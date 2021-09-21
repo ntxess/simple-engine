@@ -1,0 +1,13 @@
+#include <iostream>
+#include "Engine.hpp"
+
+int main() 
+{
+    std::cout << "Version 1.0 Beta" << std::endl;
+    Engine engine(960, 640);
+    engine.Init();
+    engine.Run();
+    std::cout << "Destroying World" << std::endl;
+    return 0;
+}
+
