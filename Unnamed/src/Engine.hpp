@@ -4,8 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/ContextSettings.hpp>
 
-#include "Drawable.hpp"
 #include "FPS.hpp"
+#include "InputHandler.hpp"
 
 enum GameState
 {
@@ -13,12 +13,15 @@ enum GameState
     GAME_MENU
 };
 
+const double MS_PER_UPDATE = 1.0 / 165.0;
+
 class Engine
 {
 public:
     sf::RenderWindow* _mainContext;
-    std::vector<Drawable*> _drawList;
+    InputHandler _inputHandler;
     GameState _state;
+    GameActor _actor;
     unsigned int _width;
     unsigned int _height;
     
@@ -26,8 +29,9 @@ public:
     ~Engine();
     void Init();
     void Run();
-    void ProcessInput(float deltaTime);
-    void Update(float deltaTime);
-    void Draw();
+    void ProcessInput();
+    void Update();
+    void Render(float interpolation);
+    void Clear();
     bool isOpen() const;
 };

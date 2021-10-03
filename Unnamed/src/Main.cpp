@@ -8,6 +8,7 @@ int main()
     engine.Init();
     engine.Run();
     std::cout << "Destroying World" << std::endl;
+    system("pause");
     return 0;
 }
 

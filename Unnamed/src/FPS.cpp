@@ -11,11 +11,13 @@ FPS::FPS() : _fps(0)
     _text.setFont(_font);
     _text.setCharacterSize(20);
     _text.setFillColor(sf::Color::White);
+    Reposition(sf::Vector2f(0, 0));
+
 }
 
 FPS::~FPS() {}
 
-void FPS::Counter()
+void FPS::Update()
 {
     if (_clock.getElapsedTime().asSeconds() >= 1.f)
     {
@@ -39,8 +41,7 @@ void FPS::Reposition(sf::Vector2f pos)
     _position = pos;
 }
 
-void FPS::Draw(sf::RenderTarget* rt)
+void FPS::Render(sf::RenderTarget* rt)
 {
-    Counter();
     rt->draw(_text);
 }

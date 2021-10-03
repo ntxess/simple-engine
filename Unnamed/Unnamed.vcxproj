@@ -21,12 +21,16 @@
   <ItemGroup>
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\FPS.cpp" />
+    <ClCompile Include="src\GameActor.cpp" />
+    <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Drawable.hpp" />
+    <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\FPS.hpp" />
+    <ClInclude Include="src\GameActor.hpp" />
+    <ClInclude Include="src\InputHandler.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
