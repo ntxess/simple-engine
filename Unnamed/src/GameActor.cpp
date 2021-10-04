@@ -1,8 +1,21 @@
 #include "GameActor.hpp"
 
-GameActor::GameActor() : _name("Player1") {}
-
-std::string GameActor::GetName()
+GameActor::GameActor()
 {
-	return _name;
+
+}
+
+GameActor::~GameActor()
+{
+
+}
+
+void GameActor::Update()
+{
+	//std::cout << "Updating Entity" << std::endl;
+}
+
+void GameActor::Render(sf::RenderTarget* rt, double interpolation)
+{
+	
 }

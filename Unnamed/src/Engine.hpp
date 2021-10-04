@@ -6,6 +6,8 @@
 
 #include "FPS.hpp"
 #include "InputHandler.hpp"
+#include "Entity.hpp"
+#include "GameActor.hpp"
 
 enum GameState
 {
@@ -19,11 +21,15 @@ class Engine
 {
 public:
     sf::RenderWindow* _mainContext;
-    InputHandler _inputHandler;
     GameState _state;
-    GameActor _actor;
     unsigned int _width;
     unsigned int _height;
+
+    InputHandler _inputHandler;
+    Command* _command;
+
+    Entity* _mainActor;
+    std::vector<Entity*> _entityList;
     
     Engine(unsigned int width, unsigned int height);
     ~Engine();
@@ -31,7 +37,8 @@ public:
     void Run();
     void ProcessInput();
     void Update();
-    void Render(float interpolation);
+    void Render(double interpolation);
     void Clear();
     bool isOpen() const;
+    sf::RenderTarget* GetContext();
 };

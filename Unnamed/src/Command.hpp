@@ -1,20 +1,20 @@
 #pragma once
 #include <iostream>
-#include "GameActor.hpp"
+#include "Entity.hpp"
 
 class Command
 {
 public:
 	virtual ~Command() {};
-	virtual void execute(GameActor& actor) = 0;
+	virtual void execute(Entity& actor) = 0;
 };
 
 class JumpCommand : public Command
 {
 public:
-	void execute(GameActor& actor)
+	void execute(Entity& actor)
 	{
-		std::cout << actor.GetName() << " called: JumpCommand" << std::endl;
+		std::cout << " Command called: JumpCommand" << std::endl;
 	}
 };
 

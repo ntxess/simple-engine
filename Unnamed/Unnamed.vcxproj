@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\FPS.cpp" />
     <ClCompile Include="src\GameActor.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
@@ -28,6 +29,7 @@
   <ItemGroup>
     <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\Engine.hpp" />
+    <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\FPS.hpp" />
     <ClInclude Include="src\GameActor.hpp" />
     <ClInclude Include="src\InputHandler.hpp" />

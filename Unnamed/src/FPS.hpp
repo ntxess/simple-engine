@@ -3,8 +3,9 @@
 #include <sstream>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Entity.hpp"
 
-class FPS
+class FPS : public Entity
 {
 private:
     sf::Clock _clock;
@@ -20,5 +21,5 @@ public:
     ~FPS();
     void Reposition(sf::Vector2f pos);
     void Update();
-    void Render(sf::RenderTarget* rt);
+    void Render(sf::RenderTarget* rt, double interpolation);
 };

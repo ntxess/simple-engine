@@ -3,7 +3,7 @@
 
 int main() 
 {
-    std::cout << "Version 1.0 Beta" << std::endl;
+    std::cout << "Ver 1.0" << std::endl;
     Engine engine(960, 640);
     engine.Init();
     engine.Run();

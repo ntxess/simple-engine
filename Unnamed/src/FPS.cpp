@@ -1,6 +1,5 @@
 #include "FPS.hpp"
 
-
 FPS::FPS() : _fps(0)
 {
     if (!_font.loadFromFile("resources/font/VCR_OSD_MONO_1.001.ttf"))
@@ -41,7 +40,7 @@ void FPS::Reposition(sf::Vector2f pos)
     _position = pos;
 }
 
-void FPS::Render(sf::RenderTarget* rt)
+void FPS::Render(sf::RenderTarget* rt, double interpolation)
 {
     rt->draw(_text);
 }

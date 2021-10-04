@@ -1,12 +1,13 @@
 #pragma once
-#include <string>
+#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "Entity.hpp"
 
-class GameActor
+class GameActor : public Entity
 {
-private:
-	std::string _name;
-
 public:
 	GameActor();
-	std::string GetName();
+	~GameActor();
+	virtual void Update();
+	virtual void Render(sf::RenderTarget* rt, double interpolation);
 };
