@@ -26,7 +26,6 @@ public:
     unsigned int _height;
 
     InputHandler _inputHandler;
-    Command* _command;
 
     GameObject* _currentFocus;
     // GameObject* _previousFocus;

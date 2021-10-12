@@ -5,13 +5,11 @@ Engine::Engine(unsigned int width, unsigned int height) :
     _state(GameState::GAME_ACTIVE),
     _width(width), 
     _height(height),
-    _command(nullptr),
     _currentFocus(nullptr) {}
 
 Engine::~Engine()
 {
     delete _mainContext;
-    delete _command;
     delete _currentFocus;
     for (int i = 0; i < _entityAll.size(); i++)
     {
@@ -71,9 +69,7 @@ void Engine::Run()
 
 void Engine::ProcessInput()
 {
-    Command* cmd = _inputHandler.HandleInput();
-    if(_currentFocus->Input() && cmd)
-        cmd->execute(*_currentFocus);
+    _inputHandler.HandleInput(*_currentFocus);
     //GameObject* temp = _currentFocus;
     //_currentFocus = _previousFocus;
     //_previousFocus = temp;
