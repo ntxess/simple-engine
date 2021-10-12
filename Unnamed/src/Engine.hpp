@@ -28,7 +28,6 @@ public:
     InputHandler _inputHandler;
 
     GameObject* _currentFocus;
-    GameObject* _previousFocus;
 
     std::vector<GameObject*> _entityAll;
     std::vector<GameObject*> _entityLive;
