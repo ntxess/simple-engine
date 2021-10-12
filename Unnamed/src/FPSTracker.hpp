@@ -3,9 +3,9 @@
 #include <sstream>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "Entity.hpp"
+#include "GameObject.hpp"
 
-class FPS : public Entity
+class FPSTracker
 {
 private:
     sf::Clock _clock;
@@ -14,12 +14,11 @@ private:
     sf::Vector2f _position;
     double _fps;
 
-    std::string FloatToString(double d);
-
 public:
-    FPS();
-    ~FPS();
+    FPSTracker();
+    ~FPSTracker();
+    std::string FloatToString(double d);
     void Reposition(sf::Vector2f pos);
-    void Update();
-    void Render(sf::RenderTarget* rt, double interpolation);
+    virtual void Update();
+    virtual void Render(sf::RenderTarget* rt);
 };

@@ -8,22 +8,24 @@ InputHandler::InputHandler()
 InputHandler::~InputHandler()
 {
 	delete _buttonW;
-	delete _buttonS;
 	delete _buttonA;
+	delete _buttonS;
 	delete _buttonD;
-	delete _buttonSpace;
 }
 
 Command* InputHandler::HandleInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) return _buttonW;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return _buttonS;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return _buttonA;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return _buttonA;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return _buttonS;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return _buttonD;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) return _buttonSpace;
+	return nullptr;
 }
 
 void InputHandler::BindCommand()
 {
-	_buttonSpace = new JumpCommand();
+	_buttonW = new CMDMoveUp();
+	_buttonA = new CMDMoveLeft();
+	_buttonS = new CMDMoveDown();
+	_buttonD = new CMDMoveRight();
 }

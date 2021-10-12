@@ -3,19 +3,19 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/ContextSettings.hpp>
-
-#include "FPS.hpp"
 #include "InputHandler.hpp"
-#include "Entity.hpp"
-#include "GameActor.hpp"
+#include "GameObject.hpp"
+#include "FPSTracker.hpp"
+#include "PlayerInputComponent.hpp"
+#include "CPUInputComponent.hpp"
 
-enum GameState
+enum class GameState
 {
     GAME_ACTIVE,
     GAME_MENU
 };
 
-const double MS_PER_UPDATE = 1.0 / 165.0;
+const double MS_PER_UPDATE = 1.0 / 60.0;
 
 class Engine
 {
@@ -28,9 +28,12 @@ public:
     InputHandler _inputHandler;
     Command* _command;
 
-    Entity* _mainActor;
-    std::vector<Entity*> _entityList;
-    
+    GameObject* _currentFocus;
+    // GameObject* _previousFocus;
+
+    std::vector<GameObject*> _entityAll;
+    std::vector<GameObject*> _entityLive;
+
     Engine(unsigned int width, unsigned int height);
     ~Engine();
     void Init();

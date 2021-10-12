@@ -1,18 +1,23 @@
 #include "Engine.hpp"
 
-Engine::Engine(unsigned int width, unsigned int height) 
-    : _state(GAME_ACTIVE), _width(width), _height(height), _mainActor(new GameActor()) {}
+Engine::Engine(unsigned int width, unsigned int height) : 
+    _mainContext(nullptr),
+    _state(GameState::GAME_ACTIVE),
+    _width(width), 
+    _height(height),
+    _command(nullptr),
+    _currentFocus(nullptr) {}
 
 Engine::~Engine()
 {
     delete _mainContext;
     delete _command;
-    delete _mainActor;
-    for (int i = 0; i < _entityList.size(); i++)
+    delete _currentFocus;
+    for (int i = 0; i < _entityAll.size(); i++)
     {
-        delete _entityList[i];
+        delete _entityAll[i];
     }
-    _entityList.clear();
+    _entityAll.clear();
 }
 
 void Engine::Init()
@@ -32,14 +37,17 @@ void Engine::Init()
     std::cout << "Done." << std::endl;
     std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << std::endl;
 
-    _entityList.push_back(new FPS());
-    _entityList.push_back(_mainActor);
+    //_entityAll.push_back(_mainActor);
+    _currentFocus = new GameObject(new PlayerInputComponent(), nullptr, nullptr);
+    //_previousFocus = new GameObject(new CPUInputComponent(), nullptr, nullptr);
+    //_currentFocus = new GameObject();
 }
 
 void Engine::Run()
 {
     std::cout << "Game Running..." << std::flush;
 
+    FPSTracker fps;
     sf::Clock clock;
     double accumulator = 0.0f;
 
@@ -53,6 +61,8 @@ void Engine::Run()
             Update();
             accumulator -= MS_PER_UPDATE;
         }
+        fps.Update();
+        fps.Render(_mainContext);
         Render(accumulator / MS_PER_UPDATE);
     }
 
@@ -61,25 +71,28 @@ void Engine::Run()
 
 void Engine::ProcessInput()
 {
-    _command = _inputHandler.HandleInput();
-    if (_command) _command->execute(*_mainActor);
+    Command* cmd = _inputHandler.HandleInput();
+    if(_currentFocus->Input() && cmd)
+        cmd->execute(*_currentFocus);
+    //GameObject* temp = _currentFocus;
+    //_currentFocus = _previousFocus;
+    //_previousFocus = temp;
 }
+
 
 void Engine::Update()
 {
-    // Remember we are updating physics and AI based of a fixed time step
-    // Therefore we do not need to pass in delta time
-    for (int i = 0; i < _entityList.size(); i++)
+    for (int i = 0; i < _entityAll.size(); i++)
     {
-        _entityList[i]->Update();
+        _entityAll[i]->Update();
     }
 }
 
 void Engine::Render(double interpolation)
 {
-    for (int i = 0; i < _entityList.size(); i++)
+    for (int i = 0; i < _entityAll.size(); i++)
     {
-        _entityList[i]->Render(_mainContext, interpolation);
+        _entityAll[i]->Render(_mainContext, interpolation);
     }
     _mainContext->display();
 }

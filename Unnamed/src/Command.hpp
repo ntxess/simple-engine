@@ -1,20 +1,54 @@
 #pragma once
 #include <iostream>
-#include "Entity.hpp"
+#include "GameObject.hpp"
 
 class Command
 {
 public:
 	virtual ~Command() {};
-	virtual void execute(Entity& actor) = 0;
+	virtual void execute(GameObject& actor) = 0;
 };
-
-class JumpCommand : public Command
+ 
+class CMDMoveUp : public Command
 {
 public:
-	void execute(Entity& actor)
+	CMDMoveUp() {}
+	~CMDMoveUp() {}
+	void execute(GameObject& actor)
 	{
-		std::cout << " Command called: JumpCommand" << std::endl;
+		actor.Input()->MoveUp();
+	}
+};
+ 
+class CMDMoveLeft : public Command
+{
+public:
+	CMDMoveLeft() {}
+	~CMDMoveLeft() {}
+	void execute(GameObject& actor)
+	{
+		actor.Input()->MoveLeft();
 	}
 };
 
+class CMDMoveDown : public Command
+{
+public:
+	CMDMoveDown() {}
+	~CMDMoveDown() {}
+	void execute(GameObject& actor)
+	{
+		actor.Input()->MoveDown();
+	}
+};
+
+class CMDMoveRight : public Command
+{
+public:
+	CMDMoveRight() {}
+	~CMDMoveRight() {}
+	void execute(GameObject& actor)
+	{
+		actor.Input()->MoveRight();
+	}
+};
