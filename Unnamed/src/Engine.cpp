@@ -37,7 +37,7 @@ void Engine::Init()
 
     //_entityAll.push_back(_mainActor);
     _currentFocus = new GameObject(new PlayerInputComponent(), nullptr, nullptr);
-    //_previousFocus = new GameObject(new CPUInputComponent(), nullptr, nullptr);
+    _previousFocus = new GameObject(new CPUInputComponent(), nullptr, nullptr);
     //_currentFocus = new GameObject();
 }
 
@@ -70,9 +70,9 @@ void Engine::Run()
 void Engine::ProcessInput()
 {
     _inputHandler.HandleInput(*_currentFocus);
-    //GameObject* temp = _currentFocus;
-    //_currentFocus = _previousFocus;
-    //_previousFocus = temp;
+    GameObject* temp = _currentFocus;
+    _currentFocus = _previousFocus;
+    _previousFocus = temp;
 }
 
 

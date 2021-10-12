@@ -28,7 +28,6 @@
     <ClCompile Include="src\PlayerInputComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\CPUInputComponent.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\FPSTracker.hpp" />
