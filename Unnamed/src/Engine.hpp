@@ -6,8 +6,8 @@
 #include "InputHandler.hpp"
 #include "GameObject.hpp"
 #include "FPSTracker.hpp"
-#include "PlayerInputComponent.hpp"
-#include "CPUInputComponent.hpp"
+#include "PlayerInput.hpp"
+#include "CPUInput.hpp"
 
 enum class GameState
 {

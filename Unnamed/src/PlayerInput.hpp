@@ -2,10 +2,10 @@
 #include <iostream>
 #include "InputComponent.hpp"
 
-class PlayerInputComponent : public InputComponent
+class PlayerInput : public InputComponent
 {
 public:
-	PlayerInputComponent();
+	PlayerInput();
 	void MoveUp();
 	void MoveLeft();
 	void MoveDown();

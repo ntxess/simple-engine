@@ -1,26 +1,26 @@
-#include "PlayerInputComponent.hpp"
+#include "PlayerInput.hpp"
 
-PlayerInputComponent::PlayerInputComponent()
+PlayerInput::PlayerInput()
 {
 
 }
 
-void PlayerInputComponent::MoveUp()
+void PlayerInput::MoveUp()
 {
 	std::cout << "PlayerInputComponent: MoveUp" << std::endl;
 }
 
-void PlayerInputComponent::MoveLeft()
+void PlayerInput::MoveLeft()
 {
 	std::cout << "PlayerInputComponent: MoveLeft" << std::endl;
 }
 
-void PlayerInputComponent::MoveDown()
+void PlayerInput::MoveDown()
 {
 	std::cout << "PlayerInputComponent: MoveDown" << std::endl;
 }
 
-void PlayerInputComponent::MoveRight()
+void PlayerInput::MoveRight()
 {
 	std::cout << "PlayerInputComponent: MoveRight" << std::endl;
 }

@@ -36,8 +36,8 @@ void Engine::Init()
     std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << std::endl;
 
     //_entityAll.push_back(_mainActor);
-    //_currentFocus = new GameObject(new PlayerInputComponent(), nullptr, nullptr);
-    _currentFocus = new GameObject();
+    _currentFocus = new GameObject(new PlayerInput(), nullptr, nullptr);
+    //_currentFocus = new GameObject();
 }
 
 void Engine::Run()
@@ -68,8 +68,7 @@ void Engine::Run()
 
 void Engine::ProcessInput()
 {
-    if(_currentFocus->Input())
-        _inputHandler.HandleInput(*_currentFocus);
+    _inputHandler.HandleInput(*_currentFocus);
 }
 
 

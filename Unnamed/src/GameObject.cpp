@@ -40,7 +40,7 @@ GraphicsComponent* GameObject::Graphics()
 
 void GameObject::Update()
 {
-	//_input->Update();
+	_graphics->Update();
 	_physics->Update();
 }
 

@@ -1,26 +1,26 @@
-#include "CPUInputComponent.hpp"
+#include "CPUInput.hpp"
 
-CPUInputComponent::CPUInputComponent()
+CPUInput::CPUInput()
 {
 
 }
 
-void CPUInputComponent::MoveUp()
+void CPUInput::MoveUp()
 {
 	std::cout << "CPUInputComponent: MoveUp" << std::endl;
 }
 
-void CPUInputComponent::MoveLeft()
+void CPUInput::MoveLeft()
 {
 	std::cout << "CPUInputComponent: MoveLeft" << std::endl;
 }
 
-void CPUInputComponent::MoveDown()
+void CPUInput::MoveDown()
 {
 	std::cout << "CPUInputComponent: MoveDown" << std::endl;
 }
 
-void CPUInputComponent::MoveRight()
+void CPUInput::MoveRight()
 {
 	std::cout << "CPUInputComponent: MoveRight" << std::endl;
 }

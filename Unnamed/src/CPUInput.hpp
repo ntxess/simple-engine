@@ -2,10 +2,10 @@
 #include <iostream>
 #include "InputComponent.hpp"
 
-class CPUInputComponent : public InputComponent
+class CPUInput : public InputComponent
 {
 public:
-	CPUInputComponent();
+	CPUInput();
 	void MoveUp();
 	void MoveLeft();
 	void MoveDown();

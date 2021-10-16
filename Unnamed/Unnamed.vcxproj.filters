@@ -30,10 +30,16 @@
     <ClCompile Include="src\FPSTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayerInputComponent.cpp">
+    <ClCompile Include="src\PlayerInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CPUInputComponent.cpp">
+    <ClCompile Include="src\CPUInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,10 +65,16 @@
     <ClInclude Include="src\FPSTracker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerInputComponent.hpp">
+    <ClInclude Include="src\PlayerInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CPUInputComponent.hpp">
+    <ClInclude Include="src\CPUInput.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sprite.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

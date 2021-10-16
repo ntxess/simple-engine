@@ -19,16 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\CPUInputComponent.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\FPSTracker.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\PlayerInputComponent.cpp" />
+    <ClCompile Include="src\PlayerInput.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\CPUInputComponent.hpp" />
+    <ClInclude Include="src\Animation.hpp" />
+    <ClInclude Include="src\Sprite.hpp" />
+    <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\FPSTracker.hpp" />
     <ClInclude Include="src\GameObject.hpp" />
@@ -36,7 +40,7 @@
     <ClInclude Include="src\InputComponent.hpp" />
     <ClInclude Include="src\InputHandler.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />
-    <ClInclude Include="src\PlayerInputComponent.hpp" />
+    <ClInclude Include="src\PlayerInput.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
