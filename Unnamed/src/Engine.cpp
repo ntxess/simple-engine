@@ -35,9 +35,10 @@ void Engine::Init()
     std::cout << "Done." << std::endl;
     std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << std::endl;
 
-    //_entityAll.push_back(_mainActor);
     _currentFocus = new GameObject(new PlayerInput(), nullptr, nullptr);
-    //_currentFocus = new GameObject();
+    GameObject* noteBlock = new GameObject(nullptr, nullptr, new MusicNote());
+    noteBlock->Graphics()->SetPosition(sf::Vector2f(100, 200));
+    _entityAll.push_back(noteBlock);
 }
 
 void Engine::Run()

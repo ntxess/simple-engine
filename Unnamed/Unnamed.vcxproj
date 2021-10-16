@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\MusicNote.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -31,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.hpp" />
+    <ClInclude Include="src\MusicNote.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />

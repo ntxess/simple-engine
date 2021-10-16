@@ -3,6 +3,6 @@
 class Animation
 {
 public:
-	Animation();
-	void Update();
+	virtual ~Animation() = 0;
+	virtual void Update() = 0;
 };

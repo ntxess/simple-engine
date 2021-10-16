@@ -8,6 +8,8 @@
 #include "FPSTracker.hpp"
 #include "PlayerInput.hpp"
 #include "CPUInput.hpp"
+#include "Sprite.hpp"
+#include "MusicNote.hpp"
 
 enum class GameState
 {

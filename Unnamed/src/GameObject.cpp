@@ -40,8 +40,10 @@ GraphicsComponent* GameObject::Graphics()
 
 void GameObject::Update()
 {
-	_graphics->Update();
-	_physics->Update();
+	if(_graphics)
+		_graphics->Update();
+	if(_physics)
+		_physics->Update();
 }
 
 void GameObject::Render(sf::RenderTarget* rt, double interpolation)

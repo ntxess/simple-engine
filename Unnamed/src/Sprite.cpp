@@ -1,6 +1,7 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite() {}
+Sprite::Sprite() : _animation(nullptr) 
+{}
 
 Sprite::~Sprite()
 {
