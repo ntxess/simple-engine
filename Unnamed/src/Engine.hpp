@@ -17,7 +17,7 @@ enum class GameState
     GAME_MENU
 };
 
-const double MS_PER_UPDATE = 1.0 / 60.0;
+const double MS_PER_UPDATE = 1.0 / 165.0f;
 
 class Engine
 {
@@ -43,5 +43,5 @@ public:
     void Render(double interpolation);
     void Clear();
     bool isOpen() const;
-    sf::RenderTarget* GetContext();
+    sf::RenderTarget* Context();
 };

@@ -48,6 +48,7 @@ void GameObject::Update()
 
 void GameObject::Render(sf::RenderTarget* rt, double interpolation)
 {
-	_graphics->Render(rt, interpolation);
+	if(_graphics)
+		_graphics->Render(rt, interpolation);
 }
 

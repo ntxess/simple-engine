@@ -9,7 +9,6 @@ MusicNote::~MusicNote() {}
 
 void MusicNote::Init()
 {
-	std::cout << "Inside Music Note Init" << std::endl;
 	if (!_texture.loadFromFile("resources/bg/bg_fld_1.png"))
 	{
 		std::cout << "FAILURE TO LOAD SPRITE TEXTURE!" << std::endl;

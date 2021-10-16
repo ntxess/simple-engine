@@ -33,11 +33,11 @@ void Engine::Init()
         (sf::VideoMode(_width, _height), "Unnamed", sf::Style::Default, settings);
 
     std::cout << "Done." << std::endl;
-    std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << std::endl;
+    std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << "\n" << std::endl;
 
     _currentFocus = new GameObject(new PlayerInput(), nullptr, nullptr);
     GameObject* noteBlock = new GameObject(nullptr, nullptr, new MusicNote());
-    noteBlock->Graphics()->SetPosition(sf::Vector2f(100, 200));
+    noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 20));
     _entityAll.push_back(noteBlock);
 }
 
@@ -63,7 +63,6 @@ void Engine::Run()
         fps.Render(_mainContext);
         Render(accumulator / MS_PER_UPDATE);
     }
-
     std::cout << "Done." << std::endl;
 }
 
@@ -71,7 +70,6 @@ void Engine::ProcessInput()
 {
     _inputHandler.HandleInput(*_currentFocus);
 }
-
 
 void Engine::Update()
 {
@@ -107,7 +105,7 @@ bool Engine::isOpen() const
     return true;
 }
 
-sf::RenderTarget* Engine::GetContext()
+sf::RenderTarget* Engine::Context()
 {
     return _mainContext;
 }
