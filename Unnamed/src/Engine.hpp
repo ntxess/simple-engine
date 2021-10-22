@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/ContextSettings.hpp>
+#include "SceneManager.hpp"
 #include "InputHandler.hpp"
 #include "GameObject.hpp"
 #include "FPSTracker.hpp"
@@ -27,8 +28,8 @@ public:
     unsigned int _width;
     unsigned int _height;
 
+    SceneManager _sceneManager;
     InputHandler _inputHandler;
-
     GameObject* _currentFocus;
 
     std::vector<GameObject*> _entityAll;

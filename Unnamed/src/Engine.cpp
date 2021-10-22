@@ -36,9 +36,9 @@ void Engine::Init()
     std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << "\n" << std::endl;
 
     _currentFocus = new GameObject(new PlayerInput(), nullptr, nullptr);
-    GameObject* noteBlock = new GameObject(nullptr, nullptr, new MusicNote());
-    noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 20));
-    _entityAll.push_back(noteBlock);
+    //GameObject* noteBlock = new GameObject(nullptr, nullptr, new MusicNote());
+    //noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 20));
+    //_entityAll.push_back(noteBlock);
 }
 
 void Engine::Run()
