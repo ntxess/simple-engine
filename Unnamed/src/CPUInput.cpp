@@ -1,9 +1,7 @@
 #include "CPUInput.hpp"
 
 CPUInput::CPUInput()
-{
-
-}
+{}
 
 void CPUInput::MoveUp()
 {

@@ -1,39 +1,37 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject() :
-	_input(nullptr),
-	_physics(nullptr),
-	_graphics(nullptr),
-	_velocity(0),
-	_x(0),
-	_y(0) {}
-
-GameObject::GameObject(InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) :
-	_input(input),
-	_physics(physics),
-	_graphics(graphics),
-	_velocity(0),
-	_x(0),
-	_y(0) {}
-
-GameObject::~GameObject()
+GameObject::GameObject()
 {
-	delete _input;
-	delete _physics;
-	delete _graphics;
+	_velocity = 0;
+	_x = 0;
+	_y = 0;
 }
 
-InputComponent* GameObject::Input()
+GameObject::GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics)
+{
+	_velocity = 0;
+	_x = 0;
+	_y = 0;
+	_input = std::move(input);
+	_physics = std::move(physics);
+	_graphics = std::move(graphics);
+}
+
+GameObject::~GameObject()
+{}
+
+
+InputComponentRef& GameObject::Input()
 {
 	return _input;
 }
 
-PhysicsComponent* GameObject::Physics()
+PhysicsComponentRef& GameObject::Physics()
 {
 	return _physics;
 }
 
-GraphicsComponent* GameObject::Graphics()
+GraphicsComponentRef& GameObject::Graphics()
 {
 	return _graphics;
 }
@@ -46,7 +44,7 @@ void GameObject::Update(double deltaTime)
 		_physics->Update(deltaTime);
 }
 
-void GameObject::Render(sf::RenderTarget* rt, double interpolation)
+void GameObject::Render(sf::RenderWindow* rt, double interpolation)
 {
 	if(_graphics)
 		_graphics->Render(rt, interpolation);

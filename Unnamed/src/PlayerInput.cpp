@@ -1,9 +1,7 @@
 #include "PlayerInput.hpp"
 
 PlayerInput::PlayerInput()
-{
-
-}
+{}
 
 void PlayerInput::MoveUp()
 {

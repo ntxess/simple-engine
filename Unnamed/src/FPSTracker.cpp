@@ -13,7 +13,8 @@ FPSTracker::FPSTracker() : _fps(0)
     Reposition(sf::Vector2f(0, 0));
 }
 
-FPSTracker::~FPSTracker() {}
+FPSTracker::~FPSTracker() 
+{}
 
 std::string FPSTracker::FloatToString(double d)
 {
@@ -39,7 +40,7 @@ void FPSTracker::Update()
     ++_fps;
 }
 
-void FPSTracker::Render(sf::RenderTarget* rt)
+void FPSTracker::Render(sf::RenderWindow* rt)
 {
     rt->draw(_text);
 }

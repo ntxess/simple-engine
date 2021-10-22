@@ -20,5 +20,5 @@ public:
     std::string FloatToString(double d);
     void Reposition(sf::Vector2f pos);
     virtual void Update();
-    virtual void Render(sf::RenderTarget* rt);
+    virtual void Render(sf::RenderWindow* rt);
 };

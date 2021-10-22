@@ -1,47 +1,31 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include <string>
 #include <SFML/Graphics.hpp>
-#include <SFML/Window/ContextSettings.hpp>
-#include "SceneManager.hpp"
-#include "InputHandler.hpp"
-#include "GameObject.hpp"
-#include "FPSTracker.hpp"
-#include "PlayerInput.hpp"
-#include "CPUInput.hpp"
-#include "Sprite.hpp"
-#include "MusicNote.hpp"
+#include "StateMachine.hpp"
+#include "DebugScene.hpp"
 
-enum class GameState
+struct GameData
 {
-    GAME_ACTIVE,
-    GAME_MENU
+    StateMachine machine;
+    sf::RenderWindow window;
 };
 
-const double MS_PER_UPDATE = 1.0 / 120.0f;
+typedef std::shared_ptr<GameData> GameDataRef;
 
 class Engine
 {
+private:
+    const double dt = 1.0 / 120.0f;
+
 public:
-    sf::RenderWindow* _mainContext;
-    GameState _state;
+    GameDataRef _data = std::make_shared<GameData>();
+    sf::Clock _clock;
     unsigned int _width;
     unsigned int _height;
 
-    SceneManager _sceneManager;
-    InputHandler _inputHandler;
-    GameObject* _currentFocus;
-
-    std::vector<GameObject*> _entityAll;
-    std::vector<GameObject*> _entityLive;
-
-    Engine(unsigned int width, unsigned int height);
+    Engine(unsigned int width, unsigned int height, std::string title);
     ~Engine();
-    void Init();
     void Run();
-    void ProcessInput();
-    void Update(double deltaTime);
-    void Render(double interpolation);
-    void Clear();
-    bool isOpen() const;
+    bool IsOpen() const;
 };

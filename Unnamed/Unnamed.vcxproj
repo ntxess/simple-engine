@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MusicNote.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -33,9 +33,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.hpp" />
+    <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\MusicNote.hpp" />
-    <ClInclude Include="src\Scene.hpp" />
-    <ClInclude Include="src\SceneManager.hpp" />
+    <ClInclude Include="src\State.hpp" />
+    <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />

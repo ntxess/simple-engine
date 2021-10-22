@@ -4,11 +4,8 @@
 int main() 
 {
     std::cout << "Ver 1.0" << std::endl;
-    Engine engine(960, 640);
-    engine.Init();
+    Engine engine(960, 640, "Unnamed");
     engine.Run();
-    std::cout << "Destroying World" << std::endl;
-    system("pause");
     return 0;
 }
 
