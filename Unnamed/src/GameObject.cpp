@@ -36,7 +36,7 @@ GraphicsComponentRef& GameObject::Graphics()
 	return _graphics;
 }
 
-void GameObject::Update(double deltaTime)
+void GameObject::Update(float deltaTime)
 {
 	if(_graphics)
 		_graphics->Update(deltaTime);
@@ -44,9 +44,9 @@ void GameObject::Update(double deltaTime)
 		_physics->Update(deltaTime);
 }
 
-void GameObject::Render(sf::RenderWindow* rt, double interpolation)
+void GameObject::Render(sf::RenderWindow &rw, float interpolation)
 {
 	if(_graphics)
-		_graphics->Render(rt, interpolation);
+		_graphics->Render(rw, interpolation);
 }
 

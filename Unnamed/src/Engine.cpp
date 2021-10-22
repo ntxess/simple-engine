@@ -46,7 +46,7 @@ void Engine::Run()
         }
 
         interpolation = accumulator / dt;
-        _data->machine.GetActiveState()->Render(&(_data->window), interpolation);
+        _data->machine.GetActiveState()->Render(_data->window, interpolation);
         _data->window.display();
     }
 }

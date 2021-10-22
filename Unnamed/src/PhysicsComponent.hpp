@@ -4,5 +4,5 @@ class PhysicsComponent
 {
 public:
 	virtual ~PhysicsComponent() {}
-	virtual void Update(double deltaTime) = 0;
+	virtual void Update(float deltaTime) = 0;
 };

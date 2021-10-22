@@ -19,6 +19,6 @@ public:
     ~FPSTracker();
     std::string FloatToString(double d);
     void Reposition(sf::Vector2f pos);
-    virtual void Update();
-    virtual void Render(sf::RenderWindow* rt);
+    void Update();
+    void Render(sf::RenderWindow &rw);
 };

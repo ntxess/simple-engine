@@ -37,7 +37,7 @@ void DebugScene::ProcessInput()
     _inputHandler.HandleInput(*_currentFocus);
 }
 
-void DebugScene::Update(double deltaTime)
+void DebugScene::Update(float deltaTime)
 {
     for (int i = 0; i < _entityAll.size(); i++)
     {
@@ -45,12 +45,14 @@ void DebugScene::Update(double deltaTime)
     }
 }
 
-void DebugScene::Render(sf::RenderWindow* rt, double interpolation)
+void DebugScene::Render(sf::RenderWindow &rw, float interpolation)
 {
     for (int i = 0; i < _entityAll.size(); i++)
     {
-        _entityAll[i]->Render(rt, interpolation);
+        _entityAll[i]->Render(rw, interpolation);
     }
+    _fps.Update();
+    _fps.Render(rw);
 }
 
 void DebugScene::Pause()

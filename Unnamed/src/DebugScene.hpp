@@ -16,6 +16,7 @@ typedef std::shared_ptr<GameObject> GameObjectRef;
 class DebugScene : public State
 {
 public:
+	FPSTracker _fps;
 	InputHandler _inputHandler;
 	GameObjectRef _currentFocus;
 	std::vector<GameObjectRef> _entityAll;
@@ -25,8 +26,8 @@ public:
 	~DebugScene();
 	void Init();
 	void ProcessInput();
-	void Update(double deltaTime);
-	void Render(sf::RenderWindow* rt, double interpolation);
+	void Update(float deltaTime);
+	void Render(sf::RenderWindow &rw, float interpolation);
 	void Pause();
 	void Resume();
 };

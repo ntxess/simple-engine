@@ -16,13 +16,13 @@ void Sprite::SetPosition(const sf::Vector2f pos)
 	_sprite.setPosition(pos);
 }
 
-void Sprite::Update(double deltaTime)
+void Sprite::Update(float deltaTime)
 {
 	if(_animation != nullptr)
-		_animation->Update();
+		_animation->Update(deltaTime);
 }
 
-void Sprite::Render(sf::RenderWindow* rt, double interpolation)
+void Sprite::Render(sf::RenderWindow &rw, float interpolation)
 {
-	rt->draw(_sprite);
+	rw.draw(_sprite);
 }

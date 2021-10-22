@@ -40,7 +40,7 @@ void FPSTracker::Update()
     ++_fps;
 }
 
-void FPSTracker::Render(sf::RenderWindow* rt)
+void FPSTracker::Render(sf::RenderWindow &rw)
 {
-    rt->draw(_text);
+    rw.draw(_text);
 }

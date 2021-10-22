@@ -16,6 +16,6 @@ public:
 	~Sprite();
 	void SetScale(const sf::Vector2f scale);
 	void SetPosition(const sf::Vector2f pos);
-	void Update(double deltaTime);
-	void Render(sf::RenderWindow* rt, double interpolation);
+	void Update(float deltaTime);
+	void Render(sf::RenderWindow &rw, float interpolation);
 };
