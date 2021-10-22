@@ -21,6 +21,6 @@ public:
 	InputComponent* Input();
 	PhysicsComponent* Physics();
 	GraphicsComponent* Graphics();
-	virtual void Update();
+	virtual void Update(double deltaTime);
 	virtual void Render(sf::RenderTarget* rt, double interpolation);
 };

@@ -19,7 +19,7 @@ void Sprite::SetPosition(const sf::Vector2f pos)
 	_posN = pos;
 }
 
-void Sprite::Update()
+void Sprite::Update(double deltaTime)
 {
 	if(_animation != nullptr)
 		_animation->Update();

@@ -56,7 +56,7 @@ void Engine::Run()
         ProcessInput();
         while (accumulator >= MS_PER_UPDATE)
         {
-            Update();
+            Update(MS_PER_UPDATE);
             accumulator -= MS_PER_UPDATE;
         }
         fps.Update();
@@ -71,11 +71,11 @@ void Engine::ProcessInput()
     _inputHandler.HandleInput(*_currentFocus);
 }
 
-void Engine::Update()
+void Engine::Update(double deltaTime)
 {
     for (int i = 0; i < _entityAll.size(); i++)
     {
-        _entityAll[i]->Update();
+        _entityAll[i]->Update(deltaTime);
     }
 }
 
@@ -103,10 +103,5 @@ bool Engine::isOpen() const
         return false;
     }
     return true;
-}
-
-sf::RenderTarget* Engine::Context()
-{
-    return _mainContext;
 }
 

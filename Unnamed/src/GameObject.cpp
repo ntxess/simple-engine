@@ -38,12 +38,12 @@ GraphicsComponent* GameObject::Graphics()
 	return _graphics;
 }
 
-void GameObject::Update()
+void GameObject::Update(double deltaTime)
 {
 	if(_graphics)
-		_graphics->Update();
+		_graphics->Update(deltaTime);
 	if(_physics)
-		_physics->Update();
+		_physics->Update(deltaTime);
 }
 
 void GameObject::Render(sf::RenderTarget* rt, double interpolation)

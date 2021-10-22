@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MusicNote.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="src\Animation.hpp" />
     <ClInclude Include="src\MusicNote.hpp" />
+    <ClInclude Include="src\SceneManager.hpp" />
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />
