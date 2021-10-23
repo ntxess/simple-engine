@@ -1,6 +1,6 @@
-#include "FPSTracker.hpp"
+#include "ResourceMonitor.hpp"
 
-FPSTracker::FPSTracker() : _fps(0)
+ResourceMonitor::ResourceMonitor() : _fps(0)
 {
     if (!_font.loadFromFile("resources/font/VCR_OSD_MONO_1.001.ttf"))
     {
@@ -13,23 +13,23 @@ FPSTracker::FPSTracker() : _fps(0)
     Reposition(sf::Vector2f(0, 0));
 }
 
-FPSTracker::~FPSTracker() 
+ResourceMonitor::~ResourceMonitor()
 {}
 
-std::string FPSTracker::FloatToString(double d)
+std::string ResourceMonitor::FloatToString(double d)
 {
     std::stringstream ss;
     ss << d;
     return ss.str();
 }
 
-void FPSTracker::Reposition(sf::Vector2f pos)
+void ResourceMonitor::Reposition(sf::Vector2f pos)
 {
     _text.setPosition(pos);
     _position = pos;
 }
 
-void FPSTracker::Update()
+void ResourceMonitor::Update()
 {
     if (_clock.getElapsedTime().asSeconds() >= 1.f)
     {
@@ -40,7 +40,7 @@ void FPSTracker::Update()
     ++_fps;
 }
 
-void FPSTracker::Render(sf::RenderWindow &rw)
+void ResourceMonitor::Render(sf::RenderWindow &rw)
 {
     rw.draw(_text);
 }

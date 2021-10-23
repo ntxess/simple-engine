@@ -25,7 +25,7 @@
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\FPSTracker.cpp" />
+    <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.hpp" />
+    <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\MusicNote.hpp" />
     <ClInclude Include="src\State.hpp" />
@@ -40,7 +41,7 @@
     <ClInclude Include="src\Sprite.hpp" />
     <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />
-    <ClInclude Include="src\FPSTracker.hpp" />
+    <ClInclude Include="src\ResourceMonitor.hpp" />
     <ClInclude Include="src\GameObject.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
     <ClInclude Include="src\InputComponent.hpp" />

@@ -17,6 +17,7 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title) : _wi
     std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << "\n" << std::endl;
 
     _data->machine.AddState(std::make_unique<DebugScene>());
+    Run();
 }
 
 Engine::~Engine()

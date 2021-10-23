@@ -11,7 +11,7 @@ void DebugScene::Init()
     _currentFocus = std::make_unique<GameObject>(
         std::make_unique<PlayerInput>(), 
         nullptr, 
-        nullptr
+        std::make_unique<MusicNote>()
         );
 
     GameObjectRef noteBlock = std::make_unique<GameObject>(
@@ -20,21 +20,17 @@ void DebugScene::Init()
         std::make_unique<MusicNote>()
         );
 
-    GameObjectRef noteBlock2 = std::make_unique<GameObject>(
-        nullptr,
-        nullptr,
-        std::make_unique<MusicNote>()
-        );
-
-    noteBlock->Graphics()->SetPosition(sf::Vector2f(400, 300));
-    noteBlock2->Graphics()->SetPosition(sf::Vector2f(200, 100));
+    _currentFocus->Graphics()->SetPosition(sf::Vector2f(400, 300));
+    noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 100));
+    _entityAll.push_back(_currentFocus);
     _entityAll.push_back(noteBlock);
-    _entityAll.push_back(noteBlock2);
 }
 
 void DebugScene::ProcessInput()
 {
-    _inputHandler.HandleInput(*_currentFocus);
+    CommandRef command = _inputHandler.HandleInput();
+    if (command)
+        command->Execute(*_currentFocus);
 }
 
 void DebugScene::Update(float deltaTime)

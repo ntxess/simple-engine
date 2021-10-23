@@ -2,13 +2,13 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "ResourceMonitor.hpp"
 #include "StateMachine.hpp"
 #include "InputHandler.hpp"
+
 #include "GameObject.hpp"
-#include "FPSTracker.hpp"
 #include "PlayerInput.hpp"
 #include "CPUInput.hpp"
-#include "Sprite.hpp"
 #include "MusicNote.hpp"
 
 typedef std::shared_ptr<GameObject> GameObjectRef;
@@ -16,7 +16,7 @@ typedef std::shared_ptr<GameObject> GameObjectRef;
 class DebugScene : public State
 {
 public:
-	FPSTracker _fps;
+	ResourceMonitor _fps;
 	InputHandler _inputHandler;
 	GameObjectRef _currentFocus;
 	std::vector<GameObjectRef> _entityAll;

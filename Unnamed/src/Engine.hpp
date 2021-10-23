@@ -16,7 +16,7 @@ typedef std::shared_ptr<GameData> GameDataRef;
 class Engine
 {
 private:
-    const double dt = 1.0 / 120.0f;
+    const float dt = 1.0 / 120.0f;
 
 public:
     GameDataRef _data = std::make_shared<GameData>();

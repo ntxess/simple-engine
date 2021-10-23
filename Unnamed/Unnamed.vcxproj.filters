@@ -27,7 +27,7 @@
     <ClCompile Include="src\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FPSTracker.cpp">
+    <ClCompile Include="src\ResourceMonitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerInput.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="src\GameObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FPSTracker.hpp">
+    <ClInclude Include="src\ResourceMonitor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerInput.hpp">
@@ -93,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Command.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

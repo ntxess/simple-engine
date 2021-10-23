@@ -3,9 +3,8 @@
 #include <sstream>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "GameObject.hpp"
 
-class FPSTracker
+class ResourceMonitor
 {
 private:
     sf::Clock _clock;
@@ -15,8 +14,8 @@ private:
     double _fps;
 
 public:
-    FPSTracker();
-    ~FPSTracker();
+    ResourceMonitor();
+    ~ResourceMonitor();
     std::string FloatToString(double d);
     void Reposition(sf::Vector2f pos);
     void Update();

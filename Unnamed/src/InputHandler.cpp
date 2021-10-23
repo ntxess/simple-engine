@@ -1,16 +1,27 @@
 #include "InputHandler.hpp"
 
-
-InputHandler::InputHandler() 
-{}
+InputHandler::InputHandler()
+{
+	BindCommand();
+}
 
 InputHandler::~InputHandler()
 {}
 
-void InputHandler::HandleInput(GameObject& actor)
+void InputHandler::BindCommand()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) actor.Input()->MoveUp();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) actor.Input()->MoveLeft();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) actor.Input()->MoveDown();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) actor.Input()->MoveRight();
+	_buttonW = std::make_shared<CommandUp>();
+	_buttonA = std::make_shared<CommandLeft>();
+	_buttonS = std::make_shared<CommandDown>();
+	_buttonD = std::make_shared<CommandRight>();
+	_buttonEnter = std::make_shared<CommandEnter>();
+}
+
+CommandRef InputHandler::HandleInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) return _buttonW;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return _buttonA;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return _buttonS;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return _buttonD;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) return _buttonEnter;
 }
