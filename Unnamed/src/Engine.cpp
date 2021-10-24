@@ -1,9 +1,8 @@
 #include "Engine.hpp"
 
-Engine::Engine(unsigned int width, unsigned int height, std::string title) : _width(width), _height(height)
+Engine::Engine(unsigned int width, unsigned int height, std::string title) 
+    : _data(std::make_shared<GameData>()), _width(width), _height(height)
 {
-    std::cout << "Starting Initialization..." << std::flush;
-
     sf::ContextSettings settings;
     settings.depthBits = 24;
     settings.stencilBits = 8;
@@ -11,13 +10,8 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title) : _wi
     settings.majorVersion = 4;
     settings.minorVersion = 3;
 
-    _data->window.create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
-
-    std::cout << "Done." << std::endl;
-    std::cout << "Opengl Ver " << settings.majorVersion << "." << settings.minorVersion << "\n" << std::endl;
-
-    _data->machine.AddState(std::make_unique<DebugScene>());
-    Run();
+    _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
+    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 }
 
 Engine::~Engine()
@@ -28,41 +22,43 @@ void Engine::Run()
     float newTime, frameTime, interpolation;
     float currentTime = _clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
+
     while(IsOpen())
     {
-        _data->machine.ProcessStateChange();
+        _data->_machine->ProcessStateChange();
 
         newTime = _clock.getElapsedTime().asSeconds();
         frameTime = newTime - currentTime;
         currentTime = newTime;
         accumulator += frameTime;
 
-        _data->window.clear();
-        _data->machine.GetActiveState()->ProcessInput();
+        _data->_window->clear();
+        _data->_machine->GetActiveState()->ProcessInput();
 
         while (accumulator >= dt)
         {
-            _data->machine.GetActiveState()->Update(dt);
+            _data->_machine->GetActiveState()->Update(dt);
             accumulator -= dt;
         }
 
         interpolation = accumulator / dt;
-        _data->machine.GetActiveState()->Render(_data->window, interpolation);
-        _data->window.display();
+        _data->_machine->GetActiveState()->Render(_data->_window, interpolation);
+        _data->_window->display();
     }
 }
 
 bool Engine::IsOpen() const
 {
     sf::Event event;
-    _data->window.pollEvent(event);
+    _data->_window->pollEvent(event);
     if (event.type == sf::Event::Closed)
     {
-        _data->window.close();
+        _data->_window->close();
         return false;
     }
     return true;
 }
+
 
 
 

@@ -13,7 +13,6 @@ private:
 	CommandRef _buttonA;
 	CommandRef _buttonS;
 	CommandRef _buttonD;
-	CommandRef _buttonEnter;
 
 public:
 	InputHandler();

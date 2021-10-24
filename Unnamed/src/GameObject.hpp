@@ -4,6 +4,7 @@
 #include "PhysicsComponent.hpp"
 #include "GraphicsComponent.hpp"
 
+typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 typedef std::unique_ptr<InputComponent> InputComponentRef;
 typedef std::unique_ptr<PhysicsComponent> PhysicsComponentRef;
 typedef std::unique_ptr<GraphicsComponent> GraphicsComponentRef;
@@ -17,7 +18,8 @@ private:
 
 public:
 	int _velocity;
-	int _x, _y;
+	int _x;
+	int _y;
 	
 	GameObject();
 	GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics);
@@ -26,5 +28,5 @@ public:
 	PhysicsComponentRef& Physics();
 	GraphicsComponentRef& Graphics();
 	virtual void Update(float deltaTime);
-	virtual void Render(sf::RenderWindow &rw, float interpolation);
+	virtual void Render(RenderWindowRef& rw, float interpolation);
 };

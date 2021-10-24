@@ -1,25 +1,15 @@
 #pragma once
-#include <iostream>
 #include <string>
-#include <SFML/Graphics.hpp>
-#include "StateMachine.hpp"
-#include "DebugScene.hpp"
-
-struct GameData
-{
-    StateMachine machine;
-    sf::RenderWindow window;
-};
-
-typedef std::shared_ptr<GameData> GameDataRef;
+#include "GameData.hpp"
+#include "MainMenu.hpp"
 
 class Engine
 {
 private:
+    std::shared_ptr<GameData> _data;
     const float dt = 1.0 / 120.0f;
 
 public:
-    GameDataRef _data = std::make_shared<GameData>();
     sf::Clock _clock;
     unsigned int _width;
     unsigned int _height;

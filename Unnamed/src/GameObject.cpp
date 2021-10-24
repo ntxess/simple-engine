@@ -1,6 +1,6 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject()
+GameObject::GameObject() 
 {
 	_velocity = 0;
 	_x = 0;
@@ -44,7 +44,7 @@ void GameObject::Update(float deltaTime)
 		_physics->Update(deltaTime);
 }
 
-void GameObject::Render(sf::RenderWindow &rw, float interpolation)
+void GameObject::Render(RenderWindowRef& rw, float interpolation)
 {
 	if(_graphics)
 		_graphics->Render(rw, interpolation);

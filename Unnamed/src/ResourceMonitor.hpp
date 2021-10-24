@@ -4,13 +4,14 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
+
 class ResourceMonitor
 {
 private:
     sf::Clock _clock;
     sf::Text  _text;
     sf::Font  _font;
-    sf::Vector2f _position;
     double _fps;
 
 public:
@@ -19,5 +20,5 @@ public:
     std::string FloatToString(double d);
     void Reposition(sf::Vector2f pos);
     void Update();
-    void Render(sf::RenderWindow &rw);
+    void Render(RenderWindowRef& rw);
 };

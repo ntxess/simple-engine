@@ -1,6 +1,7 @@
 #include "DebugScene.hpp"
 
-DebugScene::DebugScene()
+DebugScene::DebugScene(std::shared_ptr<GameData> &data) 
+    :_data(data) 
 {}
 
 DebugScene::~DebugScene()
@@ -8,13 +9,13 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    _currentFocus = std::make_unique<GameObject>(
+    _currentFocus = std::make_shared<GameObject>(
         std::make_unique<PlayerInput>(), 
         nullptr, 
         std::make_unique<MusicNote>()
         );
 
-    GameObjectRef noteBlock = std::make_unique<GameObject>(
+    GameObjectRef noteBlock = std::make_shared<GameObject>(
         nullptr, 
         nullptr, 
         std::make_unique<MusicNote>()
@@ -22,30 +23,31 @@ void DebugScene::Init()
 
     _currentFocus->Graphics()->SetPosition(sf::Vector2f(400, 300));
     noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 100));
-    _entityAll.push_back(_currentFocus);
-    _entityAll.push_back(noteBlock);
+    _assets.push_back(_currentFocus);
+    _assets.push_back(noteBlock);
 }
 
 void DebugScene::ProcessInput()
 {
     CommandRef command = _inputHandler.HandleInput();
-    if (command)
+    if (command) {
         command->Execute(*_currentFocus);
+    }
 }
 
 void DebugScene::Update(float deltaTime)
 {
-    for (int i = 0; i < _entityAll.size(); i++)
+    for (int i = 0; i < _assets.size(); i++)
     {
-        _entityAll[i]->Update(deltaTime);
+        _assets[i]->Update(deltaTime);
     }
 }
 
-void DebugScene::Render(sf::RenderWindow &rw, float interpolation)
+void DebugScene::Render(RenderWindowRef& rw, float interpolation)
 {
-    for (int i = 0; i < _entityAll.size(); i++)
+    for (int i = 0; i < _assets.size(); i++)
     {
-        _entityAll[i]->Render(rw, interpolation);
+        _assets[i]->Render(rw, interpolation);
     }
     _fps.Update();
     _fps.Render(rw);

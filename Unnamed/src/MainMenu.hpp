@@ -3,28 +3,24 @@
 #include <vector>
 #include "GameData.hpp"
 
+#include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
-#include "InputHandler.hpp"
-#include "PlayerInput.hpp"
-#include "CPUInput.hpp"
-#include "MusicNote.hpp"
+#include "Background.hpp"
 
 typedef std::shared_ptr<GameObject> GameObjectRef;
 
-class DebugScene : public State
+class MainMenu : public State
 {
 private:
-	std::shared_ptr<GameData> _data;
+    std::shared_ptr<GameData> _data;
 
 public:
 	ResourceMonitor _fps;
-	InputHandler _inputHandler;
-	GameObjectRef _currentFocus;
 	std::vector<GameObjectRef> _assets;
 
-	DebugScene(std::shared_ptr<GameData> &data);
-	~DebugScene();
+	MainMenu(std::shared_ptr<GameData>& data);
+	~MainMenu();
 	void Init();
 	void ProcessInput();
 	void Update(float deltaTime);

@@ -10,7 +10,7 @@ ResourceMonitor::ResourceMonitor() : _fps(0)
     _text.setFont(_font);
     _text.setCharacterSize(20);
     _text.setFillColor(sf::Color::White);
-    Reposition(sf::Vector2f(0, 0));
+    _text.setPosition(sf::Vector2f(0, 0));
 }
 
 ResourceMonitor::~ResourceMonitor()
@@ -26,7 +26,6 @@ std::string ResourceMonitor::FloatToString(double d)
 void ResourceMonitor::Reposition(sf::Vector2f pos)
 {
     _text.setPosition(pos);
-    _position = pos;
 }
 
 void ResourceMonitor::Update()
@@ -40,7 +39,7 @@ void ResourceMonitor::Update()
     ++_fps;
 }
 
-void ResourceMonitor::Render(sf::RenderWindow &rw)
+void ResourceMonitor::Render(RenderWindowRef& rw)
 {
-    rw.draw(_text);
+    rw->draw(_text);
 }

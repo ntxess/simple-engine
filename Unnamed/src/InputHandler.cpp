@@ -14,7 +14,6 @@ void InputHandler::BindCommand()
 	_buttonA = std::make_shared<CommandLeft>();
 	_buttonS = std::make_shared<CommandDown>();
 	_buttonD = std::make_shared<CommandRight>();
-	_buttonEnter = std::make_shared<CommandEnter>();
 }
 
 CommandRef InputHandler::HandleInput()
@@ -23,5 +22,4 @@ CommandRef InputHandler::HandleInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return _buttonA;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return _buttonS;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return _buttonD;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) return _buttonEnter;
 }

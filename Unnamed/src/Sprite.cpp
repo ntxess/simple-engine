@@ -22,7 +22,7 @@ void Sprite::Update(float deltaTime)
 		_animation->Update(deltaTime);
 }
 
-void Sprite::Render(sf::RenderWindow &rw, float interpolation)
+void Sprite::Render(RenderWindowRef& rw, float interpolation)
 {
-	rw.draw(_sprite);
+	rw->draw(_sprite);
 }
