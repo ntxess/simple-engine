@@ -3,6 +3,7 @@
 #include <vector>
 #include "GameData.hpp"
 
+#include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
 #include "InputHandler.hpp"
@@ -10,7 +11,7 @@
 #include "CPUInput.hpp"
 #include "MusicNote.hpp"
 
-typedef std::shared_ptr<GameObject> GameObjectRef;
+typedef std::unique_ptr<GameObject> GameObjectRef;
 
 class DebugScene : public State
 {

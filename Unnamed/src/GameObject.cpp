@@ -1,25 +1,28 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject() 
+GameObject::GameObject(GraphicsComponentRef graphics)
+	: _velocity(0),
+	_x(0),
+	_y(0),
+	_input(nullptr),
+	_physics(nullptr),
+	_graphics(std::move(graphics))
+{}
+
+GameObject::GameObject(PhysicsComponentRef physics, GraphicsComponentRef graphics)
+	: GameObject(std::move(graphics))
 {
-	_velocity = 0;
-	_x = 0;
-	_y = 0;
+	_physics = std::move(physics);
 }
 
-GameObject::GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics)
+GameObject::GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics) 
+	: GameObject(std::move(physics), std::move(graphics))
 {
-	_velocity = 0;
-	_x = 0;
-	_y = 0;
 	_input = std::move(input);
-	_physics = std::move(physics);
-	_graphics = std::move(graphics);
 }
 
 GameObject::~GameObject()
 {}
-
 
 InputComponentRef& GameObject::Input()
 {

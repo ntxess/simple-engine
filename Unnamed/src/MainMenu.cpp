@@ -9,19 +9,21 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-	GameObjectRef background = std::make_shared<GameObject>(
+	GameObjectRef background = std::make_unique<GameObject>(
 		nullptr,
 		nullptr,
 		std::make_unique<Background>()
 		);
 
-    _assets.push_back(background);
+    _assets.push_back(std::move(background));
 }
 
 void MainMenu::ProcessInput()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-        _data->_machine->AddState(std::make_unique<DebugScene>(_data));
+    {
+        _data->_machine->AddState(std::make_unique<DebugScene>(_data), false);
+    }
 }
 
 void MainMenu::Update(float deltaTime)

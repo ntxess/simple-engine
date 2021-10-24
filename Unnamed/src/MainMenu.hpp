@@ -8,7 +8,7 @@
 #include "GameObject.hpp"
 #include "Background.hpp"
 
-typedef std::shared_ptr<GameObject> GameObjectRef;
+typedef std::unique_ptr<GameObject> GameObjectRef;
 
 class MainMenu : public State
 {

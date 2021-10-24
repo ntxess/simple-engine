@@ -21,7 +21,8 @@ public:
 	int _x;
 	int _y;
 	
-	GameObject();
+	GameObject(GraphicsComponentRef graphics);
+	GameObject(PhysicsComponentRef physics, GraphicsComponentRef graphics);
 	GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics);
 	~GameObject();
 	InputComponentRef& Input();
