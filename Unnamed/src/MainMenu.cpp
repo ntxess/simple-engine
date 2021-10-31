@@ -34,7 +34,7 @@ void MainMenu::ProcessInput()
     {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            _data->_machine->AddState(std::make_unique<DebugScene>(_data), false);
+            _data->_machine->AddState(std::make_unique<DebugScene>(_data));
         }
     }
 

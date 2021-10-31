@@ -23,9 +23,9 @@ void DebugScene::Init()
 
 void DebugScene::ProcessInput()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
-        _data->_machine->RemoveState();
+        _data->_machine->AddState(std::make_unique<MainMenu>(_data));
     }
 
     CommandRef command = _inputHandler.HandleInput();
