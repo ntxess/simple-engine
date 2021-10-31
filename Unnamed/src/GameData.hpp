@@ -7,19 +7,17 @@
 
 typedef std::unique_ptr<StateMachine> StateMachineRef;
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-typedef std::unique_ptr<thor::ResourceHolder<sf::Texture, std::string>> ResourceHolderRef;
 
 struct GameData
 {
 public:
     StateMachineRef _machine;
     RenderWindowRef _window;
-    ResourceHolderRef _holder;
+    thor::ResourceHolder<sf::Texture, std::string> _holder;
 
     GameData()
     {
         _machine = std::make_unique<StateMachine>();
         _window = std::make_unique<sf::RenderWindow>();
-        _holder = std::make_unique<thor::ResourceHolder<sf::Texture, std::string>>();
     }
 };

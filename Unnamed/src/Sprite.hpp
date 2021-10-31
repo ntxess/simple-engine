@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include <Thor/Resources.hpp>
 #include "GraphicsComponent.hpp"
 #include "Animation.hpp"
 
@@ -9,12 +8,10 @@ typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 class Sprite : public GraphicsComponent
 {
 public:
-	sf::Texture _texture;
 	sf::Sprite _sprite;
 	std::unique_ptr<Animation> _animation;
-
-	Sprite();
-	Sprite(std::string location);
+	
+	Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~Sprite();
 	sf::Sprite GetSprite() const;
 	void SetScale(const sf::Vector2f scale);

@@ -12,14 +12,13 @@ void DebugScene::Init()
     _currentFocus = std::make_unique<GameObject>(
         std::make_unique<PlayerInput>(), 
         nullptr, 
-        std::make_unique<Sprite>("resources/player/triangle.png")
+        std::make_unique<Sprite>(_data->_holder, "Player")
         );
 
-    GameObjectRef noteBlock = std::make_unique<GameObject>(std::make_unique<Sprite>("resources/player/triangle.png"));
+    GameObjectRef background = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Background"));
 
     _currentFocus->GetGraphics()->SetPosition(sf::Vector2f(400, 300));
-    noteBlock->GetGraphics()->SetPosition(sf::Vector2f(200, 100));
-    _assets.push_back(std::move(noteBlock));
+    _assets.push_back(std::move(background));
 }
 
 void DebugScene::ProcessInput()
@@ -46,11 +45,11 @@ void DebugScene::Update(float deltaTime)
 
 void DebugScene::Render(RenderWindowRef& rw, float interpolation)
 {
-    _currentFocus->Render(rw, interpolation);
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Render(rw, interpolation);
     }
+    _currentFocus->Render(rw, interpolation);
     _fps.Update();
     _fps.Render(rw);
 }

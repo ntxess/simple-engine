@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <SFML/Graphics.hpp>
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 

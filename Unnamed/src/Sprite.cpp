@@ -1,19 +1,13 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite() 
-{}
-
-Sprite::Sprite(std::string location)
+Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
 {
-	if (!_texture.loadFromFile(location))
-	{
-		std::cout << "FAILURE TO LOAD SPRITE TEXTURE!" << std::endl;
-		exit(-1);
-	}
-	_sprite.setTexture(_texture);
+	sf::Texture& texure = holder[ID];
+	_sprite.setTexture(texure);
 	_sprite.setScale(sf::Vector2f(1, 1));
-	std::cout << "TEXTURE LOADED: " << location << std::endl;
+	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
+
 Sprite::~Sprite()
 {}
 

@@ -10,15 +10,15 @@ MainMenu::~MainMenu()
 void MainMenu::Init()
 {
 	GameObjectRef background = std::make_unique<GameObject>(
-		std::make_unique<Sprite>("resources/bg/bg1.png")
+		std::make_unique<Sprite>(_data->_holder, "Background")
 		);
 
     _startButton = std::make_unique<GameObject>(
-        std::make_unique<Sprite>("resources/bg/start.png")
+        std::make_unique<Sprite>(_data->_holder, "StartButton")
         );
 
     _quitButton = std::make_unique<GameObject>(
-        std::make_unique<Sprite>("resources/bg/quit.png")
+        std::make_unique<Sprite>(_data->_holder, "QuitButton")
         );
 
     _startButton->GetGraphics()->SetPosition(sf::Vector2f(200, 400));

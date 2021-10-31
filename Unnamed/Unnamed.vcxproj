@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Background.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
@@ -34,7 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.hpp" />
-    <ClInclude Include="src\Background.hpp" />
     <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
