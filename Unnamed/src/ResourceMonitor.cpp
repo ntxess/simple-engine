@@ -16,7 +16,7 @@ ResourceMonitor::ResourceMonitor() : _fps(0)
 ResourceMonitor::~ResourceMonitor()
 {}
 
-std::string ResourceMonitor::FloatToString(double d)
+std::string ResourceMonitor::FloatToString(float d)
 {
     std::stringstream ss;
     ss << d;

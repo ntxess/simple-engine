@@ -17,7 +17,7 @@ private:
 public:
     ResourceMonitor();
     ~ResourceMonitor();
-    std::string FloatToString(double d);
+    std::string FloatToString(float d);
     void Reposition(sf::Vector2f pos);
     void Update();
     void Render(RenderWindowRef& rw);

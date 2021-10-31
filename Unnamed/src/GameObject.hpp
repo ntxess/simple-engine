@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "InputComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "GraphicsComponent.hpp"
