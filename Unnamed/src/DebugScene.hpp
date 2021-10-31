@@ -9,7 +9,6 @@
 #include "InputHandler.hpp"
 #include "PlayerInput.hpp"
 #include "CPUInput.hpp"
-#include "MusicNote.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 

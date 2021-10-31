@@ -12,13 +12,13 @@ void DebugScene::Init()
     _currentFocus = std::make_unique<GameObject>(
         std::make_unique<PlayerInput>(), 
         nullptr, 
-        std::make_unique<MusicNote>()
+        std::make_unique<Sprite>("resources/player/triangle.png")
         );
 
-    GameObjectRef noteBlock = std::make_unique<GameObject>(std::make_unique<MusicNote>());
+    GameObjectRef noteBlock = std::make_unique<GameObject>(std::make_unique<Sprite>("resources/player/triangle.png"));
 
-    _currentFocus->Graphics()->SetPosition(sf::Vector2f(400, 300));
-    noteBlock->Graphics()->SetPosition(sf::Vector2f(200, 100));
+    _currentFocus->GetGraphics()->SetPosition(sf::Vector2f(400, 300));
+    noteBlock->GetGraphics()->SetPosition(sf::Vector2f(200, 100));
     _assets.push_back(std::move(noteBlock));
 }
 

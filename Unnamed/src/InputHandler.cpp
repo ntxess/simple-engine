@@ -22,4 +22,5 @@ CommandRef InputHandler::HandleInput()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) return _buttonA;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) return _buttonS;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) return _buttonD;
+	return nullptr;
 }

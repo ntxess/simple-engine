@@ -25,9 +25,9 @@ public:
 	GameObject(PhysicsComponentRef physics, GraphicsComponentRef graphics);
 	GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics);
 	~GameObject();
-	InputComponentRef& Input();
-	PhysicsComponentRef& Physics();
-	GraphicsComponentRef& Graphics();
+	InputComponentRef& GetInput();
+	PhysicsComponentRef& GetPhysics();
+	GraphicsComponentRef& GetGraphics();
 	virtual void Update(float deltaTime);
 	virtual void Render(RenderWindowRef& rw, float interpolation);
 };

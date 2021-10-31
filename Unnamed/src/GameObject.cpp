@@ -24,27 +24,27 @@ GameObject::GameObject(InputComponentRef input, PhysicsComponentRef physics, Gra
 GameObject::~GameObject()
 {}
 
-InputComponentRef& GameObject::Input()
+InputComponentRef& GameObject::GetInput()
 {
 	return _input;
 }
 
-PhysicsComponentRef& GameObject::Physics()
+PhysicsComponentRef& GameObject::GetPhysics()
 {
 	return _physics;
 }
 
-GraphicsComponentRef& GameObject::Graphics()
+GraphicsComponentRef& GameObject::GetGraphics()
 {
 	return _graphics;
 }
 
 void GameObject::Update(float deltaTime)
 {
-	if(_graphics)
-		_graphics->Update(deltaTime);
 	if(_physics)
 		_physics->Update(deltaTime);
+	if(_graphics)
+		_graphics->Update(deltaTime);
 }
 
 void GameObject::Render(RenderWindowRef& rw, float interpolation)

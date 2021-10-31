@@ -14,7 +14,7 @@ public:
 	~CommandUp() {}
 	void Execute(GameObject& actor)
 	{
-		actor.Input()->MoveUp();
+		actor.GetInput()->MoveUp();
 	}
 };
 
@@ -25,7 +25,7 @@ public:
 	~CommandLeft() {}
 	void Execute(GameObject& actor)
 	{
-		actor.Input()->MoveLeft();
+		actor.GetInput()->MoveLeft();
 	}
 };
 
@@ -36,7 +36,7 @@ public:
 	~CommandDown() {}
 	void Execute(GameObject& actor)
 	{
-		actor.Input()->MoveDown();
+		actor.GetInput()->MoveDown();
 	}
 };
 
@@ -47,7 +47,7 @@ public:
 	~CommandRight() {}
 	void Execute(GameObject& actor)
 	{
-		actor.Input()->MoveRight();
+		actor.GetInput()->MoveRight();
 	}
 };
 

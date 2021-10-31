@@ -3,8 +3,24 @@
 Sprite::Sprite() 
 {}
 
+Sprite::Sprite(std::string location)
+{
+	if (!_texture.loadFromFile(location))
+	{
+		std::cout << "FAILURE TO LOAD SPRITE TEXTURE!" << std::endl;
+		exit(-1);
+	}
+	_sprite.setTexture(_texture);
+	_sprite.setScale(sf::Vector2f(1, 1));
+	std::cout << "TEXTURE LOADED: " << location << std::endl;
+}
 Sprite::~Sprite()
 {}
+
+sf::Sprite Sprite::GetSprite() const
+{
+	return _sprite;
+}
 
 void Sprite::SetScale(const sf::Vector2f scale)
 {

@@ -12,6 +12,7 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
 
     _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
     _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    _data->_holder->acquire("StartButton", thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), thor::Resources::Reuse);
 }
 
 Engine::~Engine()

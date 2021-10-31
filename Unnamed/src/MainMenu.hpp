@@ -18,6 +18,9 @@ private:
 public:
 	ResourceMonitor _fps;
 	std::vector<GameObjectRef> _assets;
+	
+	GameObjectRef _startButton;
+	GameObjectRef _quitButton;
 
 	MainMenu(std::shared_ptr<GameData>& data);
 	~MainMenu();
