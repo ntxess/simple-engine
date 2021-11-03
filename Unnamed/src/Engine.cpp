@@ -55,11 +55,13 @@ bool Engine::IsOpen() const
 {
     sf::Event event;
     _data->_window->pollEvent(event);
+
     if (event.type == sf::Event::Closed)
-    {
         _data->_window->close();
+
+    if (!_data->_window->isOpen())
         return false;
-    }
+
     return true;
 }
 
