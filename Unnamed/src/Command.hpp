@@ -14,7 +14,7 @@ public:
 	~CommandUp() {}
 	void Execute(GameObject& actor)
 	{
-		actor.GetInput()->MoveUp();
+		actor.GetInput()->Move(sf::Vector2f(0, -1));
 	}
 };
 
@@ -25,7 +25,7 @@ public:
 	~CommandLeft() {}
 	void Execute(GameObject& actor)
 	{
-		actor.GetInput()->MoveLeft();
+		actor.GetInput()->Move(sf::Vector2f(-1, 0));
 	}
 };
 
@@ -36,7 +36,7 @@ public:
 	~CommandDown() {}
 	void Execute(GameObject& actor)
 	{
-		actor.GetInput()->MoveDown();
+		actor.GetInput()->Move(sf::Vector2f(0, 1));
 	}
 };
 
@@ -47,7 +47,7 @@ public:
 	~CommandRight() {}
 	void Execute(GameObject& actor)
 	{
-		actor.GetInput()->MoveRight();
+		actor.GetInput()->Move(sf::Vector2f(1, 0));
 	}
 };
 

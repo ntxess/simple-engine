@@ -5,9 +5,11 @@
 class PlayerInput : public InputComponent
 {
 public:
+	sf::Vector2f _direction;
+
 	PlayerInput();
-	void MoveUp();
-	void MoveLeft();
-	void MoveDown();
-	void MoveRight();
+	~PlayerInput();
+	sf::Vector2f GetDirection();
+	void ClearDirection();
+	void Move(sf::Vector2f direction);
 };

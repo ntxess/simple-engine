@@ -6,6 +6,7 @@ class CPUInput : public InputComponent
 {
 public:
 	CPUInput();
+	~CPUInput();
 	void MoveUp();
 	void MoveLeft();
 	void MoveDown();

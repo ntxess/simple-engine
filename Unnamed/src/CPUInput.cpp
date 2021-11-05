@@ -3,6 +3,9 @@
 CPUInput::CPUInput()
 {}
 
+CPUInput::~CPUInput()
+{}
+
 void CPUInput::MoveUp()
 {
 	std::cout << "CPUInputComponent: MoveUp" << std::endl;

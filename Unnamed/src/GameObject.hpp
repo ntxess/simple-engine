@@ -17,9 +17,8 @@ private:
 
 public:
 	int _velocity;
-	int _x;
-	int _y;
 	
+	GameObject();
 	GameObject(GraphicsComponentRef graphics);
 	GameObject(PhysicsComponentRef physics, GraphicsComponentRef graphics);
 	GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics);
@@ -27,6 +26,6 @@ public:
 	InputComponentRef& GetInput();
 	PhysicsComponentRef& GetPhysics();
 	GraphicsComponentRef& GetGraphics();
-	virtual void Update(float deltaTime);
-	virtual void Render(RenderWindowRef& rw, float interpolation);
+	void Update(float deltaTime);
+	void Render(RenderWindowRef& rw, float interpolation);
 };

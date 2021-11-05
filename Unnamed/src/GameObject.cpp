@@ -1,9 +1,14 @@
 #include "GameObject.hpp"
 
+GameObject::GameObject()
+	: _velocity(1),
+	_input(nullptr),
+	_physics(nullptr),
+	_graphics(nullptr)
+{}
+
 GameObject::GameObject(GraphicsComponentRef graphics)
-	: _velocity(0),
-	_x(0),
-	_y(0),
+	: _velocity(350),
 	_input(nullptr),
 	_physics(nullptr),
 	_graphics(std::move(graphics))
@@ -43,8 +48,11 @@ void GameObject::Update(float deltaTime)
 {
 	if(_physics)
 		_physics->Update(deltaTime);
-	if(_graphics)
-		_graphics->Update(deltaTime);
+	if (_graphics && _input)
+	{
+		_graphics->Update(_input->GetDirection(), _velocity, deltaTime);
+		_input->ClearDirection();
+	}
 }
 
 void GameObject::Render(RenderWindowRef& rw, float interpolation)

@@ -1,24 +1,23 @@
 #include "PlayerInput.hpp"
 
-PlayerInput::PlayerInput()
+PlayerInput::PlayerInput() : _direction(sf::Vector2f(0,0))
 {}
 
-void PlayerInput::MoveUp()
+PlayerInput::~PlayerInput()
+{}
+
+sf::Vector2f PlayerInput::GetDirection()
 {
-	std::cout << "PlayerInputComponent: MoveUp" << std::endl;
+	return _direction;
 }
 
-void PlayerInput::MoveLeft()
+void PlayerInput::ClearDirection()
 {
-	std::cout << "PlayerInputComponent: MoveLeft" << std::endl;
+	_direction = sf::Vector2f(0, 0);
 }
 
-void PlayerInput::MoveDown()
+void PlayerInput::Move(sf::Vector2f direction)
 {
-	std::cout << "PlayerInputComponent: MoveDown" << std::endl;
-}
-
-void PlayerInput::MoveRight()
-{
-	std::cout << "PlayerInputComponent: MoveRight" << std::endl;
+	_direction = direction;
+	std::cout << "x: " << _direction.x << " y: " << _direction.y << std::endl;
 }

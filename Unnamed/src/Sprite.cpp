@@ -1,5 +1,8 @@
 #include "Sprite.hpp"
 
+Sprite::Sprite()
+{}
+
 Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
 {
 	sf::Texture& texure = holder[ID];
@@ -26,8 +29,17 @@ void Sprite::SetPosition(const sf::Vector2f pos)
 	_sprite.setPosition(pos);
 }
 
-void Sprite::Update(float deltaTime)
+void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 {
+	float x = direction.x * velocity * deltaTime;
+	float y = direction.y * velocity * deltaTime;
+	_sprite.move(x, y);
+}
+
+void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
+{
+	Move(direction, velocity, deltaTime);
+
 	if(_animation != nullptr)
 		_animation->Update(deltaTime);
 }
