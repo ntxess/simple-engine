@@ -1,41 +1,28 @@
 #include "InputHandler.hpp"
 
 InputHandler::InputHandler()
-{
-	BindCommand();
-}
+{}
 
 InputHandler::~InputHandler()
 {}
 
-void InputHandler::BindCommand()
+void InputHandler::HandleInput(GameObject& actor)
 {
-	_buttonW = std::make_shared<CommandUp>();
-	_buttonA = std::make_shared<CommandLeft>();
-	_buttonS = std::make_shared<CommandDown>();
-	_buttonD = std::make_shared<CommandRight>();
-}
+	int horizontal = 0;
+	int vertical = 0;
 
-CommandRef InputHandler::HandleInput()
-{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		return _buttonW;
-	}
-	
+		vertical = -1;
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		return _buttonA;
-	}
+		horizontal = -1;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		return _buttonS;
-	}
+		vertical = 1;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		return _buttonD;
-	}
-	return nullptr;
+		horizontal = 1;
+	
+	if(horizontal || vertical)
+		actor.GetInput()->Move(sf::Vector2f(horizontal, vertical));
 }

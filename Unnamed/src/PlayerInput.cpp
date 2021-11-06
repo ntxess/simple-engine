@@ -18,6 +18,7 @@ void PlayerInput::ClearDirection()
 
 void PlayerInput::Move(sf::Vector2f direction)
 {
-	_direction = direction;
-	std::cout << "x: " << _direction.x << " y: " << _direction.y << std::endl;
+	_direction += direction;
+	_direction.x = std::min(std::max(_direction.x, -1.0f), 1.0f);
+	_direction.y = std::min(std::max(_direction.y, -1.0f), 1.0f);
 }

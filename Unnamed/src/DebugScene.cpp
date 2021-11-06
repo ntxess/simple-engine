@@ -28,10 +28,7 @@ void DebugScene::ProcessInput()
         _data->_machine->AddState(std::make_unique<MainMenu>(_data));
     }
 
-    CommandRef command = _inputHandler.HandleInput();
-    if (command) {
-        command->Execute(*_currentFocus);
-    }
+    _inputHandler.HandleInput(*_currentFocus);
 }
 
 void DebugScene::Update(float deltaTime)

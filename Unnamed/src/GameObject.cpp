@@ -48,10 +48,18 @@ void GameObject::Update(float deltaTime)
 {
 	if(_physics)
 		_physics->Update(deltaTime);
-	if (_graphics && _input)
+
+	if (_graphics)
 	{
-		_graphics->Update(_input->GetDirection(), _velocity, deltaTime);
-		_input->ClearDirection();
+		if (_input)
+		{
+			_graphics->Update(_input->GetDirection(), _velocity, deltaTime);
+			_input->ClearDirection();
+		}
+		else
+		{
+			_graphics->Update(deltaTime);
+		}
 	}
 }
 

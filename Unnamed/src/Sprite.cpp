@@ -36,6 +36,12 @@ void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 	_sprite.move(x, y);
 }
 
+void Sprite::Update(float deltaTime)
+{
+	if (_animation != nullptr)
+		_animation->Update(deltaTime);
+}
+
 void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);

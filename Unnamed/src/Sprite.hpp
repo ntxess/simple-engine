@@ -18,6 +18,7 @@ public:
 	void SetScale(const sf::Vector2f scale);
 	void SetPosition(const sf::Vector2f pos);
 	void Move(sf::Vector2f direction, int velocity, float deltaTime);
+	void Update(float deltaTime);
 	void Update(sf::Vector2f direction, int velocity, float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 };

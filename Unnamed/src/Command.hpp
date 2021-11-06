@@ -51,6 +51,50 @@ public:
 	}
 };
 
+class CommandUpLeft : public Command
+{
+public:
+	CommandUpLeft() {}
+	~CommandUpLeft() {}
+	void Execute(GameObject& actor)
+	{
+		actor.GetInput()->Move(sf::Vector2f(-1, -1));
+	}
+};
+
+class CommandUpRight : public Command
+{
+public:
+	CommandUpRight() {}
+	~CommandUpRight() {}
+	void Execute(GameObject& actor)
+	{
+		actor.GetInput()->Move(sf::Vector2f(1, -1));
+	}
+};
+
+class CommandDownLeft : public Command
+{
+public:
+	CommandDownLeft() {}
+	~CommandDownLeft() {}
+	void Execute(GameObject& actor)
+	{
+		actor.GetInput()->Move(sf::Vector2f(-1, 1));
+	}
+};
+
+class CommandDownRight : public Command
+{
+public:
+	CommandDownRight() {}
+	~CommandDownRight() {}
+	void Execute(GameObject& actor)
+	{
+		actor.GetInput()->Move(sf::Vector2f(1, 1));
+	}
+};
+
 class CommandEnter : public Command
 {
 public:
