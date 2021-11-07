@@ -44,6 +44,11 @@ GraphicsComponentRef& GameObject::GetGraphics()
 	return _graphics;
 }
 
+void GameObject::SetVelocity(float velocity)
+{
+	_velocity = velocity;
+}
+
 void GameObject::Update(float deltaTime)
 {
 	if(_physics)

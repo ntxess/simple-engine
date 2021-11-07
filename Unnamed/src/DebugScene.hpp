@@ -20,12 +20,8 @@ private:
 public:
 	ResourceMonitor _fps;
 	InputHandler _inputHandler;
-	GameObjectRef _currentFocus;
+	GameObjectRef _player;
 	std::vector<GameObjectRef> _assets;
-	sf::Sprite _ship;
-	thor::Animator<sf::Sprite, std::string> _animator;
-	sf::Clock _frameClock;
-
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();

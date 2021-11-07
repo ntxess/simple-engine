@@ -26,6 +26,7 @@ public:
 	InputComponentRef& GetInput();
 	PhysicsComponentRef& GetPhysics();
 	GraphicsComponentRef& GetGraphics();
+	void SetVelocity(float velocity);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 };

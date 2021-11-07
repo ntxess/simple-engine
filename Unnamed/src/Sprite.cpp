@@ -3,7 +3,7 @@
 Sprite::Sprite()
 {}
 
-Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) : _animationName("flying")
+Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) : _animationName("idle")
 {
 	sf::Texture& texure = holder[ID];
 	_sprite.setTexture(texure);
@@ -42,13 +42,18 @@ void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 }
 
 void Sprite::Update(float deltaTime)
-{}
+{
+	if (!_animator.isPlayingAnimation())
+		_animator.playAnimation("idle");
+	_animator.update(sf::seconds(deltaTime));
+	_animator.animate(_sprite);
+}
 
 void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);
 	if (!_animator.isPlayingAnimation())
-		_animator.playAnimation(_animationName);
+		_animator.playAnimation("idle");
 	_animator.update(sf::seconds(deltaTime));
 	_animator.animate(_sprite);
 }

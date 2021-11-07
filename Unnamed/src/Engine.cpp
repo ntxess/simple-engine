@@ -18,7 +18,6 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
         _data->_holder.acquire("QuitButton", thor::Resources::fromFile<sf::Texture>("resources/bg/quit.png"), thor::Resources::Reuse);
         _data->_holder.acquire("Player", thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), thor::Resources::Reuse);
         _data->_holder.acquire("Ship", thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("Ship1", thor::Resources::fromFile<sf::Texture>("resources/player/ship1.png"), thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)
     {
