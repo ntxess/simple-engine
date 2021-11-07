@@ -8,7 +8,7 @@ GameObject::GameObject()
 {}
 
 GameObject::GameObject(GraphicsComponentRef graphics)
-	: _velocity(350),
+	: _velocity(320.25),
 	_input(nullptr),
 	_physics(nullptr),
 	_graphics(std::move(graphics))

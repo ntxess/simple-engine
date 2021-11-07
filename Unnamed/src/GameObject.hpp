@@ -16,7 +16,7 @@ private:
 	GraphicsComponentRef _graphics;
 
 public:
-	const int _velocity;
+	float _velocity;
 	
 	GameObject();
 	GameObject(GraphicsComponentRef graphics);

@@ -83,9 +83,6 @@
     <ClInclude Include="src\Sprite.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Animation.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\StateMachine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Command.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MainMenu.hpp">

@@ -22,6 +22,10 @@ public:
 	InputHandler _inputHandler;
 	GameObjectRef _currentFocus;
 	std::vector<GameObjectRef> _assets;
+	sf::Sprite _ship;
+	thor::Animator<sf::Sprite, std::string> _animator;
+	sf::Clock _frameClock;
+
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();

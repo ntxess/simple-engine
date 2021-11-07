@@ -14,9 +14,14 @@ Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::stri
 Sprite::~Sprite()
 {}
 
-sf::Sprite Sprite::GetSprite() const
+sf::Sprite& Sprite::GetSprite()
 {
 	return _sprite;
+}
+
+AnimatorRef& Sprite::GetAnimator()
+{
+	return _animator;
 }
 
 void Sprite::SetScale(const sf::Vector2f scale)
@@ -37,17 +42,15 @@ void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 }
 
 void Sprite::Update(float deltaTime)
-{
-	if (_animation != nullptr)
-		_animation->Update(deltaTime);
-}
+{}
 
 void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);
-
-	if(_animation != nullptr)
-		_animation->Update(deltaTime);
+	//if (!_animator->isPlayingAnimation())
+	//	_animator->playAnimation(_animationName);
+	//_animator->update(sf::seconds(deltaTime));
+	//_animator->animate(_sprite);
 }
 
 void Sprite::Render(RenderWindowRef& rw, float interpolation)

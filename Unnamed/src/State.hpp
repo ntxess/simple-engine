@@ -1,4 +1,5 @@
 #pragma once
+#include <Thor/Animations.hpp>
 #include <SFML/Graphics.hpp>
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
