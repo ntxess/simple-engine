@@ -6,6 +6,12 @@
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
+enum Animate
+{
+	Dynamic,
+	Static
+};
+
 class GraphicsComponent
 {
 public:

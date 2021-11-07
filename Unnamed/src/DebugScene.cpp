@@ -12,7 +12,7 @@ void DebugScene::Init()
     _player = std::make_unique<GameObject>(
         std::make_unique<PlayerInput>(), 
         nullptr, 
-        std::make_unique<Sprite>(_data->_holder, "Ship")
+        std::make_unique<Sprite>(_data->_holder, "Ship", Animate::Dynamic)
         );
     _player->SetVelocity(720.f);
     _player->GetGraphics()->SetScale(sf::Vector2f(3,3));
@@ -27,17 +27,17 @@ void DebugScene::Init()
     _player->GetGraphics()->GetAnimator().addAnimation("leftTurn", leftTurn, sf::seconds(0.05f));
     _player->GetGraphics()->GetAnimator().addAnimation("rightTurn", rightTurn, sf::seconds(0.05f));
 
-    GameObjectRef testDummy1 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship"));
+    GameObjectRef testDummy1 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", Animate::Dynamic));
     testDummy1->GetGraphics()->SetScale(sf::Vector2f(3, 3));
     testDummy1->GetGraphics()->SetPosition(sf::Vector2f(300, 600));
     testDummy1->GetGraphics()->GetAnimator().addAnimation("idle", idle, sf::seconds(1.f));
 
-    GameObjectRef testDummy2 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship"));
+    GameObjectRef testDummy2 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", Animate::Dynamic));
     testDummy2->GetGraphics()->SetScale(sf::Vector2f(3, 3));
     testDummy2->GetGraphics()->SetPosition(sf::Vector2f(700, 400));
     testDummy2->GetGraphics()->GetAnimator().addAnimation("idle", idle, sf::seconds(1.f));
 
-    GameObjectRef testDummy3 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship"));
+    GameObjectRef testDummy3 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", Animate::Dynamic));
     testDummy3->GetGraphics()->SetScale(sf::Vector2f(3, 3));
     testDummy3->GetGraphics()->SetPosition(sf::Vector2f(400, 900));
     testDummy3->GetGraphics()->GetAnimator().addAnimation("idle", idle, sf::seconds(1.f));
@@ -66,6 +66,11 @@ void DebugScene::ProcessInput()
 void DebugScene::Update(float deltaTime)
 {
     _player->Update(deltaTime);
+    for (int i = 0; i < _assets.size(); i++)
+    {
+        _assets[i]->Update(deltaTime);
+    }
+
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Update(deltaTime);

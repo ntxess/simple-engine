@@ -7,11 +7,11 @@ class Sprite : public GraphicsComponent
 {
 public:
 	sf::Sprite _sprite;
-	std::string _animationName;
+	Animate _status;
 	thor::Animator<sf::Sprite, std::string> _animator;
 
 	Sprite();
-	Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
+	Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID, Animate status = Animate::Static);
 	~Sprite();
 	sf::Sprite& GetSprite();
 	thor::Animator<sf::Sprite, std::string>& GetAnimator();

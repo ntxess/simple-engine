@@ -3,7 +3,7 @@
 Sprite::Sprite()
 {}
 
-Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) : _animationName("idle")
+Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID, Animate status) : _status(status)
 {
 	sf::Texture& texure = holder[ID];
 	_sprite.setTexture(texure);
@@ -43,19 +43,26 @@ void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 
 void Sprite::Update(float deltaTime)
 {
-	if (!_animator.isPlayingAnimation())
-		_animator.playAnimation("idle");
-	_animator.update(sf::seconds(deltaTime));
-	_animator.animate(_sprite);
+	if (_status == Animate::Dynamic)
+	{
+		if (!_animator.isPlayingAnimation())
+			_animator.playAnimation("idle");
+		_animator.update(sf::seconds(deltaTime));
+		_animator.animate(_sprite);
+	}
 }
 
 void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);
-	if (!_animator.isPlayingAnimation())
-		_animator.playAnimation("idle");
-	_animator.update(sf::seconds(deltaTime));
-	_animator.animate(_sprite);
+
+	if (_status == Animate::Dynamic)
+	{
+		if (!_animator.isPlayingAnimation())
+			_animator.playAnimation("idle");
+		_animator.update(sf::seconds(deltaTime));
+		_animator.animate(_sprite);
+	}
 }
 
 void Sprite::Render(RenderWindowRef& rw, float interpolation)
