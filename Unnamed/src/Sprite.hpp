@@ -2,20 +2,19 @@
 #include "GraphicsComponent.hpp"
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-typedef std::unique_ptr<thor::Animator<sf::Sprite, std::string>> AnimatorRef;
 
 class Sprite : public GraphicsComponent
 {
 public:
 	sf::Sprite _sprite;
 	std::string _animationName;
-	AnimatorRef _animator;
+	thor::Animator<sf::Sprite, std::string> _animator;
 
 	Sprite();
 	Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~Sprite();
 	sf::Sprite& GetSprite();
-	AnimatorRef& GetAnimator();
+	thor::Animator<sf::Sprite, std::string>& GetAnimator();
 	void SetScale(const sf::Vector2f scale);
 	void SetPosition(const sf::Vector2f pos);
 	void Move(sf::Vector2f direction, int velocity, float deltaTime);

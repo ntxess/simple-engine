@@ -3,7 +3,7 @@
 Sprite::Sprite()
 {}
 
-Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
+Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) : _animationName("flying")
 {
 	sf::Texture& texure = holder[ID];
 	_sprite.setTexture(texure);
@@ -19,7 +19,7 @@ sf::Sprite& Sprite::GetSprite()
 	return _sprite;
 }
 
-AnimatorRef& Sprite::GetAnimator()
+thor::Animator<sf::Sprite, std::string>& Sprite::GetAnimator()
 {
 	return _animator;
 }
@@ -47,10 +47,10 @@ void Sprite::Update(float deltaTime)
 void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);
-	//if (!_animator->isPlayingAnimation())
-	//	_animator->playAnimation(_animationName);
-	//_animator->update(sf::seconds(deltaTime));
-	//_animator->animate(_sprite);
+	if (!_animator.isPlayingAnimation())
+		_animator.playAnimation(_animationName);
+	_animator.update(sf::seconds(deltaTime));
+	_animator.animate(_sprite);
 }
 
 void Sprite::Render(RenderWindowRef& rw, float interpolation)
