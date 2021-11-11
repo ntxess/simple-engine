@@ -26,7 +26,13 @@ public:
 	InputComponentRef& GetInput();
 	PhysicsComponentRef& GetPhysics();
 	GraphicsComponentRef& GetGraphics();
+	const sf::Vector2f& GetDirection();
+	const sf::Vector2f& GetPosition();
 	void SetVelocity(float velocity);
+	void SetScale(sf::Vector2f scale);
+	void SetPosition(sf::Vector2f position);
+	void PlayAnimation(const std::string& id, bool loop = false);
+	void AddAnimation(const std::string &id, const thor::FrameAnimation &animation, sf::Time duration);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 };

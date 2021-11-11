@@ -29,6 +29,7 @@ public:
 	void ProcessInput();
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
+	void CheckBoundary(GameObjectRef& object);
 	void Pause();
 	void Resume();
 };

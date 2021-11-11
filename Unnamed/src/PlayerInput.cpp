@@ -6,7 +6,7 @@ PlayerInput::PlayerInput() : _direction(sf::Vector2f(0,0))
 PlayerInput::~PlayerInput()
 {}
 
-sf::Vector2f PlayerInput::GetDirection()
+const sf::Vector2f& PlayerInput::GetDirection()
 {
 	return _direction;
 }

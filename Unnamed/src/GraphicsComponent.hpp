@@ -6,21 +6,13 @@
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
-enum Animate
-{
-	Dynamic,
-	Static
-};
-
 class GraphicsComponent
 {
 public:
 	virtual sf::Sprite& GetSprite() = 0;
 	virtual thor::Animator<sf::Sprite, std::string>& GetAnimator() = 0;
-	virtual void SetScale(const sf::Vector2f scale) = 0;
-	virtual void SetPosition(const sf::Vector2f pos) = 0;
-	virtual void Move(sf::Vector2f direction, int velocity, float deltaTime) = 0;
+	virtual void Move(sf::Vector2f direction, float velocity, float deltaTime) = 0;
 	virtual void Update(float deltaTime) = 0;
-	virtual void Update(sf::Vector2f direction, int velocity, float deltaTime) = 0;
+	virtual void Update(sf::Vector2f direction, float velocity, float deltaTime) = 0;
 	virtual void Render(RenderWindowRef& rw, float interpolation) = 0;
 };

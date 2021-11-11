@@ -1,6 +1,7 @@
 #pragma once
 #include <Thor/Animations.hpp>
 #include <SFML/Graphics.hpp>
+#include "GameObject.hpp"
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
@@ -11,6 +12,6 @@ public:
 	virtual void ProcessInput() = 0;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Render(RenderWindowRef& rw, float interpolation) = 0;
-	virtual void Pause() {};
-	virtual void Resume() {};
+	virtual void Pause() {}
+	virtual void Resume() {}
 };

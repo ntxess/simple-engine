@@ -1,12 +1,13 @@
 #include "Sprite.hpp"
 
-Sprite::Sprite()
+Sprite::Sprite() 
+	: _isAnimated(false)
 {}
 
-Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID, Animate status) : _status(status)
+Sprite::Sprite(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID, bool isAnimated) : _isAnimated(isAnimated)
 {
-	sf::Texture& texure = holder[ID];
-	_sprite.setTexture(texure);
+	sf::Texture& texture = holder[ID];
+	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(1, 1));
 	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
@@ -24,17 +25,7 @@ thor::Animator<sf::Sprite, std::string>& Sprite::GetAnimator()
 	return _animator;
 }
 
-void Sprite::SetScale(const sf::Vector2f scale)
-{
-	_sprite.setScale(scale);
-}
-
-void Sprite::SetPosition(const sf::Vector2f pos)
-{
-	_sprite.setPosition(pos);
-}
-
-void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
+void Sprite::Move(sf::Vector2f direction, float velocity, float deltaTime)
 {
 	float x = direction.x * velocity * deltaTime;
 	float y = direction.y * velocity * deltaTime;
@@ -43,7 +34,7 @@ void Sprite::Move(sf::Vector2f direction, int velocity, float deltaTime)
 
 void Sprite::Update(float deltaTime)
 {
-	if (_status == Animate::Dynamic)
+	if (_isAnimated)
 	{
 		if (!_animator.isPlayingAnimation())
 			_animator.playAnimation("idle");
@@ -52,11 +43,11 @@ void Sprite::Update(float deltaTime)
 	}
 }
 
-void Sprite::Update(sf::Vector2f direction, int velocity, float deltaTime)
+void Sprite::Update(sf::Vector2f direction, float velocity, float deltaTime)
 {
 	Move(direction, velocity, deltaTime);
 
-	if (_status == Animate::Dynamic)
+	if (_isAnimated)
 	{
 		if (!_animator.isPlayingAnimation())
 			_animator.playAnimation("idle");

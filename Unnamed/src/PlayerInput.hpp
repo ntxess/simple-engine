@@ -8,7 +8,7 @@ public:
 
 	PlayerInput();
 	~PlayerInput();
-	sf::Vector2f GetDirection();
+	const sf::Vector2f& GetDirection();
 	void Move(sf::Vector2f direction);
 	void ClearDirection();
 };

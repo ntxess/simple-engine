@@ -12,7 +12,7 @@ private:
     sf::Clock _clock;
     sf::Text  _text;
     sf::Font  _font;
-    double _fps;
+    float _fps;
 
 public:
     ResourceMonitor();

@@ -21,8 +21,8 @@ void MainMenu::Init()
         std::make_unique<Sprite>(_data->_holder, "QuitButton")
         );
 
-    _startButton->GetGraphics()->SetPosition(sf::Vector2f(200, 400));
-    _quitButton->GetGraphics()->SetPosition(sf::Vector2f(200, 800));
+    _startButton->SetPosition(sf::Vector2f(200, 400));
+    _quitButton->SetPosition(sf::Vector2f(200, 800));
 
     _assets.push_back(std::move(background));
 }
