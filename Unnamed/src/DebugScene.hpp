@@ -9,7 +9,7 @@
 #include "InputHandler.hpp"
 #include "PlayerInput.hpp"
 #include "RigidbodyBox.hpp"
-#include "Sprite.hpp"
+#include "ShipAnimation.hpp"
 
 
 typedef std::unique_ptr<GameObject> GameObjectRef;

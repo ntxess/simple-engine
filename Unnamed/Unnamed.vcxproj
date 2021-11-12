@@ -23,7 +23,7 @@
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
-    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\ShipAnimation.cpp" />
     <ClCompile Include="src\CPUInput.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\ResourceMonitor.cpp" />
@@ -39,7 +39,7 @@
     <ClInclude Include="src\MainMenu.hpp" />
     <ClInclude Include="src\State.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
-    <ClInclude Include="src\Sprite.hpp" />
+    <ClInclude Include="src\ShipAnimation.hpp" />
     <ClInclude Include="src\CPUInput.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\ResourceMonitor.hpp" />

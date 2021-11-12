@@ -36,7 +36,7 @@
     <ClCompile Include="src\CPUInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sprite.cpp">
+    <ClCompile Include="src\ShipAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StateMachine.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="src\CPUInput.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Sprite.hpp">
+    <ClInclude Include="src\ShipAnimation.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\StateMachine.hpp">
