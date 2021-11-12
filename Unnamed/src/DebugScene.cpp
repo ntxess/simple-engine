@@ -9,49 +9,34 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
+    InputComponentRef controller = std::make_unique<PlayerInput>();
+    PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
+    GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
     _player = std::make_unique<GameObject>(_data->_holder, "Ship");
+    _player->SetInput(controller);
+    _player->SetPhysics(rb);
+    _player->SetGraphics(animation);
     _player->SetVelocity(720.f);
     _player->SetScale(sf::Vector2f(3, 3));
     _player->SetPosition(sf::Vector2f(900, 600));
 
-    InputComponentRef controller = std::make_unique<PlayerInput>();
-    _player->SetInput(controller);
-
-    PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
-    _player->SetPhysics(rb);
-
-    GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
-    _player->SetGraphics(animation);
-
-    //thor::FrameAnimation idle, leftTurn, rightTurn;
-    //for (int i = 0; i < 4; i++)
-    //    idle.addFrame(1.f, sf::IntRect(16 * i, 0, 16, 24));
-    //leftTurn.addFrame(1.f, sf::IntRect(0, 0, 16, 24));
-    //rightTurn.addFrame(1.f, sf::IntRect(64, 0, 16, 24));
-    //_player->AddAnimation("idle", idle, sf::seconds(1.f));
-    //_player->AddAnimation("leftTurn", leftTurn, sf::seconds(0.05f));
-    //_player->AddAnimation("rightTurn", rightTurn, sf::seconds(0.05f));
-
     GameObjectRef testDummy1 = std::make_unique<GameObject>(_data->_holder, "Ship");
+    GraphicsComponentRef animation1 = std::make_unique<ShipAnimation>();
     testDummy1->SetScale(sf::Vector2f(3, 3));
     testDummy1->SetPosition(sf::Vector2f(300, 600));
-    GraphicsComponentRef animation1 = std::make_unique<ShipAnimation>();
     testDummy1->SetGraphics(animation1);
-    //testDummy1->AddAnimation("idle", idle, sf::seconds(1.f));
 
     GameObjectRef testDummy2 = std::make_unique<GameObject>(_data->_holder, "Ship");
+    GraphicsComponentRef animation2 = std::make_unique<ShipAnimation>();
     testDummy2->SetScale(sf::Vector2f(3, 3));
     testDummy2->SetPosition(sf::Vector2f(700, 400));
-    GraphicsComponentRef animation2 = std::make_unique<ShipAnimation>();
     testDummy2->SetGraphics(animation2);
-    //testDummy2->AddAnimation("idle", idle, sf::seconds(1.f));
 
     GameObjectRef testDummy3 = std::make_unique<GameObject>(_data->_holder, "Ship");
+    GraphicsComponentRef animation3 = std::make_unique<ShipAnimation>();
     testDummy3->SetScale(sf::Vector2f(3, 3));
     testDummy3->SetPosition(sf::Vector2f(400, 900));
-    GraphicsComponentRef animation3 = std::make_unique<ShipAnimation>();
     testDummy3->SetGraphics(animation3);
-    //testDummy3->AddAnimation("idle", idle, sf::seconds(1.f));
 
     GameObjectRef background = std::make_unique<GameObject>(_data->_holder, "Background");
     _assets.push_back(std::move(background));
