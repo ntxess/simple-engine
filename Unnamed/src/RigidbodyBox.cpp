@@ -3,12 +3,14 @@
 RigidbodyBox::RigidbodyBox()
 {}
 
-bool RigidbodyBox::CheckCollision(GameObject& other)
+void RigidbodyBox::Move(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime)
 {
-	return false;
+	float x = direction.x * deltaTime;
+	float y = direction.y * deltaTime;
+	sprite.move(x, y);
 }
 
-void RigidbodyBox::Update(float deltaTime)
+void RigidbodyBox::Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime)
 {
-
+	Move(sprite, direction, deltaTime);
 }
