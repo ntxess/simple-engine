@@ -9,17 +9,9 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-	GameObjectRef background = std::make_unique<GameObject>(
-		std::make_unique<Sprite>(_data->_holder, "Background")
-		);
-
-    _startButton = std::make_unique<GameObject>(
-        std::make_unique<Sprite>(_data->_holder, "StartButton")
-        );
-
-    _quitButton = std::make_unique<GameObject>(
-        std::make_unique<Sprite>(_data->_holder, "QuitButton")
-        );
+    GameObjectRef background = std::make_unique<GameObject>(_data->_holder, "Background");
+    _startButton = std::make_unique<GameObject>(_data->_holder, "StartButton");
+    _quitButton = std::make_unique<GameObject>(_data->_holder, "QuitButton");
 
     _startButton->SetPosition(sf::Vector2f(200, 400));
     _quitButton->SetPosition(sf::Vector2f(200, 800));
@@ -30,7 +22,7 @@ void MainMenu::Init()
 void MainMenu::ProcessInput()
 {
     sf::Vector2f mousePos = _data->_window->mapPixelToCoords(sf::Mouse::getPosition(*_data->_window));
-    if (_startButton->GetGraphics()->GetSprite().getGlobalBounds().contains(mousePos))
+    if (_startButton->GetSprite().getGlobalBounds().contains(mousePos))
     {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
@@ -38,7 +30,7 @@ void MainMenu::ProcessInput()
         }
     }
 
-    if (_quitButton->GetGraphics()->GetSprite().getGlobalBounds().contains(mousePos))
+    if (_quitButton->GetSprite().getGlobalBounds().contains(mousePos))
     {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
@@ -61,10 +53,8 @@ void MainMenu::Render(RenderWindowRef& rw, float interpolation)
     {
         _assets[i]->Render(rw, interpolation);
     }
-
     _startButton->Render(rw, interpolation);
     _quitButton->Render(rw, interpolation);
-
     _fps.Update();
     _fps.Render(rw);
 }

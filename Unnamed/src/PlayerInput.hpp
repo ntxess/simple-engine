@@ -3,9 +3,10 @@
 
 class PlayerInput : public InputComponent
 {
-public:
+private:
 	sf::Vector2f _direction;
 
+public:
 	PlayerInput();
 	~PlayerInput();
 	const sf::Vector2f& GetDirection();

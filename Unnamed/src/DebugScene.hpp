@@ -8,7 +8,9 @@
 #include "GameObject.hpp"
 #include "InputHandler.hpp"
 #include "PlayerInput.hpp"
-#include "CPUInput.hpp"
+#include "RigidbodyBox.hpp"
+#include "Sprite.hpp"
+
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 

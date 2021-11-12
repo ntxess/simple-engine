@@ -6,7 +6,6 @@
 #include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
-#include "Sprite.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Vertex.hpp>
 
 class InputComponent
 {

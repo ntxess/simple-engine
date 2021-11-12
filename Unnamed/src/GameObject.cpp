@@ -1,29 +1,12 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject()
-	: _velocity(1),
-	_input(nullptr),
-	_physics(nullptr),
-	_graphics(nullptr)
-{}
-
-GameObject::GameObject(GraphicsComponentRef graphics)
-	: _velocity(320.25),
-	_input(nullptr),
-	_physics(nullptr),
-	_graphics(std::move(graphics))
-{}
-
-GameObject::GameObject(PhysicsComponentRef physics, GraphicsComponentRef graphics)
-	: GameObject(std::move(graphics))
+GameObject::GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
+	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f)
 {
-	_physics = std::move(physics);
-}
-
-GameObject::GameObject(InputComponentRef input, PhysicsComponentRef physics, GraphicsComponentRef graphics) 
-	: GameObject(std::move(physics), std::move(graphics))
-{
-	_input = std::move(input);
+	sf::Texture& texture = holder[ID];
+	_sprite.setTexture(texture);
+	_sprite.setScale(sf::Vector2f(1, 1));
+	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
 
 GameObject::~GameObject()
@@ -44,14 +27,29 @@ GraphicsComponentRef& GameObject::GetGraphics()
 	return _graphics;
 }
 
-const sf::Vector2f& GameObject::GetDirection()
+const sf::Sprite& GameObject::GetSprite()
 {
-	return _input->GetDirection();
+	return _sprite;
 }
 
 const sf::Vector2f& GameObject::GetPosition()
 {
-	return _graphics->GetSprite().getPosition();
+	return _sprite.getPosition();
+}
+
+void GameObject::SetInput(InputComponentRef& input)
+{
+	_input = std::move(input);
+}
+
+void GameObject::SetPhysics(PhysicsComponentRef& physics)
+{
+	_physics = std::move(physics);
+}
+
+void GameObject::SetGraphics(GraphicsComponentRef& graphics)
+{
+	_graphics = std::move(graphics);
 }
 
 void GameObject::SetVelocity(float velocity)
@@ -61,18 +59,12 @@ void GameObject::SetVelocity(float velocity)
 
 void GameObject::SetScale(sf::Vector2f scale)
 {
-	_graphics->GetSprite().setScale(scale);
-	_graphics->GetSprite().setTextureRect(_graphics->GetSprite().getTextureRect());
+	_sprite.setScale(scale);
 }
 
 void GameObject::SetPosition(sf::Vector2f position)
 {
-	_graphics->GetSprite().setPosition(position);
-}
-
-void GameObject::PlayAnimation(const std::string& id, bool loop)
-{
-	_graphics->GetAnimator().playAnimation(id, loop);
+	_sprite.setPosition(position);
 }
 
 void GameObject::AddAnimation(const std::string& id, const thor::FrameAnimation& animation, sf::Time duration)
@@ -81,27 +73,29 @@ void GameObject::AddAnimation(const std::string& id, const thor::FrameAnimation&
 }
 
 void GameObject::Update(float deltaTime)
-{
-	if(_physics)
-		_physics->Update(deltaTime);
+{	
+	sf::Vector2f direction(0.f, 0.f);
+	if (_input)
+	{
+		direction.x = _input->GetDirection().x * _velocity;
+		direction.y = _input->GetDirection().y * _velocity;
+		_input->ClearDirection();
+	}
+
+	if (_physics)
+	{
+		_physics->Update(_sprite, direction, deltaTime);
+	}
 
 	if (_graphics)
 	{
-		if (_input)
-		{
-			_graphics->Update(_input->GetDirection(), _velocity, deltaTime);
-			_input->ClearDirection();
-		}
-		else
-		{
-			_graphics->Update(deltaTime);
-		}
+		_graphics->Update(direction, deltaTime);
+		_graphics->GetAnimator().animate(_sprite);
 	}
 }
 
 void GameObject::Render(RenderWindowRef& rw, float interpolation)
 {
-	if(_graphics)
-		_graphics->Render(rw, interpolation);
+	rw->draw(_sprite);
 }
 

@@ -9,14 +9,19 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    _player = std::make_unique<GameObject>(
-        std::make_unique<PlayerInput>(), 
-        nullptr, 
-        std::make_unique<Sprite>(_data->_holder, "Ship", true)
-        );
+    _player = std::make_unique<GameObject>(_data->_holder, "Ship");
     _player->SetVelocity(720.f);
-    _player->SetScale(sf::Vector2f(3,3));
+    _player->SetScale(sf::Vector2f(3, 3));
     _player->SetPosition(sf::Vector2f(900, 600));
+
+    InputComponentRef controller = std::make_unique<PlayerInput>();
+    _player->SetInput(controller);
+
+    PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
+    _player->SetPhysics(rb);
+
+    GraphicsComponentRef animation = std::make_unique<Sprite>();
+    _player->SetGraphics(animation);
 
     thor::FrameAnimation idle, leftTurn, rightTurn;
     for (int i = 0; i < 4; i++)
@@ -27,22 +32,28 @@ void DebugScene::Init()
     _player->AddAnimation("leftTurn", leftTurn, sf::seconds(0.05f));
     _player->AddAnimation("rightTurn", rightTurn, sf::seconds(0.05f));
 
-    GameObjectRef testDummy1 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", true));
+    GameObjectRef testDummy1 = std::make_unique<GameObject>(_data->_holder, "Ship");
     testDummy1->SetScale(sf::Vector2f(3, 3));
     testDummy1->SetPosition(sf::Vector2f(300, 600));
+    GraphicsComponentRef animation1 = std::make_unique<Sprite>();
+    testDummy1->SetGraphics(animation1);
     testDummy1->AddAnimation("idle", idle, sf::seconds(1.f));
 
-    GameObjectRef testDummy2 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", true));
+    GameObjectRef testDummy2 = std::make_unique<GameObject>(_data->_holder, "Ship");
     testDummy2->SetScale(sf::Vector2f(3, 3));
     testDummy2->SetPosition(sf::Vector2f(700, 400));
+    GraphicsComponentRef animation2 = std::make_unique<Sprite>();
+    testDummy2->SetGraphics(animation2);
     testDummy2->AddAnimation("idle", idle, sf::seconds(1.f));
 
-    GameObjectRef testDummy3 = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Ship", true));
+    GameObjectRef testDummy3 = std::make_unique<GameObject>(_data->_holder, "Ship");
     testDummy3->SetScale(sf::Vector2f(3, 3));
     testDummy3->SetPosition(sf::Vector2f(400, 900));
+    GraphicsComponentRef animation3 = std::make_unique<Sprite>();
+    testDummy3->SetGraphics(animation3);
     testDummy3->AddAnimation("idle", idle, sf::seconds(1.f));
 
-    GameObjectRef background = std::make_unique<GameObject>(std::make_unique<Sprite>(_data->_holder, "Background"));
+    GameObjectRef background = std::make_unique<GameObject>(_data->_holder, "Background");
     _assets.push_back(std::move(background));
     _assets.push_back(std::move(testDummy1));
     _assets.push_back(std::move(testDummy2));
@@ -55,22 +66,12 @@ void DebugScene::ProcessInput()
     {
         _data->_machine->AddState(std::make_unique<MainMenu>(_data));
     }
-
     _inputHandler.HandleInput(*_player);
-    if (_player->GetDirection().x > 0)
-        _player->PlayAnimation("rightTurn");
-    if (_player->GetDirection().x < 0)
-        _player->PlayAnimation("leftTurn");
 }
 
 void DebugScene::Update(float deltaTime)
 {
     _player->Update(deltaTime);
-    for (int i = 0; i < _assets.size(); i++)
-    {
-        _assets[i]->Update(deltaTime);
-    }
-
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Update(deltaTime);
@@ -97,11 +98,11 @@ void DebugScene::CheckBoundary(GameObjectRef& object)
     if (object->GetPosition().y < 0)
         object->SetPosition(sf::Vector2f(object->GetPosition().x, 0.f));
 
-    if (object->GetPosition().x + object->GetGraphics()->GetSprite().getGlobalBounds().width > _data->_window->getSize().x)
-        object->SetPosition(sf::Vector2f(_data->_window->getSize().x - object->GetGraphics()->GetSprite().getGlobalBounds().width, object->GetPosition().y));
+    if (object->GetPosition().x + object->GetSprite().getGlobalBounds().width > _data->_window->getSize().x)
+        object->SetPosition(sf::Vector2f(_data->_window->getSize().x - object->GetSprite().getGlobalBounds().width, object->GetPosition().y));
 
-    if (object->GetPosition().y + object->GetGraphics()->GetSprite().getGlobalBounds().height > _data->_window->getSize().y)
-        object->SetPosition(sf::Vector2f(object->GetPosition().x, _data->_window->getSize().y - object->GetGraphics()->GetSprite().getGlobalBounds().height));
+    if (object->GetPosition().y + object->GetSprite().getGlobalBounds().height > _data->_window->getSize().y)
+        object->SetPosition(sf::Vector2f(object->GetPosition().x, _data->_window->getSize().y - object->GetSprite().getGlobalBounds().height));
 }
 
 void DebugScene::Pause()
