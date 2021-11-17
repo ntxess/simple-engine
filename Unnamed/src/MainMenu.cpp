@@ -13,8 +13,8 @@ void MainMenu::Init()
     _startButton = std::make_unique<GameObject>(_data->_holder, "StartButton");
     _quitButton = std::make_unique<GameObject>(_data->_holder, "QuitButton");
 
-    _startButton->SetPosition(sf::Vector2f(200, 400));
-    _quitButton->SetPosition(sf::Vector2f(200, 800));
+    _startButton->SetPosition(sf::Vector2f(160, 500));
+    _quitButton->SetPosition(sf::Vector2f(160, 800));
 
     _assets.push_back(std::move(background));
 }

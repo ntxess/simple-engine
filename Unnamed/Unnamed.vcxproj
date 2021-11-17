@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\PlayerIdentity.cpp" />
     <ClCompile Include="src\RigidbodyBox.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
@@ -33,6 +34,8 @@
     <ClCompile Include="src\PlayerInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\InputComponent.hpp" />
+    <ClInclude Include="src\PlayerIdentity.hpp" />
     <ClInclude Include="src\RigidbodyBox.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
@@ -45,7 +48,6 @@
     <ClInclude Include="src\ResourceMonitor.hpp" />
     <ClInclude Include="src\GameObject.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
-    <ClInclude Include="src\InputComponent.hpp" />
     <ClInclude Include="src\InputHandler.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />

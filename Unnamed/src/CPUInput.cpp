@@ -1,27 +1,49 @@
 #include "CPUInput.hpp"
 
-CPUInput::CPUInput()
-{}
+CPUInput::CPUInput() : _direction(sf::Vector2f(0, 0))
+{
+	_previousD.x = -1;
+	_previousD.y = 1;
+}
 
 CPUInput::~CPUInput()
 {}
 
-void CPUInput::MoveUp()
+const sf::Vector2f& CPUInput::GetDirection()
 {
-	std::cout << "CPUInputComponent: MoveUp" << std::endl;
+	return _direction;
 }
 
-void CPUInput::MoveLeft()
+void CPUInput::Move(sf::Vector2f direction)
 {
-	std::cout << "CPUInputComponent: MoveLeft" << std::endl;
+	if (_previousD.x == -1 && _previousD.y == 1)
+	{
+		_direction.x = -1;
+		_direction.y = -1;
+	}
+
+	if (_previousD.x == -1 && _previousD.y == -1)
+	{
+		_direction.x = 1;
+		_direction.y = -1;
+	}
+
+	if (_previousD.x == 1 && _previousD.y == -1)
+	{
+		_direction.x = 1;
+		_direction.y = 1;
+	}
+
+	if (_previousD.x == 1 && _previousD.y == 1)
+	{
+		_direction.x = -1;
+		_direction.y = 1;
+	}
+	_previousD.x = _direction.x;
+	_previousD.y = _direction.y;
 }
 
-void CPUInput::MoveDown()
+void CPUInput::ClearDirection()
 {
-	std::cout << "CPUInputComponent: MoveDown" << std::endl;
-}
-
-void CPUInput::MoveRight()
-{
-	std::cout << "CPUInputComponent: MoveRight" << std::endl;
+	_direction = sf::Vector2f(0, 0);
 }

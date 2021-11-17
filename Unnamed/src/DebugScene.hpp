@@ -10,7 +10,8 @@
 #include "PlayerInput.hpp"
 #include "RigidbodyBox.hpp"
 #include "ShipAnimation.hpp"
-
+#include "PlayerIdentity.hpp"
+#include "CPUInput.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 
@@ -32,6 +33,7 @@ public:
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 	void CheckBoundary(GameObjectRef& object);
+	bool CheckCollision(GameObjectRef& player, GameObjectRef& object);
 	void Pause();
 	void Resume();
 };

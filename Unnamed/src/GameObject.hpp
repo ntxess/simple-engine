@@ -19,6 +19,7 @@ public:
 	GraphicsComponentRef _graphics;
 	float _velocity;
 
+	GameObject();
 	GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~GameObject();
 	InputComponentRef& GetInput();

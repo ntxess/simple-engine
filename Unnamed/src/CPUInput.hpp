@@ -1,14 +1,16 @@
 #pragma once
-#include <iostream>
 #include "InputComponent.hpp"
 
 class CPUInput : public InputComponent
 {
+private:
+	sf::Vector2f _direction;
+	sf::Vector2f _previousD;
+
 public:
 	CPUInput();
 	~CPUInput();
-	void MoveUp();
-	void MoveLeft();
-	void MoveDown();
-	void MoveRight();
+	const sf::Vector2f& GetDirection();
+	void Move(sf::Vector2f direction);
+	void ClearDirection();
 };
