@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.hpp"
+#include "Component.hpp"
 
 typedef std::unique_ptr<Component> ComponentRef;
 

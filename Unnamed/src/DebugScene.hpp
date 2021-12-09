@@ -5,8 +5,7 @@
 
 #include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
-#include "GameObject.hpp"
-#include "InputHandler.hpp"
+#include "Component.hpp"
 #include "PlayerInput.hpp"
 #include "RigidbodyBox.hpp"
 #include "ShipAnimation.hpp"
@@ -22,7 +21,6 @@ private:
 	std::shared_ptr<GameData> _data;
 
 public:
-	InputHandler _inputHandler;
 	ResourceMonitor _fps;
 	PlayerRef _player;
 

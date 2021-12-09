@@ -29,7 +29,6 @@
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\Component.cpp" />
-    <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayerInput.cpp" />
   </ItemGroup>
@@ -48,7 +47,6 @@
     <ClInclude Include="src\ResourceMonitor.hpp" />
     <ClInclude Include="src\Component.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
-    <ClInclude Include="src\InputHandler.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />
   </ItemGroup>

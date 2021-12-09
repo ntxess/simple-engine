@@ -9,17 +9,17 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    ComponentRef shipIdentity = std::make_unique<Component>(_data->_holder, "Ship");
+    ComponentRef aircraft = std::make_unique<Component>(_data->_holder, "Ship");
     InputComponentRef controller = std::make_unique<PlayerInput>();
     PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
     GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
-    shipIdentity->SetInput(controller);
-    shipIdentity->SetPhysics(rb);
-    shipIdentity->SetGraphics(animation);
-    shipIdentity->SetVelocity(500.f);
-    shipIdentity->SetScale(sf::Vector2f(3, 3));
-    shipIdentity->SetPosition(sf::Vector2f(360, 900));
-    _player = std::make_unique<Player>(shipIdentity);
+    aircraft->SetInput(controller);
+    aircraft->SetPhysics(rb);
+    aircraft->SetGraphics(animation);
+    aircraft->SetVelocity(500.f);
+    aircraft->SetScale(sf::Vector2f(2, 2));
+    aircraft->SetPosition(sf::Vector2f(360, 900));
+    _player = std::make_unique<Player>(aircraft);
     
     ComponentRef background = std::make_unique<Component>(_data->_holder, "Background");
     _assets.push_back(std::move(background));
@@ -28,11 +28,25 @@ void DebugScene::Init()
 void DebugScene::ProcessInput()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
         _data->_machine->AddState(std::make_unique<MainMenu>(_data));
-    }
 
-    _inputHandler.HandleInput(*_player->GetComponent());
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+        _player->GetComponent()->GetInput()->Shoot(true);
+
+    float horizontal = 0, vertical = 0;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        vertical = -1.f;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        horizontal = -1.f;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        vertical = 1.f;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        horizontal = 1.f;
+
+    _player->GetComponent()->GetInput()->Move(sf::Vector2f(horizontal, vertical));
 }
 
 void DebugScene::Update(float deltaTime)

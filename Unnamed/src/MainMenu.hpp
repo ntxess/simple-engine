@@ -5,7 +5,7 @@
 
 #include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"
-#include "GameObject.hpp"
+#include "Component.hpp"
 
 typedef std::unique_ptr<Component> ComponentRef;
 
