@@ -1,10 +1,10 @@
 #include "PlayerIdentity.hpp"
 
-Player::Player(IdentityRef& component)
+Player::Player(ComponentRef& component)
 	: _component(std::move(component)), _MAX_HEALTH(1000), _attackDamage(10), _health(_MAX_HEALTH)
 {}
 
-IdentityRef& Player::GetComponent()
+ComponentRef& Player::GetComponent()
 {
 	return _component;
 }

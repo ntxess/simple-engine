@@ -13,7 +13,7 @@
 #include "PlayerIdentity.hpp"
 #include "ProjectilePhysics.hpp"
 
-typedef std::unique_ptr<Identity> IdentityRef;
+typedef std::unique_ptr<Component> ComponentRef;
 typedef std::unique_ptr<Player> PlayerRef;
 
 class DebugScene : public State
@@ -26,7 +26,7 @@ public:
 	ResourceMonitor _fps;
 	PlayerRef _player;
 
-	std::vector<IdentityRef> _assets;
+	std::vector<ComponentRef> _assets;
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();
@@ -34,8 +34,8 @@ public:
 	void ProcessInput();
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
-	void CheckBoundary(IdentityRef& object);
-	bool CheckCollision(IdentityRef& player, IdentityRef& object);
+	void CheckBoundary(ComponentRef& object);
+	bool CheckCollision(ComponentRef& player, ComponentRef& object);
 	void Pause();
 	void Resume();
 };

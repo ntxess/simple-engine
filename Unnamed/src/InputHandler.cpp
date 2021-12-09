@@ -6,7 +6,7 @@ InputHandler::InputHandler()
 InputHandler::~InputHandler() 
 {}
 
-void InputHandler::HandleInput(Identity& actor)
+void InputHandler::HandleInput(Component& actor)
 {
 	float horizontal = 0, vertical = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))

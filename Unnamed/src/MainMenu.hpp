@@ -7,7 +7,7 @@
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
 
-typedef std::unique_ptr<Identity> IdentityRef;
+typedef std::unique_ptr<Component> ComponentRef;
 
 class MainMenu : public State
 {
@@ -16,10 +16,10 @@ private:
 
 public:
 	ResourceMonitor _fps;
-	std::vector<IdentityRef> _assets;
+	std::vector<ComponentRef> _assets;
 	
-	IdentityRef _startButton;
-	IdentityRef _quitButton;
+	ComponentRef _startButton;
+	ComponentRef _quitButton;
 
 	MainMenu(std::shared_ptr<GameData>& data);
 	~MainMenu();

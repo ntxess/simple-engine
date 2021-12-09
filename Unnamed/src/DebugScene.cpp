@@ -9,7 +9,7 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    IdentityRef shipIdentity = std::make_unique<Identity>(_data->_holder, "Ship");
+    ComponentRef shipIdentity = std::make_unique<Component>(_data->_holder, "Ship");
     InputComponentRef controller = std::make_unique<PlayerInput>();
     PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
     GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
@@ -21,7 +21,7 @@ void DebugScene::Init()
     shipIdentity->SetPosition(sf::Vector2f(360, 900));
     _player = std::make_unique<Player>(shipIdentity);
     
-    IdentityRef background = std::make_unique<Identity>(_data->_holder, "Background");
+    ComponentRef background = std::make_unique<Component>(_data->_holder, "Background");
     _assets.push_back(std::move(background));
 }
 
@@ -66,7 +66,7 @@ void DebugScene::Render(RenderWindowRef& rw, float interpolation)
     }
 }
 
-void DebugScene::CheckBoundary(IdentityRef& object)
+void DebugScene::CheckBoundary(ComponentRef& object)
 {
     if (object->GetPosition().x < 0)
         object->SetPosition(sf::Vector2f(0.f, object->GetPosition().y));
@@ -81,11 +81,11 @@ void DebugScene::CheckBoundary(IdentityRef& object)
         object->SetPosition(sf::Vector2f(object->GetPosition().x, _data->_window->getSize().y - object->GetSprite().getGlobalBounds().height));
 }
 
-bool DebugScene::CheckCollision(IdentityRef& player, IdentityRef& object)
+bool DebugScene::CheckCollision(ComponentRef& playerComponent, ComponentRef& object)
 {
     if (object->GetPhysics())
     {
-        if (player->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
+        if (playerComponent->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
         {
             object->SetTouchTag(true);
             _player->TakeDamage(30.f);

@@ -9,9 +9,9 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-    IdentityRef background = std::make_unique<Identity>(_data->_holder, "Background");
-    _startButton = std::make_unique<Identity>(_data->_holder, "StartButton");
-    _quitButton = std::make_unique<Identity>(_data->_holder, "QuitButton");
+    ComponentRef background = std::make_unique<Component>(_data->_holder, "Background");
+    _startButton = std::make_unique<Component>(_data->_holder, "StartButton");
+    _quitButton = std::make_unique<Component>(_data->_holder, "QuitButton");
 
     _startButton->SetPosition(sf::Vector2f(160, 500));
     _quitButton->SetPosition(sf::Vector2f(160, 800));

@@ -28,14 +28,13 @@
     <ClCompile Include="src\ShipAnimation.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\ResourceMonitor.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\InputHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PlayerInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ProjectilePhysics.hpp" />
-    <ClInclude Include="src\IdentityComponent.hpp" />
     <ClInclude Include="src\InputComponent.hpp" />
     <ClInclude Include="src\PlayerIdentity.hpp" />
     <ClInclude Include="src\RigidbodyBox.hpp" />
@@ -47,7 +46,7 @@
     <ClInclude Include="src\ShipAnimation.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\ResourceMonitor.hpp" />
-    <ClInclude Include="src\GameObject.hpp" />
+    <ClInclude Include="src\Component.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
     <ClInclude Include="src\InputHandler.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />

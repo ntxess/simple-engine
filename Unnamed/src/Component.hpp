@@ -4,7 +4,6 @@
 #include "InputComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "GraphicsComponent.hpp"
-#include "IdentityComponent.hpp"
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 typedef std::unique_ptr<InputComponent> InputComponentRef;
