@@ -11,9 +11,10 @@
 #include "RigidbodyBox.hpp"
 #include "ShipAnimation.hpp"
 #include "PlayerIdentity.hpp"
-#include "CPUInput.hpp"
+#include "ProjectilePhysics.hpp"
 
-typedef std::unique_ptr<GameObject> GameObjectRef;
+typedef std::unique_ptr<Identity> IdentityRef;
+typedef std::unique_ptr<Player> PlayerRef;
 
 class DebugScene : public State
 {
@@ -21,10 +22,11 @@ private:
 	std::shared_ptr<GameData> _data;
 
 public:
-	ResourceMonitor _fps;
 	InputHandler _inputHandler;
-	GameObjectRef _player;
-	std::vector<GameObjectRef> _assets;
+	ResourceMonitor _fps;
+	PlayerRef _player;
+
+	std::vector<IdentityRef> _assets;
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();
@@ -32,8 +34,8 @@ public:
 	void ProcessInput();
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
-	void CheckBoundary(GameObjectRef& object);
-	bool CheckCollision(GameObjectRef& player, GameObjectRef& object);
+	void CheckBoundary(IdentityRef& object);
+	bool CheckCollision(IdentityRef& player, IdentityRef& object);
 	void Pause();
 	void Resume();
 };

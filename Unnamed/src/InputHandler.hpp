@@ -8,5 +8,5 @@ class InputHandler
 public:
 	InputHandler();
 	~InputHandler();
-	void HandleInput(GameObject& actor);
+	void HandleInput(Identity& actor);
 };

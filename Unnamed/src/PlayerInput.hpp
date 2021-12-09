@@ -11,5 +11,6 @@ public:
 	~PlayerInput();
 	const sf::Vector2f& GetDirection();
 	void Move(sf::Vector2f direction);
+	void Shoot(bool isShooting);
 	void ClearDirection();
 };

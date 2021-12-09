@@ -1,11 +1,11 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject()
-	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f)
+Identity::Identity()
+	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f), _isTouched(false)
 {}
 
-GameObject::GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
-	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f)
+Identity::Identity(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
+	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f), _isTouched(false)
 {
 	sf::Texture& texture = holder[ID];
 	_sprite.setTexture(texture);
@@ -13,70 +13,80 @@ GameObject::GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, s
 	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
 
-GameObject::~GameObject()
+Identity::~Identity()
 {}
 
-InputComponentRef& GameObject::GetInput()
+InputComponentRef& Identity::GetInput()
 {
 	return _input;
 }
 
-PhysicsComponentRef& GameObject::GetPhysics()
+PhysicsComponentRef& Identity::GetPhysics()
 {
 	return _physics;
 }
 
-GraphicsComponentRef& GameObject::GetGraphics()
+GraphicsComponentRef& Identity::GetGraphics()
 {
 	return _graphics;
 }
 
-const sf::Sprite& GameObject::GetSprite()
+bool Identity::IsTouched()
+{
+	return _isTouched;
+}
+
+const sf::Sprite& Identity::GetSprite()
 {
 	return _sprite;
 }
 
-const sf::Vector2f& GameObject::GetPosition()
+const sf::Vector2f& Identity::GetPosition()
 {
 	return _sprite.getPosition();
 }
 
-void GameObject::SetInput(InputComponentRef& input)
+void Identity::SetInput(InputComponentRef& input)
 {
 	_input = std::move(input);
 }
 
-void GameObject::SetPhysics(PhysicsComponentRef& physics)
+void Identity::SetPhysics(PhysicsComponentRef& physics)
 {
 	_physics = std::move(physics);
 }
 
-void GameObject::SetGraphics(GraphicsComponentRef& graphics)
+void Identity::SetGraphics(GraphicsComponentRef& graphics)
 {
 	_graphics = std::move(graphics);
 }
 
-void GameObject::SetVelocity(float velocity)
+void Identity::SetVelocity(float velocity)
 {
 	_velocity = velocity;
 }
 
-void GameObject::SetScale(sf::Vector2f scale)
+void Identity::SetTouchTag(bool isTouched)
+{
+	_isTouched = isTouched;
+}
+
+void Identity::SetScale(sf::Vector2f scale)
 {
 	_sprite.setScale(scale);
 }
 
-void GameObject::SetPosition(sf::Vector2f position)
+void Identity::SetPosition(sf::Vector2f position)
 {
 	_sprite.setPosition(position);
 }
 
-void GameObject::AddAnimation(const std::string& id, const thor::FrameAnimation& animation, sf::Time duration)
+void Identity::AddAnimation(const std::string& id, const thor::FrameAnimation& animation, sf::Time duration)
 {
 	_graphics->GetAnimator().addAnimation(id, animation, duration);
 }
 
-void GameObject::Update(float deltaTime)
+void Identity::Update(float deltaTime)
 {	
 	sf::Vector2f direction(0.f, 0.f);
 	if (_input)
@@ -98,7 +108,7 @@ void GameObject::Update(float deltaTime)
 	}
 }
 
-void GameObject::Render(RenderWindowRef& rw, float interpolation)
+void Identity::Render(RenderWindowRef& rw, float interpolation)
 {
 	rw->draw(_sprite);
 }
