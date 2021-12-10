@@ -8,10 +8,6 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    sf::Texture& texture = _data->_holder["Shot"];
-    _particleSystem.setTexture(texture);
-    std::cout << "TEXTURE LOADED: Triangle" << std::endl;
-
     ComponentRef aircraft = std::make_unique<Component>(_data->_holder, "Ship");
     InputComponentRef controller = std::make_unique<PlayerInput>();
     PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
@@ -30,13 +26,22 @@ void DebugScene::Init()
 
 void DebugScene::ProcessInput(sf::Event event)
 {
-    if (event.key.code == sf::Keyboard::Escape)
-        _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Escape)
+            _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 
-    if (event.key.code == sf::Keyboard::Z)
-        _player->Shoot(true);
-    else
-        _player->Shoot(false);
+        if (event.key.code == sf::Keyboard::Z)
+        {
+            std::cout << "Pressed Z" << std::endl;
+            _player->Shoot(true);
+        }
+
+        if (event.key.code == sf::Keyboard::X)
+        {
+            std::cout << "Pressed X" << std::endl;
+        }
+    }
 
     float horizontal = 0, vertical = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -56,17 +61,6 @@ void DebugScene::ProcessInput(sf::Event event)
 
 void DebugScene::Update(float deltaTime)
 {
-    if (_player->_isShooting)
-    {
-        thor::UniversalEmitter emitter;
-        emitter.setParticleVelocity(sf::Vector2f(0, -2000));
-        emitter.setParticleLifetime(sf::seconds(1));
-        emitter.setParticleScale(sf::Vector2f(2, 2));
-        emitter.setParticlePosition(sf::Vector2f(_player->_component->GetPosition()));
-        _particleSystem.addEmitter(emitter);
-    }
-    _particleSystem.update(sf::seconds(deltaTime));
-
     _player->Update(deltaTime);
     CheckBoundary(_player->GetComponent());
 
@@ -87,7 +81,6 @@ void DebugScene::Render(RenderWindowRef& rw, float interpolation)
         _assets[i]->Render(rw, interpolation);
     }
 
-    rw->draw(_particleSystem);
     _player->Render(rw, interpolation);
     _fps.Update();
     _fps.Render(rw);

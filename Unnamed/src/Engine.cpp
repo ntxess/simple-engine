@@ -13,19 +13,33 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     settings.minorVersion = 3;
 
     _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
+
     try
     {
-        _data->_holder.acquire("Background", thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("StartButton", thor::Resources::fromFile<sf::Texture>("resources/bg/start.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("QuitButton", thor::Resources::fromFile<sf::Texture>("resources/bg/quit.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("Triangle", thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("Ship", thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("Shot", thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), thor::Resources::Reuse);
+        _data->_holder.acquire("Background", 
+            thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), 
+            thor::Resources::Reuse);
+        _data->_holder.acquire("StartButton", 
+            thor::Resources::fromFile<sf::Texture>("resources/bg/start.png"), 
+            thor::Resources::Reuse);
+        _data->_holder.acquire("QuitButton", 
+            thor::Resources::fromFile<sf::Texture>("resources/bg/quit.png"), 
+            thor::Resources::Reuse);
+        _data->_holder.acquire("Triangle", 
+            thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), 
+            thor::Resources::Reuse);
+        _data->_holder.acquire("Ship", 
+            thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"), 
+            thor::Resources::Reuse);
+        _data->_holder.acquire("Shot", 
+            thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 
+            thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
+
     _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 }
 
@@ -46,7 +60,7 @@ void Engine::Run()
             if (event.type == sf::Event::Closed)
                 _data->_window->close();
 
-            if (event.type == sf::Event::KeyPressed)
+            if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
                 _data->_machine->GetActiveState()->ProcessInput(event);
         }
 
