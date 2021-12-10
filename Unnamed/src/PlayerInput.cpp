@@ -18,11 +18,6 @@ void PlayerInput::Move(sf::Vector2f direction)
 	_direction.y = std::min(std::max(_direction.y, -1.0f), 1.0f);
 }
 
-void PlayerInput::Shoot(bool isShooting)
-{
-
-}
-
 void PlayerInput::ClearDirection()
 {
 	_direction = sf::Vector2f(0, 0);

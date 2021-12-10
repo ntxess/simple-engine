@@ -9,8 +9,8 @@
 #include "PlayerInput.hpp"
 #include "RigidbodyBox.hpp"
 #include "ShipAnimation.hpp"
-#include "PlayerIdentity.hpp"
-#include "ProjectilePhysics.hpp"
+#include "Player.hpp"
+#include "Thor/Particles.hpp"
 
 typedef std::unique_ptr<Component> ComponentRef;
 typedef std::unique_ptr<Player> PlayerRef;
@@ -23,13 +23,13 @@ private:
 public:
 	ResourceMonitor _fps;
 	PlayerRef _player;
-
 	std::vector<ComponentRef> _assets;
+	thor::ParticleSystem _particleSystem;
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();
 	void Init();
-	void ProcessInput();
+	void ProcessInput(sf::Event event);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 	void CheckBoundary(ComponentRef& object);

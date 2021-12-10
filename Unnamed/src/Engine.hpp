@@ -18,5 +18,4 @@ public:
     Engine(unsigned int width, unsigned int height, std::string title);
     ~Engine();
     void Run();
-    bool IsOpen() const;
 };

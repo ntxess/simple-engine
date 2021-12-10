@@ -1,11 +1,19 @@
 #include "Component.hpp"
 
 Component::Component()
-	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f), _isTouched(false)
+	: _input(nullptr)
+	, _physics(nullptr)
+	, _graphics(nullptr)
+	, _velocity(1.f)
+	, _isTouched(false)
 {}
 
 Component::Component(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
-	: _input(nullptr), _physics(nullptr), _graphics(nullptr), _velocity(1.f), _isTouched(false)
+	: _input(nullptr)
+	, _physics(nullptr)
+	, _graphics(nullptr)
+	, _velocity(1.f)
+	, _isTouched(false)
 {
 	sf::Texture& texture = holder[ID];
 	_sprite.setTexture(texture);

@@ -1,7 +1,11 @@
-#include "PlayerIdentity.hpp"
+#include "Player.hpp"
 
 Player::Player(ComponentRef& component)
-	: _component(std::move(component)), _MAX_HEALTH(1000), _attackDamage(10), _health(_MAX_HEALTH)
+	: _component(std::move(component))
+	, _MAX_HEALTH(1000)
+	, _attackDamage(10)
+	, _health(_MAX_HEALTH)
+	, _isShooting(false)
 {}
 
 ComponentRef& Player::GetComponent()
@@ -30,6 +34,11 @@ void Player::Heal(float healAmount)
 	_health += healAmount;
 	if (_MAX_HEALTH > _health)
 		_health = _MAX_HEALTH;
+}
+
+void Player::Shoot(bool isShooting)
+{
+	_isShooting = isShooting;
 }
 
 void Player::Update(float deltaTime)

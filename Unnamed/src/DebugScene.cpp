@@ -1,7 +1,6 @@
 #include "DebugScene.hpp"
 
-DebugScene::DebugScene(std::shared_ptr<GameData> &data) 
-    :_data(data) 
+DebugScene::DebugScene(std::shared_ptr<GameData> &data) :_data(data) 
 {}
 
 DebugScene::~DebugScene()
@@ -9,6 +8,10 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
+    sf::Texture& texture = _data->_holder["Shot"];
+    _particleSystem.setTexture(texture);
+    std::cout << "TEXTURE LOADED: Triangle" << std::endl;
+
     ComponentRef aircraft = std::make_unique<Component>(_data->_holder, "Ship");
     InputComponentRef controller = std::make_unique<PlayerInput>();
     PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
@@ -25,13 +28,18 @@ void DebugScene::Init()
     _assets.push_back(std::move(background));
 }
 
-void DebugScene::ProcessInput()
+void DebugScene::ProcessInput(sf::Event event)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    if (event.type == sf::Event::KeyReleased)
+    {
+        if (event.key.code == sf::Keyboard::Escape)
+            _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-        _player->GetComponent()->GetInput()->Shoot(true);
+        if (event.key.code == sf::Keyboard::Z)
+            _player->Shoot(true);
+        else
+            _player->Shoot(false);
+    }
 
     float horizontal = 0, vertical = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -51,15 +59,28 @@ void DebugScene::ProcessInput()
 
 void DebugScene::Update(float deltaTime)
 {
-    auto assetStart = _assets.begin();
+    if (_player->_isShooting)
+    {
+        thor::UniversalEmitter emitter;
+        emitter.setParticleVelocity(sf::Vector2f(0, -2000));
+        emitter.setParticleLifetime(sf::seconds(1));
+        emitter.setParticleScale(sf::Vector2f(2, 2));
+        emitter.setParticlePosition(sf::Vector2f(_player->_component->GetPosition()));
+        _particleSystem.addEmitter(emitter);
+        std::cout << "added particle" << std::endl;
+    }
+
+    _particleSystem.update(sf::seconds(deltaTime));
     _player->Update(deltaTime);
     CheckBoundary(_player->GetComponent());
+
+    auto assetStart = _assets.begin();
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Update(deltaTime);
-        CheckCollision(_player->GetComponent(), _assets[i]);
-        if (_assets[i]->IsTouched())
-            _assets.erase(assetStart + i);
+        //CheckCollision(_player->GetComponent(), _assets[i]);
+        //if (_assets[i]->IsTouched())
+        //    _assets.erase(assetStart + i);
     }
 }
 
@@ -70,6 +91,7 @@ void DebugScene::Render(RenderWindowRef& rw, float interpolation)
         _assets[i]->Render(rw, interpolation);
     }
 
+    rw->draw(_particleSystem);
     _player->Render(rw, interpolation);
     _fps.Update();
     _fps.Render(rw);

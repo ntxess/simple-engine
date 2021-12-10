@@ -1,7 +1,9 @@
 #include "Engine.hpp"
 
 Engine::Engine(unsigned int width, unsigned int height, std::string title) 
-    : _data(std::make_shared<GameData>()), _width(width), _height(height)
+    : _data(std::make_shared<GameData>())
+    , _width(width)
+    , _height(height)
 {
     sf::ContextSettings settings;
     settings.depthBits = 24;
@@ -16,8 +18,9 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
         _data->_holder.acquire("Background", thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), thor::Resources::Reuse);
         _data->_holder.acquire("StartButton", thor::Resources::fromFile<sf::Texture>("resources/bg/start.png"), thor::Resources::Reuse);
         _data->_holder.acquire("QuitButton", thor::Resources::fromFile<sf::Texture>("resources/bg/quit.png"), thor::Resources::Reuse);
-        _data->_holder.acquire("Player", thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), thor::Resources::Reuse);
+        _data->_holder.acquire("Triangle", thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), thor::Resources::Reuse);
         _data->_holder.acquire("Ship", thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"), thor::Resources::Reuse);
+        _data->_holder.acquire("Shot", thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)
     {
@@ -35,8 +38,15 @@ void Engine::Run()
     float currentTime = _clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
 
-    while(IsOpen())
+    sf::Event event;
+    while (_data->_window->isOpen())
     {
+        while (_data->_window->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                _data->_window->close();
+        }
+
         _data->_machine->ProcessStateChange();
 
         newTime = _clock.getElapsedTime().asSeconds();
@@ -45,7 +55,7 @@ void Engine::Run()
         accumulator += frameTime;
 
         _data->_window->clear();
-        _data->_machine->GetActiveState()->ProcessInput();
+        _data->_machine->GetActiveState()->ProcessInput(event);
 
         while (accumulator >= dt)
         {
@@ -57,20 +67,6 @@ void Engine::Run()
         _data->_machine->GetActiveState()->Render(_data->_window, interpolation);
         _data->_window->display();
     }
-}
-
-bool Engine::IsOpen() const
-{
-    sf::Event event;
-    _data->_window->pollEvent(event);
-
-    if (event.type == sf::Event::Closed)
-        _data->_window->close();
-
-    if (!_data->_window->isOpen())
-        return false;
-
-    return true;
 }
 
 

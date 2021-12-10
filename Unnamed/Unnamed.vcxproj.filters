@@ -45,7 +45,7 @@
     <ClCompile Include="src\RigidbodyBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayerIdentity.cpp">
+    <ClCompile Include="src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ProjectilePhysics.cpp">
@@ -92,7 +92,7 @@
     <ClInclude Include="src\RigidbodyBox.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerIdentity.hpp">
+    <ClInclude Include="src\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\InputComponent.hpp">

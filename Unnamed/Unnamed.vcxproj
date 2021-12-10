@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ProjectilePhysics.cpp" />
-    <ClCompile Include="src\PlayerIdentity.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\RigidbodyBox.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
@@ -35,7 +35,7 @@
   <ItemGroup>
     <ClInclude Include="src\ProjectilePhysics.hpp" />
     <ClInclude Include="src\InputComponent.hpp" />
-    <ClInclude Include="src\PlayerIdentity.hpp" />
+    <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\RigidbodyBox.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />

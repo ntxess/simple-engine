@@ -1,7 +1,6 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu(std::shared_ptr<GameData>& data) 
-    : _data(data) 
+MainMenu::MainMenu(std::shared_ptr<GameData>& data) : _data(data) 
 {}
 
 MainMenu::~MainMenu()
@@ -19,7 +18,7 @@ void MainMenu::Init()
     _assets.push_back(std::move(background));
 }
 
-void MainMenu::ProcessInput()
+void MainMenu::ProcessInput(sf::Event event)
 {
     sf::Vector2f mousePos = _data->_window->mapPixelToCoords(sf::Mouse::getPosition(*_data->_window));
     if (_startButton->GetSprite().getGlobalBounds().contains(mousePos))
