@@ -45,6 +45,9 @@ void Engine::Run()
         {
             if (event.type == sf::Event::Closed)
                 _data->_window->close();
+
+            if (event.type == sf::Event::KeyPressed)
+                _data->_machine->GetActiveState()->ProcessInput(event);
         }
 
         _data->_machine->ProcessStateChange();

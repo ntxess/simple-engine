@@ -30,16 +30,13 @@ void DebugScene::Init()
 
 void DebugScene::ProcessInput(sf::Event event)
 {
-    if (event.type == sf::Event::KeyReleased)
-    {
-        if (event.key.code == sf::Keyboard::Escape)
-            _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    if (event.key.code == sf::Keyboard::Escape)
+        _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 
-        if (event.key.code == sf::Keyboard::Z)
-            _player->Shoot(true);
-        else
-            _player->Shoot(false);
-    }
+    if (event.key.code == sf::Keyboard::Z)
+        _player->Shoot(true);
+    else
+        _player->Shoot(false);
 
     float horizontal = 0, vertical = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -67,10 +64,9 @@ void DebugScene::Update(float deltaTime)
         emitter.setParticleScale(sf::Vector2f(2, 2));
         emitter.setParticlePosition(sf::Vector2f(_player->_component->GetPosition()));
         _particleSystem.addEmitter(emitter);
-        std::cout << "added particle" << std::endl;
     }
-
     _particleSystem.update(sf::seconds(deltaTime));
+
     _player->Update(deltaTime);
     CheckBoundary(_player->GetComponent());
 
