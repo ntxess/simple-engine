@@ -8,20 +8,8 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    ComponentRef aircraft = std::make_unique<Component>(_data->_holder, "Ship");
-    InputComponentRef controller = std::make_unique<PlayerInput>();
-    PhysicsComponentRef rb = std::make_unique<RigidbodyBox>();
-    GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
-    aircraft->SetInput(controller);
-    aircraft->SetPhysics(rb);
-    aircraft->SetGraphics(animation);
-    aircraft->SetVelocity(500.f);
-    aircraft->SetScale(sf::Vector2f(2, 2));
-    aircraft->SetPosition(sf::Vector2f(360, 900));
-    _player = std::make_unique<Player>(aircraft);
-    
-    ComponentRef background = std::make_unique<Component>(_data->_holder, "Background");
-    _assets.push_back(std::move(background));
+    _player     = std::make_unique<Player>(_data->_holder, "Ship");
+    _background = std::make_unique<GameObject>(_data->_holder, "Background");
 }
 
 void DebugScene::ProcessInput(sf::Event event)
@@ -61,29 +49,24 @@ void DebugScene::ProcessInput(sf::Event event)
 
 void DebugScene::Update(float deltaTime)
 {
+    _background->Update(deltaTime);
     _player->Update(deltaTime);
+
+    if (_player->_isShooting)
+        SpawnShotParticle();
+
     CheckBoundary(_player->GetComponent());
 
     auto assetStart = _assets.begin();
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Update(deltaTime);
+        _assets[i]->GetInput()->Move(sf::Vector2f(0, -1));
+        CheckBoundary(_assets[i]);
         //CheckCollision(_player->GetComponent(), _assets[i]);
         //if (_assets[i]->IsTouched())
         //    _assets.erase(assetStart + i);
     }
-}
-
-void DebugScene::Render(RenderWindowRef& rw, float interpolation)
-{
-    for (int i = 0; i < _assets.size(); i++)
-    {
-        _assets[i]->Render(rw, interpolation);
-    }
-
-    _player->Render(rw, interpolation);
-    _fps.Update();
-    _fps.Render(rw);
 
     if (!_player->IsAlive())
     {
@@ -91,7 +74,19 @@ void DebugScene::Render(RenderWindowRef& rw, float interpolation)
     }
 }
 
-void DebugScene::CheckBoundary(ComponentRef& object)
+void DebugScene::Render(RenderWindowRef& rw, float interpolation)
+{
+    _background->Render(rw, interpolation);
+    _player->Render(rw, interpolation);
+
+    for (int i = 0; i < _assets.size(); i++)
+        _assets[i]->Render(rw, interpolation);
+
+    _fps.Update();
+    _fps.Render(rw);
+}
+
+void DebugScene::CheckBoundary(GameObjectRef& object)
 {
     if (object->GetPosition().x < 0)
         object->SetPosition(sf::Vector2f(0.f, object->GetPosition().y));
@@ -106,7 +101,7 @@ void DebugScene::CheckBoundary(ComponentRef& object)
         object->SetPosition(sf::Vector2f(object->GetPosition().x, _data->_window->getSize().y - object->GetSprite().getGlobalBounds().height));
 }
 
-bool DebugScene::CheckCollision(ComponentRef& playerComponent, ComponentRef& object)
+bool DebugScene::CheckCollision(GameObjectRef& playerComponent, GameObjectRef& object)
 {
     if (object->GetPhysics())
     {
@@ -119,6 +114,14 @@ bool DebugScene::CheckCollision(ComponentRef& playerComponent, ComponentRef& obj
     return false;
 }
 
+void DebugScene::SpawnShotParticle()
+{
+    sf::Vector2f position = _player->GetComponent()->GetPosition();
+    GameObjectRef shotParticle = std::make_unique<ShotParticle>(_data->_holder, position);
+    _assets.push_back(std::move(shotParticle));
+    _player->Shoot(false);
+}
+
 void DebugScene::Pause()
 {
 }
@@ -126,3 +129,4 @@ void DebugScene::Pause()
 void DebugScene::Resume()
 {
 }
+

@@ -2,12 +2,11 @@
 #include <iostream>
 #include <vector>
 #include "GameData.hpp"
-
 #include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"
-#include "Component.hpp"
+#include "GameObject.hpp"
 
-typedef std::unique_ptr<Component> ComponentRef;
+typedef std::unique_ptr<GameObject> GameObjectRef;
 
 class MainMenu : public State
 {
@@ -16,10 +15,10 @@ private:
 
 public:
 	ResourceMonitor _fps;
-	std::vector<ComponentRef> _assets;
+	std::vector<GameObjectRef> _assets;
 	
-	ComponentRef _startButton;
-	ComponentRef _quitButton;
+	GameObjectRef _startButton;
+	GameObjectRef _quitButton;
 
 	MainMenu(std::shared_ptr<GameData>& data);
 	~MainMenu();

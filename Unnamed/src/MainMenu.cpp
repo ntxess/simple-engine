@@ -8,9 +8,9 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-    ComponentRef background = std::make_unique<Component>(_data->_holder, "Background");
-    _startButton = std::make_unique<Component>(_data->_holder, "StartButton");
-    _quitButton = std::make_unique<Component>(_data->_holder, "QuitButton");
+    GameObjectRef background = std::make_unique<GameObject>(_data->_holder, "Background");
+    _startButton = std::make_unique<GameObject>(_data->_holder, "StartButton");
+    _quitButton = std::make_unique<GameObject>(_data->_holder, "QuitButton");
 
     _startButton->SetPosition(sf::Vector2f(160, 500));
     _quitButton->SetPosition(sf::Vector2f(160, 800));
@@ -59,11 +59,7 @@ void MainMenu::Render(RenderWindowRef& rw, float interpolation)
 }
 
 void MainMenu::Pause()
-{
-
-}
+{}
 
 void MainMenu::Resume()
-{
-
-}
+{}

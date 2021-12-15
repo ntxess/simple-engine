@@ -1,21 +1,22 @@
 #pragma once
 #include "Thor/Particles.hpp"
 #include "Thor/Math/Distributions.hpp"
-#include "Component.hpp"
+#include "GameObject.hpp"
+#include "ShipAnimation.hpp"
 
-typedef std::unique_ptr<Component> ComponentRef;
+typedef std::unique_ptr<GameObject> GameObjectRef;
 
 class Player
 {
 public:
-	ComponentRef _component;
+	GameObjectRef _component;
 	const float _MAX_HEALTH;
 	float _attackDamage;
 	float _health;
 	bool _isShooting;
 
-	Player(ComponentRef& component);
-	ComponentRef& GetComponent();
+	Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
+	GameObjectRef& GetComponent();
 	bool IsAlive() const;
 	float GetAttackDamage() const;
 	void TakeDamage(float damage);

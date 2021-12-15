@@ -15,11 +15,6 @@ ShipAnimation::ShipAnimation()
 ShipAnimation::~ShipAnimation()
 {}
 
-thor::Animator<sf::Sprite, std::string>& ShipAnimation::GetAnimator()
-{
-	return _animator;
-}
-
 void ShipAnimation::EventReceiver(sf::Vector2f direction)
 {
 	if (!_animator.isPlayingAnimation())
@@ -32,8 +27,9 @@ void ShipAnimation::EventReceiver(sf::Vector2f direction)
 		_animator.playAnimation("leftTurn");
 }
 
-void ShipAnimation::Update(sf::Vector2f direction, float deltaTime)
+void ShipAnimation::Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime)
 {
 	EventReceiver(direction);
 	_animator.update(sf::seconds(deltaTime));
+	_animator.animate(sprite);
 }

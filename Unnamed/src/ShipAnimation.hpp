@@ -9,7 +9,6 @@ private:
 public:
 	ShipAnimation();
 	~ShipAnimation();
-	thor::Animator<sf::Sprite, std::string>& GetAnimator();
 	void EventReceiver(sf::Vector2f direction);
-	void Update(sf::Vector2f direction, float deltaTime);
+	void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime);
 };

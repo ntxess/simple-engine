@@ -5,6 +5,6 @@
 class PhysicsComponent
 {
 public:
-	virtual void Move(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime) = 0;
-	virtual void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime) = 0;
+	PhysicsComponent();
+	void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime);
 };

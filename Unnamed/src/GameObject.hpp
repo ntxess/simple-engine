@@ -10,19 +10,19 @@ typedef std::unique_ptr<InputComponent> InputComponentRef;
 typedef std::unique_ptr<PhysicsComponent> PhysicsComponentRef;
 typedef std::unique_ptr<GraphicsComponent> GraphicsComponentRef;
 
-class Component
+class GameObject
 {
 public:
-	sf::Sprite _sprite;
 	InputComponentRef _input;
 	PhysicsComponentRef _physics;
 	GraphicsComponentRef _graphics;
+	sf::Sprite _sprite;
 	float _velocity;
 	bool _isTouched;
 
-	Component();
-	Component(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
-	~Component();
+	GameObject();
+	GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
+	~GameObject();
 	InputComponentRef& GetInput();
 	PhysicsComponentRef& GetPhysics();
 	GraphicsComponentRef& GetGraphics();
@@ -36,7 +36,7 @@ public:
 	void SetTouchTag(bool isTouched);
 	void SetScale(sf::Vector2f scale);
 	void SetPosition(sf::Vector2f position);
-	void AddAnimation(const std::string &id, const thor::FrameAnimation &animation, sf::Time duration);
+	void SetOrigin(sf::Vector2f position);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 }; 

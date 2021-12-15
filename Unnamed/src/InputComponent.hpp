@@ -4,8 +4,14 @@
 
 class InputComponent
 {
+private:
+	sf::Vector2f _direction;
+
 public:
-	virtual const sf::Vector2f& GetDirection() = 0;
-	virtual void Move(sf::Vector2f direction) = 0;
-	virtual void ClearDirection() = 0;
+	InputComponent();
+	~InputComponent();
+	const sf::Vector2f& GetDirection();
+	void Move(sf::Vector2f direction);
+	void Update(float velocity);
+	void ClearDirection();
 };

@@ -2,27 +2,31 @@
 #include <iostream>
 #include <vector>
 #include "GameData.hpp"
-
 #include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
-#include "Component.hpp"
-#include "PlayerInput.hpp"
-#include "RigidbodyBox.hpp"
+#include "GameObject.hpp"
 #include "ShipAnimation.hpp"
 #include "Player.hpp"
+#include "ShotParticle.hpp"
 
-typedef std::unique_ptr<Component> ComponentRef;
+typedef std::unique_ptr<GameObject> GameObjectRef;
 typedef std::unique_ptr<Player> PlayerRef;
 
 class DebugScene : public State
 {
 private:
+	//static const uint16_t MAX_ENTITIES = 100000;
 	std::shared_ptr<GameData> _data;
 
 public:
 	ResourceMonitor _fps;
 	PlayerRef _player;
-	std::vector<ComponentRef> _assets;
+	GameObjectRef _background;
+	//PhysicsComponent* _physicsComponent = new PhysicsComponent[MAX_ENTITIES];
+	//std::vector<PhysicsComponent> _physicsComponent;
+	//std::vector<GraphicsComponent> _graphicsComponent;
+
+	std::vector<GameObjectRef> _assets;
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();
@@ -30,8 +34,9 @@ public:
 	void ProcessInput(sf::Event event);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
-	void CheckBoundary(ComponentRef& object);
-	bool CheckCollision(ComponentRef& player, ComponentRef& object);
+	void CheckBoundary(GameObjectRef& object);
+	bool CheckCollision(GameObjectRef& player, GameObjectRef& object);
+	void SpawnShotParticle();
 	void Pause();
 	void Resume();
 };
