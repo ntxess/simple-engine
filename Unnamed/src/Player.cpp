@@ -9,7 +9,7 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::stri
 	_component = std::make_unique<GameObject>(holder, "Ship");
 	InputComponentRef controller = std::make_unique<InputComponent>();
 	PhysicsComponentRef rb = std::make_unique<PhysicsComponent>();
-	GraphicsComponentRef animation = std::make_unique<ShipAnimation>();
+	GraphicsComponentRef animation = std::make_unique<GraphicsComponent>();
 	_component->SetInput(controller);
 	_component->SetPhysics(rb);
 	_component->SetGraphics(animation);

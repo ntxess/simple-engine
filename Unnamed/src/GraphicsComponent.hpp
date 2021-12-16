@@ -6,7 +6,12 @@
 
 class GraphicsComponent
 {
+private:
+	thor::Animator<sf::Sprite, std::string> _animator;
+
 public:
-	virtual void EventReceiver(sf::Vector2f direction) = 0;
-	virtual void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime) = 0;
+	GraphicsComponent();
+	~GraphicsComponent();
+	void EventReceiver(sf::Vector2f direction);
+	void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime);
 };

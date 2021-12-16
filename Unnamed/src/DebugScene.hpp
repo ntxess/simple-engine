@@ -5,7 +5,6 @@
 #include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
-#include "ShipAnimation.hpp"
 #include "Player.hpp"
 #include "ShotParticle.hpp"
 

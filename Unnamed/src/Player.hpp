@@ -2,7 +2,6 @@
 #include "Thor/Particles.hpp"
 #include "Thor/Math/Distributions.hpp"
 #include "GameObject.hpp"
-#include "ShipAnimation.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 

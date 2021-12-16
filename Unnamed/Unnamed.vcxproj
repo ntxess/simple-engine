@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
     <ClCompile Include="src\PhysicsComponent.cpp" />
     <ClCompile Include="src\Player.cpp" />
@@ -26,7 +27,6 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\ShotParticle.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
-    <ClCompile Include="src\ShipAnimation.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -41,7 +41,6 @@
     <ClInclude Include="src\ShotParticle.hpp" />
     <ClInclude Include="src\State.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
-    <ClInclude Include="src\ShipAnimation.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\ResourceMonitor.hpp" />
     <ClInclude Include="src\GameObject.hpp" />

@@ -1,6 +1,6 @@
-#include "ShipAnimation.hpp"
+#include "GraphicsComponent.hpp"
 
-ShipAnimation::ShipAnimation() 
+GraphicsComponent::GraphicsComponent()
 {
 	thor::FrameAnimation idle, leftTurn, rightTurn;
 	for (int i = 0; i < 4; i++)
@@ -12,10 +12,10 @@ ShipAnimation::ShipAnimation()
 	_animator.addAnimation("rightTurn", rightTurn, sf::seconds(0.05f));
 }
 
-ShipAnimation::~ShipAnimation()
+GraphicsComponent::~GraphicsComponent()
 {}
 
-void ShipAnimation::EventReceiver(sf::Vector2f direction)
+void GraphicsComponent::EventReceiver(sf::Vector2f direction)
 {
 	if (!_animator.isPlayingAnimation())
 		_animator.playAnimation("idle");
@@ -27,7 +27,7 @@ void ShipAnimation::EventReceiver(sf::Vector2f direction)
 		_animator.playAnimation("leftTurn");
 }
 
-void ShipAnimation::Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime)
+void GraphicsComponent::Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime)
 {
 	EventReceiver(direction);
 	_animator.update(sf::seconds(deltaTime));
