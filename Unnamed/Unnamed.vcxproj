@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
+    <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\PhysicsComponent.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
@@ -34,6 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\InputComponent.hpp" />
+    <ClInclude Include="src\Particle.hpp" />
+    <ClInclude Include="src\GameObjectPool.hpp" />
     <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
@@ -127,6 +130,7 @@
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +148,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +167,7 @@
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -179,6 +185,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

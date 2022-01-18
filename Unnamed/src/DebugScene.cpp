@@ -8,8 +8,9 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    _player     = std::make_unique<Player>(_data->_holder, "Ship");
-    _background = std::make_unique<GameObject>(_data->_holder, "Background");
+    _player       = std::make_unique<Player>(_data->_holder, "Ship");
+    _background   = std::make_unique<GameObject>(_data->_holder, "Background");
+    _particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
 }
 
 void DebugScene::ProcessInput(sf::Event event)
@@ -44,7 +45,7 @@ void DebugScene::ProcessInput(sf::Event event)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         horizontal = 1.f;
 
-    _player->GetComponent()->GetInput()->Move(sf::Vector2f(horizontal, vertical));
+    _player->GetComponent()->GetInput()->Update(sf::Vector2f(horizontal, vertical));
 }
 
 void DebugScene::Update(float deltaTime)
@@ -61,7 +62,7 @@ void DebugScene::Update(float deltaTime)
     for (int i = 0; i < _assets.size(); i++)
     {
         _assets[i]->Update(deltaTime);
-        _assets[i]->GetInput()->Move(sf::Vector2f(0, -1));
+        _assets[i]->GetInput()->Update(sf::Vector2f(0, -1));
         CheckBoundary(_assets[i]);
         //CheckCollision(_player->GetComponent(), _assets[i]);
         //if (_assets[i]->IsTouched())

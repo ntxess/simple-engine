@@ -11,7 +11,6 @@ public:
 	InputComponent();
 	~InputComponent();
 	const sf::Vector2f& GetDirection();
-	void Move(sf::Vector2f direction);
-	void Update(float velocity);
+	void Update(sf::Vector2f direction);
 	void ClearDirection();
 };

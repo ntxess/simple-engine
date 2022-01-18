@@ -7,6 +7,8 @@
 #include "GameObject.hpp"
 #include "Player.hpp"
 #include "ShotParticle.hpp"
+#include "GameObjectPool.hpp"
+#include "Particle.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
 typedef std::unique_ptr<Player> PlayerRef;
@@ -21,6 +23,8 @@ public:
 	ResourceMonitor _fps;
 	PlayerRef _player;
 	GameObjectRef _background;
+	std::unique_ptr<GameObjectPool<Particle>> _particlePool;
+
 	//PhysicsComponent* _physicsComponent = new PhysicsComponent[MAX_ENTITIES];
 	//std::vector<PhysicsComponent> _physicsComponent;
 	//std::vector<GraphicsComponent> _graphicsComponent;

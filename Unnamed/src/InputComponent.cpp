@@ -11,7 +11,7 @@ const sf::Vector2f& InputComponent::GetDirection()
 	return _direction;
 }
 
-void InputComponent::Move(sf::Vector2f direction)
+void InputComponent::Update(sf::Vector2f direction)
 {
 	_direction += direction;
 	_direction.x = std::min(std::max(_direction.x, -1.0f), 1.0f);
