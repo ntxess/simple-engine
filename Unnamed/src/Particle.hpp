@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics/Vertex.hpp>
+#include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 #include "GameObjectPool.hpp"
 
@@ -24,10 +24,14 @@ private:
 	};
 
 	UState _state;
+	bool _inUse;
 
 public:
 	Particle();
 	void Init();
 	void SetNext(Particle* next);
+	void Update(float deltaTime);
+	bool Animate(float deltaTime);
+	bool Render(RenderWindowRef& rw, float interpolation);
 	Particle* GetNext() const;
 };
