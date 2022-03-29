@@ -18,7 +18,10 @@ void MainMenu::Init()
     _assets.push_back(std::move(background));
 }
 
-void MainMenu::ProcessInput(sf::Event event)
+void MainMenu::ProcessEvent(sf::Event event)
+{}
+
+void MainMenu::ProcessInput()
 {
     sf::Vector2f mousePos = _data->_window->mapPixelToCoords(sf::Mouse::getPosition(*_data->_window));
     if (_startButton->GetSprite().getGlobalBounds().contains(mousePos))

@@ -34,7 +34,8 @@ public:
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();
 	void Init();
-	void ProcessInput(sf::Event event);
+	void ProcessEvent(sf::Event event);
+	void ProcessInput();
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float interpolation);
 	void CheckBoundary(GameObjectRef& object);

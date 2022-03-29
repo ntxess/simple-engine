@@ -13,7 +13,7 @@ void DebugScene::Init()
     _particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
 }
 
-void DebugScene::ProcessInput(sf::Event event)
+void DebugScene::ProcessEvent(sf::Event event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
@@ -31,7 +31,10 @@ void DebugScene::ProcessInput(sf::Event event)
             std::cout << "Pressed X" << std::endl;
         }
     }
+}
 
+void DebugScene::ProcessInput()
+{
     float horizontal = 0, vertical = 0;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         vertical = -1.f;

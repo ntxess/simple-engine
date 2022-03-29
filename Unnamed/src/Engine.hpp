@@ -8,7 +8,7 @@ class Engine
 {
 private:
     std::shared_ptr<GameData> _data;
-    const float dt = 1.0f / 175.0f;
+    const float dt = 1.0f / 165.0f;
 
 public:
     sf::Clock _clock;

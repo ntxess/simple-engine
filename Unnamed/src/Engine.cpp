@@ -39,8 +39,6 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
-
-    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 }
 
 Engine::~Engine()
@@ -48,6 +46,8 @@ Engine::~Engine()
 
 void Engine::Run()
 {
+    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+
     float newTime, frameTime, interpolation;
     float currentTime = _clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
@@ -55,24 +55,22 @@ void Engine::Run()
     sf::Event event;
     while (_data->_window->isOpen())
     {
+        _data->_machine->ProcessStateChange();
+
         while (_data->_window->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 _data->_window->close();
 
-            if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
-                _data->_machine->GetActiveState()->ProcessInput(event);
+            _data->_machine->GetActiveState()->ProcessEvent(event);
         }
-
-        _data->_machine->ProcessStateChange();
 
         newTime = _clock.getElapsedTime().asSeconds();
         frameTime = newTime - currentTime;
         currentTime = newTime;
         accumulator += frameTime;
 
-        _data->_window->clear();
-        _data->_machine->GetActiveState()->ProcessInput(event);
+        _data->_machine->GetActiveState()->ProcessInput();
 
         while (accumulator >= dt)
         {
@@ -81,6 +79,8 @@ void Engine::Run()
         }
 
         interpolation = accumulator / dt;
+
+        _data->_window->clear();
         _data->_machine->GetActiveState()->Render(_data->_window, interpolation);
         _data->_window->display();
     }
