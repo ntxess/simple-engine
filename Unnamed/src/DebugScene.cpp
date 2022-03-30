@@ -11,6 +11,7 @@ void DebugScene::Init()
     _player       = std::make_unique<Player>(_data->_holder, "Ship");
     _background   = std::make_unique<GameObject>(_data->_holder, "Background");
     _particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
+    _player->GetComponent()->SetVelocity(15.f);
 }
 
 void DebugScene::ProcessEvent(sf::Event event)
@@ -34,21 +35,23 @@ void DebugScene::ProcessEvent(sf::Event event)
 }
 
 void DebugScene::ProcessInput()
-{
-    float horizontal = 0, vertical = 0;
+{ 
+    sf::Vector2f direction;
+    const float input = 1.f;
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        vertical = -1.f;
+        direction.y -= input;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        horizontal = -1.f;
+        direction.x -= input;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        vertical = 1.f;
+        direction.y += input;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        horizontal = 1.f;
+        direction.x += input;
 
-    _player->GetComponent()->GetInput()->Update(sf::Vector2f(horizontal, vertical));
+    _player->GetComponent()->GetInput()->Update(direction);
 }
 
 void DebugScene::Update(float deltaTime)
@@ -67,9 +70,6 @@ void DebugScene::Update(float deltaTime)
         _assets[i]->Update(deltaTime);
         _assets[i]->GetInput()->Update(sf::Vector2f(0, -1));
         CheckBoundary(_assets[i]);
-        //CheckCollision(_player->GetComponent(), _assets[i]);
-        //if (_assets[i]->IsTouched())
-        //    _assets.erase(assetStart + i);
     }
 
     if (!_player->IsAlive())

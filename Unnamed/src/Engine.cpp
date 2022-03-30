@@ -55,6 +55,11 @@ void Engine::Run()
     sf::Event event;
     while (_data->_window->isOpen())
     {
+        newTime = _clock.getElapsedTime().asSeconds();
+        frameTime = newTime - currentTime;
+        currentTime = newTime;
+        accumulator += frameTime;
+
         _data->_machine->ProcessStateChange();
 
         while (_data->_window->pollEvent(event))
@@ -64,11 +69,6 @@ void Engine::Run()
 
             _data->_machine->GetActiveState()->ProcessEvent(event);
         }
-
-        newTime = _clock.getElapsedTime().asSeconds();
-        frameTime = newTime - currentTime;
-        currentTime = newTime;
-        accumulator += frameTime;
 
         _data->_machine->GetActiveState()->ProcessInput();
 

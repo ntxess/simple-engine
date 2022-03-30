@@ -1,6 +1,6 @@
 #pragma once
-#include "Thor/Particles.hpp"
-#include "Thor/Math/Distributions.hpp"
+#include <Thor/Particles.hpp>
+#include <Thor/Math/Distributions.hpp>
 #include "GameObject.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;

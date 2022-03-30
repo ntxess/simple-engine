@@ -7,8 +7,8 @@ class PhysicsComponent
 {
 private:
 	InputComponent _input;
-	float _velocity;
 	bool _isTouched;
+	float _velocity;
 
 public:
 	PhysicsComponent();

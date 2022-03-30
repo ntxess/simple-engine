@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\PlayerGraphics.cpp" />
+    <ClCompile Include="src\PlayerInput.cpp" />
+    <ClCompile Include="src\PlayerPhysics.cpp" />
     <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
     <ClCompile Include="src\Particle.cpp" />
@@ -26,6 +29,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
+    <ClCompile Include="src\PlayerNew.cpp" />
     <ClCompile Include="src\ShotParticle.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -34,6 +38,9 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\PlayerGraphics.hpp" />
+    <ClInclude Include="src\PlayerInput.hpp" />
+    <ClInclude Include="src\PlayerPhysics.hpp" />
     <ClInclude Include="src\InputComponent.hpp" />
     <ClInclude Include="src\Particle.hpp" />
     <ClInclude Include="src\GameObjectPool.hpp" />
@@ -41,6 +48,7 @@
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
+    <ClInclude Include="src\PlayerNew.hpp" />
     <ClInclude Include="src\ShotParticle.hpp" />
     <ClInclude Include="src\State.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
