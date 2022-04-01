@@ -38,6 +38,7 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\PlayerGraphics.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />
     <ClInclude Include="src\PlayerPhysics.hpp" />

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+
 #include "GameData.hpp"
 #include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"

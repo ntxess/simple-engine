@@ -15,21 +15,6 @@ PlayerNew::PlayerNew()
 PlayerNew::~PlayerNew() 
 {}
 
-InputComponentRef& PlayerNew::GetInput()
-{
-	return _input;
-}
-
-PhysicsComponentRef& PlayerNew::GetPhysics()
-{
-	return _physics;
-}
-
-GraphicsComponentRef& PlayerNew::GetGraphics()
-{
-	return _graphics;
-}
-
 void PlayerNew::ResetStats()
 {
 	_currentStats.HP = _defaultStats.HP;
@@ -50,4 +35,20 @@ void PlayerNew::AugmentSpeed(float newSpeed)
 void PlayerNew::AugmentAttackSpeed(float newAttackSpeed)
 {
 	_defaultStats.ATTACK_SPEED = newAttackSpeed;
+}
+
+void PlayerNew::InputUpdate(sf::Event event)
+{
+	_input->Update(event);
+}
+
+void PlayerNew::PhysicsUpdate(float deltaTime)
+{
+	_physics->Update(*this, deltaTime);
+}
+
+void PlayerNew::GraphicsUpdate(RenderWindowRef& rw, float deltaTime, float interpolation)
+{
+	_graphics->Animator(*this, deltaTime, interpolation);
+	_graphics->Render(rw, interpolation);
 }
