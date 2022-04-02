@@ -33,6 +33,26 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::stri
 Player::~Player() 
 {}
 
+PlayerInputRef& Player::GetInput()
+{
+	return _input;
+}
+
+PlayerPhysicsRef& Player::GetPhysics()
+{
+	return _physics;
+}
+
+PlayerGraphicsRef& Player::GetGraphics()
+{
+	return _graphics;
+}
+
+void Player::Rebound()
+{
+	_graphics->_sprite.setPosition(_physics->_previousPos);
+}
+
 void Player::ResetStats()
 {
 	_currentStats.HP = _defaultStats.HP;

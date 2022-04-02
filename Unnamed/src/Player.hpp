@@ -45,6 +45,11 @@ public:
 	Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~Player();
 
+	PlayerInputRef& GetInput();
+	PlayerPhysicsRef& GetPhysics();
+	PlayerGraphicsRef& GetGraphics();
+
+	void Rebound();
 	void ResetStats();
 	void AugmentHealth(float newHealth);
 	void AugmentSpeed(float newSpeed);

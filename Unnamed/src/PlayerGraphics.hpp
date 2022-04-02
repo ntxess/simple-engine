@@ -21,6 +21,7 @@ public:
 	PlayerGraphics();
 	~PlayerGraphics();
 
+	const sf::Sprite& GetSprite();
 	void Animator(const Player& player);
 	void Render(const RenderWindowRef& rw, float deltaTime, float interpolation);
 };

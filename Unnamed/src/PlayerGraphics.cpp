@@ -14,6 +14,11 @@ PlayerGraphics::PlayerGraphics()
 PlayerGraphics::~PlayerGraphics()
 {}
 
+const sf::Sprite& PlayerGraphics::GetSprite()
+{
+	return _sprite;
+}
+
 void PlayerGraphics::Animator(const Player& player)
 {
 	if (!_animator.isPlayingAnimation())

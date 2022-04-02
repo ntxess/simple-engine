@@ -6,13 +6,14 @@ class Player;
 
 class PlayerPhysics
 {
+	friend class Player;
+
 private:
-	const sf::Vector2u _bounds;
+	sf::Vector2f _previousPos;
 
 public:
 	PlayerPhysics();
 	~PlayerPhysics();
 
-	bool OutOfBounds(const Player& player);
 	void Update(const Player& player, float deltaTime);
 };

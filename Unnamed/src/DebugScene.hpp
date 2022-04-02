@@ -40,7 +40,7 @@ public:
 	void ProcessInput(sf::Event event);
 	void Update(float deltaTime);
 	void Render(RenderWindowRef& rw, float deltaTime, float interpolation);
-	void CheckBoundary(GameObjectRef& object);
+	void CheckBoundary(PlayerRef& object);
 	bool CheckCollision(GameObjectRef& player, GameObjectRef& object);
 	void SpawnShotParticle();
 	void Pause();

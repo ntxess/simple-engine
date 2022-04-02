@@ -1,27 +1,11 @@
 #include "PlayerPhysics.hpp"
 
 PlayerPhysics::PlayerPhysics()
-	: _bounds(sf::Vector2u(1920, 1080))
+	: _previousPos(sf::Vector2u(0, 0))
 {}
 
 PlayerPhysics::~PlayerPhysics()
 {}
-
-bool PlayerPhysics::OutOfBounds(const Player& player)
-{
-	sf::Vector2f position = player._graphics->_sprite.getPosition();
-	sf::FloatRect rect = player._graphics->_sprite.getGlobalBounds();
-
-	if ((position.x < 0) || 
-		(position.y < 0) ||
-		(position.x + rect.width  > _bounds.x) ||
-		(position.y + rect.height > _bounds.y))
-	{
-		return true;
-	}
-
-	return false;
-}
 
 void PlayerPhysics::Update(const Player& player, float deltaTime)
 {
@@ -39,10 +23,7 @@ void PlayerPhysics::Update(const Player& player, float deltaTime)
 	// to the previous location
 	if (direction != sf::Vector2f(0, 0))
 	{
-		sf::Vector2f previousPos = player._graphics->_sprite.getPosition();
+		_previousPos = player._graphics->_sprite.getPosition();
 		player._graphics->_sprite.move(direction);
-		
-		if(OutOfBounds(player))
-			player._graphics->_sprite.setPosition(previousPos);
 	}
 }

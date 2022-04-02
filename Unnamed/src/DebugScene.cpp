@@ -31,7 +31,7 @@ void DebugScene::Update(float deltaTime)
 {
     _background->Update(deltaTime);
     _player->PhysicsUpdate(deltaTime);
-
+    CheckBoundary(_player);
     //_player->Update(deltaTime);
     //if (_player->_isShooting)
     //    SpawnShotParticle();
@@ -60,25 +60,23 @@ void DebugScene::Render(RenderWindowRef& rw, float deltaTime, float interpolatio
     _fps.Render(rw);
     _player->GraphicsUpdate(rw, deltaTime, interpolation);
 
-    //_player->Render(rw, interpolation);
-
     //for (int i = 0; i < _assets.size(); i++)
     //    _assets[i]->Render(rw, interpolation);
 }
 
-void DebugScene::CheckBoundary(GameObjectRef& object)
+void DebugScene::CheckBoundary(PlayerRef& player)
 {
-    if (object->GetPosition().x < 0)
-        object->SetPosition(sf::Vector2f(0.f, object->GetPosition().y));
+    sf::Vector2f position = player->GetGraphics()->GetSprite().getPosition();
+    sf::FloatRect rect = player->GetGraphics()->GetSprite().getGlobalBounds();
+    sf::Vector2u bounds = _data->_window->getSize();
 
-    if (object->GetPosition().y < 0)
-        object->SetPosition(sf::Vector2f(object->GetPosition().x, 0.f));
-
-    if (object->GetPosition().x + object->GetSprite().getGlobalBounds().width > _data->_window->getSize().x)
-        object->SetPosition(sf::Vector2f(_data->_window->getSize().x - object->GetSprite().getGlobalBounds().width, object->GetPosition().y));
-
-    if (object->GetPosition().y + object->GetSprite().getGlobalBounds().height > _data->_window->getSize().y)
-        object->SetPosition(sf::Vector2f(object->GetPosition().x, _data->_window->getSize().y - object->GetSprite().getGlobalBounds().height));
+    if ((position.x < 0) ||
+        (position.y < 0) ||
+        (position.x + rect.width  > bounds.x) ||
+        (position.y + rect.height > bounds.y))
+    {
+        player->Rebound();
+    }
 }
 
 bool DebugScene::CheckCollision(GameObjectRef& playerComponent, GameObjectRef& object)
