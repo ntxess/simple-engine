@@ -1,27 +1,55 @@
 #pragma once
-#include <Thor/Particles.hpp>
-#include <Thor/Math/Distributions.hpp>
-#include "GameObject.hpp"
+#include <SFML/Graphics.hpp>
+#include <Thor/Resources.hpp>
 
-typedef std::unique_ptr<GameObject> GameObjectRef;
+#include "PlayerInput.hpp"
+#include "PlayerPhysics.hpp"
+#include "PlayerGraphics.hpp"
+
+typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
+typedef std::unique_ptr<PlayerInput> PlayerInputRef;
+typedef std::unique_ptr<PlayerPhysics> PlayerPhysicsRef;
+typedef std::unique_ptr<PlayerGraphics> PlayerGraphicsRef;
 
 class Player
 {
+	friend class PlayerInput;
+	friend class PlayerPhysics;
+	friend class PlayerGraphics;
+
+private:
+	struct DEFAULT_STATS
+	{
+		float HP;
+		float SPD;
+		float ATTACK_SPEED;
+	};
+
+	struct CURRENT_STATS
+	{
+		float HP;
+		float SPD;
+		float ATTACK_SPEED;
+	};
+
+	// Compartmentalize components to update in different steps of game-loop
+	PlayerInputRef _input;
+	PlayerPhysicsRef _physics;
+	PlayerGraphicsRef _graphics;
+
+	DEFAULT_STATS _defaultStats;
+	CURRENT_STATS _currentStats;
+
 public:
-	GameObjectRef _component;
-	const float _MAX_HEALTH;
-	float _attackDamage;
-	float _health;
-	bool _isShooting;
-
+	Player();
 	Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
-	GameObjectRef& GetComponent();
-	bool IsAlive() const;
-	float GetAttackDamage() const;
-	void TakeDamage(float damage);
-	void Heal(float healAmount);
-	void Shoot(bool isShooting);
-	void Update(float deltaTime);
-	void Render(RenderWindowRef& rw, float interpolation);
-};
+	~Player();
 
+	void ResetStats();
+	void AugmentHealth(float newHealth);
+	void AugmentSpeed(float newSpeed);
+	void AugmentAttackSpeed(float newAttackSpeed);
+	void InputUpdate(sf::Event event);
+	void PhysicsUpdate(float deltaTime);
+	void GraphicsUpdate(RenderWindowRef& rw, float deltaTime, float interpolation);
+};

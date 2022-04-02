@@ -33,10 +33,10 @@ void PlayerInput::Update(sf::Event event)
 	_command = NULL;
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::Space)
-			_command = _KeySpace;
-
 		if (event.key.code == sf::Keyboard::LShift)
 			_command = _KeyShift;
+
+		if (event.key.code == sf::Keyboard::Space)
+			_command = _KeySpace;
 	}
 }

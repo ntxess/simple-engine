@@ -14,6 +14,7 @@
 typedef std::unique_ptr<GameObject> GameObjectRef;
 typedef std::unique_ptr<Player> PlayerRef;
 
+
 class DebugScene : public State
 {
 private:
@@ -36,9 +37,9 @@ public:
 	~DebugScene();
 	void Init();
 	void ProcessEvent(sf::Event event);
-	void ProcessInput();
+	void ProcessInput(sf::Event event);
 	void Update(float deltaTime);
-	void Render(RenderWindowRef& rw, float interpolation);
+	void Render(RenderWindowRef& rw, float deltaTime, float interpolation);
 	void CheckBoundary(GameObjectRef& object);
 	bool CheckCollision(GameObjectRef& player, GameObjectRef& object);
 	void SpawnShotParticle();

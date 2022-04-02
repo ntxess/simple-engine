@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PlayerNew.hpp"
+#include "Player.hpp"
 
-class PlayerNew;
+class Player;
 
 class PlayerPhysics
 {
@@ -10,6 +10,5 @@ public:
 	PlayerPhysics();
 	~PlayerPhysics();
 
-	void Update(PlayerNew& player, float deltaTime);
+	void Update(Player& player, float deltaTime);
 };
-

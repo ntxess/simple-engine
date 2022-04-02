@@ -25,9 +25,9 @@ public:
 	~MainMenu();
 	void Init();
 	void ProcessEvent(sf::Event event);
-	void ProcessInput();
+	void ProcessInput(sf::Event event);
 	void Update(float deltaTime);
-	void Render(RenderWindowRef& rw, float interpolation);
+	void Render(RenderWindowRef& rw, float deltaTime, float interpolation);
 	void Pause();
 	void Resume();
 };

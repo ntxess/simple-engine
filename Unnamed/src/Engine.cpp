@@ -70,18 +70,18 @@ void Engine::Run()
             _data->_machine->GetActiveState()->ProcessEvent(event);
         }
 
-        _data->_machine->GetActiveState()->ProcessInput();
+        _data->_machine->GetActiveState()->ProcessInput(event);
 
-        while (accumulator >= dt)
+        while (accumulator >= deltaTime)
         {
-            _data->_machine->GetActiveState()->Update(dt);
-            accumulator -= dt;
+            _data->_machine->GetActiveState()->Update(deltaTime);
+            accumulator -= deltaTime;
         }
 
-        interpolation = accumulator / dt;
+        interpolation = accumulator / deltaTime;
 
         _data->_window->clear();
-        _data->_machine->GetActiveState()->Render(_data->_window, interpolation);
+        _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
         _data->_window->display();
     }
 }

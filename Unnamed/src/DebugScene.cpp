@@ -8,10 +8,9 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    _player       = std::make_unique<Player>(_data->_holder, "Ship");
     _background   = std::make_unique<GameObject>(_data->_holder, "Background");
     _particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
-    _player->GetComponent()->SetVelocity(15.f);
+    _player = std::make_unique<Player>(_data->_holder, "Ship");
 }
 
 void DebugScene::ProcessEvent(sf::Event event)
@@ -20,74 +19,51 @@ void DebugScene::ProcessEvent(sf::Event event)
     {
         if (event.key.code == sf::Keyboard::Escape)
             _data->_machine->AddState(std::make_unique<MainMenu>(_data));
-
-        if (event.key.code == sf::Keyboard::Z)
-        {
-            std::cout << "Pressed Z" << std::endl;
-            _player->Shoot(true);
-        }
-
-        if (event.key.code == sf::Keyboard::X)
-        {
-            std::cout << "Pressed X" << std::endl;
-        }
     }
 }
 
-void DebugScene::ProcessInput()
+void DebugScene::ProcessInput(sf::Event event)
 { 
-    sf::Vector2f direction;
-    const float input = 1.f;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        direction.y -= input;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        direction.x -= input;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        direction.y += input;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        direction.x += input;
-
-    _player->GetComponent()->GetInput()->Update(direction);
+    _player->InputUpdate(event);
 }
 
 void DebugScene::Update(float deltaTime)
 {
     _background->Update(deltaTime);
-    _player->Update(deltaTime);
+    _player->PhysicsUpdate(deltaTime);
 
-    if (_player->_isShooting)
-        SpawnShotParticle();
+    //_player->Update(deltaTime);
+    //if (_player->_isShooting)
+    //    SpawnShotParticle();
 
-    CheckBoundary(_player->GetComponent());
+    //CheckBoundary(_player->GetComponent());
 
-    auto assetStart = _assets.begin();
-    for (int i = 0; i < _assets.size(); i++)
-    {
-        _assets[i]->Update(deltaTime);
-        _assets[i]->GetInput()->Update(sf::Vector2f(0, -1));
-        CheckBoundary(_assets[i]);
-    }
+    //auto assetStart = _assets.begin();
+    //for (int i = 0; i < _assets.size(); i++)
+    //{
+    //    _assets[i]->Update(deltaTime);
+    //    _assets[i]->GetInput()->Update(sf::Vector2f(0, -1));
+    //    CheckBoundary(_assets[i]);
+    //}
 
-    if (!_player->IsAlive())
-    {
-        _data->_machine->AddState(std::make_unique<MainMenu>(_data));
-    }
+    //if (!_player->IsAlive())
+    //{
+    //    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    //}
 }
 
-void DebugScene::Render(RenderWindowRef& rw, float interpolation)
+void DebugScene::Render(RenderWindowRef& rw, float deltaTime, float interpolation)
 {
     _background->Render(rw, interpolation);
-    _player->Render(rw, interpolation);
-
-    for (int i = 0; i < _assets.size(); i++)
-        _assets[i]->Render(rw, interpolation);
 
     _fps.Update();
     _fps.Render(rw);
+    _player->GraphicsUpdate(rw, deltaTime, interpolation);
+
+    //_player->Render(rw, interpolation);
+
+    //for (int i = 0; i < _assets.size(); i++)
+    //    _assets[i]->Render(rw, interpolation);
 }
 
 void DebugScene::CheckBoundary(GameObjectRef& object)
@@ -112,7 +88,6 @@ bool DebugScene::CheckCollision(GameObjectRef& playerComponent, GameObjectRef& o
         if (playerComponent->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
         {
             object->SetTouchTag(true);
-            _player->TakeDamage(30.f);
         }
     }
     return false;
@@ -120,10 +95,10 @@ bool DebugScene::CheckCollision(GameObjectRef& playerComponent, GameObjectRef& o
 
 void DebugScene::SpawnShotParticle()
 {
-    sf::Vector2f position = _player->GetComponent()->GetPosition();
-    GameObjectRef shotParticle = std::make_unique<ShotParticle>(_data->_holder, position);
-    _assets.push_back(std::move(shotParticle));
-    _player->Shoot(false);
+    //sf::Vector2f position = _player->GetComponent()->GetPosition();
+    //GameObjectRef shotParticle = std::make_unique<ShotParticle>(_data->_holder, position);
+    //_assets.push_back(std::move(shotParticle));
+    //_player->Shoot(false);
 }
 
 void DebugScene::Pause()

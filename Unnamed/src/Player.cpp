@@ -1,62 +1,72 @@
 #include "Player.hpp"
 
+Player::Player()
+	: _input(std::make_unique<PlayerInput>())
+	, _physics(std::make_unique<PlayerPhysics>())
+	, _graphics(std::make_unique<PlayerGraphics>())
+{
+	_defaultStats.HP = 100.f;
+	_defaultStats.SPD = 200.f;
+	_defaultStats.ATTACK_SPEED = 1.f;
+
+	ResetStats();
+}
+
 Player::Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
-	: _MAX_HEALTH(1000)
-	, _attackDamage(10)
-	, _health(_MAX_HEALTH)
-	, _isShooting(false)
+	: _input(std::make_unique<PlayerInput>())
+	, _physics(std::make_unique<PlayerPhysics>())
+	, _graphics(std::make_unique<PlayerGraphics>())
 {
-	_component = std::make_unique<GameObject>(holder, "Ship");
-	InputComponentRef controller = std::make_unique<InputComponent>();
-	PhysicsComponentRef rb = std::make_unique<PhysicsComponent>();
-	GraphicsComponentRef animation = std::make_unique<GraphicsComponent>();
-	_component->SetInput(controller);
-	_component->SetPhysics(rb);
-	_component->SetGraphics(animation);
-	_component->SetVelocity(600.f);
-	_component->SetScale(sf::Vector2f(2, 2));
-	_component->SetPosition(sf::Vector2f(360, 900));
+	_defaultStats.HP = 100.f;
+	_defaultStats.SPD = 500.f;
+	_defaultStats.ATTACK_SPEED = 1.f;
+
+	ResetStats();
+
+	sf::Texture& texture = holder[ID];
+	_graphics->_sprite.setTexture(texture);
+	_graphics->_sprite.setScale(sf::Vector2f(2, 2));
+	_graphics->_sprite.setPosition(sf::Vector2f(360, 900));
+	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
 
-GameObjectRef& Player::GetComponent()
+Player::~Player() 
+{}
+
+void Player::ResetStats()
 {
-	return _component;
+	_currentStats.HP = _defaultStats.HP;
+	_currentStats.SPD = _defaultStats.SPD;
+	_currentStats.ATTACK_SPEED = _defaultStats.ATTACK_SPEED;
 }
 
-bool Player::IsAlive() const
+void Player::AugmentHealth(float newHealth)
 {
-	return _health > 0 ? true : false;
+	_defaultStats.HP = newHealth;
 }
 
-float Player::GetAttackDamage() const
+void Player::AugmentSpeed(float newSpeed)
 {
-	return _attackDamage;
+	_defaultStats.SPD = newSpeed;
 }
 
-void Player::TakeDamage(float damage)
+void Player::AugmentAttackSpeed(float newAttackSpeed)
 {
-	if (_health > 0.f)
-		_health -= damage;
+	_defaultStats.ATTACK_SPEED = newAttackSpeed;
 }
 
-void Player::Heal(float healAmount)
+void Player::InputUpdate(sf::Event event)
 {
-	_health += healAmount;
-	if (_MAX_HEALTH > _health)
-		_health = _MAX_HEALTH;
+	_input->Update(event);
 }
 
-void Player::Shoot(bool isShooting)
+void Player::PhysicsUpdate(float deltaTime)
 {
-	_isShooting = isShooting;
+	_physics->Update(*this, deltaTime);
 }
 
-void Player::Update(float deltaTime)
+void Player::GraphicsUpdate(RenderWindowRef& rw, float deltaTime, float interpolation)
 {
-	_component->Update(deltaTime);
-}
-
-void Player::Render(RenderWindowRef& rw, float interpolation)
-{
-	_component->Render(rw, interpolation);
+	_graphics->Animator(*this);
+	_graphics->Render(rw, deltaTime, interpolation);
 }

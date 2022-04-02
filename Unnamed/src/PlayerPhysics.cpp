@@ -6,7 +6,7 @@ PlayerPhysics::PlayerPhysics()
 PlayerPhysics::~PlayerPhysics()
 {}
 
-void PlayerPhysics::Update(PlayerNew& player, float deltaTime)
+void PlayerPhysics::Update(Player& player, float deltaTime)
 {
 	CommandRef command = player._input->_command;
 	if (command)
@@ -17,5 +17,5 @@ void PlayerPhysics::Update(PlayerNew& player, float deltaTime)
 	direction.y = direction.y * deltaTime * player._currentStats.SPD;
 
 	if (direction != sf::Vector2f(0, 0))
-		player._graphics->_sprite.move(player._input->_direction);
+		player._graphics->_sprite.move(direction);
 }
