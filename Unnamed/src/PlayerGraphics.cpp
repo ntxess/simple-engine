@@ -26,7 +26,7 @@ void PlayerGraphics::Animator(const Player& player)
 		_animator.playAnimation("leftTurn");
 }
 
-void PlayerGraphics::Render(const RenderWindowRef& rw, float deltaTime, float interpolation)
+void PlayerGraphics::Render(RenderWindowRef& rw, float interpolation)
 {
 	_animator.update(sf::seconds(deltaTime));
 	_animator.animate(_sprite);
