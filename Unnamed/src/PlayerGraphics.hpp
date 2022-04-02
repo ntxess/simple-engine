@@ -2,14 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
-#include "PlayerNew.hpp"
+#include "Player.hpp"
 
-class PlayerNew;
+class Player;
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
 class PlayerGraphics
 {
+	friend class Player;
 	friend class PlayerPhysics;
 
 private:
@@ -20,7 +21,7 @@ public:
 	PlayerGraphics();
 	~PlayerGraphics();
 
-	void Animator(PlayerNew& player, float deltaTime, float interpolation);
-	void Render(RenderWindowRef& rw, float interpolation);
+	void Animator(const Player& player);
+	void Render(const RenderWindowRef& rw, float deltaTime, float interpolation);
 };
 

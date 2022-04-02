@@ -10,8 +10,8 @@ PlayerInput::~PlayerInput()
 
 void PlayerInput::ResetCommandBinds()
 {
-	_KeyShift = std::make_shared<CommandDodge>();
-	_KeySpace = std::make_shared<CommandEXSkill>();
+	_KeyLShift = std::make_shared<CommandDodge>();
+	_KeyRShift = std::make_shared<CommandEXSkill>();
 }
 
 void PlayerInput::Update(sf::Event event)
@@ -33,10 +33,10 @@ void PlayerInput::Update(sf::Event event)
 	_command = NULL;
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::Space)
-			_command = _KeySpace;
-
 		if (event.key.code == sf::Keyboard::LShift)
-			_command = _KeyShift;
+			_command = _KeyLShift;
+
+		if (event.key.code == sf::Keyboard::RShift)
+			_command = _KeyRShift;
 	}
 }

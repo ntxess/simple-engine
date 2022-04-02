@@ -1,15 +1,18 @@
 #pragma once
 
-#include "PlayerNew.hpp"
+#include "Player.hpp"
 
-class PlayerNew;
+class Player;
 
 class PlayerPhysics
 {
+private:
+	const sf::Vector2u _bounds;
+
 public:
 	PlayerPhysics();
 	~PlayerPhysics();
 
-	void Update(PlayerNew& player, float deltaTime);
+	bool OutOfBounds(const Player& player);
+	void Update(const Player& player, float deltaTime);
 };
-

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Command
 {
@@ -14,7 +15,7 @@ public:
 
 	void Execute()
 	{
-
+		std::cout << "DODGING" << std::endl;
 	}
 };
 
@@ -26,6 +27,6 @@ public:
 
 	void Execute()
 	{
-
+		std::cout << "USING EX SKILL" << std::endl;
 	}
 };

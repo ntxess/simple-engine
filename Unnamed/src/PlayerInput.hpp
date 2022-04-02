@@ -14,8 +14,8 @@ private:
 	sf::Vector2f _direction;
 
 	CommandRef _command;
-	CommandRef _KeyShift;
-	CommandRef _KeySpace;
+	CommandRef _KeyLShift;
+	CommandRef _KeyRShift;
 
 public:
 	PlayerInput();
