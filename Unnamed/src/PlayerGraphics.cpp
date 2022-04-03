@@ -14,7 +14,7 @@ PlayerGraphics::PlayerGraphics()
 PlayerGraphics::~PlayerGraphics()
 {}
 
-const sf::Sprite& PlayerGraphics::GetSprite()
+const sf::Sprite& PlayerGraphics::GetSprite() const
 {
 	return _sprite;
 }
@@ -31,7 +31,7 @@ void PlayerGraphics::Animator(const Player& player)
 		_animator.playAnimation("leftTurn");
 }
 
-void PlayerGraphics::Render(const RenderWindowRef& rw, float deltaTime, float interpolation)
+void PlayerGraphics::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
 	_animator.update(sf::seconds(deltaTime));
 	_animator.animate(_sprite);

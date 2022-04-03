@@ -11,6 +11,3 @@ public:
 
 	void Execute(const Player& player);
 };
-
-
-

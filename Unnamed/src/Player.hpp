@@ -6,6 +6,10 @@
 #include "PlayerPhysics.hpp"
 #include "PlayerGraphics.hpp"
 
+class PlayerInput;
+class PlayerPhysics;
+class PlayerGraphics;
+
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 typedef std::unique_ptr<PlayerInput> PlayerInputRef;
 typedef std::unique_ptr<PlayerPhysics> PlayerPhysicsRef;
@@ -45,16 +49,16 @@ public:
 	Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~Player();
 
-	PlayerInputRef& GetInput();
-	PlayerPhysicsRef& GetPhysics();
-	PlayerGraphicsRef& GetGraphics();
+	const PlayerInputRef& GetInput() const;
+	const PlayerPhysicsRef& GetPhysics() const;
+	const PlayerGraphicsRef& GetGraphics() const;
 
 	void Rebound();
 	void ResetStats();
-	void AugmentHealth(float newHealth);
-	void AugmentSpeed(float newSpeed);
-	void AugmentAttackSpeed(float newAttackSpeed);
-	void InputUpdate(sf::Event event);
-	void PhysicsUpdate(float deltaTime);
-	void GraphicsUpdate(RenderWindowRef& rw, float deltaTime, float interpolation);
+	void AugmentHealth(const float& newHealth);
+	void AugmentSpeed(const float& newSpeed);
+	void AugmentAttackSpeed(const float& newAttackSpeed);
+	void InputUpdate(const sf::Event& event);
+	void PhysicsUpdate(const float& deltaTime);
+	void GraphicsUpdate(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
 };

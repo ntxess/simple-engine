@@ -1,6 +1,8 @@
 #include "PlayerInput.hpp"
 
 PlayerInput::PlayerInput()
+	: _delay(sf::seconds(0.5f).asSeconds())
+	, _direction(sf::Vector2f(0, 0))
 {
 	ResetCommandBinds();
 }
@@ -10,11 +12,11 @@ PlayerInput::~PlayerInput()
 
 void PlayerInput::ResetCommandBinds()
 {
-	//_KeyLShift = std::make_shared<CommandDodge>();
-	//_KeyRShift = std::make_shared<CommandExSkill>();
+	_KeyLShift = std::make_shared<CommandDodge>();
+	_KeyRShift = std::make_shared<CommandExSkill>();
 }
 
-void PlayerInput::Update(sf::Event event)
+void PlayerInput::Update(const sf::Event& event)
 {
 	const float input = 1.f;
 	_direction = sf::Vector2f(0, 0);
@@ -30,20 +32,13 @@ void PlayerInput::Update(sf::Event event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		_direction.x += input;
 	
-	//_command = NULL;
-	_command = PlayerInput::COMMAND::NONE;
+	_command = NULL;
 	if (event.type == sf::Event::KeyPressed)
 	{
-		//if (event.key.code == sf::Keyboard::LShift)
-		//	_command = _KeyLShift;
-
-		//if (event.key.code == sf::Keyboard::RShift)
-		//	_command = _KeyRShift;
-
 		if (event.key.code == sf::Keyboard::LShift)
-			_command = PlayerInput::COMMAND::DODGE;
+			_command = _KeyLShift;
 
 		if (event.key.code == sf::Keyboard::RShift)
-			_command = PlayerInput::COMMAND::EX_SKILL;
+			_command = _KeyRShift;
 	}
 }

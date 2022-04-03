@@ -33,17 +33,17 @@ Player::Player(thor::ResourceHolder<sf::Texture, std::string>& holder, std::stri
 Player::~Player() 
 {}
 
-PlayerInputRef& Player::GetInput()
+const PlayerInputRef& Player::GetInput() const
 {
 	return _input;
 }
 
-PlayerPhysicsRef& Player::GetPhysics()
+const PlayerPhysicsRef& Player::GetPhysics() const
 {
 	return _physics;
 }
 
-PlayerGraphicsRef& Player::GetGraphics()
+const PlayerGraphicsRef& Player::GetGraphics() const
 {
 	return _graphics;
 }
@@ -60,32 +60,32 @@ void Player::ResetStats()
 	_currentStats.ATTACK_SPEED = _defaultStats.ATTACK_SPEED;
 }
 
-void Player::AugmentHealth(float newHealth)
+void Player::AugmentHealth(const float& newHealth)
 {
 	_defaultStats.HP = newHealth;
 }
 
-void Player::AugmentSpeed(float newSpeed)
+void Player::AugmentSpeed(const float& newSpeed)
 {
 	_defaultStats.SPD = newSpeed;
 }
 
-void Player::AugmentAttackSpeed(float newAttackSpeed)
+void Player::AugmentAttackSpeed(const float& newAttackSpeed)
 {
 	_defaultStats.ATTACK_SPEED = newAttackSpeed;
 }
 
-void Player::InputUpdate(sf::Event event)
+void Player::InputUpdate(const sf::Event& event)
 {
 	_input->Update(event);
 }
 
-void Player::PhysicsUpdate(float deltaTime)
+void Player::PhysicsUpdate(const float& deltaTime)
 {
 	_physics->Update(*this, deltaTime);
 }
 
-void Player::GraphicsUpdate(RenderWindowRef& rw, float deltaTime, float interpolation)
+void Player::GraphicsUpdate(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
 	_graphics->Animator(*this);
 	_graphics->Render(rw, deltaTime, interpolation);

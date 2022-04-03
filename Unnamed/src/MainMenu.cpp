@@ -18,10 +18,10 @@ void MainMenu::Init()
     _assets.push_back(std::move(background));
 }
 
-void MainMenu::ProcessEvent(sf::Event event)
+void MainMenu::ProcessEvent(const sf::Event& event)
 {}
 
-void MainMenu::ProcessInput(sf::Event event)
+void MainMenu::ProcessInput(const sf::Event& event)
 {
     sf::Vector2f mousePos = _data->_window->mapPixelToCoords(sf::Mouse::getPosition(*_data->_window));
     if (_startButton->GetSprite().getGlobalBounds().contains(mousePos))
@@ -41,7 +41,7 @@ void MainMenu::ProcessInput(sf::Event event)
     }
 }
 
-void MainMenu::Update(float deltaTime)
+void MainMenu::Update(const float& deltaTime)
 {
     for (int i = 0; i < _assets.size(); i++)
     {
@@ -49,7 +49,7 @@ void MainMenu::Update(float deltaTime)
     }
 }
 
-void MainMenu::Render(RenderWindowRef& rw, float deltaTime, float interpolation)
+void MainMenu::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
     for (int i = 0; i < _assets.size(); i++)
     {

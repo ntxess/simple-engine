@@ -13,7 +13,7 @@ void DebugScene::Init()
     _player = std::make_unique<Player>(_data->_holder, "Ship");
 }
 
-void DebugScene::ProcessEvent(sf::Event event)
+void DebugScene::ProcessEvent(const sf::Event& event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
@@ -22,12 +22,12 @@ void DebugScene::ProcessEvent(sf::Event event)
     }
 }
 
-void DebugScene::ProcessInput(sf::Event event)
+void DebugScene::ProcessInput(const sf::Event& event)
 { 
     _player->InputUpdate(event);
 }
 
-void DebugScene::Update(float deltaTime)
+void DebugScene::Update(const float& deltaTime)
 {
     _background->Update(deltaTime);
     _player->PhysicsUpdate(deltaTime);
@@ -52,7 +52,7 @@ void DebugScene::Update(float deltaTime)
     //}
 }
 
-void DebugScene::Render(RenderWindowRef& rw, float deltaTime, float interpolation)
+void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
     _background->Render(rw, interpolation);
 
@@ -79,7 +79,7 @@ void DebugScene::CheckBoundary(const PlayerRef& player)
     }
 }
 
-bool DebugScene::CheckCollision(GameObjectRef& playerComponent, GameObjectRef& object)
+bool DebugScene::CheckCollision(const GameObjectRef& playerComponent, const GameObjectRef& object)
 {
     if (object->GetPhysics())
     {

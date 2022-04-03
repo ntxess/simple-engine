@@ -94,7 +94,7 @@ void GameObject::SetOrigin(sf::Vector2f position)
 	_sprite.setOrigin(position);
 }
 
-void GameObject::Update(float deltaTime)
+void GameObject::Update(const float& deltaTime)
 {	
 	sf::Vector2f direction(0.f, 0.f);
 	if (_input)
@@ -111,7 +111,7 @@ void GameObject::Update(float deltaTime)
 		_graphics->Update(_sprite, direction, deltaTime);
 }
 
-void GameObject::Render(RenderWindowRef& rw, float interpolation)
+void GameObject::Render(const RenderWindowRef& rw, const float& interpolation)
 {
 	rw->draw(_sprite);
 }

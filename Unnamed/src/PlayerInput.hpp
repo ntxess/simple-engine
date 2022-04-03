@@ -12,25 +12,20 @@ class PlayerInput
 	friend class PlayerGraphics;
 
 private:
-	enum class COMMAND
-	{
-		NONE,
-		DODGE,
-		EX_SKILL
-	};
+	const float _delay;
 
+	sf::Clock _cooldownTimer;
 	sf::Vector2f _direction;
-	COMMAND _command;
 
-	//CommandRef _command;
-	//CommandRef _KeyLShift;
-	//CommandRef _KeyRShift;
+	CommandRef _command;
+	CommandRef _KeyLShift;
+	CommandRef _KeyRShift;
 
 public:
 	PlayerInput();
 	~PlayerInput();
 
 	void ResetCommandBinds();
- 	void Update(sf::Event event);
+ 	void Update(const sf::Event& event);
 };
 

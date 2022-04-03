@@ -39,7 +39,7 @@ void ResourceMonitor::Update()
     ++_fps;
 }
 
-void ResourceMonitor::Render(RenderWindowRef& rw)
+void ResourceMonitor::Render(const RenderWindowRef& rw)
 {
     rw->draw(_text);
 }

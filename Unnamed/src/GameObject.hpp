@@ -37,6 +37,6 @@ public:
 	void SetScale(sf::Vector2f scale);
 	void SetPosition(sf::Vector2f position);
 	void SetOrigin(sf::Vector2f position);
-	void Update(float deltaTime);
-	void Render(RenderWindowRef& rw, float interpolation);
+	void Update(const float& deltaTime);
+	void Render(const RenderWindowRef& rw, const float& interpolation);
 }; 

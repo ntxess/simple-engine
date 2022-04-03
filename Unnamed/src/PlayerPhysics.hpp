@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 #include "Player.hpp"
 
@@ -15,5 +16,5 @@ public:
 	PlayerPhysics();
 	~PlayerPhysics();
 
-	void Update(const Player& player, float deltaTime);
+	void Update(const Player& player, const float& deltaTime);
 };

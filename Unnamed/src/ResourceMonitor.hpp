@@ -20,5 +20,5 @@ public:
     std::string FloatToString(float d);
     void Reposition(sf::Vector2f pos);
     void Update();
-    void Render(RenderWindowRef& rw);
+    void Render(const RenderWindowRef& rw);
 };

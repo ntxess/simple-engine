@@ -8,10 +8,10 @@ class State
 {
 public:
 	virtual void Init() = 0;
-	virtual void ProcessEvent(sf::Event event) = 0;
-	virtual void ProcessInput(sf::Event event) = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual void Render(RenderWindowRef& rw, float deltaTime, float interpolation) = 0;
+	virtual void ProcessEvent(const sf::Event& event) = 0;
+	virtual void ProcessInput(const sf::Event& event) = 0;
+	virtual void Update(const float& deltaTime) = 0;
+	virtual void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation) = 0;
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 };

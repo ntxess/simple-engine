@@ -24,10 +24,10 @@ public:
 	MainMenu(std::shared_ptr<GameData>& data);
 	~MainMenu();
 	void Init();
-	void ProcessEvent(sf::Event event);
-	void ProcessInput(sf::Event event);
-	void Update(float deltaTime);
-	void Render(RenderWindowRef& rw, float deltaTime, float interpolation);
+	void ProcessEvent(const sf::Event& event);
+	void ProcessInput(const sf::Event& event);
+	void Update(const float& deltaTime);
+	void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
 	void Pause();
 	void Resume();
 };
