@@ -22,6 +22,7 @@ public:
 	PlayerInput();
 	~PlayerInput();
 
+	sf::Vector2f GetDirection() const;
 	void ResetCommandBinds();
  	void Update(const sf::Event& event);
 };

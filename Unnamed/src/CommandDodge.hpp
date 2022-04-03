@@ -8,6 +8,7 @@ class CommandDodge : public Command
 private:
 	sf::Clock _timer;
 	const float _cooldownTime;
+	const float _dodgeOffset;
 
 public:
 	CommandDodge();

@@ -53,7 +53,6 @@ public:
 	const PlayerPhysicsRef& GetPhysics() const;
 	const PlayerGraphicsRef& GetGraphics() const;
 
-	void Rebound();
 	void ResetStats();
 	void AugmentHealth(const float& newHealth);
 	void AugmentSpeed(const float& newSpeed);

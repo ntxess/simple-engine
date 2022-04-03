@@ -48,11 +48,6 @@ const PlayerGraphicsRef& Player::GetGraphics() const
 	return _graphics;
 }
 
-void Player::Rebound()
-{
-	_graphics->_sprite.setPosition(_physics->_previousPos);
-}
-
 void Player::ResetStats()
 {
 	_currentStats.HP = _defaultStats.HP;

@@ -14,7 +14,7 @@ PlayerGraphics::PlayerGraphics()
 PlayerGraphics::~PlayerGraphics()
 {}
 
-const sf::Sprite& PlayerGraphics::GetSprite() const
+sf::Sprite& PlayerGraphics::GetSprite()
 {
 	return _sprite;
 }

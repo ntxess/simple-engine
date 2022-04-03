@@ -2,6 +2,7 @@
 
 CommandDodge::CommandDodge()
 	: _cooldownTime(sf::seconds(5.f).asSeconds())
+	, _dodgeOffset(100.f)
 {}
 
 CommandDodge::~CommandDodge()
@@ -10,10 +11,14 @@ CommandDodge::~CommandDodge()
 void CommandDodge::Execute(const Player& player)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
+	sf::Vector2f direction = player.GetInput()->GetDirection();
 
-	if (currentTime > _cooldownTime)
+	if (direction != sf::Vector2f(0, 0) && currentTime > _cooldownTime)
 	{
-		std::cout << "Dodging" << std::endl;
+		direction.x *= _dodgeOffset;
+		direction.y *= _dodgeOffset;
+
+		player.GetGraphics()->GetSprite().move(direction);
 		_timer.restart();
 	}
 }

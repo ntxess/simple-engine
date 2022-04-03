@@ -9,9 +9,6 @@ class PlayerPhysics
 {
 	friend class Player;
 
-private:
-	sf::Vector2f _previousPos;
-
 public:
 	PlayerPhysics();
 	~PlayerPhysics();

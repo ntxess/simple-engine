@@ -32,6 +32,7 @@ void DebugScene::Update(const float& deltaTime)
     _background->Update(deltaTime);
     _player->PhysicsUpdate(deltaTime);
     CheckBoundary(_player);
+
     //_player->Update(deltaTime);
     //if (_player->_isShooting)
     //    SpawnShotParticle();
@@ -70,13 +71,17 @@ void DebugScene::CheckBoundary(const PlayerRef& player)
     sf::FloatRect rect = player->GetGraphics()->GetSprite().getGlobalBounds();
     sf::Vector2u bounds = _data->_window->getSize();
 
-    if ((position.x < 0) ||
-        (position.y < 0) ||
-        (position.x + rect.width  > bounds.x) ||
-        (position.y + rect.height > bounds.y))
-    {
-        player->Rebound();
-    }
+    if (position.x < 0)
+        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(0.f, position.y));
+
+    if (position.y < 0)
+        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
+
+    if (position.x + rect.width > bounds.x)
+        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
+
+    if (position.y + rect.height > bounds.y)
+        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
 bool DebugScene::CheckCollision(const GameObjectRef& playerComponent, const GameObjectRef& object)
