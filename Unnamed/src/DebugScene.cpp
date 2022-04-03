@@ -64,7 +64,7 @@ void DebugScene::Render(RenderWindowRef& rw, float deltaTime, float interpolatio
     //    _assets[i]->Render(rw, interpolation);
 }
 
-void DebugScene::CheckBoundary(PlayerRef& player)
+void DebugScene::CheckBoundary(const PlayerRef& player)
 {
     sf::Vector2f position = player->GetGraphics()->GetSprite().getPosition();
     sf::FloatRect rect = player->GetGraphics()->GetSprite().getGlobalBounds();

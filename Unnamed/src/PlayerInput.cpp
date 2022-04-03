@@ -10,8 +10,8 @@ PlayerInput::~PlayerInput()
 
 void PlayerInput::ResetCommandBinds()
 {
-	_KeyLShift = std::make_shared<CommandDodge>();
-	_KeyRShift = std::make_shared<CommandEXSkill>();
+	//_KeyLShift = std::make_shared<CommandDodge>();
+	//_KeyRShift = std::make_shared<CommandExSkill>();
 }
 
 void PlayerInput::Update(sf::Event event)
@@ -30,13 +30,20 @@ void PlayerInput::Update(sf::Event event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		_direction.x += input;
 	
-	_command = NULL;
+	//_command = NULL;
+	_command = PlayerInput::COMMAND::NONE;
 	if (event.type == sf::Event::KeyPressed)
 	{
+		//if (event.key.code == sf::Keyboard::LShift)
+		//	_command = _KeyLShift;
+
+		//if (event.key.code == sf::Keyboard::RShift)
+		//	_command = _KeyRShift;
+
 		if (event.key.code == sf::Keyboard::LShift)
-			_command = _KeyLShift;
+			_command = PlayerInput::COMMAND::DODGE;
 
 		if (event.key.code == sf::Keyboard::RShift)
-			_command = _KeyRShift;
+			_command = PlayerInput::COMMAND::EX_SKILL;
 	}
 }

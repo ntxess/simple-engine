@@ -10,20 +10,22 @@ PlayerPhysics::~PlayerPhysics()
 void PlayerPhysics::Update(const Player& player, float deltaTime)
 {
 	// Execute any events triggered by the keys defined in PlayerInput
-	CommandRef command = player._input->_command;
-	if (command)
-		command->Execute();
+	//CommandRef command = player._input->_command;
+	//if (command)
+	//	command->Execute(player);
 	
-	// Calculate distance to travele and save as offset
+	PlayerInput::COMMAND command = player._input->_command;
+	if (command == PlayerInput::COMMAND::DODGE)
+		std::cout << "Dodging in Update" << std::endl;
+
+	if (command == PlayerInput::COMMAND::EX_SKILL)
+		std::cout << "Using EX_Skill in Update" << std::endl;
+
+	// Calculate distance to travel as offset
 	sf::Vector2f direction = player._input->_direction;
 	direction.x = direction.x * deltaTime * player._currentStats.SPD;
 	direction.y = direction.y * deltaTime * player._currentStats.SPD;
 
-	// If the offset causes the player to go out of bounds reset the player position 
-	// to the previous location
-	if (direction != sf::Vector2f(0, 0))
-	{
-		_previousPos = player._graphics->_sprite.getPosition();
-		player._graphics->_sprite.move(direction);
-	}
+	_previousPos = player._graphics->_sprite.getPosition();
+	player._graphics->_sprite.move(direction);
 }

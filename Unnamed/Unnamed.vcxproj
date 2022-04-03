@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CommandExSkill.cpp" />
+    <ClCompile Include="src\CommandDodge.cpp" />
     <ClCompile Include="src\PlayerGraphics.cpp" />
     <ClCompile Include="src\PlayerInput.cpp" />
     <ClCompile Include="src\PlayerPhysics.cpp" />
@@ -37,6 +39,8 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CommandExSkill.hpp" />
+    <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />
     <ClInclude Include="src\PlayerGraphics.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />

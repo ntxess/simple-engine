@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "Command.hpp"
+#include "CommandDodge.hpp"
+#include "CommandEXSkill.hpp"
 
 typedef std::shared_ptr<Command> CommandRef;
 
@@ -11,11 +12,19 @@ class PlayerInput
 	friend class PlayerGraphics;
 
 private:
-	sf::Vector2f _direction;
+	enum class COMMAND
+	{
+		NONE,
+		DODGE,
+		EX_SKILL
+	};
 
-	CommandRef _command;
-	CommandRef _KeyLShift;
-	CommandRef _KeyRShift;
+	sf::Vector2f _direction;
+	COMMAND _command;
+
+	//CommandRef _command;
+	//CommandRef _KeyLShift;
+	//CommandRef _KeyRShift;
 
 public:
 	PlayerInput();
