@@ -74,12 +74,14 @@ void DebugScene::CheckBoundary(const PlayerRef& player)
     if (position.x < 0)
         player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(0.f, position.y));
 
-    if (position.y < 0)
-        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
-
     if (position.x + rect.width > bounds.x)
         player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
 
+    position = player->GetGraphics()->GetSprite().getPosition();
+
+    if (position.y < 0)
+        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
+    
     if (position.y + rect.height > bounds.y)
         player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
