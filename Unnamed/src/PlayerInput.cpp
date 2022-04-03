@@ -1,8 +1,7 @@
 #include "PlayerInput.hpp"
 
 PlayerInput::PlayerInput()
-	: _delay(sf::seconds(0.5f).asSeconds())
-	, _direction(sf::Vector2f(0, 0))
+	: _direction(sf::Vector2f(0, 0))
 {
 	ResetCommandBinds();
 }

@@ -12,9 +12,6 @@ class PlayerInput
 	friend class PlayerGraphics;
 
 private:
-	const float _delay;
-
-	sf::Clock _cooldownTimer;
 	sf::Vector2f _direction;
 
 	CommandRef _command;
