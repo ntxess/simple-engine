@@ -6,18 +6,6 @@ GameObject::GameObject()
 	, _graphics(nullptr)
 {
 	_defaultStats.HP = 100.f;
-	_defaultStats.SPD = 200.f;
-	_defaultStats.ATTACK_SPEED = 1.f;
-
-	ResetStats();
-}
-
-GameObject::GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
-	: _input(nullptr)
-	, _physics(nullptr)
-	, _graphics(nullptr)
-{
-	_defaultStats.HP = 100.f;
 	_defaultStats.SPD = 500.f;
 	_defaultStats.ATTACK_SPEED = 1.f;
 
@@ -44,17 +32,27 @@ const GraphicsComponentRef& GameObject::GetGraphics() const
 
 void GameObject::SetInput(InputComponentRef& input)
 {
-	_input = std::move(input);
+	_input = input;
 }
 
 void GameObject::SetPhysics(PhysicsComponentRef& physics)
 {
-	_physics = std::move(physics);
+	_physics = physics;
 }
 
 void GameObject::SetGraphics(GraphicsComponentRef& graphics)
 {
-	_graphics = std::move(graphics);
+	_graphics = graphics;
+}
+
+GameObject::DEFAULT_STATS GameObject::GetDefaultStats() const
+{
+	return _defaultStats;
+}
+
+GameObject::CURRENT_STATS GameObject::GetCurrentStats() const
+{
+	return _currentStats;
 }
 
 void GameObject::ResetStats()

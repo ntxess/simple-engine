@@ -9,6 +9,11 @@ PlayerInput::PlayerInput()
 PlayerInput::~PlayerInput()
 {}
 
+const CommandRef& PlayerInput::GetCommand() const
+{
+	return _command;
+}
+
 sf::Vector2f PlayerInput::GetDirection() const
 {
 	return _direction;

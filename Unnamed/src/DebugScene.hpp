@@ -6,14 +6,20 @@
 #include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
-#include "Player.hpp"
 #include "ShotParticle.hpp"
 #include "GameObjectPool.hpp"
 #include "Particle.hpp"
+#include "PlayerInput.hpp"
+#include "PlayerPhysics.hpp"
+#include "PlayerGraphics.hpp"
+#include "AIInput.hpp"
+#include "AIPhysics.hpp"
+#include "AIGraphics.hpp"
 
 typedef std::unique_ptr<GameObject> GameObjectRef;
-typedef std::unique_ptr<Player> PlayerRef;
-
+typedef std::shared_ptr<InputComponent> InputComponentRef;
+typedef std::shared_ptr<PhysicsComponent> PhysicsComponentRef;
+typedef std::shared_ptr<GraphicsComponent> GraphicsComponentRef;
 
 class DebugScene : public State
 {
@@ -23,8 +29,8 @@ private:
 
 public:
 	ResourceMonitor _fps;
-	PlayerRef _player;
-	PlayerRef _playerDup;
+	GameObjectRef _player;
+	GameObjectRef _playerDup;
 
 	//GameObjectRef _background;
 	//std::unique_ptr<GameObjectPool<Particle>> _particlePool;
@@ -42,7 +48,7 @@ public:
 	void ProcessInput(const sf::Event& event);
 	void Update(const float& deltaTime);
 	void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
-	void CheckBoundary(const PlayerRef& object);
+	void CheckBoundary(const GameObjectRef& object);
 	bool CheckCollision(const GameObjectRef& player, const GameObjectRef& object);
 	void SpawnShotParticle();
 	void Pause();

@@ -1,9 +1,9 @@
-#include "PlayerGraphics.hpp"
+#include "AIGraphics.hpp"
 
-PlayerGraphics::PlayerGraphics()
+AIGraphics::AIGraphics()
 {}
 
-PlayerGraphics::PlayerGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
+AIGraphics::AIGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
 {
 	sf::Texture& texture = holder[ID];
 	_sprite.setTexture(texture);
@@ -20,27 +20,27 @@ PlayerGraphics::PlayerGraphics(thor::ResourceHolder<sf::Texture, std::string>& h
 	_animator.addAnimation("rightTurn", rightTurn, sf::seconds(0.05f));
 }
 
-PlayerGraphics::~PlayerGraphics()
+AIGraphics::~AIGraphics()
 {}
-
-sf::Sprite& PlayerGraphics::GetSprite()
+sf::Sprite& AIGraphics::GetSprite()
 {
 	return _sprite;
 }
 
-void PlayerGraphics::Animator(const GameObject& object)
+void AIGraphics::Animator(const GameObject& object)
 {
+	sf::Vector2f direction = object.GetInput()->GetDirection();
 	if (!_animator.isPlayingAnimation())
 		_animator.playAnimation("idle");
 
-	if (object.GetInput()->GetDirection().x > 0)
+	if (direction.x > 0)
 		_animator.playAnimation("rightTurn");
 
-	if (object.GetInput()->GetDirection().x < 0)
+	if (direction.x < 0)
 		_animator.playAnimation("leftTurn");
 }
 
-void PlayerGraphics::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+void AIGraphics::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
 	_animator.update(sf::seconds(deltaTime));
 	_animator.animate(_sprite);

@@ -10,9 +10,23 @@ void DebugScene::Init()
 {
     //_background   = std::make_unique<GameObject>(_data->_holder, "Background");
     //_particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
-    _player = std::make_unique<Player>(_data->_holder, "Ship");
-    _playerDup = std::make_unique<Player>(_data->_holder, "Ship");
-    _playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
+    _player = std::make_unique<GameObject>();
+    InputComponentRef playerInput = std::make_shared<PlayerInput>();
+    PhysicsComponentRef playerPhysics = std::make_shared<PlayerPhysics>();
+    GraphicsComponentRef playerGraphics = std::make_shared<PlayerGraphics>(_data->_holder, "Ship");
+    _player->SetInput(playerInput);
+    _player->SetPhysics(playerPhysics);
+    _player->SetGraphics(playerGraphics);
+
+    _playerDup = std::make_unique<GameObject>();
+    InputComponentRef aiInput = std::make_shared<AIInput>();
+    PhysicsComponentRef aiPhysics = std::make_shared<AIPhysics>();
+    GraphicsComponentRef aiGraphics = std::make_shared<AIGraphics>(_data->_holder, "Ship");
+    _playerDup->SetInput(aiInput);
+    _playerDup->SetPhysics(aiPhysics);
+    _playerDup->SetGraphics(aiGraphics);
+
+    //_playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
@@ -72,25 +86,25 @@ void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const
     //    _assets[i]->Render(rw, interpolation);
 }
 
-void DebugScene::CheckBoundary(const PlayerRef& player)
+void DebugScene::CheckBoundary(const GameObjectRef& object)
 {
-    sf::Vector2f position = player->GetGraphics()->GetSprite().getPosition();
-    sf::FloatRect rect = player->GetGraphics()->GetSprite().getGlobalBounds();
+    sf::Vector2f position = object->GetGraphics()->GetSprite().getPosition();
+    sf::FloatRect rect = object->GetGraphics()->GetSprite().getGlobalBounds();
     sf::Vector2u bounds = _data->_window->getSize();
 
     if (position.x < 0)
-        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(0.f, position.y));
+        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(0.f, position.y));
 
     if (position.x + rect.width > bounds.x)
-        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
+        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
 
-    position = player->GetGraphics()->GetSprite().getPosition();
+    position = object->GetGraphics()->GetSprite().getPosition();
 
     if (position.y < 0)
-        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
+        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
 
     if (position.y + rect.height > bounds.y)
-        player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
+        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
 bool DebugScene::CheckCollision(const GameObjectRef& playerComponent, const GameObjectRef& object)

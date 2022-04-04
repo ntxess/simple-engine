@@ -3,15 +3,17 @@
 #include "PhysicsComponent.hpp"
 #include "GameObject.hpp"
 
-class PlayerPhysics : public PhysicsComponent
+class GameObject;
+
+class AIPhysics : public PhysicsComponent
 {
 private:
 	sf::Vector2f _velocity;
 
 public:
-	PlayerPhysics();
-	~PlayerPhysics();
+	AIPhysics();
+	~AIPhysics();
 
-	sf::Vector2f GetVelocity() const;
 	void Update(const GameObject& object, const float& deltaTime);
 };
+

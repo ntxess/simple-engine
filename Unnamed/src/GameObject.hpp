@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
 #include "InputComponent.hpp"
@@ -11,16 +10,12 @@ class PhysicsComponent;
 class GraphicsComponent;
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-typedef std::unique_ptr<InputComponent> InputComponentRef;
-typedef std::unique_ptr<PhysicsComponent> PhysicsComponentRef;
-typedef std::unique_ptr<GraphicsComponent> GraphicsComponentRef;
+typedef std::shared_ptr<InputComponent> InputComponentRef;
+typedef std::shared_ptr<PhysicsComponent> PhysicsComponentRef;
+typedef std::shared_ptr<GraphicsComponent> GraphicsComponentRef;
 
 class GameObject
 {
-	friend class InputComponent;
-	friend class PhysicsComponent;
-	friend class GraphicsComponent;
-
 private:
 	struct DEFAULT_STATS
 	{
@@ -46,7 +41,6 @@ private:
 
 public:
 	GameObject();
-	GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~GameObject();
 
 	const InputComponentRef& GetInput() const;
@@ -56,6 +50,8 @@ public:
 	void SetPhysics(PhysicsComponentRef& physics);
 	void SetGraphics(GraphicsComponentRef& graphics);
 
+	GameObject::DEFAULT_STATS GetDefaultStats() const;
+	GameObject::CURRENT_STATS GetCurrentStats() const;
 	void ResetStats();
 	void AugmentHealth(const float& newHealth);
 	void AugmentSpeed(const float& newSpeed);

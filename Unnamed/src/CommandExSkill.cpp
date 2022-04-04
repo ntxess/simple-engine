@@ -7,7 +7,7 @@ CommandExSkill::CommandExSkill()
 CommandExSkill::~CommandExSkill()
 {}
 
-void CommandExSkill::Execute(const Player& player)
+void CommandExSkill::Execute(const GameObject& object)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
 

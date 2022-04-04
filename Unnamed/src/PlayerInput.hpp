@@ -1,16 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+#include "InputComponent.hpp"
 #include "CommandDodge.hpp"
 #include "CommandEXSkill.hpp"
 
 typedef std::shared_ptr<Command> CommandRef;
 
-class PlayerInput
+class PlayerInput : public InputComponent
 {
-	friend class PlayerPhysics;
-	friend class PlayerGraphics;
-
 private:
 	sf::Vector2f _direction; 
 
@@ -22,6 +20,7 @@ public:
 	PlayerInput();
 	~PlayerInput();
 
+	const CommandRef& GetCommand() const;
 	sf::Vector2f GetDirection() const;
 	void ResetCommandBinds();
  	void Update(const sf::Event& event);

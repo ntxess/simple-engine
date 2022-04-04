@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AIGraphics.cpp" />
+    <ClCompile Include="src\AIPhysics.cpp" />
+    <ClCompile Include="src\AIInput.cpp" />
     <ClCompile Include="src\CommandExSkill.cpp" />
     <ClCompile Include="src\CommandDodge.cpp" />
     <ClCompile Include="src\PlayerGraphics.cpp" />
@@ -27,7 +30,6 @@
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\ShotParticle.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -36,6 +38,9 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AIGraphics.hpp" />
+    <ClInclude Include="src\AIPhysics.hpp" />
+    <ClInclude Include="src\AIInput.hpp" />
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />
@@ -48,7 +53,6 @@
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
-    <ClInclude Include="src\Player.hpp" />
     <ClInclude Include="src\ShotParticle.hpp" />
     <ClInclude Include="src\State.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
