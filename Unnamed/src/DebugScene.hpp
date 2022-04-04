@@ -24,14 +24,16 @@ private:
 public:
 	ResourceMonitor _fps;
 	PlayerRef _player;
-	GameObjectRef _background;
-	std::unique_ptr<GameObjectPool<Particle>> _particlePool;
+	PlayerRef _playerDup;
+
+	//GameObjectRef _background;
+	//std::unique_ptr<GameObjectPool<Particle>> _particlePool;
 
 	//PhysicsComponent* _physicsComponent = new PhysicsComponent[MAX_ENTITIES];
 	//std::vector<PhysicsComponent> _physicsComponent;
 	//std::vector<GraphicsComponent> _graphicsComponent;
 
-	std::vector<GameObjectRef> _assets;
+	//std::vector<GameObjectRef> _assets;
 
 	DebugScene(std::shared_ptr<GameData> &data);
 	~DebugScene();

@@ -24,10 +24,7 @@
     <ClCompile Include="src\PlayerGraphics.cpp" />
     <ClCompile Include="src\PlayerInput.cpp" />
     <ClCompile Include="src\PlayerPhysics.cpp" />
-    <ClCompile Include="src\GraphicsComponent.cpp" />
-    <ClCompile Include="src\InputComponent.cpp" />
     <ClCompile Include="src\Particle.cpp" />
-    <ClCompile Include="src\PhysicsComponent.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\Player.cpp" />

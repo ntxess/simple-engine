@@ -8,9 +8,11 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    _background   = std::make_unique<GameObject>(_data->_holder, "Background");
-    _particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
+    //_background   = std::make_unique<GameObject>(_data->_holder, "Background");
+    //_particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
     _player = std::make_unique<Player>(_data->_holder, "Ship");
+    _playerDup = std::make_unique<Player>(_data->_holder, "Ship");
+    _playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
@@ -25,13 +27,17 @@ void DebugScene::ProcessEvent(const sf::Event& event)
 void DebugScene::ProcessInput(const sf::Event& event)
 { 
     _player->InputUpdate(event);
+    _playerDup->InputUpdate(event);
 }
 
 void DebugScene::Update(const float& deltaTime)
 {
-    _background->Update(deltaTime);
+    //_background->Update(deltaTime);
     _player->PhysicsUpdate(deltaTime);
     CheckBoundary(_player);
+
+    _playerDup->PhysicsUpdate(deltaTime);
+    CheckBoundary(_playerDup);
 
     //_player->Update(deltaTime);
     //if (_player->_isShooting)
@@ -55,11 +61,12 @@ void DebugScene::Update(const float& deltaTime)
 
 void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
-    _background->Render(rw, interpolation);
+    //_background->Render(rw, interpolation);
 
     _fps.Update();
     _fps.Render(rw);
     _player->GraphicsUpdate(rw, deltaTime, interpolation);
+    _playerDup->GraphicsUpdate(rw, deltaTime, interpolation);
 
     //for (int i = 0; i < _assets.size(); i++)
     //    _assets[i]->Render(rw, interpolation);
@@ -81,20 +88,20 @@ void DebugScene::CheckBoundary(const PlayerRef& player)
 
     if (position.y < 0)
         player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
-    
+
     if (position.y + rect.height > bounds.y)
         player->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
 bool DebugScene::CheckCollision(const GameObjectRef& playerComponent, const GameObjectRef& object)
 {
-    if (object->GetPhysics())
-    {
-        if (playerComponent->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
-        {
-            object->SetTouchTag(true);
-        }
-    }
+    //if (object->GetPhysics())
+    //{
+    //    if (playerComponent->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
+    //    {
+    //        object->SetTouchTag(true);
+    //    }
+    //}
     return false;
 }
 

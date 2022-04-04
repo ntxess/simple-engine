@@ -4,54 +4,42 @@ GameObject::GameObject()
 	: _input(nullptr)
 	, _physics(nullptr)
 	, _graphics(nullptr)
-	, _velocity(1.f)
-	, _isTouched(false)
-{}
+{
+	_defaultStats.HP = 100.f;
+	_defaultStats.SPD = 200.f;
+	_defaultStats.ATTACK_SPEED = 1.f;
+
+	ResetStats();
+}
 
 GameObject::GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID) 
 	: _input(nullptr)
 	, _physics(nullptr)
 	, _graphics(nullptr)
-	, _velocity(1.f)
-	, _isTouched(false)
 {
-	sf::Texture& texture = holder[ID];
-	_sprite.setTexture(texture);
-	_sprite.setScale(sf::Vector2f(1, 1));
-	std::cout << "TEXTURE LOADED: " << ID << std::endl;
+	_defaultStats.HP = 100.f;
+	_defaultStats.SPD = 500.f;
+	_defaultStats.ATTACK_SPEED = 1.f;
+
+	ResetStats();
 }
 
 GameObject::~GameObject()
 {}
 
-InputComponentRef& GameObject::GetInput()
+const InputComponentRef& GameObject::GetInput() const
 {
 	return _input;
 }
 
-PhysicsComponentRef& GameObject::GetPhysics()
+const PhysicsComponentRef& GameObject::GetPhysics() const
 {
 	return _physics;
 }
 
-GraphicsComponentRef& GameObject::GetGraphics()
+const GraphicsComponentRef& GameObject::GetGraphics() const
 {
 	return _graphics;
-}
-
-bool GameObject::IsTouched()
-{
-	return _isTouched;
-}
-
-const sf::Sprite& GameObject::GetSprite()
-{
-	return _sprite;
-}
-
-const sf::Vector2f& GameObject::GetPosition()
-{
-	return _sprite.getPosition();
 }
 
 void GameObject::SetInput(InputComponentRef& input)
@@ -69,50 +57,40 @@ void GameObject::SetGraphics(GraphicsComponentRef& graphics)
 	_graphics = std::move(graphics);
 }
 
-void GameObject::SetVelocity(float velocity)
+void GameObject::ResetStats()
 {
-	_velocity = velocity;
+	_currentStats.HP = _defaultStats.HP;
+	_currentStats.SPD = _defaultStats.SPD;
+	_currentStats.ATTACK_SPEED = _defaultStats.ATTACK_SPEED;
 }
 
-void GameObject::SetTouchTag(bool isTouched)
+void GameObject::AugmentHealth(const float& newHealth)
 {
-	_isTouched = isTouched;
+	_defaultStats.HP = newHealth;
 }
 
-void GameObject::SetScale(sf::Vector2f scale)
+void GameObject::AugmentSpeed(const float& newSpeed)
 {
-	_sprite.setScale(scale);
+	_defaultStats.SPD = newSpeed;
 }
 
-void GameObject::SetPosition(sf::Vector2f position)
+void GameObject::AugmentAttackSpeed(const float& newAttackSpeed)
 {
-	_sprite.setPosition(position);
+	_defaultStats.ATTACK_SPEED = newAttackSpeed;
 }
 
-void GameObject::SetOrigin(sf::Vector2f position)
+void GameObject::InputUpdate(const sf::Event& event)
 {
-	_sprite.setOrigin(position);
+	_input->Update(event);
 }
 
-void GameObject::Update(const float& deltaTime)
-{	
-	sf::Vector2f direction(0.f, 0.f);
-	if (_input)
-	{
-		direction.x = _input->GetDirection().x * _velocity;
-		direction.y = _input->GetDirection().y * _velocity;
-		_input->ClearDirection();
-	}
-
-	if (_physics)
-		_physics->Update(_sprite, direction, deltaTime);
-
-	if (_graphics)
-		_graphics->Update(_sprite, direction, deltaTime);
-}
-
-void GameObject::Render(const RenderWindowRef& rw, const float& interpolation)
+void GameObject::PhysicsUpdate(const float& deltaTime)
 {
-	rw->draw(_sprite);
+	_physics->Update(*this, deltaTime);
 }
 
+void GameObject::GraphicsUpdate(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+{
+	_graphics->Animator(*this);
+	_graphics->Render(rw, deltaTime, interpolation);
+}

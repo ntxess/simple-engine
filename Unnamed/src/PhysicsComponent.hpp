@@ -1,16 +1,12 @@
 #pragma once
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Vertex.hpp>
-#include "InputComponent.hpp"
+
+#include "GameObject.hpp"
+
+class GameObject;
 
 class PhysicsComponent
 {
-private:
-	InputComponent _input;
-	bool _isTouched;
-	float _velocity;
-
 public:
-	PhysicsComponent();
-	void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime);
+	virtual sf::Vector2f GetVelocity() const = 0;
+	virtual void Update(const GameObject& object, const float& deltaTime) = 0;
 };

@@ -1,20 +1,17 @@
 #pragma once
-#include <string>
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Vertex.hpp>
+#include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
-#include "InputComponent.hpp"
+
+#include "GameObject.hpp"
+
+class GameObject;
+
+typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
 class GraphicsComponent
 {
-private:
-	InputComponent _input;
-	sf::Sprite _sprite;
-	thor::Animator<sf::Sprite, std::string> _animator;
-
 public:
-	GraphicsComponent();
-	~GraphicsComponent();
-	void EventReceiver(sf::Vector2f direction);
-	void Update(sf::Sprite& sprite, sf::Vector2f direction, float deltaTime);
+	virtual sf::Sprite& GetSprite() = 0;
+	virtual void Animator(const GameObject& object) = 0;
+	virtual void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation) = 0;
 };

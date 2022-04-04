@@ -1,16 +1,9 @@
 #pragma once
-#include <iostream>
-#include <SFML/Graphics/Vertex.hpp>
+#include <SFML/Graphics.hpp>
 
 class InputComponent
 {
-private:
-	sf::Vector2f _direction;
-
 public:
-	InputComponent();
-	~InputComponent();
-	const sf::Vector2f& GetDirection();
-	void Update(sf::Vector2f direction);
-	void ClearDirection();
+	virtual sf::Vector2f GetDirection() const = 0;
+	virtual void Update(const sf::Event& event) = 0;
 };

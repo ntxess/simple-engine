@@ -46,7 +46,8 @@ Engine::~Engine()
 
 void Engine::Run()
 {
-    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    //_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    _data->_machine->AddState(std::make_unique<DebugScene>(_data));
 
     float newTime, frameTime, interpolation;
     float currentTime = _clock.getElapsedTime().asSeconds();

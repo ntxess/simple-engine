@@ -12,7 +12,7 @@ class PlayerInput
 	friend class PlayerGraphics;
 
 private:
-	sf::Vector2f _direction;
+	sf::Vector2f _direction; 
 
 	CommandRef _command;
 	CommandRef _KeyLShift;

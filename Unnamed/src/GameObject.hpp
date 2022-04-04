@@ -1,9 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
+
 #include "InputComponent.hpp"
 #include "PhysicsComponent.hpp"
 #include "GraphicsComponent.hpp"
+
+class InputComponent;
+class PhysicsComponent;
+class GraphicsComponent;
 
 typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 typedef std::unique_ptr<InputComponent> InputComponentRef;
@@ -12,31 +17,50 @@ typedef std::unique_ptr<GraphicsComponent> GraphicsComponentRef;
 
 class GameObject
 {
-public:
+	friend class InputComponent;
+	friend class PhysicsComponent;
+	friend class GraphicsComponent;
+
+private:
+	struct DEFAULT_STATS
+	{
+		float HP;
+		float SPD;
+		float ATTACK_SPEED;
+	};
+
+	struct CURRENT_STATS
+	{
+		float HP;
+		float SPD;
+		float ATTACK_SPEED;
+	};
+
+	// Compartmentalize components to update in different steps of game-loop
 	InputComponentRef _input;
 	PhysicsComponentRef _physics;
 	GraphicsComponentRef _graphics;
-	sf::Sprite _sprite;
-	float _velocity;
-	bool _isTouched;
 
+	DEFAULT_STATS _defaultStats;
+	CURRENT_STATS _currentStats;
+
+public:
 	GameObject();
 	GameObject(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
 	~GameObject();
-	InputComponentRef& GetInput();
-	PhysicsComponentRef& GetPhysics();
-	GraphicsComponentRef& GetGraphics();
-	bool IsTouched();
-	const sf::Sprite& GetSprite();
-	const sf::Vector2f& GetPosition();
+
+	const InputComponentRef& GetInput() const;
+	const PhysicsComponentRef& GetPhysics() const;
+	const GraphicsComponentRef& GetGraphics() const;
 	void SetInput(InputComponentRef& input);
 	void SetPhysics(PhysicsComponentRef& physics);
 	void SetGraphics(GraphicsComponentRef& graphics);
-	void SetVelocity(float velocity);
-	void SetTouchTag(bool isTouched);
-	void SetScale(sf::Vector2f scale);
-	void SetPosition(sf::Vector2f position);
-	void SetOrigin(sf::Vector2f position);
-	void Update(const float& deltaTime);
-	void Render(const RenderWindowRef& rw, const float& interpolation);
+
+	void ResetStats();
+	void AugmentHealth(const float& newHealth);
+	void AugmentSpeed(const float& newSpeed);
+	void AugmentAttackSpeed(const float& newAttackSpeed);
+	void InputUpdate(const sf::Event& event);
+	void PhysicsUpdate(const float& deltaTime);
+	void GraphicsUpdate(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
 }; 
