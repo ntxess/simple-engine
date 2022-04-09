@@ -3,8 +3,6 @@
 #include "PhysicsComponent.hpp"
 #include "GameObject.hpp"
 
-class GameObject;
-
 class AIPhysics : public PhysicsComponent
 {
 private:

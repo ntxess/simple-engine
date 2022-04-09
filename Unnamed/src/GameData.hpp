@@ -13,6 +13,7 @@ public:
     StateMachineRef _machine;
     RenderWindowRef _window;
     thor::ResourceHolder<sf::Texture, std::string> _holder;
+    thor::Animator<sf::Sprite, std::string> _animator;
 
     GameData()
     {

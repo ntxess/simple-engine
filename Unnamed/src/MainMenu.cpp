@@ -1,6 +1,7 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu(std::shared_ptr<GameData>& data) : _data(data) 
+MainMenu::MainMenu(std::shared_ptr<GameData>& data) 
+    : _data(data) 
 {}
 
 MainMenu::~MainMenu()
@@ -8,14 +9,17 @@ MainMenu::~MainMenu()
 
 void MainMenu::Init()
 {
-    //GameObjectRef background = std::make_unique<GameObject>(_data->_holder, "Background");
-    //_startButton = std::make_unique<GameObject>(_data->_holder, "StartButton");
-    //_quitButton = std::make_unique<GameObject>(_data->_holder, "QuitButton");
+    //_background  = std::make_unique<UIObject>(_data->_holder, "Background");
+    //_startButton = std::make_unique<UIObject>(_data->_holder, "StartButton");
+    //_quitButton  = std::make_unique<UIObject>(_data->_holder, "QuitButton");
 
-    //_startButton->SetPosition(sf::Vector2f(160, 500));
-    //_quitButton->SetPosition(sf::Vector2f(160, 800));
+    //_startButton->GetSprite().setPosition(sf::Vector2f(160, 500));
+    //_quitButton->GetSprite().setPosition(sf::Vector2f(160, 800));
 
-    //_assets.push_back(std::move(background));
+    //_assets.push_back(std::move(_background));
+    //_assets.push_back(std::move(_startButton));
+    //_assets.push_back(std::move(_quitButton));
+
 }
 
 void MainMenu::ProcessEvent(const sf::Event& event)
@@ -53,12 +57,14 @@ void MainMenu::Render(const RenderWindowRef& rw, const float& deltaTime, const f
 {
     //for (int i = 0; i < _assets.size(); i++)
     //{
-    //    _assets[i]->Render(rw, interpolation);
+    //    _assets[i]->Render(rw, deltaTime, interpolation);
     //}
-    //_startButton->Render(rw, interpolation);
-    //_quitButton->Render(rw, interpolation);
-    //_fps.Update();
-    //_fps.Render(rw);
+
+    //_background->Render(rw, deltaTime, interpolation);
+    //_startButton->Render(rw, deltaTime, interpolation);
+    //_quitButton->Render(rw, deltaTime, interpolation);
+    _fps.Update();
+    _fps.Render(rw);
 }
 
 void MainMenu::Pause()

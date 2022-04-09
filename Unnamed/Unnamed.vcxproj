@@ -36,6 +36,7 @@
     <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AIGraphics.hpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />
+    <ClInclude Include="src\ParticlePool.hpp" />
     <ClInclude Include="src\PlayerGraphics.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />
     <ClInclude Include="src\PlayerPhysics.hpp" />
@@ -61,6 +63,8 @@
     <ClInclude Include="src\GameObject.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />
+    <ClInclude Include="UIGraphics.hpp" />
+    <ClInclude Include="WayPoint.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

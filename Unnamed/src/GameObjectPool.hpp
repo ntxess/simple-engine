@@ -1,6 +1,5 @@
 #pragma once
-//#include <iostream>
-//#include <string>
+
 #include <assert.h>
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
@@ -17,7 +16,7 @@ private:
 	TObject  _entity[POOL_SIZE];
 
 public:
-	GameObjectPool(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID);
+	GameObjectPool();
 	~GameObjectPool();
 	void Create(sf::Vector2f pos);
 	void Update(float deltaTime);
@@ -25,7 +24,7 @@ public:
 };
 
 template<class TObject>
-inline GameObjectPool<TObject>::GameObjectPool(thor::ResourceHolder<sf::Texture, std::string>& holder, std::string ID)
+GameObjectPool<TObject>::GameObjectPool()
 {
 	_firstAvailable = &_entity[0];
 
@@ -38,11 +37,11 @@ inline GameObjectPool<TObject>::GameObjectPool(thor::ResourceHolder<sf::Texture,
 }
 
 template<class TObject>
-inline GameObjectPool<TObject>::~GameObjectPool()
+GameObjectPool<TObject>::~GameObjectPool()
 {}
 
 template<class TObject>
-inline void GameObjectPool<TObject>::Create(sf::Vector2f pos)
+void GameObjectPool<TObject>::Create(sf::Vector2f pos)
 {
 	assert(_firstAvailable != nullptr);
 
@@ -52,7 +51,7 @@ inline void GameObjectPool<TObject>::Create(sf::Vector2f pos)
 }
 
 template<class TObject>
-inline void GameObjectPool<TObject>::Update(float deltaTime)
+void GameObjectPool<TObject>::Update(float deltaTime)
 {
 	for (unsigned int i = 0; i < POOL_SIZE; i++)
 	{
@@ -64,7 +63,7 @@ inline void GameObjectPool<TObject>::Update(float deltaTime)
 }
 
 template<class TObject>
-inline void GameObjectPool<TObject>::Render(RenderWindowRef& rw, float interpolation)
+void GameObjectPool<TObject>::Render(RenderWindowRef& rw, float interpolation)
 {
 	// Note: Animation is also updated in render
 	for (unsigned int i = 0; i < POOL_SIZE; i++)
@@ -74,6 +73,5 @@ inline void GameObjectPool<TObject>::Render(RenderWindowRef& rw, float interpola
 			_entity[i].SetNext(_firstAvailable);
 			_firstAvailable = &_entity[i];
 		}
-		
 	}
 }

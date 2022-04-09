@@ -17,6 +17,7 @@ public:
 	AIInput();
 	~AIInput();
 
+	// JSON file parser that read data and apply AI movement
 	const CommandRef& GetCommand() const;
 	sf::Vector2f GetDirection() const;
 	void Update(const sf::Event& event);

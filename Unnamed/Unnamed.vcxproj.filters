@@ -9,133 +9,189 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{312e3042-a7a8-4181-bee6-9809c3954c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{6bf35503-5632-410e-80dd-f2b2be2831fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{43ffb782-4226-4dd1-bd7e-5fe32e0c3722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{d450d57b-e720-445e-a089-c88a93c3a3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Input">
+      <UniqueIdentifier>{02349e48-d5ff-4e1f-bf2f-9306cf9716ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Graphics">
+      <UniqueIdentifier>{1ef22ed2-62eb-43d9-b29e-ce3888e6e3d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Physics">
+      <UniqueIdentifier>{f593c18a-5bd6-49b1-bd31-13d92a0485c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{a3fa9b0e-db9c-4cd2-99f2-bfd7824985ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Input">
+      <UniqueIdentifier>{e89b31f3-27e9-4738-bbd1-67dbe804aa81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Graphics">
+      <UniqueIdentifier>{b0e88d7e-d640-48fb-a8fb-44a73dbc387d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Physics">
+      <UniqueIdentifier>{cd4af765-f05e-4ae4-9a8e-284c5b05c7b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{310db1d6-3118-4a3c-924b-148aaf2a6011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{9ea5679c-2280-4213-84c6-a95ca31a78f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{d5990af1-7ee9-460a-9085-41427ed572ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Input\Commands">
+      <UniqueIdentifier>{c37ff0bc-8ab3-40ff-9ea7-bf3b9c9def84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Input\Commands">
+      <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ResourceMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DebugScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShotParticle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Particle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerPhysics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerGraphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CommandDodge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CommandExSkill.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\AIGraphics.cpp">
+      <Filter>Source Files\Components\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\AIInput.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\AIPhysics.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIGraphics.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\PlayerGraphics.cpp">
+      <Filter>Source Files\Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerInput.cpp">
+      <Filter>Source Files\Components\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerPhysics.cpp">
+      <Filter>Source Files\Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateMachine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceMonitor.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particle.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShotParticle.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugScene.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CommandDodge.cpp">
+      <Filter>Source Files\Components\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CommandExSkill.cpp">
+      <Filter>Source Files\Components\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="WayPoint.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GraphicsComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PhysicsComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ResourceMonitor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StateMachine.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\State.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\DebugScene.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="src\MainMenu.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine.hpp">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\GameData.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputComponent.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\State.hpp">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShotParticle.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\StateMachine.hpp">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\Particle.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\GameObject.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObjectPool.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerPhysics.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Particle.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerGraphics.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerInput.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Command.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandDodge.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandExSkill.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ShotParticle.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\AIInput.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIPhysics.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\PlayerInput.hpp">
+      <Filter>Header Files\Components\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputComponent.hpp">
+      <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\AIGraphics.hpp">
+      <Filter>Header Files\Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicsComponent.hpp">
+      <Filter>Header Files\Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerGraphics.hpp">
+      <Filter>Header Files\Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIPhysics.hpp">
+      <Filter>Header Files\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PhysicsComponent.hpp">
+      <Filter>Header Files\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerPhysics.hpp">
+      <Filter>Header Files\Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceMonitor.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Command.hpp">
+      <Filter>Header Files\Components\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommandDodge.hpp">
+      <Filter>Header Files\Components\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommandExSkill.hpp">
+      <Filter>Header Files\Components\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGraphics.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticlePool.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="WayPoint.hpp">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

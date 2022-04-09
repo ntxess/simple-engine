@@ -1,6 +1,7 @@
 #include "DebugScene.hpp"
 
-DebugScene::DebugScene(std::shared_ptr<GameData> &data) :_data(data) 
+DebugScene::DebugScene(std::shared_ptr<GameData> &data) 
+    :_data(data) 
 {}
 
 DebugScene::~DebugScene()
@@ -8,8 +9,9 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    //_background   = std::make_unique<GameObject>(_data->_holder, "Background");
-    //_particlePool = std::make_unique<GameObjectPool<Particle>>(_data->_holder, "Shot");
+    //_background = std::make_unique<UIObject>(_data->_holder, "Background");
+    //_particlePool = std::make_unique<ParticlePool<Particle>>();
+
     _player = std::make_unique<GameObject>();
     InputComponentRef playerInput = std::make_shared<PlayerInput>();
     PhysicsComponentRef playerPhysics = std::make_shared<PlayerPhysics>();
@@ -17,6 +19,10 @@ void DebugScene::Init()
     _player->SetInput(playerInput);
     _player->SetPhysics(playerPhysics);
     _player->SetGraphics(playerGraphics);
+
+    thor::FrameAnimation idle;
+    idle.addFrame(1.f, sf::IntRect(16, 0, 16, 24));
+    _data->_animator.addAnimation("idle", idle, sf::seconds(0.05f));
 
     _playerDup = std::make_unique<GameObject>();
     InputComponentRef aiInput = std::make_shared<AIInput>();
@@ -27,6 +33,12 @@ void DebugScene::Init()
     _playerDup->SetGraphics(aiGraphics);
 
     //_playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
+    //_particlePool->Create(_data->_holder, "Ship", _player->GetGraphics()->GetSprite().getPosition());
+    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(300, 500));
+    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(300, 600));
+    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(200, 500));
+    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(100, 500));
+    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(600, 700));
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
@@ -46,12 +58,14 @@ void DebugScene::ProcessInput(const sf::Event& event)
 
 void DebugScene::Update(const float& deltaTime)
 {
-    //_background->Update(deltaTime);
     _player->PhysicsUpdate(deltaTime);
     CheckBoundary(_player);
 
     _playerDup->PhysicsUpdate(deltaTime);
     CheckBoundary(_playerDup);
+
+    //_particlePool->Create(_data->_holder, "Shot", _player->GetGraphics()->GetSprite().getPosition());
+    //_particlePool->Update(deltaTime);
 
     //_player->Update(deltaTime);
     //if (_player->_isShooting)
@@ -75,13 +89,14 @@ void DebugScene::Update(const float& deltaTime)
 
 void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
 {
-    //_background->Render(rw, interpolation);
-
+    //_background->Render(rw, deltaTime, interpolation);
     _fps.Update();
     _fps.Render(rw);
-    _player->GraphicsUpdate(rw, deltaTime, interpolation);
-    _playerDup->GraphicsUpdate(rw, deltaTime, interpolation);
-
+    _data->_animator.playAnimation("idle");
+    _data->_animator.animate(_player->GetGraphics()->GetSprite());
+    _player->GraphicsUpdate(rw, interpolation);
+    _playerDup->GraphicsUpdate(rw, interpolation);
+    //_particlePool->Render(rw, deltaTime, interpolation);
     //for (int i = 0; i < _assets.size(); i++)
     //    _assets[i]->Render(rw, interpolation);
 }

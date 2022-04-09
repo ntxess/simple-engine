@@ -7,6 +7,7 @@
 #include "ResourceMonitor.hpp"
 #include "GameObject.hpp"
 #include "ShotParticle.hpp"
+#include "ParticlePool.hpp"
 #include "GameObjectPool.hpp"
 #include "Particle.hpp"
 #include "PlayerInput.hpp"
@@ -31,7 +32,7 @@ public:
 	ResourceMonitor _fps;
 	GameObjectRef _player;
 	GameObjectRef _playerDup;
-
+	std::unique_ptr<ParticlePool<Particle>> _particlePool;
 	//GameObjectRef _background;
 	//std::unique_ptr<GameObjectPool<Particle>> _particlePool;
 

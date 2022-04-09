@@ -82,6 +82,7 @@ void Engine::Run()
         interpolation = accumulator / deltaTime;
 
         _data->_window->clear();
+        _data->_animator.update(sf::seconds(deltaTime));
         _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
         _data->_window->display();
     }

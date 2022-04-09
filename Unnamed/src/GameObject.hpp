@@ -1,5 +1,4 @@
 #pragma once
-#include <Thor/Resources.hpp>
 
 #include "InputComponent.hpp"
 #include "PhysicsComponent.hpp"
@@ -31,18 +30,20 @@ private:
 		float ATTACK_SPEED;
 	};
 
+	DEFAULT_STATS _defaultStats;
+	CURRENT_STATS _currentStats;
+
 	// Compartmentalize components to update in different steps of game-loop
 	InputComponentRef _input;
 	PhysicsComponentRef _physics;
 	GraphicsComponentRef _graphics;
 
-	DEFAULT_STATS _defaultStats;
-	CURRENT_STATS _currentStats;
-
 public:
 	GameObject();
 	~GameObject();
 
+	GameObject::DEFAULT_STATS GetDefaultStats() const;
+	GameObject::CURRENT_STATS GetCurrentStats() const;
 	const InputComponentRef& GetInput() const;
 	const PhysicsComponentRef& GetPhysics() const;
 	const GraphicsComponentRef& GetGraphics() const;
@@ -50,13 +51,11 @@ public:
 	void SetPhysics(PhysicsComponentRef& physics);
 	void SetGraphics(GraphicsComponentRef& graphics);
 
-	GameObject::DEFAULT_STATS GetDefaultStats() const;
-	GameObject::CURRENT_STATS GetCurrentStats() const;
 	void ResetStats();
 	void AugmentHealth(const float& newHealth);
 	void AugmentSpeed(const float& newSpeed);
 	void AugmentAttackSpeed(const float& newAttackSpeed);
 	void InputUpdate(const sf::Event& event);
 	void PhysicsUpdate(const float& deltaTime);
-	void GraphicsUpdate(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
+	void GraphicsUpdate(const RenderWindowRef& rw, const float& interpolation);
 }; 
