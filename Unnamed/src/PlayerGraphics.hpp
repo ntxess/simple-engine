@@ -4,9 +4,6 @@
 #include <Thor/Animations.hpp>
 
 #include "GraphicsComponent.hpp"
-#include "GameObject.hpp"
-
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
 
 class PlayerGraphics : public GraphicsComponent
 {
@@ -19,6 +16,5 @@ public:
 	~PlayerGraphics();
 
 	sf::Sprite& GetSprite();
-	void Animator(const GameObject& player);
-	void Render(const RenderWindowRef& rw, const float& interpolation);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);
 };

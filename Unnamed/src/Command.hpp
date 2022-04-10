@@ -2,9 +2,6 @@
 #include <iostream>
 
 class GameObject;
-class PlayerInput;
-class PlayerPhysics;
-class PlayerGraphics;
 
 class Command
 {

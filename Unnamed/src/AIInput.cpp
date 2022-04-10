@@ -8,7 +8,7 @@ AIInput::AIInput()
 AIInput::~AIInput()
 {}
 
-const CommandRef& AIInput::GetCommand() const
+const std::shared_ptr<Command>& AIInput::GetCommand() const
 {
 	return _command;
 }

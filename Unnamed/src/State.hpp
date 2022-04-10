@@ -2,8 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-
 class State
 {
 public:
@@ -11,7 +9,7 @@ public:
 	virtual void ProcessEvent(const sf::Event& event) = 0;
 	virtual void ProcessInput(const sf::Event& event) = 0;
 	virtual void Update(const float& deltaTime) = 0;
-	virtual void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation) = 0;
+	virtual void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation) = 0;
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 };

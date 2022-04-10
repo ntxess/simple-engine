@@ -41,5 +41,5 @@ public:
 	void SetNext(Particle* next);
 	void Update(const float& deltaTime);
 	void Animator(const float& deltaTime);
-	bool Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
+	bool Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };

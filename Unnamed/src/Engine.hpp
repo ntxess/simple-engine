@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <Thor/Animations/FrameAnimation.hpp>
+
 #include "GameData.hpp"
 #include "MainMenu.hpp"
 

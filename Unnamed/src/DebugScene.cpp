@@ -1,6 +1,6 @@
 #include "DebugScene.hpp"
 
-DebugScene::DebugScene(std::shared_ptr<GameData> &data) 
+DebugScene::DebugScene(std::shared_ptr<GameData>& data)
     :_data(data) 
 {}
 
@@ -13,21 +13,23 @@ void DebugScene::Init()
     //_particlePool = std::make_unique<ParticlePool<Particle>>();
 
     _player = std::make_unique<GameObject>();
-    InputComponentRef playerInput = std::make_shared<PlayerInput>();
-    PhysicsComponentRef playerPhysics = std::make_shared<PlayerPhysics>();
-    GraphicsComponentRef playerGraphics = std::make_shared<PlayerGraphics>(_data->_holder, "Ship");
+    std::shared_ptr<InputComponent> playerInput = std::make_shared<PlayerInput>();
+    std::shared_ptr<PhysicsComponent> playerPhysics = std::make_shared<PlayerPhysics>();
+    std::shared_ptr<GraphicsComponent> playerGraphics = std::make_shared<PlayerGraphics>(_data->_holder, "Ship");
     _player->SetInput(playerInput);
     _player->SetPhysics(playerPhysics);
     _player->SetGraphics(playerGraphics);
 
     thor::FrameAnimation idle;
-    idle.addFrame(1.f, sf::IntRect(16, 0, 16, 24));
-    _data->_animator.addAnimation("idle", idle, sf::seconds(0.05f));
+    for (int i = 0; i < 4; i++)
+        idle.addFrame(1.f, sf::IntRect(16 * i, 0, 16, 24));
+    _data->_animator.addAnimation("idle", idle, sf::seconds(8.f));
+    //_data->_animator.playAnimation("idle", true);
 
     _playerDup = std::make_unique<GameObject>();
-    InputComponentRef aiInput = std::make_shared<AIInput>();
-    PhysicsComponentRef aiPhysics = std::make_shared<AIPhysics>();
-    GraphicsComponentRef aiGraphics = std::make_shared<AIGraphics>(_data->_holder, "Ship");
+    std::shared_ptr<InputComponent> aiInput = std::make_shared<AIInput>();
+    std::shared_ptr<PhysicsComponent> aiPhysics = std::make_shared<AIPhysics>();
+    std::shared_ptr<GraphicsComponent> aiGraphics = std::make_shared<AIGraphics>(_data->_holder, "Ship");
     _playerDup->SetInput(aiInput);
     _playerDup->SetPhysics(aiPhysics);
     _playerDup->SetGraphics(aiGraphics);
@@ -87,12 +89,12 @@ void DebugScene::Update(const float& deltaTime)
     //}
 }
 
-void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
     //_background->Render(rw, deltaTime, interpolation);
     _fps.Update();
     _fps.Render(rw);
-    _data->_animator.playAnimation("idle");
+
     _data->_animator.animate(_player->GetGraphics()->GetSprite());
     _player->GraphicsUpdate(rw, interpolation);
     _playerDup->GraphicsUpdate(rw, interpolation);
@@ -101,7 +103,7 @@ void DebugScene::Render(const RenderWindowRef& rw, const float& deltaTime, const
     //    _assets[i]->Render(rw, interpolation);
 }
 
-void DebugScene::CheckBoundary(const GameObjectRef& object)
+void DebugScene::CheckBoundary(const std::unique_ptr<GameObject>& object)
 {
     sf::Vector2f position = object->GetGraphics()->GetSprite().getPosition();
     sf::FloatRect rect = object->GetGraphics()->GetSprite().getGlobalBounds();
@@ -122,7 +124,7 @@ void DebugScene::CheckBoundary(const GameObjectRef& object)
         object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
-bool DebugScene::CheckCollision(const GameObjectRef& playerComponent, const GameObjectRef& object)
+bool DebugScene::CheckCollision(const std::unique_ptr<GameObject>& playerComponent, const std::unique_ptr<GameObject>& object)
 {
     //if (object->GetPhysics())
     //{

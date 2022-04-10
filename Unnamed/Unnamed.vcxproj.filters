@@ -136,9 +136,6 @@
     <ClInclude Include="src\GameObject.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObjectPool.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\Particle.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
@@ -183,9 +180,6 @@
     </ClInclude>
     <ClInclude Include="src\CommandExSkill.hpp">
       <Filter>Header Files\Components\Input\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="UIGraphics.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ParticlePool.hpp">
       <Filter>Header Files\Objects</Filter>

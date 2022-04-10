@@ -39,7 +39,7 @@ void ResourceMonitor::Update()
     ++_fps;
 }
 
-void ResourceMonitor::Render(const RenderWindowRef& rw)
+void ResourceMonitor::Render(const std::unique_ptr<sf::RenderWindow>& rw)
 {
     rw->draw(_text);
 }

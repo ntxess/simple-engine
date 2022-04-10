@@ -4,8 +4,6 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-
 class ResourceMonitor
 {
 private:
@@ -20,5 +18,5 @@ public:
     std::string FloatToString(float d);
     void Reposition(sf::Vector2f pos);
     void Update();
-    void Render(const RenderWindowRef& rw);
+    void Render(const std::unique_ptr<sf::RenderWindow>& rw);
 };

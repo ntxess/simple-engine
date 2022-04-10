@@ -14,7 +14,7 @@ sf::Vector2f PlayerPhysics::GetVelocity() const
 void PlayerPhysics::Update(const GameObject& object, const float& deltaTime)
 {
 	// Execute any events triggered by the keys defined inside PlayerInput.Update()
-	CommandRef command = object.GetInput()->GetCommand();
+	std::shared_ptr<Command> command = object.GetInput()->GetCommand();
 	if (command)
 		command->Execute(object);
 

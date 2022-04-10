@@ -9,7 +9,7 @@
 class MainMenu : public State
 {
 private:
-    std::shared_ptr<GameData> _data;
+	std::shared_ptr<GameData> _data;
 
 public:
 	ResourceMonitor _fps;
@@ -25,7 +25,7 @@ public:
 	void ProcessEvent(const sf::Event& event);
 	void ProcessInput(const sf::Event& event);
 	void Update(const float& deltaTime);
-	void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 	void Pause();
 	void Resume();
 };

@@ -2,14 +2,12 @@
 
 #include "InputComponent.hpp"
 
-typedef std::shared_ptr<Command> CommandRef;
-
 class AIInput : public InputComponent
 {
 private:
 	sf::Vector2f _direction;
 
-	CommandRef _command;
+	std::shared_ptr<Command> _command;
 	bool _moveLeft;
 	bool _moveRight;
 
@@ -18,7 +16,7 @@ public:
 	~AIInput();
 
 	// JSON file parser that read data and apply AI movement
-	const CommandRef& GetCommand() const;
+	const std::shared_ptr<Command>& GetCommand() const;
 	sf::Vector2f GetDirection() const;
 	void Update(const sf::Event& event);
 };

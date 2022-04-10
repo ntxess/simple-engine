@@ -3,13 +3,11 @@
 #include <stack>
 #include "State.hpp"
 
-typedef std::unique_ptr<State> StateRef;
-
 class StateMachine
 {
 private:
-	std::stack<StateRef> _states;
-	StateRef _newState;
+	std::stack<std::unique_ptr<State>> _states;
+	std::unique_ptr<State> _newState;
 
 	bool _isRemoving;
 	bool _isAdding;
@@ -18,8 +16,8 @@ private:
 public:
 	StateMachine();
 	~StateMachine();
-	void AddState(StateRef newState, bool isReplacing = true);
+	void AddState(std::unique_ptr<State> newState, bool isReplacing = true);
 	void RemoveState();
 	void ProcessStateChange();
-	StateRef& GetActiveState();
+	std::unique_ptr<State>& GetActiveState();
 };

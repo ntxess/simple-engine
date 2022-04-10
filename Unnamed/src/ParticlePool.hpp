@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-
 template <class TObject>
 class ParticlePool
 {
@@ -18,7 +16,7 @@ public:
 	~ParticlePool();
 	void Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID, const sf::Vector2f emitterPos);
 	void Update(const float& deltaTime);
-	void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
 
 template<class TObject>
@@ -58,7 +56,7 @@ void ParticlePool<TObject>::Update(const float& deltaTime)
 }
 
 template<class TObject>
-void ParticlePool<TObject>::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+void ParticlePool<TObject>::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	// If entity is in use, update animation and physics
 	// Once entity finished its lifetime return true and set unused entity as head and append to free-list

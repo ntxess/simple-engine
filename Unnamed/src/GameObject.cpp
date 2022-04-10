@@ -25,32 +25,32 @@ GameObject::CURRENT_STATS GameObject::GetCurrentStats() const
 	return _currentStats;
 }
 
-const InputComponentRef& GameObject::GetInput() const
+const std::shared_ptr<InputComponent>& GameObject::GetInput() const
 {
 	return _input;
 }
 
-const PhysicsComponentRef& GameObject::GetPhysics() const
+const std::shared_ptr<PhysicsComponent>& GameObject::GetPhysics() const
 {
 	return _physics;
 }
 
-const GraphicsComponentRef& GameObject::GetGraphics() const
+const std::shared_ptr<GraphicsComponent>& GameObject::GetGraphics() const
 {
 	return _graphics;
 }
 
-void GameObject::SetInput(InputComponentRef& input)
+void GameObject::SetInput(std::shared_ptr<InputComponent>& input)
 {
 	_input = input;
 }
 
-void GameObject::SetPhysics(PhysicsComponentRef& physics)
+void GameObject::SetPhysics(std::shared_ptr<PhysicsComponent>& physics)
 {
 	_physics = physics;
 }
 
-void GameObject::SetGraphics(GraphicsComponentRef& graphics)
+void GameObject::SetGraphics(std::shared_ptr<GraphicsComponent>& graphics)
 {
 	_graphics = graphics;
 }
@@ -87,8 +87,7 @@ void GameObject::PhysicsUpdate(const float& deltaTime)
 	_physics->Update(*this, deltaTime);
 }
 
-void GameObject::GraphicsUpdate(const RenderWindowRef& rw, const float& interpolation)
+void GameObject::GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
 {
-	_graphics->Animator(*this);
 	_graphics->Render(rw, interpolation);
 }

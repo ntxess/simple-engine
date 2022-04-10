@@ -6,7 +6,7 @@ StateMachine::StateMachine()
 StateMachine::~StateMachine()
 {}
 
-void StateMachine::AddState(StateRef newState, bool isReplacing)
+void StateMachine::AddState(std::unique_ptr<State> newState, bool isReplacing)
 {
 	_isAdding = true;
 	_isReplacing = isReplacing;
@@ -50,7 +50,7 @@ void StateMachine::ProcessStateChange()
 	}
 }
 
-StateRef& StateMachine::GetActiveState()
+std::unique_ptr<State>& StateMachine::GetActiveState()
 {
 	return _states.top();
 }

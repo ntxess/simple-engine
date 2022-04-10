@@ -8,7 +8,6 @@
 #include "GameObject.hpp"
 #include "ShotParticle.hpp"
 #include "ParticlePool.hpp"
-#include "GameObjectPool.hpp"
 #include "Particle.hpp"
 #include "PlayerInput.hpp"
 #include "PlayerPhysics.hpp"
@@ -17,21 +16,15 @@
 #include "AIPhysics.hpp"
 #include "AIGraphics.hpp"
 
-typedef std::unique_ptr<GameObject> GameObjectRef;
-typedef std::shared_ptr<InputComponent> InputComponentRef;
-typedef std::shared_ptr<PhysicsComponent> PhysicsComponentRef;
-typedef std::shared_ptr<GraphicsComponent> GraphicsComponentRef;
-
 class DebugScene : public State
 {
 private:
-	//static const uint16_t MAX_ENTITIES = 100000;
 	std::shared_ptr<GameData> _data;
 
 public:
 	ResourceMonitor _fps;
-	GameObjectRef _player;
-	GameObjectRef _playerDup;
+	std::unique_ptr<GameObject> _player;
+	std::unique_ptr<GameObject> _playerDup;
 	std::unique_ptr<ParticlePool<Particle>> _particlePool;
 	//GameObjectRef _background;
 	//std::unique_ptr<GameObjectPool<Particle>> _particlePool;
@@ -42,15 +35,15 @@ public:
 
 	//std::vector<GameObjectRef> _assets;
 
-	DebugScene(std::shared_ptr<GameData> &data);
+	DebugScene(std::shared_ptr<GameData>& data);
 	~DebugScene();
 	void Init();
 	void ProcessEvent(const sf::Event& event);
 	void ProcessInput(const sf::Event& event);
 	void Update(const float& deltaTime);
-	void Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation);
-	void CheckBoundary(const GameObjectRef& object);
-	bool CheckCollision(const GameObjectRef& player, const GameObjectRef& object);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
+	void CheckBoundary(const std::unique_ptr<GameObject>& object);
+	bool CheckCollision(const std::unique_ptr<GameObject>& player, const std::unique_ptr<GameObject>& object);
 	void SpawnShotParticle();
 	void Pause();
 	void Resume();

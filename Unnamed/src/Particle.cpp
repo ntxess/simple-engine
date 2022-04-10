@@ -32,7 +32,7 @@ void Particle::Update(const float& deltaTime)
 
 }
 
-bool Particle::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+bool Particle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	return false;
 }

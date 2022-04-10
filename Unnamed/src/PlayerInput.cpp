@@ -9,7 +9,7 @@ PlayerInput::PlayerInput()
 PlayerInput::~PlayerInput()
 {}
 
-const CommandRef& PlayerInput::GetCommand() const
+const std::shared_ptr<Command>& PlayerInput::GetCommand() const
 {
 	return _command;
 }

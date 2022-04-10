@@ -14,15 +14,13 @@ AIGraphics::AIGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, c
 
 AIGraphics::~AIGraphics()
 {}
+
 sf::Sprite& AIGraphics::GetSprite()
 {
 	return _sprite;
 }
 
-void AIGraphics::Animator(const GameObject& object)
-{}
-
-void AIGraphics::Render(const RenderWindowRef& rw, const float& interpolation)
+void AIGraphics::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
 {
 	rw->draw(_sprite);
 }

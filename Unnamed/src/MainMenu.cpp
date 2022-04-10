@@ -1,6 +1,6 @@
 #include "MainMenu.hpp"
 
-MainMenu::MainMenu(std::shared_ptr<GameData>& data) 
+MainMenu::MainMenu(std::shared_ptr<GameData>& data)
     : _data(data) 
 {}
 
@@ -53,7 +53,7 @@ void MainMenu::Update(const float& deltaTime)
     //}
 }
 
-void MainMenu::Render(const RenderWindowRef& rw, const float& deltaTime, const float& interpolation)
+void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
     //for (int i = 0; i < _assets.size(); i++)
     //{

@@ -10,7 +10,6 @@ PlayerGraphics::PlayerGraphics(thor::ResourceHolder<sf::Texture, std::string>& h
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(sf::Vector2f(360, 900));
 	std::cout << "TEXTURE LOADED: " << ID << std::endl;
-
 }
 
 PlayerGraphics::~PlayerGraphics()
@@ -21,19 +20,7 @@ sf::Sprite& PlayerGraphics::GetSprite()
 	return _sprite;
 }
 
-void PlayerGraphics::Animator(const GameObject& object)
-{
-	//if (!_animator.isPlayingAnimation())
-	//	_animator.playAnimation("idle");
-
-	//if (object.GetInput()->GetDirection().x > 0)
-	//	_animator.playAnimation("rightTurn");
-
-	//if (object.GetInput()->GetDirection().x < 0)
-	//	_animator.playAnimation("leftTurn");
-}
-
-void PlayerGraphics::Render(const RenderWindowRef& rw, const float& interpolation)
+void PlayerGraphics::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
 {
 	rw->draw(_sprite);
 }

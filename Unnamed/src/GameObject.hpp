@@ -8,11 +8,6 @@ class InputComponent;
 class PhysicsComponent;
 class GraphicsComponent;
 
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-typedef std::shared_ptr<InputComponent> InputComponentRef;
-typedef std::shared_ptr<PhysicsComponent> PhysicsComponentRef;
-typedef std::shared_ptr<GraphicsComponent> GraphicsComponentRef;
-
 class GameObject
 {
 private:
@@ -34,9 +29,9 @@ private:
 	CURRENT_STATS _currentStats;
 
 	// Compartmentalize components to update in different steps of game-loop
-	InputComponentRef _input;
-	PhysicsComponentRef _physics;
-	GraphicsComponentRef _graphics;
+	std::shared_ptr<InputComponent> _input;
+	std::shared_ptr<PhysicsComponent> _physics;
+	std::shared_ptr<GraphicsComponent> _graphics;
 
 public:
 	GameObject();
@@ -44,12 +39,12 @@ public:
 
 	GameObject::DEFAULT_STATS GetDefaultStats() const;
 	GameObject::CURRENT_STATS GetCurrentStats() const;
-	const InputComponentRef& GetInput() const;
-	const PhysicsComponentRef& GetPhysics() const;
-	const GraphicsComponentRef& GetGraphics() const;
-	void SetInput(InputComponentRef& input);
-	void SetPhysics(PhysicsComponentRef& physics);
-	void SetGraphics(GraphicsComponentRef& graphics);
+	const std::shared_ptr<InputComponent>& GetInput() const;
+	const std::shared_ptr<PhysicsComponent>& GetPhysics() const;
+	const std::shared_ptr<GraphicsComponent>& GetGraphics() const;
+	void SetInput(std::shared_ptr<InputComponent>& input);
+	void SetPhysics(std::shared_ptr<PhysicsComponent>& physics);
+	void SetGraphics(std::shared_ptr<GraphicsComponent>& graphics);
 
 	void ResetStats();
 	void AugmentHealth(const float& newHealth);
@@ -57,5 +52,5 @@ public:
 	void AugmentAttackSpeed(const float& newAttackSpeed);
 	void InputUpdate(const sf::Event& event);
 	void PhysicsUpdate(const float& deltaTime);
-	void GraphicsUpdate(const RenderWindowRef& rw, const float& interpolation);
+	void GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);
 }; 

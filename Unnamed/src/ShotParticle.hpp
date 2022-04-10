@@ -4,8 +4,6 @@
 #include <Thor/Resources.hpp>
 #include "GameObject.hpp"
 
-typedef std::unique_ptr<sf::RenderWindow> RenderWindowRef;
-
 class ShotParticle : public GameObject
 {
 public:
