@@ -21,22 +21,15 @@ class DebugScene : public State
 private:
 	std::shared_ptr<GameData> _data;
 
-public:
 	ResourceMonitor _fps;
 	std::unique_ptr<GameObject> _player;
 	std::unique_ptr<GameObject> _playerDup;
 	std::unique_ptr<ParticlePool<Particle>> _particlePool;
-	//GameObjectRef _background;
-	//std::unique_ptr<GameObjectPool<Particle>> _particlePool;
 
-	//PhysicsComponent* _physicsComponent = new PhysicsComponent[MAX_ENTITIES];
-	//std::vector<PhysicsComponent> _physicsComponent;
-	//std::vector<GraphicsComponent> _graphicsComponent;
-
-	//std::vector<GameObjectRef> _assets;
-
+public:
 	DebugScene(std::shared_ptr<GameData>& data);
 	~DebugScene();
+
 	void Init();
 	void ProcessEvent(const sf::Event& event);
 	void ProcessInput(const sf::Event& event);

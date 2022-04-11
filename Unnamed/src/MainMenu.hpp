@@ -11,16 +11,15 @@ class MainMenu : public State
 private:
 	std::shared_ptr<GameData> _data;
 
-public:
 	ResourceMonitor _fps;
-	//std::vector<UIObjectRef> _assets;
-	//
 	//UIObjectRef _background;
 	//UIObjectRef _startButton;
 	//UIObjectRef _quitButton;
-	 
+
+public:
 	MainMenu(std::shared_ptr<GameData>& data);
 	~MainMenu();
+
 	void Init();
 	void ProcessEvent(const sf::Event& event);
 	void ProcessInput(const sf::Event& event);
