@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 
-class GameObject;
+class PlayerObject;
 
 class Command
 {
 public:
-	virtual void Execute(const GameObject& object) = 0;
+	virtual void Execute(const PlayerObject& player) = 0;
 };

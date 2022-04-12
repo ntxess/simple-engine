@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AIGraphics.cpp" />
-    <ClCompile Include="src\AIPhysics.cpp" />
+    <ClCompile Include="src\EnemyObject.cpp" />
+    <ClCompile Include="src\PlayerObject.cpp" />
+    <ClCompile Include="src\EnemyGraphics.cpp" />
+    <ClCompile Include="src\EnemyPhysics.cpp" />
     <ClCompile Include="src\AIInput.cpp" />
     <ClCompile Include="src\CommandExSkill.cpp" />
     <ClCompile Include="src\CommandDodge.cpp" />
@@ -36,11 +38,13 @@
     <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="WayPoint.cpp" />
+    <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AIGraphics.hpp" />
-    <ClInclude Include="src\AIPhysics.hpp" />
+    <ClInclude Include="src\EnemyObject.hpp" />
+    <ClInclude Include="src\PlayerObject.hpp" />
+    <ClInclude Include="src\EnemyGraphics.hpp" />
+    <ClInclude Include="src\EnemyPhysics.hpp" />
     <ClInclude Include="src\AIInput.hpp" />
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
@@ -62,7 +66,7 @@
     <ClInclude Include="src\GameObject.hpp" />
     <ClInclude Include="src\GraphicsComponent.hpp" />
     <ClInclude Include="src\PhysicsComponent.hpp" />
-    <ClInclude Include="WayPoint.hpp" />
+    <ClInclude Include="src\WayPoint.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

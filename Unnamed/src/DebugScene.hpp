@@ -5,7 +5,8 @@
 #include "GameData.hpp"
 #include "MainMenu.hpp"
 #include "ResourceMonitor.hpp"
-#include "GameObject.hpp"
+#include "EnemyObject.hpp"
+#include "PlayerObject.hpp"
 #include "ShotParticle.hpp"
 #include "ParticlePool.hpp"
 #include "Particle.hpp"
@@ -13,8 +14,7 @@
 #include "PlayerPhysics.hpp"
 #include "PlayerGraphics.hpp"
 #include "AIInput.hpp"
-#include "AIPhysics.hpp"
-#include "AIGraphics.hpp"
+#include "WayPoint.hpp"
 
 class DebugScene : public State
 {
@@ -22,9 +22,9 @@ private:
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
-	std::unique_ptr<GameObject> _player;
-	std::unique_ptr<GameObject> _playerDup;
-	std::unique_ptr<ParticlePool<Particle>> _particlePool;
+	std::unique_ptr<PlayerObject> _player;
+	std::unique_ptr<EnemyObject> _enemy;
+	//std::unique_ptr<ParticlePool<Particle>> _particlePool;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);
@@ -35,7 +35,7 @@ public:
 	void ProcessInput(const sf::Event& event);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
-	void CheckBoundary(const std::unique_ptr<GameObject>& object);
+	void CheckBoundary(const std::unique_ptr<PlayerObject>& object);
 	bool CheckCollision(const std::unique_ptr<GameObject>& player, const std::unique_ptr<GameObject>& object);
 	void SpawnShotParticle();
 	void Pause();

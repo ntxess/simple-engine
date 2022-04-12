@@ -8,17 +8,17 @@ CommandDodge::CommandDodge()
 CommandDodge::~CommandDodge()
 {}
 
-void CommandDodge::Execute(const GameObject& object)
+void CommandDodge::Execute(const PlayerObject& player)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
-	sf::Vector2f direction = object.GetInput()->GetDirection();
+	sf::Vector2f direction = player.GetInput()->GetDirection();
 
 	if (direction != sf::Vector2f(0, 0) && currentTime > _cooldownTime)
 	{
 		direction.x *= _dodgeOffset;
 		direction.y *= _dodgeOffset;
 
-		object.GetGraphics()->GetSprite().move(direction);
+		player.GetGraphics()->GetSprite().move(direction);
 		_timer.restart();
 	}
 }

@@ -57,15 +57,18 @@
     <Filter Include="Source Files\Components\Input\Commands">
       <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Input\MovementType">
+      <UniqueIdentifier>{d02c7eb8-3015-4f50-8f7d-721fcbe1948a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AIGraphics.cpp">
+    <ClCompile Include="src\EnemyGraphics.cpp">
       <Filter>Source Files\Components\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\AIInput.cpp">
       <Filter>Source Files\Components\Input</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIPhysics.cpp">
+    <ClCompile Include="src\EnemyPhysics.cpp">
       <Filter>Source Files\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerGraphics.cpp">
@@ -107,11 +110,17 @@
     <ClCompile Include="src\CommandExSkill.cpp">
       <Filter>Source Files\Components\Input\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="WayPoint.cpp">
+    <ClCompile Include="src\WayPoint.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\StateMachine.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EnemyObject.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +160,7 @@
     <ClInclude Include="src\InputComponent.hpp">
       <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIGraphics.hpp">
+    <ClInclude Include="src\EnemyGraphics.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\GraphicsComponent.hpp">
@@ -160,7 +169,7 @@
     <ClInclude Include="src\PlayerGraphics.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\AIPhysics.hpp">
+    <ClInclude Include="src\EnemyPhysics.hpp">
       <Filter>Header Files\Components\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\PhysicsComponent.hpp">
@@ -184,8 +193,14 @@
     <ClInclude Include="src\ParticlePool.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="WayPoint.hpp">
+    <ClInclude Include="src\WayPoint.hpp">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerObject.hpp">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EnemyObject.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

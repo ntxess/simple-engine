@@ -1,11 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "InputComponent.hpp"
 #include "CommandDodge.hpp"
 #include "CommandEXSkill.hpp"
 
-class PlayerInput : public InputComponent
+class PlayerInput
 {
 private:
 	sf::Vector2f _direction; 

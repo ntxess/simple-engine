@@ -1,9 +1,8 @@
 #pragma once
 
-#include "PhysicsComponent.hpp"
-#include "GameObject.hpp"
+#include "PlayerObject.hpp"
 
-class PlayerPhysics : public PhysicsComponent
+class PlayerPhysics
 {
 private:
 	sf::Vector2f _velocity;
@@ -13,5 +12,5 @@ public:
 	~PlayerPhysics();
 
 	sf::Vector2f GetVelocity() const;
-	void Update(const GameObject& object, const float& deltaTime);
+	void Update(const PlayerObject& player, const float& deltaTime);
 };

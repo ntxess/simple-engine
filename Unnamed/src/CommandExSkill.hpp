@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Command.hpp"
-#include "GameObject.hpp"
+#include "PlayerObject.hpp"
 
 class CommandExSkill : public Command
 {
@@ -13,5 +13,5 @@ public:
 	CommandExSkill();
 	~CommandExSkill();
 
-	void Execute(const GameObject& player);
+	void Execute(const PlayerObject& player);
 };

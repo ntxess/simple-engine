@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Command.hpp"
-#include "GameObject.hpp"
+#include "PlayerObject.hpp"
 
 class CommandDodge : public Command
 {
@@ -14,5 +14,5 @@ public:
 	CommandDodge();
 	~CommandDodge();
 
-	void Execute(const GameObject& player);
+	void Execute(const PlayerObject& player);
 };

@@ -1,11 +1,9 @@
 #pragma once
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
-#include <Thor/Animations.hpp>
 
-#include "GraphicsComponent.hpp"
-
-class PlayerGraphics : public GraphicsComponent
+class PlayerGraphics
 {
 private:
 	sf::Sprite _sprite;
