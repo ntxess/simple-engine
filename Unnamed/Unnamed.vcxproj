@@ -23,7 +23,6 @@
     <ClCompile Include="src\PlayerObject.cpp" />
     <ClCompile Include="src\EnemyGraphics.cpp" />
     <ClCompile Include="src\EnemyPhysics.cpp" />
-    <ClCompile Include="src\AIInput.cpp" />
     <ClCompile Include="src\CommandExSkill.cpp" />
     <ClCompile Include="src\CommandDodge.cpp" />
     <ClCompile Include="src\PlayerGraphics.cpp" />
@@ -46,7 +45,6 @@
     <ClInclude Include="src\PlayerObject.hpp" />
     <ClInclude Include="src\EnemyGraphics.hpp" />
     <ClInclude Include="src\EnemyPhysics.hpp" />
-    <ClInclude Include="src\AIInput.hpp" />
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />

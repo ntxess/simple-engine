@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 #include "GameData.hpp"
 #include "MainMenu.hpp"
@@ -13,13 +14,13 @@
 #include "PlayerInput.hpp"
 #include "PlayerPhysics.hpp"
 #include "PlayerGraphics.hpp"
-#include "AIInput.hpp"
 #include "WayPoint.hpp"
 #include "MCircle.hpp"
 
 class DebugScene : public State
 {
 private:
+	static const int SIZE = 48;
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
@@ -27,6 +28,8 @@ private:
 	std::unique_ptr<EnemyObject> _enemy;
 	std::unique_ptr<EnemyObject> _enemy2;
 
+	EnemyObject enemies[SIZE];
+	EnemyObject* enemiesPtr[SIZE];
 	//std::unique_ptr<ParticlePool<Particle>> _particlePool;
 
 public:
@@ -40,7 +43,6 @@ public:
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 	void CheckBoundary(sf::Sprite& object);
 	void CheckCollision(sf::Sprite& player, sf::Sprite& object);
-	void SpawnShotParticle();
 	void Pause();
 	void Resume();
 };

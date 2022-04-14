@@ -5,7 +5,13 @@ DebugScene::DebugScene(std::shared_ptr<GameData>& data)
 {}
 
 DebugScene::~DebugScene()
-{}
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        delete enemiesPtr[i];
+        std::cout << enemiesPtr[i]->GetCurrentStats().SPD << std::endl;
+    }
+}
 
 void DebugScene::Init()
 {
@@ -16,12 +22,26 @@ void DebugScene::Init()
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
     _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-
     MCircle* path = new MCircle();
     _enemy->GetPhysics()->SetMovePattern(path->wps, true);
     _enemy2->GetPhysics()->SetMovePattern(path->wps);
-
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
+        std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
+        enemies[i].SetPhysics(physics);
+        enemies[i].SetGraphics(graphics);
+        enemies[i].GetGraphics()->GetSprite().setPosition((i * 40.0f), 50.0f);
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        EnemyObject* object = new EnemyObject(_data->_holder, "Ship");
+        object->GetGraphics()->GetSprite().setPosition((i * 40.0f), 100.0f);
+        enemiesPtr[i] = object;
+    }
 
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)
@@ -64,28 +84,34 @@ void DebugScene::Update(const float& deltaTime)
     CheckBoundary(_enemy2->GetGraphics()->GetSprite());
 
     CheckCollision(_player->GetGraphics()->GetSprite(), _enemy->GetGraphics()->GetSprite());
-
-    //if (!_player->IsAlive())
-    //{
-    //    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
-    //}
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-    //_background->Render(rw, deltaTime, interpolation);
     _fps.Update();
     _fps.Render(rw);
 
-    //_data->_animator.animate(_player->GetGraphics()->GetSprite());
     _player->GraphicsUpdate(rw, interpolation);
     _enemy->GraphicsUpdate(rw, interpolation);
     _enemy2->GraphicsUpdate(rw, interpolation);
 
-    //_playerDup->GraphicsUpdate(rw, interpolation);
-    //_particlePool->Render(rw, deltaTime, interpolation);
-    //for (int i = 0; i < _assets.size(); i++)
-    //    _assets[i]->Render(rw, interpolation);
+    //auto start = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < SIZE; i++)
+    {
+        enemies[i].GraphicsUpdate(rw, interpolation);
+    }
+    //auto stop = std::chrono::high_resolution_clock::now();
+    //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
+    //std::cout << duration.count() << std::endl;
+
+    //auto start = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < SIZE; i++)
+    {
+        enemiesPtr[i]->GraphicsUpdate(rw, interpolation);
+    }
+    //auto stop = std::chrono::high_resolution_clock::now();
+    //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
+    //std::cout << duration.count() << std::endl;
 }
 
 void DebugScene::CheckBoundary(sf::Sprite& object)
@@ -115,14 +141,6 @@ void DebugScene::CheckCollision(sf::Sprite& player, sf::Sprite& object)
     {
         std::cout << "UGGHH I GOT HIT" << std::endl;
     }
-}
-
-void DebugScene::SpawnShotParticle()
-{
-    //sf::Vector2f position = _player->GetComponent()->GetPosition();
-    //GameObjectRef shotParticle = std::make_unique<ShotParticle>(_data->_holder, position);
-    //_assets.push_back(std::move(shotParticle));
-    //_player->Shoot(false);
 }
 
 void DebugScene::Pause()

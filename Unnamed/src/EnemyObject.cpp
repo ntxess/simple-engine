@@ -45,6 +45,16 @@ const std::unique_ptr<EnemyGraphics>& EnemyObject::GetGraphics() const
 	return _graphics;
 }
 
+void EnemyObject::SetPhysics(std::unique_ptr<EnemyPhysics>& physics)
+{
+	_physics = std::move(physics);
+}
+
+void EnemyObject::SetGraphics(std::unique_ptr<EnemyGraphics>& graphics)
+{
+	_graphics = std::move(graphics);
+}
+
 void EnemyObject::ResetStats()
 {
 	_currentStats.HP = _defaultStats.HP;

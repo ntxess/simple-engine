@@ -39,6 +39,8 @@ public:
 	EnemyObject::CURRENT_STATS GetCurrentStats() const;
 	const std::unique_ptr<EnemyPhysics>& GetPhysics() const;
 	const std::unique_ptr<EnemyGraphics>& GetGraphics() const;
+	void SetPhysics(std::unique_ptr<EnemyPhysics>& physics);
+	void SetGraphics(std::unique_ptr<EnemyGraphics>& graphics);
 
 	void ResetStats();
 	void AugmentHealth(const float& newHealth);

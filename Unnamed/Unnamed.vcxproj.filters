@@ -71,9 +71,6 @@
     <ClCompile Include="src\EnemyGraphics.cpp">
       <Filter>Source Files\Components\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\AIInput.cpp">
-      <Filter>Source Files\Components\Input</Filter>
-    </ClCompile>
     <ClCompile Include="src\EnemyPhysics.cpp">
       <Filter>Source Files\Components\Physics</Filter>
     </ClCompile>
@@ -156,9 +153,6 @@
     </ClInclude>
     <ClInclude Include="src\ShotParticle.hpp">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AIInput.hpp">
-      <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerInput.hpp">
       <Filter>Header Files\Components\Input</Filter>
