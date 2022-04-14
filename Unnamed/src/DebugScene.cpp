@@ -14,18 +14,18 @@ void DebugScene::Init()
 
     _player = std::make_unique<PlayerObject>(_data->_holder, "Ship");
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
-
-    std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(100.0f, 100.0f));
-    std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(200.0f, 600.0f));
-    std::unique_ptr<WayPoint> pointC = std::make_unique<WayPoint>(sf::Vector2f(-100.0f, -100.0f));
+    _enemy->GetPhysics()->SetMovePattern(std::make_unique<CircleMov>());
+    //std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(100.0f, 100.0f));
+    //std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(200.0f, 600.0f));
+    //std::unique_ptr<WayPoint> pointC = std::make_unique<WayPoint>(sf::Vector2f(-100.0f, -100.0f));
 
     //WayPoint* pointA = new WayPoint(sf::Vector2f(10.0f, 10.0f));
     //WayPoint* pointB = new WayPoint(sf::Vector2f(10.0f, 40.0f));
     //WayPoint* pointC = new WayPoint(sf::Vector2f(-100.0f, -100.0f));
 
-    pointB->AddNext(std::move(pointC));
-    pointA->AddNext(std::move(pointB));
-    _enemy->GetPhysics()->SetPath(std::move(pointA));
+    //pointB->AddNext(std::move(pointC));
+    //pointA->AddNext(std::move(pointB));
+    //_enemy->GetPhysics()->SetPath(std::move(pointA));
 
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)

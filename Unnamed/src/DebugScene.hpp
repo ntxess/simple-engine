@@ -15,6 +15,7 @@
 #include "PlayerGraphics.hpp"
 #include "AIInput.hpp"
 #include "WayPoint.hpp"
+#include "CircleMov.hpp"
 
 class DebugScene : public State
 {

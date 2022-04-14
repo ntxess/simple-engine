@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CircleMov.cpp" />
     <ClCompile Include="src\EnemyObject.cpp" />
     <ClCompile Include="src\PlayerObject.cpp" />
     <ClCompile Include="src\EnemyGraphics.cpp" />
@@ -41,6 +42,9 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CircleMov.hpp" />
+    <ClInclude Include="src\MCircle.hpp" />
+    <ClInclude Include="src\MovementType.hpp" />
     <ClInclude Include="src\EnemyObject.hpp" />
     <ClInclude Include="src\PlayerObject.hpp" />
     <ClInclude Include="src\EnemyGraphics.hpp" />

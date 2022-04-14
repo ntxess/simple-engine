@@ -29,7 +29,7 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
             thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), 
             thor::Resources::Reuse);
         _data->_holder.acquire("Ship", 
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"), 
+            thor::Resources::fromFile<sf::Texture>("resources/player/ship0.png"), 
             thor::Resources::Reuse);
         _data->_holder.acquire("Shot", 
             thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 

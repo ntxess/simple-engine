@@ -17,9 +17,10 @@ WayPoint::WayPoint(sf::Vector2f location)
 WayPoint::~WayPoint()
 {}
 
-void WayPoint::AddNext(std::unique_ptr<WayPoint> wayPoint)
+void WayPoint::AddNext(WayPoint* wayPoint)
 {
-	_nextWP = std::move(wayPoint);
+	_nextWP = wayPoint;
+
 	_distanceToNext = sqrt((_nextWP->_location.x - _location.x) *
 						   (_nextWP->_location.x - _location.x) +
 						   (_nextWP->_location.y - _location.y) * 
