@@ -2,9 +2,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
-#include "GameObject.hpp"
 
-class ShotParticle : public GameObject
+class ShotParticle
 {
 public:
 	ShotParticle();

@@ -57,9 +57,6 @@
     <Filter Include="Source Files\Components\Input\Commands">
       <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Input\MovementType">
-      <UniqueIdentifier>{d02c7eb8-3015-4f50-8f7d-721fcbe1948a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components\MovementType">
       <UniqueIdentifier>{96c97064-856a-4942-a2d9-6a3aa2dd827f}</UniqueIdentifier>
     </Filter>
@@ -88,9 +85,6 @@
     </ClCompile>
     <ClCompile Include="src\ResourceMonitor.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject.cpp">
-      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\Particle.cpp">
       <Filter>Source Files\Objects</Filter>
@@ -145,9 +139,6 @@
     <ClInclude Include="src\StateMachine.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\Particle.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
@@ -157,22 +148,13 @@
     <ClInclude Include="src\PlayerInput.hpp">
       <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputComponent.hpp">
-      <Filter>Header Files\Components\Input</Filter>
-    </ClInclude>
     <ClInclude Include="src\EnemyGraphics.hpp">
-      <Filter>Header Files\Components\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GraphicsComponent.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerGraphics.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\EnemyPhysics.hpp">
-      <Filter>Header Files\Components\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PhysicsComponent.hpp">
       <Filter>Header Files\Components\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerPhysics.hpp">

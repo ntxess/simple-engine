@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include "WayPoint.hpp"
 
 struct MCircle
@@ -21,9 +20,6 @@ public:
 		pointB->AddNext(pointC);
 		pointC->AddNext(pointD);
 		pointD->AddNext(pointE);
-
-		wps = pointA;
-		head = pointA;
 
 		wps = pointA;
 		head = pointA;
