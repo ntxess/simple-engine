@@ -15,7 +15,7 @@
 #include "PlayerGraphics.hpp"
 #include "AIInput.hpp"
 #include "WayPoint.hpp"
-#include "CircleMov.hpp"
+#include "MCircle.hpp"
 
 class DebugScene : public State
 {
@@ -25,6 +25,8 @@ private:
 	ResourceMonitor _fps;
 	std::unique_ptr<PlayerObject> _player;
 	std::unique_ptr<EnemyObject> _enemy;
+	std::unique_ptr<EnemyObject> _enemy2;
+
 	//std::unique_ptr<ParticlePool<Particle>> _particlePool;
 
 public:

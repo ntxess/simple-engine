@@ -14,18 +14,15 @@ void DebugScene::Init()
 
     _player = std::make_unique<PlayerObject>(_data->_holder, "Ship");
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
-    _enemy->GetPhysics()->SetMovePattern(std::make_unique<CircleMov>());
-    //std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(100.0f, 100.0f));
-    //std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(200.0f, 600.0f));
-    //std::unique_ptr<WayPoint> pointC = std::make_unique<WayPoint>(sf::Vector2f(-100.0f, -100.0f));
+    _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-    //WayPoint* pointA = new WayPoint(sf::Vector2f(10.0f, 10.0f));
-    //WayPoint* pointB = new WayPoint(sf::Vector2f(10.0f, 40.0f));
-    //WayPoint* pointC = new WayPoint(sf::Vector2f(-100.0f, -100.0f));
 
-    //pointB->AddNext(std::move(pointC));
-    //pointA->AddNext(std::move(pointB));
-    //_enemy->GetPhysics()->SetPath(std::move(pointA));
+    MCircle* path = new MCircle();
+    _enemy->GetPhysics()->SetMovePattern(path->wps, true);
+    _enemy2->GetPhysics()->SetMovePattern(path->wps);
+
+    _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
+
 
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)
@@ -62,7 +59,6 @@ void DebugScene::ProcessEvent(const sf::Event& event)
 void DebugScene::ProcessInput(const sf::Event& event)
 { 
     _player->InputUpdate(event);
-    //_playerDup->InputUpdate(event);
 }
 
 void DebugScene::Update(const float& deltaTime)
@@ -71,6 +67,8 @@ void DebugScene::Update(const float& deltaTime)
     CheckBoundary(_player);
 
     _enemy->PhysicsUpdate(deltaTime);
+    _enemy2->PhysicsUpdate(deltaTime);
+
     //_playerDup->PhysicsUpdate(deltaTime);
     //CheckBoundary(_playerDup);
 
@@ -106,6 +104,8 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     //_data->_animator.animate(_player->GetGraphics()->GetSprite());
     _player->GraphicsUpdate(rw, interpolation);
     _enemy->GraphicsUpdate(rw, interpolation);
+    _enemy2->GraphicsUpdate(rw, interpolation);
+
     //_playerDup->GraphicsUpdate(rw, interpolation);
     //_particlePool->Render(rw, deltaTime, interpolation);
     //for (int i = 0; i < _assets.size(); i++)

@@ -128,9 +128,6 @@
     <ClCompile Include="src\WayPoint.cpp">
       <Filter>Source Files\Components\MovementType</Filter>
     </ClCompile>
-    <ClCompile Include="src\CircleMov.cpp">
-      <Filter>Source Files\Components\MovementType</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DebugScene.hpp">
@@ -208,13 +205,7 @@
     <ClInclude Include="src\EnemyObject.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\MovementType.hpp">
-      <Filter>Header Files\Components\MovementType</Filter>
-    </ClInclude>
     <ClInclude Include="src\WayPoint.hpp">
-      <Filter>Header Files\Components\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CircleMov.hpp">
       <Filter>Header Files\Components\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MCircle.hpp">
