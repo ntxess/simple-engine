@@ -23,20 +23,11 @@ void DebugScene::Init()
 
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
 
-
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)
     //    idle.addFrame(1.f, sf::IntRect(16 * i, 0, 16, 24));
     //_data->_animator.addAnimation("idle", idle, sf::seconds(8.f));
     //_data->_animator.playAnimation("idle", true);
-
-    //_playerDup = std::make_unique<GameObject>();
-    //std::shared_ptr<InputComponent> aiInput = std::make_shared<AIInput>();
-    //std::shared_ptr<PhysicsComponent> aiPhysics = std::make_shared<AIPhysics>();
-    //std::shared_ptr<GraphicsComponent> aiGraphics = std::make_shared<AIGraphics>(_data->_holder, "Ship");
-    //_playerDup->SetInput(aiInput);
-    //_playerDup->SetPhysics(aiPhysics);
-    //_playerDup->SetGraphics(aiGraphics);
 
     //_playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
     //_particlePool->Create(_data->_holder, "Ship", _player->GetGraphics()->GetSprite().getPosition());
@@ -64,30 +55,15 @@ void DebugScene::ProcessInput(const sf::Event& event)
 void DebugScene::Update(const float& deltaTime)
 {
     _player->PhysicsUpdate(deltaTime);
-    CheckBoundary(_player);
+    CheckBoundary(_player->GetGraphics()->GetSprite());
 
     _enemy->PhysicsUpdate(deltaTime);
+    CheckBoundary(_enemy->GetGraphics()->GetSprite());
+
     _enemy2->PhysicsUpdate(deltaTime);
+    CheckBoundary(_enemy2->GetGraphics()->GetSprite());
 
-    //_playerDup->PhysicsUpdate(deltaTime);
-    //CheckBoundary(_playerDup);
-
-    //_particlePool->Create(_data->_holder, "Shot", _player->GetGraphics()->GetSprite().getPosition());
-    //_particlePool->Update(deltaTime);
-
-    //_player->Update(deltaTime);
-    //if (_player->_isShooting)
-    //    SpawnShotParticle();
-
-    //CheckBoundary(_player->GetComponent());
-
-    //auto assetStart = _assets.begin();
-    //for (int i = 0; i < _assets.size(); i++)
-    //{
-    //    _assets[i]->Update(deltaTime);
-    //    _assets[i]->GetInput()->Update(sf::Vector2f(0, -1));
-    //    CheckBoundary(_assets[i]);
-    //}
+    CheckCollision(_player->GetGraphics()->GetSprite(), _enemy->GetGraphics()->GetSprite());
 
     //if (!_player->IsAlive())
     //{
@@ -112,37 +88,33 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     //    _assets[i]->Render(rw, interpolation);
 }
 
-void DebugScene::CheckBoundary(const std::unique_ptr<PlayerObject>& object)
+void DebugScene::CheckBoundary(sf::Sprite& object)
 {
-    sf::Vector2f position = object->GetGraphics()->GetSprite().getPosition();
-    sf::FloatRect rect = object->GetGraphics()->GetSprite().getGlobalBounds();
+    sf::Vector2f position = object.getPosition();
+    sf::FloatRect rect = object.getGlobalBounds();
     sf::Vector2u bounds = _data->_window->getSize();
 
     if (position.x < 0)
-        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(0.f, position.y));
+        object.setPosition(sf::Vector2f(0.f, position.y));
 
     if (position.x + rect.width > bounds.x)
-        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
+        object.setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
 
-    position = object->GetGraphics()->GetSprite().getPosition();
+    position = object.getPosition();
 
     if (position.y < 0)
-        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, 0.f));
+        object.setPosition(sf::Vector2f(position.x, 0.f));
 
     if (position.y + rect.height > bounds.y)
-        object->GetGraphics()->GetSprite().setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
+        object.setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
-bool DebugScene::CheckCollision(const std::unique_ptr<GameObject>& playerComponent, const std::unique_ptr<GameObject>& object)
+void DebugScene::CheckCollision(sf::Sprite& player, sf::Sprite& object)
 {
-    //if (object->GetPhysics())
-    //{
-    //    if (playerComponent->GetSprite().getGlobalBounds().intersects(object->GetSprite().getGlobalBounds()))
-    //    {
-    //        object->SetTouchTag(true);
-    //    }
-    //}
-    return false;
+    if (player.getGlobalBounds().intersects(object.getGlobalBounds()))
+    {
+        std::cout << "UGGHH I GOT HIT" << std::endl;
+    }
 }
 
 void DebugScene::SpawnShotParticle()

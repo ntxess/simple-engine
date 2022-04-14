@@ -38,8 +38,8 @@ public:
 	void ProcessInput(const sf::Event& event);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
-	void CheckBoundary(const std::unique_ptr<PlayerObject>& object);
-	bool CheckCollision(const std::unique_ptr<GameObject>& player, const std::unique_ptr<GameObject>& object);
+	void CheckBoundary(sf::Sprite& object);
+	void CheckCollision(sf::Sprite& player, sf::Sprite& object);
 	void SpawnShotParticle();
 	void Pause();
 	void Resume();
