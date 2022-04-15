@@ -9,7 +9,6 @@ DebugScene::~DebugScene()
     for (int i = 0; i < SIZE; i++)
     {
         delete enemiesPtr[i];
-        std::cout << enemiesPtr[i]->GetCurrentStats().SPD << std::endl;
     }
 }
 
@@ -22,26 +21,45 @@ void DebugScene::Init()
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
     _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-    MCircle* path = new MCircle();
-    _enemy->GetPhysics()->SetMovePattern(path->wps, true);
-    _enemy2->GetPhysics()->SetMovePattern(path->wps);
+    MCircle* pathCircle = new MCircle();
+    _enemy->GetPhysics()->SetMovePattern(pathCircle->wps, true);
+    _enemy2->GetPhysics()->SetMovePattern(pathCircle->wps);
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
 
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 1800);
+    
     for (int i = 0; i < SIZE; i++)
     {
+        MRandom* pathRandom = new MRandom();
         std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
         std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
+        enemies[i].AugmentHealth(100.f);
+        enemies[i].AugmentSpeed(500.f);
+        enemies[i].AugmentAttackSpeed(1.f);
+        enemies[i].ResetStats();
         enemies[i].SetPhysics(physics);
+        enemies[i].GetPhysics()->SetMovePattern(pathRandom->wps, true);
         enemies[i].SetGraphics(graphics);
-        enemies[i].GetGraphics()->GetSprite().setPosition((i * 40.0f), 50.0f);
+        enemies[i].GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
+        enemies[i].GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
     }
 
     for (int i = 0; i < SIZE; i++)
     {
+        MRandom* pathRandom = new MRandom();
         EnemyObject* object = new EnemyObject(_data->_holder, "Ship");
-        object->GetGraphics()->GetSprite().setPosition((i * 40.0f), 100.0f);
+        object->GetPhysics()->SetMovePattern(pathRandom->wps, true);
+        object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
+        object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
         enemiesPtr[i] = object;
     }
+
+    //for (int i = 0; i < SIZE; i++)
+    //{
+    //    delete enemiesPtr[i];
+    //}
 
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)
@@ -83,7 +101,16 @@ void DebugScene::Update(const float& deltaTime)
     _enemy2->PhysicsUpdate(deltaTime);
     CheckBoundary(_enemy2->GetGraphics()->GetSprite());
 
-    CheckCollision(_player->GetGraphics()->GetSprite(), _enemy->GetGraphics()->GetSprite());
+    for (int i = 0; i < SIZE; i++)
+    {
+        enemies[i].PhysicsUpdate(deltaTime);
+        CheckBoundary(enemies[i].GetGraphics()->GetSprite());
+        //CheckCollision(_player->GetGraphics()->GetSprite(), enemies[i].GetGraphics()->GetSprite());
+        
+        enemiesPtr[i]->PhysicsUpdate(deltaTime);
+        CheckBoundary(enemiesPtr[i]->GetGraphics()->GetSprite());
+        //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
+    }
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -99,14 +126,6 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     for (int i = 0; i < SIZE; i++)
     {
         enemies[i].GraphicsUpdate(rw, interpolation);
-    }
-    //auto stop = std::chrono::high_resolution_clock::now();
-    //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
-    //std::cout << duration.count() << std::endl;
-
-    //auto start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < SIZE; i++)
-    {
         enemiesPtr[i]->GraphicsUpdate(rw, interpolation);
     }
     //auto stop = std::chrono::high_resolution_clock::now();

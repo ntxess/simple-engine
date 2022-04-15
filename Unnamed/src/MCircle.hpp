@@ -27,12 +27,12 @@ public:
 
 	~MCircle()
 	{
-		WayPoint* temp;
-		while (head)
+		WayPoint* next;
+		while (head != NULL)
 		{
-			temp = head;
-			head = head->_nextWP;
-			delete temp;
+			next = head->_nextWP;
+			delete head;
+			head = next;
 		}
 	}
 };

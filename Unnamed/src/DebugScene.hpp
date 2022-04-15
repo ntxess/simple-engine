@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <random>
 
 #include "GameData.hpp"
 #include "MainMenu.hpp"
@@ -16,11 +17,12 @@
 #include "PlayerGraphics.hpp"
 #include "WayPoint.hpp"
 #include "MCircle.hpp"
+#include "MRandom.hpp"
 
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 48;
+	static const int SIZE = 1000;
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;

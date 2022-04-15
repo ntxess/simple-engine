@@ -187,5 +187,8 @@
     <ClInclude Include="src\MCircle.hpp">
       <Filter>Header Files\Components\MovementType</Filter>
     </ClInclude>
+    <ClInclude Include="src\MRandom.hpp">
+      <Filter>Header Files\Components\MovementType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

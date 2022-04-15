@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="src\MCircle.hpp" />
     <ClInclude Include="src\EnemyObject.hpp" />
+    <ClInclude Include="src\MRandom.hpp" />
     <ClInclude Include="src\PlayerObject.hpp" />
     <ClInclude Include="src\EnemyGraphics.hpp" />
     <ClInclude Include="src\EnemyPhysics.hpp" />

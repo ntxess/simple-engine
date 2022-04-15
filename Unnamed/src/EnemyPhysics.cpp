@@ -9,7 +9,15 @@ EnemyPhysics::EnemyPhysics()
 {}
 
 EnemyPhysics::~EnemyPhysics()
-{}
+{
+	WayPoint* next;
+	while (_head != NULL)
+	{
+		next = _head->_nextWP;
+		delete _head;
+		_head = next;
+	}
+}
 
 void EnemyPhysics::SetMovePattern(WayPoint* wps, const bool& repeat)
 {
