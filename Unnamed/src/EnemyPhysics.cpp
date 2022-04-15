@@ -11,7 +11,7 @@ EnemyPhysics::EnemyPhysics()
 EnemyPhysics::~EnemyPhysics()
 {
 	WayPoint* next;
-	while (_head != NULL)
+	while (_head != nullptr)
 	{
 		next = _head->_nextWP;
 		delete _head;
@@ -33,7 +33,7 @@ bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 	{
 		_distance += speed * deltaTime;
 		if (_distance > _path->_nextWP->_distanceTotal)
-			_path = std::move(_path->_nextWP);
+			_path = _path->_nextWP;
 	}
 
 	if (_path->_nextWP)

@@ -56,11 +56,6 @@ void DebugScene::Init()
         enemiesPtr[i] = object;
     }
 
-    //for (int i = 0; i < SIZE; i++)
-    //{
-    //    delete enemiesPtr[i];
-    //}
-
     //thor::FrameAnimation idle;
     //for (int i = 0; i < 4; i++)
     //    idle.addFrame(1.f, sf::IntRect(16 * i, 0, 16, 24));

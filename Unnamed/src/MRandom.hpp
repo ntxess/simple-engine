@@ -33,7 +33,8 @@ public:
 		pointF->AddNext(pointG);
 		pointG->AddNext(pointH);
 		pointH->AddNext(pointI);
-
+		pointI->AddNext(pointJ);
+													 
 		wps = pointA;
 		head = pointA;
 	}
