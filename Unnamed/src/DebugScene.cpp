@@ -92,9 +92,6 @@ void DebugScene::Update(const float& deltaTime)
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-    _fps.Update();
-    _fps.Render(rw);
-
     _player->GraphicsUpdate(rw, interpolation);
     _enemy->GraphicsUpdate(rw, interpolation);
     _enemy2->GraphicsUpdate(rw, interpolation);
@@ -108,6 +105,9 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     //auto stop = std::chrono::high_resolution_clock::now();
     //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
     //std::cout << duration.count() << std::endl;
+
+    _fps.Update();
+    _fps.Render(rw);
 }
 
 void DebugScene::CheckBoundary(sf::Sprite& object)

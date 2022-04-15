@@ -22,7 +22,7 @@
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 100;
+	static const int SIZE = 1000;
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
