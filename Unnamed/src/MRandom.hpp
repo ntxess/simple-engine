@@ -5,8 +5,7 @@
 struct MRandom
 {
 public:
-	WayPoint* head;
-	WayPoint* wps;
+	std::unique_ptr<WayPoint> head;
 
 	MRandom()
 	{
@@ -14,39 +13,30 @@ public:
 		std::mt19937 rng(dev());
 		std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 700);
 
-		WayPoint* pointA = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointB = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointC = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointD = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointE = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointF = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointG = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointH = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointI = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
-		WayPoint* pointJ = new WayPoint(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointC = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointD = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointE = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointF = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointG = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointH = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointI = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
+		std::unique_ptr<WayPoint> pointJ = std::make_unique<WayPoint>(sf::Vector2f(float(dist6(rng)), float(dist6(rng))));
 
-		pointA->AddNext(pointB);
-		pointB->AddNext(pointC);
-		pointC->AddNext(pointD);
-		pointD->AddNext(pointE);
-		pointE->AddNext(pointF);
-		pointF->AddNext(pointG);
-		pointG->AddNext(pointH);
-		pointH->AddNext(pointI);
-		pointI->AddNext(pointJ);
-													 
-		head = pointA;
-		wps = pointA;
+		pointI->AddNext(std::move(pointJ));
+		pointH->AddNext(std::move(pointI));
+		pointG->AddNext(std::move(pointH));
+		pointF->AddNext(std::move(pointG));
+		pointE->AddNext(std::move(pointF));
+		pointD->AddNext(std::move(pointE));
+		pointC->AddNext(std::move(pointD));
+		pointB->AddNext(std::move(pointC));
+		pointA->AddNext(std::move(pointB));
+
+		head = std::move(pointA);
 	}
 
 	~MRandom()
-	{
-		WayPoint* next;
-		while (head != NULL)
-		{
-			next = head->_nextWP;
-			delete head;
-			head = next;
-		}
-	}
+	{}
 };

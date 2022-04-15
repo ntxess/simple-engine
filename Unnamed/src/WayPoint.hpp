@@ -7,13 +7,13 @@ public:
 	sf::Vector2f _location;
 	float _distanceToNext;
 	float _distanceTotal;
-	WayPoint* _nextWP;
+	std::unique_ptr<WayPoint> _nextWP;
 
 public:
 	WayPoint();
 	WayPoint(sf::Vector2f location);
 	~WayPoint();
 
-	void AddNext(WayPoint* wayPoint);
+	void AddNext(std::unique_ptr<WayPoint> wayPoint);
 };
 

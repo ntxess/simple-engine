@@ -8,7 +8,7 @@ class EnemyObject;
 class EnemyPhysics
 {
 private:
-	WayPoint* _head;
+	std::unique_ptr<WayPoint> _movePattern;
 	WayPoint* _path;
 
 	sf::Vector2f _velocity;
@@ -19,7 +19,7 @@ public:
 	EnemyPhysics();
 	~EnemyPhysics();
 
-	void SetMovePattern(WayPoint* wps, const bool& repeat = false);
+	void SetMovePattern(std::unique_ptr<WayPoint> wps, const bool& repeat = false);
 	bool TraversePattern(const float& speed, const float& deltaTime);
 	void Update(const EnemyObject& enemy, const float& deltaTime);
 };

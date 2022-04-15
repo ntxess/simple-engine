@@ -5,34 +5,24 @@
 struct MCircle
 {
 public:
-	WayPoint* head;
-	WayPoint* wps;
+	std::unique_ptr<WayPoint> head;
 
 	MCircle()
 	{
-		WayPoint* pointA = new WayPoint(sf::Vector2f(120.0f, 80.0f));
-		WayPoint* pointB = new WayPoint(sf::Vector2f(210.0f, 30.0f));
-		WayPoint* pointC = new WayPoint(sf::Vector2f(260.0f, 120.0f));
-		WayPoint* pointD = new WayPoint(sf::Vector2f(180.0f, 190.0f));
-		WayPoint* pointE = new WayPoint(sf::Vector2f(80.0f, 140.0f));
+		std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(120.0f, 80.0f));
+		std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(210.0f, 30.0f));
+		std::unique_ptr<WayPoint> pointC = std::make_unique<WayPoint>(sf::Vector2f(260.0f, 120.0f));
+		std::unique_ptr<WayPoint> pointD = std::make_unique<WayPoint>(sf::Vector2f(180.0f, 190.0f));
+		std::unique_ptr<WayPoint> pointE = std::make_unique<WayPoint>(sf::Vector2f(80.0f, 140.0f));
 
-		pointA->AddNext(pointB);
-		pointB->AddNext(pointC);
-		pointC->AddNext(pointD);
-		pointD->AddNext(pointE);
+		pointD->AddNext(std::move(pointE));
+		pointC->AddNext(std::move(pointD));
+		pointB->AddNext(std::move(pointC));
+		pointA->AddNext(std::move(pointB));
 
-		head = pointA;
-		wps = pointA;
+		head = std::move(pointA);
 	}
 
 	~MCircle()
-	{
-		WayPoint* next;
-		while (head != NULL)
-		{
-			next = head->_nextWP;
-			delete head;
-			head = next;
-		}
-	}
+	{}
 };

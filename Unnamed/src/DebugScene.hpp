@@ -31,7 +31,7 @@ private:
 	std::unique_ptr<EnemyObject> _enemy2;
 
 	EnemyObject enemies[SIZE];
-	EnemyObject* enemiesPtr[SIZE];
+	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
 	//std::unique_ptr<ParticlePool<Particle>> _particlePool;
 
 public:

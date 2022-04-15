@@ -5,12 +5,7 @@ DebugScene::DebugScene(std::shared_ptr<GameData>& data)
 {}
 
 DebugScene::~DebugScene()
-{
-    for (int i = 0; i < SIZE; i++)
-    {
-        delete enemiesPtr[i];
-    }
-}
+{}
 
 void DebugScene::Init()
 {
@@ -21,9 +16,10 @@ void DebugScene::Init()
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
     _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-    MRandom* pathRandom = new MRandom();
-    _enemy->GetPhysics()->SetMovePattern(pathRandom->wps, true);
-    _enemy2->GetPhysics()->SetMovePattern(pathRandom->wps);
+    std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
+    _enemy->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
+    std::unique_ptr<MRandom> pathRandom2 = std::make_unique<MRandom>();
+    _enemy2->GetPhysics()->SetMovePattern(std::move(pathRandom2->head));
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
 
     std::random_device dev;
@@ -32,7 +28,7 @@ void DebugScene::Init()
     
     for (int i = 0; i < SIZE; i++)
     {
-        MRandom* pathRandom = new MRandom();
+        std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
         std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
         std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
         enemies[i].AugmentHealth(100.f);
@@ -40,7 +36,7 @@ void DebugScene::Init()
         enemies[i].AugmentAttackSpeed(1.f);
         enemies[i].ResetStats();
         enemies[i].SetPhysics(physics);
-        enemies[i].GetPhysics()->SetMovePattern(pathRandom->wps, true);
+        enemies[i].GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
         enemies[i].SetGraphics(graphics);
         enemies[i].GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
         enemies[i].GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
@@ -48,27 +44,13 @@ void DebugScene::Init()
 
     for (int i = 0; i < SIZE; i++)
     {
-        MRandom* pathRandom = new MRandom();
-        EnemyObject* object = new EnemyObject(_data->_holder, "Ship");
-        object->GetPhysics()->SetMovePattern(pathRandom->wps, true);
+        std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
+        std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder, "Ship");
+        object->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
         object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
         object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
-        enemiesPtr[i] = object;
+        enemiesPtr[i] = std::move(object);
     }
-
-    //thor::FrameAnimation idle;
-    //for (int i = 0; i < 4; i++)
-    //    idle.addFrame(1.f, sf::IntRect(16 * i, 0, 16, 24));
-    //_data->_animator.addAnimation("idle", idle, sf::seconds(8.f));
-    //_data->_animator.playAnimation("idle", true);
-
-    //_playerDup->GetGraphics()->GetSprite().setPosition(sf::Vector2f(700, 900));
-    //_particlePool->Create(_data->_holder, "Ship", _player->GetGraphics()->GetSprite().getPosition());
-    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(300, 500));
-    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(300, 600));
-    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(200, 500));
-    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(100, 500));
-    //_particlePool->Create(_data->_holder, "Ship", sf::Vector2f(600, 700));
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
