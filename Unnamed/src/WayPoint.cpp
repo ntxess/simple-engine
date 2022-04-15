@@ -15,9 +15,7 @@ WayPoint::WayPoint(sf::Vector2f location)
 {}
 
 WayPoint::~WayPoint()
-{
-	delete _nextWP;
-}
+{}
 
 void WayPoint::AddNext(WayPoint* wayPoint)
 {

@@ -21,9 +21,9 @@ void DebugScene::Init()
     _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
     _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-    MCircle* pathCircle = new MCircle();
-    _enemy->GetPhysics()->SetMovePattern(pathCircle->wps, true);
-    _enemy2->GetPhysics()->SetMovePattern(pathCircle->wps);
+    MRandom* pathRandom = new MRandom();
+    _enemy->GetPhysics()->SetMovePattern(pathRandom->wps, true);
+    _enemy2->GetPhysics()->SetMovePattern(pathRandom->wps);
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
 
     std::random_device dev;

@@ -5,8 +5,8 @@
 struct MRandom
 {
 public:
-	WayPoint* wps;
 	WayPoint* head;
+	WayPoint* wps;
 
 	MRandom()
 	{
@@ -35,8 +35,8 @@ public:
 		pointH->AddNext(pointI);
 		pointI->AddNext(pointJ);
 													 
-		wps = pointA;
 		head = pointA;
+		wps = pointA;
 	}
 
 	~MRandom()

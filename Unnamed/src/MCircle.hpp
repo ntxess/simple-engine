@@ -5,8 +5,8 @@
 struct MCircle
 {
 public:
-	WayPoint* wps;
 	WayPoint* head;
+	WayPoint* wps;
 
 	MCircle()
 	{
@@ -21,8 +21,8 @@ public:
 		pointC->AddNext(pointD);
 		pointD->AddNext(pointE);
 
-		wps = pointA;
 		head = pointA;
+		wps = pointA;
 	}
 
 	~MCircle()
