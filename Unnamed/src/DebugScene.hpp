@@ -22,12 +22,12 @@
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 1000;
+	static const int SIZE = 1; // Upper limit - 1500@60fps
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
 	std::unique_ptr<PlayerObject> _player;
-	std::unique_ptr<EnemyObject> _enemy;
+	//std::unique_ptr<EnemyObject> _enemy;
 	std::unique_ptr<EnemyObject> _enemy2;
 
 	EnemyObject enemies[SIZE];
