@@ -9,7 +9,6 @@ PlayerGraphics::PlayerGraphics(thor::ResourceHolder<sf::Texture, std::string>& h
 	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(sf::Vector2f(360, 900));
-	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
 
 PlayerGraphics::~PlayerGraphics()

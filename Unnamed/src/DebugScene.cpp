@@ -20,7 +20,7 @@ void DebugScene::Init()
     _enemy->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
 
     std::unique_ptr<MCircle> pathCircle = std::make_unique<MCircle>();
-    _enemy2->GetPhysics()->SetMovePattern(std::move(pathCircle->head));
+    _enemy2->GetPhysics()->SetMovePattern(std::move(pathCircle->head), true);
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
 
     std::random_device dev;

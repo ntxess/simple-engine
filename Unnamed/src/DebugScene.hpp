@@ -22,7 +22,7 @@
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 100; // Upper limit - 1500@60fps
+	static const int SIZE = 50; // Upper limit - 15000@60fps
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;

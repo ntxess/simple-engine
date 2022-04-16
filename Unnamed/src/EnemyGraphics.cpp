@@ -9,7 +9,6 @@ EnemyGraphics::EnemyGraphics(thor::ResourceHolder<sf::Texture, std::string>& hol
 	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(sf::Vector2f(500.f, 500.f));
-	std::cout << "TEXTURE LOADED: " << ID << std::endl;
 }
 
 EnemyGraphics::~EnemyGraphics()

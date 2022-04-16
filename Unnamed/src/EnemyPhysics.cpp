@@ -16,6 +16,16 @@ void EnemyPhysics::SetMovePattern(std::unique_ptr<WayPoint> wps, const bool& rep
 	_movePattern = std::move(wps);
 	_path = _movePattern.get();
 	_repeat = repeat;
+
+	// Setting distance between WayPoints
+	WayPoint* headPtr = _movePattern.get();
+	WayPoint* next;
+	while (headPtr->_nextWP.get() != NULL)
+	{
+		next = headPtr->_nextWP.get();
+		headPtr->_nextWP.get()->_distanceTotal = headPtr->_distanceTotal + headPtr->_distanceToNext;
+		headPtr = next;
+	}
 }
 
 bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
