@@ -13,11 +13,12 @@ void DebugScene::Init()
     //_particlePool = std::make_unique<ParticlePool<Particle>>();
 
     _player = std::make_unique<PlayerObject>(_data->_holder, "Ship");
-    //_enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
+    _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
     _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
 
-    //std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
-    //_enemy->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
+    std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
+    _enemy->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
+
     std::unique_ptr<MCircle> pathCircle = std::make_unique<MCircle>();
     _enemy2->GetPhysics()->SetMovePattern(std::move(pathCircle->head));
     _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
@@ -26,31 +27,31 @@ void DebugScene::Init()
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 1800);
     
-    //for (int i = 0; i < SIZE; i++)
-    //{
-    //    std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
-    //    std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
-    //    std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
-    //    enemies[i].AugmentHealth(100.f);
-    //    enemies[i].AugmentSpeed(500.f);
-    //    enemies[i].AugmentAttackSpeed(1.f);
-    //    enemies[i].ResetStats();
-    //    enemies[i].SetPhysics(physics);
-    //    enemies[i].GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
-    //    enemies[i].SetGraphics(graphics);
-    //    enemies[i].GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
-    //    enemies[i].GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
-    //}
+    for (int i = 0; i < SIZE; i++)
+    {
+        std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
+        std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
+        std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
+        enemies[i].AugmentHealth(100.f);
+        enemies[i].AugmentSpeed(500.f);
+        enemies[i].AugmentAttackSpeed(1.f);
+        enemies[i].ResetStats();
+        enemies[i].SetPhysics(physics);
+        enemies[i].GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
+        enemies[i].SetGraphics(graphics);
+        enemies[i].GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
+        enemies[i].GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
+    }
 
-    //for (int i = 0; i < SIZE; i++)
-    //{
-    //    std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
-    //    std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder, "Ship");
-    //    object->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
-    //    object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
-    //    object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
-    //    enemiesPtr[i] = std::move(object);
-    //}
+    for (int i = 0; i < SIZE; i++)
+    {
+        std::unique_ptr<MRandom> pathRandom = std::make_unique<MRandom>();
+        std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder, "Ship");
+        object->GetPhysics()->SetMovePattern(std::move(pathRandom->head), true);
+        object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
+        object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
+        enemiesPtr[i] = std::move(object);
+    }
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
@@ -72,36 +73,36 @@ void DebugScene::Update(const float& deltaTime)
     _player->PhysicsUpdate(deltaTime);
     CheckBoundary(_player->GetGraphics()->GetSprite());
 
-    //_enemy->PhysicsUpdate(deltaTime);
-    //CheckBoundary(_enemy->GetGraphics()->GetSprite());
+    _enemy->PhysicsUpdate(deltaTime);
+    CheckBoundary(_enemy->GetGraphics()->GetSprite());
 
     _enemy2->PhysicsUpdate(deltaTime);
     CheckBoundary(_enemy2->GetGraphics()->GetSprite());
 
-    //for (int i = 0; i < SIZE; i++)
-    //{
-    //    //enemies[i].PhysicsUpdate(deltaTime);
-    //    CheckBoundary(enemies[i].GetGraphics()->GetSprite());
-    //    //CheckCollision(_player->GetGraphics()->GetSprite(), enemies[i].GetGraphics()->GetSprite());
-    //    
-    //    //enemiesPtr[i]->PhysicsUpdate(deltaTime);
-    //    CheckBoundary(enemiesPtr[i]->GetGraphics()->GetSprite());
-    //    //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
-    //}
+    for (int i = 0; i < SIZE; i++)
+    {
+        enemies[i].PhysicsUpdate(deltaTime);
+        CheckBoundary(enemies[i].GetGraphics()->GetSprite());
+        //CheckCollision(_player->GetGraphics()->GetSprite(), enemies[i].GetGraphics()->GetSprite());
+        
+        enemiesPtr[i]->PhysicsUpdate(deltaTime);
+        CheckBoundary(enemiesPtr[i]->GetGraphics()->GetSprite());
+        //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
+    }
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
     _player->GraphicsUpdate(rw, interpolation);
-    //_enemy->GraphicsUpdate(rw, interpolation);
+    _enemy->GraphicsUpdate(rw, interpolation);
     _enemy2->GraphicsUpdate(rw, interpolation);
 
     //auto start = std::chrono::high_resolution_clock::now();
-    //for (int i = 0; i < SIZE; i++)
-    //{
-    //    enemies[i].GraphicsUpdate(rw, interpolation);
-    //    enemiesPtr[i]->GraphicsUpdate(rw, interpolation);
-    //}
+    for (int i = 0; i < SIZE; i++)
+    {
+        enemies[i].GraphicsUpdate(rw, interpolation);
+        enemiesPtr[i]->GraphicsUpdate(rw, interpolation);
+    }
     //auto stop = std::chrono::high_resolution_clock::now();
     //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
     //std::cout << duration.count() << std::endl;

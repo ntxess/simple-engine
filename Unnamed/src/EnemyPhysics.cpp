@@ -16,19 +16,6 @@ void EnemyPhysics::SetMovePattern(std::unique_ptr<WayPoint> wps, const bool& rep
 	_movePattern = std::move(wps);
 	_path = _movePattern.get();
 	_repeat = repeat;
-
-	WayPoint* headPtr = _movePattern.get();
-	WayPoint* next;
-	while (headPtr != NULL)
-	{
-		std::cout << "=========================Physics=========================" << std::endl;
-		next = headPtr->_nextWP.get();
-		std::cout << "ADDRESS   : " << &*(headPtr) << " " << &*(headPtr->_nextWP) << std::endl;
-		std::cout << "LOCATION  : " << headPtr->_location.x << " " << headPtr->_location.y << std::endl;
-		std::cout << "DISTANCE N: " << headPtr->_distanceToNext << std::endl;
-		std::cout << "DISTANCE T: " << headPtr->_distanceTotal << std::endl;
-		headPtr = next;
-	}
 }
 
 bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
@@ -37,9 +24,6 @@ bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 	if (_path->_nextWP.get())
 	{
 		_distance += speed * deltaTime;
-		std::cout << "**********************************************" << std::endl;
-		std::cout << "DEBUG DISTANCE   : " << _distance << std::endl;
-		std::cout << "DEBUG DISTANCE T : " << _path->_nextWP.get()->_distanceTotal << std::endl;
 		if (_distance > _path->_nextWP.get()->_distanceTotal)
 			_path = _path->_nextWP.get();
 	}
@@ -53,12 +37,6 @@ bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 		sf::Vector2f velocity;
 		_velocity.x = unitDist.x * speed * deltaTime;
 		_velocity.y = unitDist.y * speed * deltaTime;
-
-		std::cout << "DEBUG LOCATION   : " << _path->_location.x << " " << _path->_location.y << std::endl;
-		std::cout << "DEBUG LOCATION N : " << _path->_nextWP.get()->_location.x << " " << _path->_nextWP.get()->_location.y << std::endl;
-		std::cout << "DEBUG DISTANCE N : " << _path->_distanceToNext << std::endl;
-		std::cout << "DEBUG UNITDIST   : " << unitDist.x << " " << unitDist.y << std::endl;
-		std::cout << "DEBUG VELOCITY   : " << _velocity.x << " " << _velocity.y << std::endl;
 
 		return true;
 	}
