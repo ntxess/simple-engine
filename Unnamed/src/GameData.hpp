@@ -4,15 +4,15 @@
 #include <Thor/Resources.hpp>
 
 #include "StateMachine.hpp"
-//#include "MovementType.hpp"
+#include "WayPoint.hpp"
 
 struct GameData
 {
 public:
     std::unique_ptr<sf::RenderWindow> _window;
     std::unique_ptr<StateMachine> _machine;
+    std::unordered_map<std::string, std::unique_ptr<WayPoint>> _pathMap;
     thor::ResourceHolder<sf::Texture, std::string> _holder;
-    //thor::ResourceHolder<MovementType, std::string> _moveholder;
     thor::Animator<sf::Sprite, std::string> _animator;
 
     GameData()

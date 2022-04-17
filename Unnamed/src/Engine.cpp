@@ -39,6 +39,12 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     {
         std::cout << "Error: " << e.what() << std::endl;
     }
+
+    std::unique_ptr<MCircle> mCircle = std::make_unique<MCircle>();
+    std::unique_ptr<MRandom> mRandom = std::make_unique<MRandom>();
+
+    _data->_pathMap["mCircle"] = std::move(mCircle->head);
+    _data->_pathMap["mRandom"] = std::move(mRandom->head);
 }
 
 Engine::~Engine()

@@ -29,10 +29,6 @@ private:
 	EnemyObject enemies[SIZE];
 	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
 
-	std::unique_ptr<MCircle> pathCircle;
-	std::unique_ptr<MRandom> pathRandom;
-	//std::unique_ptr<ParticlePool<Particle>> _particlePool;
-
 public:
 	DebugScene(std::shared_ptr<GameData>& data);
 	~DebugScene();
