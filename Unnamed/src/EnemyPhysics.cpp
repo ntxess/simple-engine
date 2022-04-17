@@ -11,53 +11,42 @@ EnemyPhysics::EnemyPhysics()
 EnemyPhysics::~EnemyPhysics()
 {}
 
-void EnemyPhysics::SetMovePattern(std::unique_ptr<WayPoint> wps, const bool& repeat)
+void EnemyPhysics::SetMovePattern(WayPoint* wps, const bool& repeat)
 {
-	_movePattern = std::move(wps);
-	_path = _movePattern.get();
+	_movePattern = &*wps;
+	_path = &*wps;
 	_repeat = repeat;
-
-	// Setting distance between WayPoints
-	WayPoint* headPtr = _movePattern.get();
-	WayPoint* next;
-	while (headPtr->_nextWP.get() != NULL)
-	{
-		next = headPtr->_nextWP.get();
-		headPtr->_nextWP.get()->_distanceTotal = headPtr->_distanceTotal + headPtr->_distanceToNext;
-		headPtr = next;
-	}
 }
 
 bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 {
-	_velocity = sf::Vector2f(0.f, 0.f);
-	if (_path->_nextWP.get())
+	WayPoint* headPtr = _path;
+	WayPoint* nextPtr;
+
+	nextPtr = headPtr->_nextWP.get();
+	if (nextPtr == nullptr)
+		return false;
+
+	_distance += speed * deltaTime;
+	if (_distance > nextPtr->_distanceTotal)
+		_path = nextPtr;
+
+	nextPtr = headPtr->_nextWP.get();
+	sf::Vector2f unitDist;
+	unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
+	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
+
+	sf::Vector2f velocity;
+	_velocity.x = unitDist.x * speed * deltaTime;
+	_velocity.y = unitDist.y * speed * deltaTime;
+
+	if (_repeat && _path->_distanceToNext == 0)
 	{
-		_distance += speed * deltaTime;
-		if (_distance > _path->_nextWP.get()->_distanceTotal)
-			_path = _path->_nextWP.get();
-	}
-
-	if (_path->_nextWP.get())
-	{
-		sf::Vector2f unitDist;
-		unitDist.x = (_path->_nextWP.get()->_location.x - _path->_location.x) / _path->_distanceToNext;
-		unitDist.y = (_path->_nextWP.get()->_location.y - _path->_location.y) / _path->_distanceToNext;
-
-		sf::Vector2f velocity;
-		_velocity.x = unitDist.x * speed * deltaTime;
-		_velocity.y = unitDist.y * speed * deltaTime;
-
-		return true;
-	}
-
-	if (_repeat)
-	{
-		_path = _movePattern.get();
+		_path = _movePattern;
 		_distance = 0.f;
 	}
 
-	return false;
+	return true;
 }
 
 void EnemyPhysics::Update(const EnemyObject& enemy, const float& deltaTime)

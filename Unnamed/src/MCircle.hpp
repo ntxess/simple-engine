@@ -21,6 +21,16 @@ public:
 		pointA->AddNext(std::move(pointB));
 
 		head = std::move(pointA);
+
+		// Setting distance between WayPoints
+		WayPoint* headPtr = head.get();
+		WayPoint* next;
+		while (headPtr->_nextWP.get() != NULL)
+		{
+			next = headPtr->_nextWP.get();
+			headPtr->_nextWP.get()->_distanceTotal = headPtr->_distanceTotal + headPtr->_distanceToNext;
+			headPtr = next;
+		}
 	}
 
 	~MCircle()

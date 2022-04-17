@@ -57,10 +57,10 @@
     <Filter Include="Source Files\Components\Input\Commands">
       <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\MovementType">
+    <Filter Include="Header Files\MovementType">
       <UniqueIdentifier>{96c97064-856a-4942-a2d9-6a3aa2dd827f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\MovementType">
+    <Filter Include="Source Files\MovementType">
       <UniqueIdentifier>{f0d22942-ba8d-4f3c-9e17-33d747aec99d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -117,7 +117,7 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\WayPoint.cpp">
-      <Filter>Source Files\Components\MovementType</Filter>
+      <Filter>Source Files\MovementType</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,13 +182,13 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\WayPoint.hpp">
-      <Filter>Header Files\Components\MovementType</Filter>
+      <Filter>Header Files\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MCircle.hpp">
-      <Filter>Header Files\Components\MovementType</Filter>
+      <Filter>Header Files\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MRandom.hpp">
-      <Filter>Header Files\Components\MovementType</Filter>
+      <Filter>Header Files\MovementType</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

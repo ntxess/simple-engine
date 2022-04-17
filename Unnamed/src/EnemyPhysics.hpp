@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include "EnemyObject.hpp"
 #include "WayPoint.hpp"
 
@@ -8,7 +8,7 @@ class EnemyObject;
 class EnemyPhysics
 {
 private:
-	std::unique_ptr<WayPoint> _movePattern;
+	WayPoint* _movePattern;
 	WayPoint* _path;
 
 	sf::Vector2f _velocity;
@@ -19,7 +19,7 @@ public:
 	EnemyPhysics();
 	~EnemyPhysics();
 
-	void SetMovePattern(std::unique_ptr<WayPoint> wps, const bool& repeat = false);
+	void SetMovePattern(WayPoint* wps, const bool& repeat = false);
 	bool TraversePattern(const float& speed, const float& deltaTime);
 	void Update(const EnemyObject& enemy, const float& deltaTime);
 };
