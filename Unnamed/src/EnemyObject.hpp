@@ -32,7 +32,7 @@ private:
 
 public:
 	EnemyObject();
-	EnemyObject(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID);
+	EnemyObject(sf::Texture& texture);
 	~EnemyObject();
 
 	EnemyObject::DEFAULT_STATS GetDefaultStats() const;

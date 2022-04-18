@@ -49,10 +49,10 @@ bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 	return true;
 }
 
-void EnemyPhysics::Update(const EnemyObject& enemy, const float& deltaTime)
+void EnemyPhysics::Update(sf::Sprite& object, const float& speed, const float& deltaTime)
 {
-	if (TraversePattern(enemy.GetCurrentStats().SPD, deltaTime))
+	if (TraversePattern(speed, deltaTime))
 	{
-		enemy.GetGraphics()->GetSprite().move(_velocity);
+		object.move(_velocity);
 	}
 }

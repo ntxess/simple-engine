@@ -9,7 +9,6 @@
 #include "MainMenu.hpp"
 #include "PlayerObject.hpp"
 #include "EnemyObject.hpp"
-#include "ShotParticle.hpp"
 #include "ParticlePool.hpp"
 #include "Particle.hpp"
 #include "MCircle.hpp"

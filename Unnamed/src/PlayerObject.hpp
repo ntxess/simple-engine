@@ -35,7 +35,7 @@ private:
 
 public:
 	PlayerObject();
-	PlayerObject(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID);
+	PlayerObject(sf::Texture& texture);
 	~PlayerObject();
 
 	PlayerObject::DEFAULT_STATS GetDefaultStats() const;

@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
+#include "GameData.hpp"
+
 template <class TObject>
 class ParticlePool
 {
@@ -14,7 +16,9 @@ private:
 public:
 	ParticlePool();
 	~ParticlePool();
-	void Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID, const sf::Vector2f emitterPos);
+	void Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& spriteID, 
+				std::unordered_map<std::string, std::unique_ptr<WayPoint>> pathMap, const std::string& pathID, 
+				const sf::Vector2f emitterPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
@@ -37,13 +41,15 @@ ParticlePool<TObject>::~ParticlePool()
 {}
 
 template<class TObject>
-void ParticlePool<TObject>::Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID, const sf::Vector2f emitterPos)
+void ParticlePool<TObject>::Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& spriteID,
+								   std::unordered_map<std::string, std::unique_ptr<WayPoint>> pathMap, const std::string& pathID,
+								   const sf::Vector2f emitterPos)
 {
 	assert(_firstAvailable != nullptr);
 
 	TObject* newObject = _firstAvailable;
 	_firstAvailable = _firstAvailable->_state.next;
-	newObject->Init(holder, ID, emitterPos);
+	newObject->Init(holder, spriteID, pathMap, pathID, emitterPos);
 }
 
 template<class TObject>

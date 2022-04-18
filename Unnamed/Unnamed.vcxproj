@@ -31,7 +31,6 @@
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
-    <ClCompile Include="src\ShotParticle.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\ResourceMonitor.cpp" />
@@ -56,7 +55,6 @@
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
-    <ClInclude Include="src\ShotParticle.hpp" />
     <ClInclude Include="src\State.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Engine.hpp" />

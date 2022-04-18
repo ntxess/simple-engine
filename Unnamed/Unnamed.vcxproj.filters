@@ -89,9 +89,6 @@
     <ClCompile Include="src\Particle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\ShotParticle.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\DebugScene.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
@@ -140,9 +137,6 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="src\Particle.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ShotParticle.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerInput.hpp">

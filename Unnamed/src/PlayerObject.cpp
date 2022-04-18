@@ -12,10 +12,10 @@ PlayerObject::PlayerObject()
 	ResetStats();
 }
 
-PlayerObject::PlayerObject(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID)
+PlayerObject::PlayerObject(sf::Texture& texture)
 	: _input(std::make_unique<PlayerInput>())
 	, _physics(std::make_unique<PlayerPhysics>())
-	, _graphics(std::make_unique<PlayerGraphics>(holder, ID))
+	, _graphics(std::make_unique<PlayerGraphics>(texture))
 {
 	_defaultStats.HP = 100.f;
 	_defaultStats.SPD = 500.f;

@@ -11,9 +11,9 @@ EnemyObject::EnemyObject()
 	ResetStats();
 }
 
-EnemyObject::EnemyObject(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID)
+EnemyObject::EnemyObject(sf::Texture& texture)
 	: _physics(std::make_unique<EnemyPhysics>())
-	, _graphics(std::make_unique<EnemyGraphics>(holder, ID))
+	, _graphics(std::make_unique<EnemyGraphics>(texture))
 {
 	_defaultStats.HP = 100.f;
 	_defaultStats.SPD = 500.f;
@@ -79,7 +79,7 @@ void EnemyObject::AugmentAttackSpeed(const float& newAttackSpeed)
 
 void EnemyObject::PhysicsUpdate(const float& deltaTime)
 {
-	_physics->Update(*this, deltaTime);
+	_physics->Update(_graphics->GetSprite(), _currentStats.SPD, deltaTime);
 }
 
 void EnemyObject::GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)

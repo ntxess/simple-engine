@@ -9,7 +9,7 @@ private:
 
 public:
 	PlayerGraphics();
-	PlayerGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID);
+	PlayerGraphics(sf::Texture& texture);
 	~PlayerGraphics();
 
 	sf::Sprite& GetSprite();

@@ -14,9 +14,9 @@ void DebugScene::Init()
     //pathRandom = std::make_unique<MRandom>();
     //pathCircle = std::make_unique<MCircle>();
 
-    _player = std::make_unique<PlayerObject>(_data->_holder, "Ship");
-    _enemy = std::make_unique<EnemyObject>(_data->_holder, "Ship");
-    _enemy2 = std::make_unique<EnemyObject>(_data->_holder, "Ship");
+    _player = std::make_unique<PlayerObject>(_data->_holder["Ship"]);
+    _enemy = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
+    _enemy2 = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
 
     _enemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
     _enemy2->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), false);
@@ -29,7 +29,7 @@ void DebugScene::Init()
     for (int i = 0; i < SIZE; i++)
     {
         std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
-        std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder, "Ship");
+        std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder["Ship"]);
         enemies[i].AugmentHealth(100.f);
         enemies[i].AugmentSpeed(500.f);
         enemies[i].AugmentAttackSpeed(1.f);
@@ -43,7 +43,7 @@ void DebugScene::Init()
 
     for (int i = 0; i < SIZE; i++)
     {
-        std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder, "Ship");
+        std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
         object->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
         object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
         object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));

@@ -3,9 +3,8 @@
 EnemyGraphics::EnemyGraphics()
 {}
 
-EnemyGraphics::EnemyGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID)
+EnemyGraphics::EnemyGraphics(sf::Texture& texture)
 {
-	sf::Texture& texture = holder[ID];
 	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(sf::Vector2f(500.f, 500.f));

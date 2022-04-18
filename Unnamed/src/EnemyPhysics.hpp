@@ -21,5 +21,5 @@ public:
 
 	void SetMovePattern(WayPoint* wps, const bool& repeat = false);
 	bool TraversePattern(const float& speed, const float& deltaTime);
-	void Update(const EnemyObject& enemy, const float& deltaTime);
+	void Update(sf::Sprite& object, const float& speed, const float& deltaTime);
 };

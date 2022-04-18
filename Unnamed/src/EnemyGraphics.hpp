@@ -9,7 +9,7 @@ private:
 
 public:
 	EnemyGraphics();
-	EnemyGraphics(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& ID);
+	EnemyGraphics(sf::Texture& texture);
 	~EnemyGraphics();
 
 	sf::Sprite& GetSprite();
