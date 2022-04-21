@@ -16,7 +16,7 @@ private:
 public:
 	ParticlePool();
 	~ParticlePool();
-	void Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos);
+	void Create(const GameData& data, const sf::Vector2f& emitterPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
@@ -40,14 +40,14 @@ ParticlePool<TObject>::~ParticlePool()
 {}
 
 template<class TObject>
-void ParticlePool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos)
+void ParticlePool<TObject>::Create(const GameData& data, const sf::Vector2f& emitterPos)
 {
 	assert(_firstAvailable != nullptr);
 
 	TObject* newObject = _firstAvailable;
 	_firstAvailable = _firstAvailable->_state.next;
 
-	newObject->Init(texture, wps, emitterPos);
+	newObject->Init(data, emitterPos);
 }
 
 template<class TObject>

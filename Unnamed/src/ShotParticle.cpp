@@ -1,34 +1,34 @@
-#include "Particle.hpp"
+#include "ShotParticle.hpp"
 
-Particle::Particle()
+ShotParticle::ShotParticle()
 	: _inUse(false)
 {}
 
-Particle::~Particle()
+ShotParticle::~ShotParticle()
 {}
 
-void Particle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos)
+void ShotParticle::Init(const GameData& data, const sf::Vector2f& emitterPos)
 {
-	_sprite.setTexture(texture);
+	_sprite.setTexture(data._holder["Shot"]);
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(emitterPos);
 	_state.live.speed = 500;
-	_state.live.movePattern = &*wps;
-	_state.live.path = &*wps;
+	_state.live.movePattern = data._pathMap.at("mStraight").get();
+	_state.live.path = data._pathMap.at("mStraight").get();
 	_inUse = true;
 }
 
-Particle* Particle::GetNext() const
+ShotParticle* ShotParticle::GetNext() const
 {
 	return _state.next;
 }
 
-void Particle::SetNext(Particle* next)
+void ShotParticle::SetNext(ShotParticle* next)
 {
 	_state.next = next;
 }
 
-sf::Vector2f Particle::TraversePattern(const float& deltaTime)
+sf::Vector2f ShotParticle::TraversePattern(const float& deltaTime)
 {
 	WayPoint* headPtr = _state.live.path;
 	WayPoint* nextPtr = headPtr->_nextWP.get();
@@ -56,7 +56,7 @@ sf::Vector2f Particle::TraversePattern(const float& deltaTime)
 	return velocity;
 }
 
-bool Particle::Update(const float& deltaTime)
+bool ShotParticle::Update(const float& deltaTime)
 {
 	if (!_inUse)
 		return false;
@@ -66,7 +66,7 @@ bool Particle::Update(const float& deltaTime)
 	return _state.live.path->_distanceToNext == 0.f;
 }
 
-void Particle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
+void ShotParticle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	if (_inUse)
 		rw->draw(_sprite);

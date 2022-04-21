@@ -1,7 +1,7 @@
 #include "Engine.hpp"
 
 Engine::Engine(unsigned int width, unsigned int height, std::string title) 
-    : _data(std::make_shared<GameData>())
+    : _data(std::make_unique<GameData>())
     , _width(width)
     , _height(height)
 {

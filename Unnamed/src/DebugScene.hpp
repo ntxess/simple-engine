@@ -10,12 +10,12 @@
 #include "PlayerObject.hpp"
 #include "EnemyObject.hpp"
 #include "ParticlePool.hpp"
-#include "Particle.hpp"
+#include "ShotParticle.hpp"
 
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 10; // Upper limit - 15000@60fps
+	static const int SIZE = 100; // Upper limit - 20000x2@60fps
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
@@ -26,7 +26,7 @@ private:
 	EnemyObject enemies[SIZE];
 	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
 
-	ParticlePool<Particle> shotParticle;
+	ParticlePool<ShotParticle> shotParticle;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);

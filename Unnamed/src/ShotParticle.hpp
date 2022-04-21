@@ -6,10 +6,9 @@
 #include "ParticlePool.hpp"
 
 template <class TObject>
-
 class ParticlePool;
 
-class Particle
+class ShotParticle
 {
 	template <class TObject>
 	friend class ParticlePool;
@@ -26,7 +25,7 @@ private:
 			float speed;
 		} live;
 
-		Particle* next;
+		ShotParticle* next;
 	};
 
 	bool _inUse;
@@ -34,11 +33,11 @@ private:
 	sf::Sprite _sprite;
 
 public:
-	Particle();
-	~Particle();
-	void Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos);
-	Particle* GetNext() const;
-	void SetNext(Particle* next);
+	ShotParticle();
+	~ShotParticle();
+	void Init(const GameData& data, const sf::Vector2f& emitterPos);
+	ShotParticle* GetNext() const;
+	void SetNext(ShotParticle* next);
 	sf::Vector2f TraversePattern(const float& deltaTime);
 	bool Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);

@@ -60,7 +60,7 @@ void DebugScene::ProcessEvent(const sf::Event& event)
 
         if (event.key.code == sf::Keyboard::L)
         {
-            shotParticle.Create(_data->_holder["Shot"], _data->_pathMap.at("mStraight").get(), _player->GetGraphics()->GetSprite().getPosition());
+            shotParticle.Create(*_data, _player->GetGraphics()->GetSprite().getPosition());
         }
     }
 }

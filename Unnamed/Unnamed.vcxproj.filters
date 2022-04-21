@@ -86,7 +86,7 @@
     <ClCompile Include="src\ResourceMonitor.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Particle.cpp">
+    <ClCompile Include="src\ShotParticle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="src\DebugScene.cpp">
@@ -136,7 +136,7 @@
     <ClInclude Include="src\StateMachine.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\Particle.hpp">
+    <ClInclude Include="src\ShotParticle.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerInput.hpp">

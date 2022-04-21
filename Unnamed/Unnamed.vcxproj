@@ -28,7 +28,7 @@
     <ClCompile Include="src\PlayerGraphics.cpp" />
     <ClCompile Include="src\PlayerInput.cpp" />
     <ClCompile Include="src\PlayerPhysics.cpp" />
-    <ClCompile Include="src\Particle.cpp" />
+    <ClCompile Include="src\ShotParticle.cpp" />
     <ClCompile Include="src\DebugScene.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
@@ -52,7 +52,7 @@
     <ClInclude Include="src\PlayerGraphics.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />
     <ClInclude Include="src\PlayerPhysics.hpp" />
-    <ClInclude Include="src\Particle.hpp" />
+    <ClInclude Include="src\ShotParticle.hpp" />
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
