@@ -16,7 +16,6 @@ private:
 public:
 	ObjectPool();
 	~ObjectPool();
-	void Create(const GameData& data, const sf::Vector2f& spawnPos);
 	void Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
@@ -39,17 +38,6 @@ ObjectPool<TObject>::ObjectPool()
 template<class TObject>
 ObjectPool<TObject>::~ObjectPool()
 {}
-
-template<class TObject>
-void ObjectPool<TObject>::Create(const GameData& data, const sf::Vector2f& spawnPos)
-{
-	assert(_firstAvailable != nullptr);
-
-	TObject* newObject = _firstAvailable;
-	_firstAvailable = _firstAvailable->_state.next;
-
-	newObject->Init(data, spawnPos);
-}
 
 template<class TObject>
 void ObjectPool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos)

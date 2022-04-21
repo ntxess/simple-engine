@@ -16,7 +16,6 @@ class ShotParticle
 private:
 	union UState
 	{
-		UState() {}
 		struct
 		{
 			WayPoint* movePattern;

@@ -26,7 +26,14 @@ sf::Vector2f EnemyPhysics::TraversePattern(const float& speed, const float& delt
 	WayPoint* nextPtr = headPtr->_nextWP.get();
 
 	if (nextPtr == nullptr)
+	{
+		if (_repeat)
+		{
+			_path = _movePattern;
+			_distance = 0.f;
+		}
 		return sf::Vector2f(0.f, 0.f);
+	}
 
 	_distance += speed * deltaTime;
 	if (_distance > nextPtr->_distanceTotal)
@@ -39,12 +46,6 @@ sf::Vector2f EnemyPhysics::TraversePattern(const float& speed, const float& delt
 	sf::Vector2f velocity;
 	velocity.x = unitDist.x * speed * deltaTime;
 	velocity.y = unitDist.y * speed * deltaTime;
-
-	if (_repeat && _path->_distanceToNext == 0)
-	{
-		_path = _movePattern;
-		_distance = 0.f;
-	}
 
 	return velocity;
 }
