@@ -1,16 +1,11 @@
 #include "Particle.hpp"
 
-Particle::Particle() 
+Particle::Particle()
 	: _inUse(false)
 {}
 
 Particle::~Particle()
 {}
-
-Particle* Particle::GetNext() const
-{
-	return _state.next;
-}
 
 void Particle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos)
 {
@@ -23,29 +18,30 @@ void Particle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emit
 	_inUse = true;
 }
 
+Particle* Particle::GetNext() const
+{
+	return _state.next;
+}
+
 void Particle::SetNext(Particle* next)
 {
 	_state.next = next;
 }
 
-sf::Vector2f Particle::TraversePattern(const float& speed, const float& deltaTime)
+sf::Vector2f Particle::TraversePattern(const float& deltaTime)
 {
-	if (!_inUse || _state.live.movePattern == nullptr)
-	{
-		_state.live.distance = 0.f;
-		return sf::Vector2f(0.f, 0.f);
-	}
-
 	WayPoint* headPtr = _state.live.path;
 	WayPoint* nextPtr = headPtr->_nextWP.get();
 
 	if (nextPtr == nullptr)
 	{
 		_inUse = false;
+		_state.live.distance = 0.f;
+		_state.live.path = _state.live.movePattern;
 		return sf::Vector2f(0.f, 0.f);
 	}
 
-	_state.live.distance += speed * deltaTime;
+	_state.live.distance += _state.live.speed * deltaTime;
 	if (_state.live.distance > nextPtr->_distanceTotal)
 		_state.live.path = nextPtr;
 
@@ -54,23 +50,24 @@ sf::Vector2f Particle::TraversePattern(const float& speed, const float& deltaTim
 	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
 
 	sf::Vector2f velocity;
-	velocity.x = unitDist.x * speed * deltaTime;
-	velocity.y = unitDist.y * speed * deltaTime;
+	velocity.x = unitDist.x * _state.live.speed * deltaTime;
+	velocity.y = unitDist.y * _state.live.speed * deltaTime;
 
 	return velocity;
 }
 
-void Particle::Update(const float& deltaTime)
-{
-	_sprite.move(TraversePattern(_state.live.speed, deltaTime));
-}
-
-bool Particle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
+bool Particle::Update(const float& deltaTime)
 {
 	if (!_inUse)
-		return true;
+		return false;
 
-	rw->draw(_sprite);
+	_sprite.move(TraversePattern(deltaTime));
 
-	return false;
+	return _state.live.path->_distanceToNext == 0.f;
+}
+
+void Particle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
+{
+	if (_inUse)
+		rw->draw(_sprite);
 }

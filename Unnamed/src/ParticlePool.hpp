@@ -46,30 +46,31 @@ void ParticlePool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf
 
 	TObject* newObject = _firstAvailable;
 	_firstAvailable = _firstAvailable->_state.next;
+
 	newObject->Init(texture, wps, emitterPos);
 }
 
 template<class TObject>
 void ParticlePool<TObject>::Update(const float& deltaTime)
 {
+	// If entity is in use, update animation and physics
+	// Once entity finished its lifetime return true and set unused entity as head and append to free-list
+	// If entity is not in use skip update
 	for (unsigned int i = 0; i < POOL_SIZE; i++)
 	{
-		_entity[i].Update(deltaTime);
+		if (_entity[i].Update(deltaTime))
+		{
+			_entity[i].SetNext(_firstAvailable);
+			_firstAvailable = &_entity[i];
+		}
 	}
 }
 
 template<class TObject>
 void ParticlePool<TObject>::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-	// If entity is in use, update animation and physics
-	// Once entity finished its lifetime return true and set unused entity as head and append to free-list
-	// If entity is not in use skip update
 	for (unsigned int i = 0; i < POOL_SIZE; i++)
 	{
-		if (_entity[i].Render(rw, deltaTime, interpolation))
-		{
-			_entity[i].SetNext(_firstAvailable);
-			_firstAvailable = &_entity[i];
-		}
+		_entity[i].Render(rw, deltaTime, interpolation);
 	}
 }

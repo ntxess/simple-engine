@@ -10,7 +10,7 @@ public:
 	MStraight()
 	{
 		std::unique_ptr<WayPoint> pointA = std::make_unique<WayPoint>(sf::Vector2f(0.0f, 0.0f));
-		std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(0.0f, -1000.0f));
+		std::unique_ptr<WayPoint> pointB = std::make_unique<WayPoint>(sf::Vector2f(0.0f, -2000.0f));
 
 		pointA->AddNext(std::move(pointB));
 
