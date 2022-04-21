@@ -10,9 +10,6 @@ DebugScene::~DebugScene()
 void DebugScene::Init()
 {
     //_background = std::make_unique<UIObject>(_data->_holder, "Background");
-    //_particlePool = std::make_unique<ParticlePool<Particle>>();
-    //pathRandom = std::make_unique<MRandom>();
-    //pathCircle = std::make_unique<MCircle>();
 
     _player = std::make_unique<PlayerObject>(_data->_holder["Ship"]);
     _enemy = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
@@ -60,7 +57,7 @@ void DebugScene::ProcessEvent(const sf::Event& event)
 
         if (event.key.code == sf::Keyboard::L)
         {
-            shotParticle.Create(*_data, _player->GetGraphics()->GetSprite().getPosition());
+            weaponPool.Create(_data->_holder["Shot"], _data->_pathMap.at("mStraight").get(), _player->GetGraphics()->GetSprite().getPosition());
         }
     }
 }
@@ -92,7 +89,7 @@ void DebugScene::Update(const float& deltaTime)
         //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
     }
 
-    shotParticle.Update(deltaTime);
+    weaponPool.Update(deltaTime);
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -111,7 +108,7 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
     //std::cout << duration.count() << std::endl;
 
-    shotParticle.Render(rw, deltaTime, interpolation);
+    weaponPool.Render(rw, deltaTime, interpolation);
 
     _fps.Update();
     _fps.Render(rw);

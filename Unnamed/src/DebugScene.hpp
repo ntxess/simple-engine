@@ -9,7 +9,7 @@
 #include "MainMenu.hpp"
 #include "PlayerObject.hpp"
 #include "EnemyObject.hpp"
-#include "ParticlePool.hpp"
+#include "ObjectPool.hpp"
 #include "ShotParticle.hpp"
 
 class DebugScene : public State
@@ -26,7 +26,8 @@ private:
 	EnemyObject enemies[SIZE];
 	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
 
-	ParticlePool<ShotParticle> shotParticle;
+	ObjectPool<ShotParticle> weaponPool;
+	//ObjectPool<EnemyObject> enemyPool;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);

@@ -48,7 +48,7 @@
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />
-    <ClInclude Include="src\ParticlePool.hpp" />
+    <ClInclude Include="src\ObjectPool.hpp" />
     <ClInclude Include="src\PlayerGraphics.hpp" />
     <ClInclude Include="src\PlayerInput.hpp" />
     <ClInclude Include="src\PlayerPhysics.hpp" />

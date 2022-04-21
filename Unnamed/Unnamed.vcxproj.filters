@@ -166,7 +166,7 @@
     <ClInclude Include="src\CommandExSkill.hpp">
       <Filter>Header Files\Components\Input\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="src\ParticlePool.hpp">
+    <ClInclude Include="src\ObjectPool.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerObject.hpp">

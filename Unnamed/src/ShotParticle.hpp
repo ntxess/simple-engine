@@ -3,15 +3,15 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
-#include "ParticlePool.hpp"
+#include "ObjectPool.hpp"
 
 template <class TObject>
-class ParticlePool;
+class ObjectPool;
 
 class ShotParticle
 {
 	template <class TObject>
-	friend class ParticlePool;
+	friend class ObjectPool;
 
 private:
 	union UState
@@ -35,7 +35,7 @@ private:
 public:
 	ShotParticle();
 	~ShotParticle();
-	void Init(const GameData& data, const sf::Vector2f& emitterPos);
+	void Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
 	ShotParticle* GetNext() const;
 	void SetNext(ShotParticle* next);
 	sf::Vector2f TraversePattern(const float& deltaTime);

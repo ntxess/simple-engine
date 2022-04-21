@@ -6,7 +6,7 @@
 #include "GameData.hpp"
 
 template <class TObject>
-class ParticlePool
+class ObjectPool
 {
 private:
 	static const int POOL_SIZE = 10000;
@@ -14,15 +14,16 @@ private:
 	TObject _entity[POOL_SIZE];
 
 public:
-	ParticlePool();
-	~ParticlePool();
-	void Create(const GameData& data, const sf::Vector2f& emitterPos);
+	ObjectPool();
+	~ObjectPool();
+	void Create(const GameData& data, const sf::Vector2f& spawnPos);
+	void Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
 
 template<class TObject>
-ParticlePool<TObject>::ParticlePool()
+ObjectPool<TObject>::ObjectPool()
 {
 	// Free-list implementation
 	_firstAvailable = &_entity[0];
@@ -36,22 +37,32 @@ ParticlePool<TObject>::ParticlePool()
 }
 
 template<class TObject>
-ParticlePool<TObject>::~ParticlePool()
+ObjectPool<TObject>::~ObjectPool()
 {}
 
 template<class TObject>
-void ParticlePool<TObject>::Create(const GameData& data, const sf::Vector2f& emitterPos)
+void ObjectPool<TObject>::Create(const GameData& data, const sf::Vector2f& spawnPos)
 {
 	assert(_firstAvailable != nullptr);
 
 	TObject* newObject = _firstAvailable;
 	_firstAvailable = _firstAvailable->_state.next;
 
-	newObject->Init(data, emitterPos);
+	newObject->Init(data, spawnPos);
 }
 
 template<class TObject>
-void ParticlePool<TObject>::Update(const float& deltaTime)
+void ObjectPool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos)
+{
+	assert(_firstAvailable != nullptr);
+
+	TObject* newObject = _firstAvailable;
+	_firstAvailable = _firstAvailable->_state.next;
+	newObject->Init(texture, wps, spawnPos);
+}
+
+template<class TObject>
+void ObjectPool<TObject>::Update(const float& deltaTime)
 {
 	// If entity is in use, update animation and physics
 	// Once entity finished its lifetime return true and set unused entity as head and append to free-list
@@ -67,7 +78,7 @@ void ParticlePool<TObject>::Update(const float& deltaTime)
 }
 
 template<class TObject>
-void ParticlePool<TObject>::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
+void ObjectPool<TObject>::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	for (unsigned int i = 0; i < POOL_SIZE; i++)
 	{

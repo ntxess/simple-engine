@@ -7,14 +7,14 @@ ShotParticle::ShotParticle()
 ShotParticle::~ShotParticle()
 {}
 
-void ShotParticle::Init(const GameData& data, const sf::Vector2f& emitterPos)
+void ShotParticle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos)
 {
-	_sprite.setTexture(data._holder["Shot"]);
+	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
-	_sprite.setPosition(emitterPos);
+	_sprite.setPosition(spawnPos);
 	_state.live.speed = 500;
-	_state.live.movePattern = data._pathMap.at("mStraight").get();
-	_state.live.path = data._pathMap.at("mStraight").get();
+	_state.live.movePattern = &*wps;
+	_state.live.path = &*wps;
 	_inUse = true;
 }
 
