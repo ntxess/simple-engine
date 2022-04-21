@@ -3,7 +3,6 @@
 EnemyPhysics::EnemyPhysics()
 	: _movePattern(nullptr)
 	, _path(nullptr)
-	, _velocity(sf::Vector2f(0.f, 0.f))
 	, _distance(0.f)
 	, _repeat(false)
 {}
@@ -18,27 +17,28 @@ void EnemyPhysics::SetMovePattern(WayPoint* wps, const bool& repeat)
 	_repeat = repeat;
 }
 
-bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
+sf::Vector2f EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 {
-	WayPoint* headPtr = _path;
-	WayPoint* nextPtr;
+	if (_movePattern == nullptr)
+		return sf::Vector2f(0.f, 0.f);
 
-	nextPtr = headPtr->_nextWP.get();
+	WayPoint* headPtr = _path;
+	WayPoint* nextPtr = headPtr->_nextWP.get();
+
 	if (nextPtr == nullptr)
-		return false;
+		return sf::Vector2f(0.f, 0.f);
 
 	_distance += speed * deltaTime;
 	if (_distance > nextPtr->_distanceTotal)
 		_path = nextPtr;
 
-	nextPtr = headPtr->_nextWP.get();
 	sf::Vector2f unitDist;
 	unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
 	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
 
 	sf::Vector2f velocity;
-	_velocity.x = unitDist.x * speed * deltaTime;
-	_velocity.y = unitDist.y * speed * deltaTime;
+	velocity.x = unitDist.x * speed * deltaTime;
+	velocity.y = unitDist.y * speed * deltaTime;
 
 	if (_repeat && _path->_distanceToNext == 0)
 	{
@@ -46,13 +46,10 @@ bool EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 		_distance = 0.f;
 	}
 
-	return true;
+	return velocity;
 }
 
 void EnemyPhysics::Update(sf::Sprite& object, const float& speed, const float& deltaTime)
 {
-	if (TraversePattern(speed, deltaTime))
-	{
-		object.move(_velocity);
-	}
+	object.move(TraversePattern(speed, deltaTime));
 }

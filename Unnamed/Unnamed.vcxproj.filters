@@ -184,5 +184,8 @@
     <ClInclude Include="src\MRandom.hpp">
       <Filter>Header Files\MovementType</Filter>
     </ClInclude>
+    <ClInclude Include="src\MStraight.hpp">
+      <Filter>Header Files\MovementType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,9 @@
 
 #include "GameData.hpp"
 #include "MainMenu.hpp"
+#include "MCircle.hpp"
+#include "MRandom.hpp"
+#include "MStraight.hpp"
 
 class Engine
 {

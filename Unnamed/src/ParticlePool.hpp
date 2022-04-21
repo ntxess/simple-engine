@@ -9,16 +9,14 @@ template <class TObject>
 class ParticlePool
 {
 private:
-	static const int POOL_SIZE = 10;
+	static const int POOL_SIZE = 10000;
 	TObject* _firstAvailable;
 	TObject _entity[POOL_SIZE];
 
 public:
 	ParticlePool();
 	~ParticlePool();
-	void Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& spriteID, 
-				std::unordered_map<std::string, std::unique_ptr<WayPoint>> pathMap, const std::string& pathID, 
-				const sf::Vector2f emitterPos);
+	void Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
@@ -26,6 +24,7 @@ public:
 template<class TObject>
 ParticlePool<TObject>::ParticlePool()
 {
+	// Free-list implementation
 	_firstAvailable = &_entity[0];
 
 	for (int i = 0; i < POOL_SIZE - 1; i++)
@@ -41,15 +40,13 @@ ParticlePool<TObject>::~ParticlePool()
 {}
 
 template<class TObject>
-void ParticlePool<TObject>::Create(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& spriteID,
-								   std::unordered_map<std::string, std::unique_ptr<WayPoint>> pathMap, const std::string& pathID,
-								   const sf::Vector2f emitterPos)
+void ParticlePool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos)
 {
 	assert(_firstAvailable != nullptr);
 
 	TObject* newObject = _firstAvailable;
 	_firstAvailable = _firstAvailable->_state.next;
-	newObject->Init(holder, spriteID, pathMap, pathID, emitterPos);
+	newObject->Init(texture, wps, emitterPos);
 }
 
 template<class TObject>
@@ -73,7 +70,6 @@ void ParticlePool<TObject>::Render(const std::unique_ptr<sf::RenderWindow>& rw, 
 		{
 			_entity[i].SetNext(_firstAvailable);
 			_firstAvailable = &_entity[i];
-			std::cout << "Particle Freed" << std::endl;
 		}
 	}
 }

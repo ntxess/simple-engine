@@ -11,8 +11,6 @@
 #include "EnemyObject.hpp"
 #include "ParticlePool.hpp"
 #include "Particle.hpp"
-#include "MCircle.hpp"
-#include "MRandom.hpp"
 
 class DebugScene : public State
 {
@@ -27,6 +25,8 @@ private:
 
 	EnemyObject enemies[SIZE];
 	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
+
+	ParticlePool<Particle> shotParticle;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);

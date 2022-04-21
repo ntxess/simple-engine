@@ -12,14 +12,14 @@ Particle* Particle::GetNext() const
 	return _state.next;
 }
 
-void Particle::Init(thor::ResourceHolder<sf::Texture, std::string>& holder, const std::string& spriteID,
-					std::unordered_map<std::string, std::unique_ptr<WayPoint>> pathMap, const std::string& pathID,
-					const sf::Vector2f emitterPos)
+void Particle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f emitterPos)
 {
-	sf::Texture& texture = holder[spriteID];
 	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
 	_sprite.setPosition(emitterPos);
+	_state.live.speed = 500;
+	_state.live.movePattern = &*wps;
+	_state.live.path = &*wps;
 	_inUse = true;
 }
 
@@ -28,46 +28,49 @@ void Particle::SetNext(Particle* next)
 	_state.next = next;
 }
 
-bool Particle::TraversePattern(const float& speed, const float& deltaTime)
+sf::Vector2f Particle::TraversePattern(const float& speed, const float& deltaTime)
 {
-	//WayPoint* headPtr = _path;
-	//WayPoint* nextPtr;
+	if (!_inUse || _state.live.movePattern == nullptr)
+	{
+		_state.live.distance = 0.f;
+		return sf::Vector2f(0.f, 0.f);
+	}
 
-	//nextPtr = headPtr->_nextWP.get();
-	//if (nextPtr == nullptr)
-	//	return false;
+	WayPoint* headPtr = _state.live.path;
+	WayPoint* nextPtr = headPtr->_nextWP.get();
 
-	//_distance += speed * deltaTime;
-	//if (_distance > nextPtr->_distanceTotal)
-	//	_path = nextPtr;
+	if (nextPtr == nullptr)
+	{
+		_inUse = false;
+		return sf::Vector2f(0.f, 0.f);
+	}
 
-	//nextPtr = headPtr->_nextWP.get();
-	//sf::Vector2f unitDist;
-	//unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
-	//unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
+	_state.live.distance += speed * deltaTime;
+	if (_state.live.distance > nextPtr->_distanceTotal)
+		_state.live.path = nextPtr;
 
-	//sf::Vector2f velocity;
-	//_velocity.x = unitDist.x * speed * deltaTime;
-	//_velocity.y = unitDist.y * speed * deltaTime;
+	sf::Vector2f unitDist;
+	unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
+	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
 
-	//if (_repeat && _path->_distanceToNext == 0)
-	//{
-	//	_path = _movePattern;
-	//	_distance = 0.f;
-	//}
+	sf::Vector2f velocity;
+	velocity.x = unitDist.x * speed * deltaTime;
+	velocity.y = unitDist.y * speed * deltaTime;
 
-	return true;
+	return velocity;
 }
 
 void Particle::Update(const float& deltaTime)
 {
-	//if (TraversePattern(enemy.GetCurrentStats().SPD, deltaTime))
-	//{
-	//	enemy.GetGraphics()->GetSprite().move(_velocity);
-	//}
+	_sprite.move(TraversePattern(_state.live.speed, deltaTime));
 }
 
 bool Particle::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
+	if (!_inUse)
+		return true;
+
+	rw->draw(_sprite);
+
 	return false;
 }

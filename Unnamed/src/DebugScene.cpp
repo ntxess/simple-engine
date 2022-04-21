@@ -57,6 +57,12 @@ void DebugScene::ProcessEvent(const sf::Event& event)
     {
         if (event.key.code == sf::Keyboard::Escape)
             _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+
+        if (event.key.code == sf::Keyboard::L)
+        {
+            std::cout << "Pressed" << std::endl;
+            shotParticle.Create(_data->_holder["Shot"], _data->_pathMap.at("mRandom").get(), _player->GetGraphics()->GetSprite().getPosition());
+        }
     }
 }
 
@@ -86,6 +92,8 @@ void DebugScene::Update(const float& deltaTime)
         CheckBoundary(enemiesPtr[i]->GetGraphics()->GetSprite());
         //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
     }
+
+    shotParticle.Update(deltaTime);
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -104,8 +112,11 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
     //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
     //std::cout << duration.count() << std::endl;
 
+    shotParticle.Render(rw, deltaTime, interpolation);
+
     _fps.Update();
     _fps.Render(rw);
+
 }
 
 void DebugScene::CheckBoundary(sf::Sprite& object)

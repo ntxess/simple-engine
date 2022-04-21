@@ -12,9 +12,6 @@ private:
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
-	//UIObjectRef _background;
-	//UIObjectRef _startButton;
-	//UIObjectRef _quitButton;
 
 public:
 	MainMenu(std::shared_ptr<GameData>& data);

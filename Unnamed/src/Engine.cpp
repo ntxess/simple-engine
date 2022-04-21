@@ -42,9 +42,11 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
 
     std::unique_ptr<MCircle> mCircle = std::make_unique<MCircle>();
     std::unique_ptr<MRandom> mRandom = std::make_unique<MRandom>();
+    std::unique_ptr<MStraight> mStraight = std::make_unique<MStraight>();
 
     _data->_pathMap["mCircle"] = std::move(mCircle->head);
     _data->_pathMap["mRandom"] = std::move(mRandom->head);
+    _data->_pathMap["mStraight"] = std::move(mStraight->head);
 }
 
 Engine::~Engine()

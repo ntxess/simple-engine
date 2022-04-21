@@ -11,7 +11,6 @@ private:
 	WayPoint* _movePattern;
 	WayPoint* _path;
 
-	sf::Vector2f _velocity;
 	float _distance;
 	bool _repeat;
 
@@ -20,6 +19,6 @@ public:
 	~EnemyPhysics();
 
 	void SetMovePattern(WayPoint* wps, const bool& repeat = false);
-	bool TraversePattern(const float& speed, const float& deltaTime);
+	sf::Vector2f TraversePattern(const float& speed, const float& deltaTime);
 	void Update(sf::Sprite& object, const float& speed, const float& deltaTime);
 };
