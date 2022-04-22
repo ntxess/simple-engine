@@ -1,52 +1,62 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include <Thor/Animations.hpp>
 
-#include "EnemyPhysics.hpp"
-#include "EnemyGraphics.hpp"
+#include "ObjectPool.hpp"
 
-class EnemyPhysics;
-class EnemyGraphics;
+template <class TObject>
+class ObjectPool;
 
 class EnemyObject
 {
+	template <class TObject>
+	friend class ObjectPool;
+
 private:
-	struct DEFAULT_STATS
+	struct STATUS
 	{
-		float HP;
-		float SPD;
-		float ATTACK_SPEED;
+		float CURRENT_HP;
+		float CURRENT_SPD;
+		float CURRENT_ATTACK_SPEED;
+		float DEFAULT_HP;
+		float DEFAULT_SPD;
+		float DEFAULT_ATTACK_SPEED;
 	};
 
-	struct CURRENT_STATS
+	union USTATE
 	{
-		float HP;
-		float SPD;
-		float ATTACK_SPEED;
+		struct
+		{
+			STATUS stats;
+			WayPoint* movePattern;
+			WayPoint* path;
+			float distance;
+			bool repeat;
+		} live;
+
+		EnemyObject* next;
 	};
 
-	DEFAULT_STATS _defaultStats;
-	CURRENT_STATS _currentStats;
-
-	// Compartmentalize components to update in different steps of game-loop
-	std::unique_ptr<EnemyPhysics> _physics;
-	std::unique_ptr<EnemyGraphics> _graphics;
+	bool _inUse;
+	USTATE _state;
+	sf::Sprite _sprite;
 
 public:
 	EnemyObject();
-	EnemyObject(sf::Texture& texture);
 	~EnemyObject();
 
-	EnemyObject::DEFAULT_STATS GetDefaultStats() const;
-	EnemyObject::CURRENT_STATS GetCurrentStats() const;
-	const std::unique_ptr<EnemyPhysics>& GetPhysics() const;
-	const std::unique_ptr<EnemyGraphics>& GetGraphics() const;
-	void SetPhysics(std::unique_ptr<EnemyPhysics>& physics);
-	void SetGraphics(std::unique_ptr<EnemyGraphics>& graphics);
-
+	void Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
+	EnemyObject* GetNext() const;
+	void SetNext(EnemyObject* next);
+	sf::Sprite& GetSprite();
+	EnemyObject::STATUS GetStatus() const;
 	void ResetStats();
-	void AugmentHealth(const float& newHealth);
-	void AugmentSpeed(const float& newSpeed);
-	void AugmentAttackSpeed(const float& newAttackSpeed);
-	void PhysicsUpdate(const float& deltaTime);
-	void GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);
+	void SetHealth(const float& newHealth);
+	void SetSpeed(const float& newSpeed);
+	void SetAttackSpeed(const float& newAttackSpeed);
+	void SetRepeatPath(const bool& repeat);
+	sf::Vector2f TraversePattern(const float& deltaTime);
+	bool Update(const float& deltaTime);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 };
 

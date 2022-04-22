@@ -74,17 +74,17 @@ void PlayerObject::AugmentAttackSpeed(const float& newAttackSpeed)
 	_defaultStats.ATTACK_SPEED = newAttackSpeed;
 }
 
-void PlayerObject::InputUpdate(const sf::Event& event)
+void PlayerObject::ProcessInput(const sf::Event& event)
 {
 	_input->Update(event);
 }
 
-void PlayerObject::PhysicsUpdate(const float& deltaTime)
+void PlayerObject::Update(const float& deltaTime)
 {
 	_physics->Update(*this, deltaTime);
 }
 
-void PlayerObject::GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
+void PlayerObject::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
 {
 	_graphics->Render(rw, interpolation);
 }

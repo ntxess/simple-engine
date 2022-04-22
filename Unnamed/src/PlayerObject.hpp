@@ -48,7 +48,7 @@ public:
 	void AugmentHealth(const float& newHealth);
 	void AugmentSpeed(const float& newSpeed);
 	void AugmentAttackSpeed(const float& newAttackSpeed);
-	void InputUpdate(const sf::Event& event);
-	void PhysicsUpdate(const float& deltaTime);
-	void GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);
+	void ProcessInput(const sf::Event& event);
+	void Update(const float& deltaTime);
+	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);
 };

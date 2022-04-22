@@ -12,39 +12,20 @@ void DebugScene::Init()
     //_background = std::make_unique<UIObject>(_data->_holder, "Background");
 
     _player = std::make_unique<PlayerObject>(_data->_holder["Ship"]);
-    _enemy = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
-    _enemy2 = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
-
-    _enemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
-    _enemy2->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), false);
-    _enemy2->GetGraphics()->GetSprite().setPosition(1000.f, 800.f);
+    _uEnemy = std::make_unique<UEnemyObject>(_data->_holder["Ship"]);
+    _uEnemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
 
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 1800);
     
-    for (int i = 0; i < SIZE; i++)
+    for (int i = 0; i < enemyPool.POOL_SIZE; i++)
     {
-        std::unique_ptr<EnemyPhysics> physics = std::make_unique<EnemyPhysics>();
-        std::unique_ptr<EnemyGraphics> graphics = std::make_unique<EnemyGraphics>(_data->_holder["Ship"]);
-        enemies[i].AugmentHealth(100.f);
-        enemies[i].AugmentSpeed(500.f);
-        enemies[i].AugmentAttackSpeed(1.f);
-        enemies[i].ResetStats();
-        enemies[i].SetPhysics(physics);
-        enemies[i].GetPhysics()->SetMovePattern(_data->_pathMap.at("mRandom").get(), true);
-        enemies[i].SetGraphics(graphics);
-        enemies[i].GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
-        enemies[i].GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
-    }
-
-    for (int i = 0; i < SIZE; i++)
-    {
-        std::unique_ptr<EnemyObject> object = std::make_unique<EnemyObject>(_data->_holder["Ship"]);
-        object->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
-        object->GetGraphics()->GetSprite().setScale(sf::Vector2f(1.f, 1.f));
-        object->GetGraphics()->GetSprite().setPosition(float(dist6(rng)), float(dist6(rng) - 790));
-        enemiesPtr[i] = std::move(object);
+        sf::Texture& ship = _data->_holder["Ship"];
+        WayPoint * pathPattern = _data->_pathMap.at("mRandom").get();
+        sf::Vector2f randomPos = sf::Vector2f(float(dist6(rng)), float(dist6(rng) - 790));
+        enemyPool.Create(ship, pathPattern, randomPos);
+        enemyPool.GetObject(i).SetRepeatPath(true);
     }
 }
 
@@ -57,62 +38,46 @@ void DebugScene::ProcessEvent(const sf::Event& event)
 
         if (event.key.code == sf::Keyboard::L)
         {
-            weaponPool.Create(_data->_holder["Shot"], _data->_pathMap.at("mStraight").get(), _player->GetGraphics()->GetSprite().getPosition());
+            sf::Texture& basicAttack = _data->_holder["Shot"];
+            WayPoint* pathPattern = _data->_pathMap.at("mStraight").get();
+            sf::Vector2f playerPos = _player->GetGraphics()->GetSprite().getPosition();
+            weaponPool.Create(basicAttack, pathPattern, playerPos);
         }
     }
 }
 
 void DebugScene::ProcessInput(const sf::Event& event)
 { 
-    _player->InputUpdate(event);
+    _player->ProcessInput(event);
 }
 
 void DebugScene::Update(const float& deltaTime)
 {
-    _player->PhysicsUpdate(deltaTime);
+    _player->Update(deltaTime);
     CheckBoundary(_player->GetGraphics()->GetSprite());
 
-    _enemy->PhysicsUpdate(deltaTime);
-    CheckBoundary(_enemy->GetGraphics()->GetSprite());
+    _uEnemy->Update(deltaTime);
+    CheckBoundary(_uEnemy->GetGraphics()->GetSprite());
 
-    _enemy2->PhysicsUpdate(deltaTime);
-    CheckBoundary(_enemy2->GetGraphics()->GetSprite());
-
-    for (int i = 0; i < SIZE; i++)
-    {
-        enemies[i].PhysicsUpdate(deltaTime);
-        CheckBoundary(enemies[i].GetGraphics()->GetSprite());
-        //CheckCollision(_player->GetGraphics()->GetSprite(), enemies[i].GetGraphics()->GetSprite());
-        
-        enemiesPtr[i]->PhysicsUpdate(deltaTime);
-        CheckBoundary(enemiesPtr[i]->GetGraphics()->GetSprite());
-        //CheckCollision(_player->GetGraphics()->GetSprite(), enemiesPtr[i]->GetGraphics()->GetSprite());
-    }
-
+    enemyPool.Update(deltaTime);
     weaponPool.Update(deltaTime);
+
+    for (unsigned int i = 0; i < enemyPool.POOL_SIZE; i++)
+    {
+        CheckBoundary(enemyPool.GetObject(i).GetSprite());
+    }
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-    _player->GraphicsUpdate(rw, interpolation);
-    _enemy->GraphicsUpdate(rw, interpolation);
-    _enemy2->GraphicsUpdate(rw, interpolation);
+    _player->Render(rw, interpolation);
+    _uEnemy->Render(rw, interpolation);
 
-    //auto start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < SIZE; i++)
-    {
-        enemies[i].GraphicsUpdate(rw, interpolation);
-        enemiesPtr[i]->GraphicsUpdate(rw, interpolation);
-    }
-    //auto stop = std::chrono::high_resolution_clock::now();
-    //auto duration = duration_cast<std::chrono::nanoseconds>(stop - start);
-    //std::cout << duration.count() << std::endl;
-
+    enemyPool.Render(rw, deltaTime, interpolation);
     weaponPool.Render(rw, deltaTime, interpolation);
 
     _fps.Update();
     _fps.Render(rw);
-
 }
 
 void DebugScene::CheckBoundary(sf::Sprite& object)
@@ -136,9 +101,9 @@ void DebugScene::CheckBoundary(sf::Sprite& object)
         object.setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
-void DebugScene::CheckCollision(sf::Sprite& player, sf::Sprite& object)
+void DebugScene::CheckCollision(sf::Sprite& receiver, sf::Sprite& object)
 {
-    if (player.getGlobalBounds().intersects(object.getGlobalBounds()))
+    if (receiver.getGlobalBounds().intersects(object.getGlobalBounds()))
     {
         std::cout << "UGGHH I GOT HIT" << std::endl;
     }

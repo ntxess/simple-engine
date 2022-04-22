@@ -8,6 +8,7 @@
 #include "ResourceMonitor.hpp"
 #include "MainMenu.hpp"
 #include "PlayerObject.hpp"
+#include "UEnemyObject.hpp"
 #include "EnemyObject.hpp"
 #include "ObjectPool.hpp"
 #include "ShotParticle.hpp"
@@ -15,19 +16,14 @@
 class DebugScene : public State
 {
 private:
-	static const int SIZE = 100; // Upper limit - 20000x2@60fps
 	std::shared_ptr<GameData> _data;
 
 	ResourceMonitor _fps;
 	std::unique_ptr<PlayerObject> _player;
-	std::unique_ptr<EnemyObject> _enemy;
-	std::unique_ptr<EnemyObject> _enemy2;
-
-	EnemyObject enemies[SIZE];
-	std::unique_ptr<EnemyObject> enemiesPtr[SIZE];
+	std::unique_ptr<UEnemyObject> _uEnemy;
 
 	ObjectPool<ShotParticle> weaponPool;
-	//ObjectPool<EnemyObject> enemyPool;
+	ObjectPool<EnemyObject> enemyPool;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);

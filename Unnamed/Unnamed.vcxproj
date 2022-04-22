@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\UEnemyObject.cpp" />
     <ClCompile Include="src\EnemyObject.cpp" />
     <ClCompile Include="src\PlayerObject.cpp" />
-    <ClCompile Include="src\EnemyGraphics.cpp" />
-    <ClCompile Include="src\EnemyPhysics.cpp" />
+    <ClCompile Include="src\UEnemyGraphics.cpp" />
+    <ClCompile Include="src\UEnemyPhysics.cpp" />
     <ClCompile Include="src\CommandExSkill.cpp" />
     <ClCompile Include="src\CommandDodge.cpp" />
     <ClCompile Include="src\PlayerGraphics.cpp" />
@@ -38,13 +39,14 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\UEnemyObject.hpp" />
     <ClInclude Include="src\MCircle.hpp" />
     <ClInclude Include="src\EnemyObject.hpp" />
     <ClInclude Include="src\MRandom.hpp" />
     <ClInclude Include="src\MStraight.hpp" />
     <ClInclude Include="src\PlayerObject.hpp" />
-    <ClInclude Include="src\EnemyGraphics.hpp" />
-    <ClInclude Include="src\EnemyPhysics.hpp" />
+    <ClInclude Include="src\UEnemyGraphics.hpp" />
+    <ClInclude Include="src\UEnemyPhysics.hpp" />
     <ClInclude Include="src\CommandExSkill.hpp" />
     <ClInclude Include="src\CommandDodge.hpp" />
     <ClInclude Include="src\Command.hpp" />

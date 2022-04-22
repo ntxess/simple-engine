@@ -2,15 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
 
-class EnemyGraphics
+class UEnemyGraphics
 {
 private:
 	sf::Sprite _sprite;
 
 public:
-	EnemyGraphics();
-	EnemyGraphics(sf::Texture& texture);
-	~EnemyGraphics();
+	UEnemyGraphics();
+	UEnemyGraphics(sf::Texture& texture);
+	~UEnemyGraphics();
 
 	sf::Sprite& GetSprite();
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation);

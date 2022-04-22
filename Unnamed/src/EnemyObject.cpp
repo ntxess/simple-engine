@@ -1,88 +1,119 @@
 #include "EnemyObject.hpp"
 
 EnemyObject::EnemyObject()
-	: _physics(std::make_unique<EnemyPhysics>())
-	, _graphics(std::make_unique<EnemyGraphics>())
-{
-	_defaultStats.HP = 1.f;
-	_defaultStats.SPD = 1.f;
-	_defaultStats.ATTACK_SPEED = 1.f;
-
-	ResetStats();
-}
-
-EnemyObject::EnemyObject(sf::Texture& texture)
-	: _physics(std::make_unique<EnemyPhysics>())
-	, _graphics(std::make_unique<EnemyGraphics>(texture))
-{
-	_defaultStats.HP = 100.f;
-	_defaultStats.SPD = 500.f;
-	_defaultStats.ATTACK_SPEED = 1.f;
-
-	ResetStats();
-}
+	: _inUse(false)
+{}
 
 EnemyObject::~EnemyObject()
 {}
 
-EnemyObject::DEFAULT_STATS EnemyObject::GetDefaultStats() const
+void EnemyObject::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos)
 {
-	return _defaultStats;
+	_sprite.setTexture(texture);
+	_sprite.setScale(1.f, 1.f);
+	_sprite.setPosition(spawnPos);
+	_state.live.stats.DEFAULT_HP = 100.f;
+	_state.live.stats.DEFAULT_SPD = 500.f;
+	_state.live.stats.DEFAULT_ATTACK_SPEED = 1.f;
+	_state.live.movePattern = &*wps;
+	_state.live.path = &*wps;
+	_inUse = true;
+
+	ResetStats();
 }
 
-EnemyObject::CURRENT_STATS EnemyObject::GetCurrentStats() const
+EnemyObject* EnemyObject::GetNext() const
 {
-	return _currentStats;
+	return _state.next;
 }
 
-const std::unique_ptr<EnemyPhysics>& EnemyObject::GetPhysics() const
+void EnemyObject::SetNext(EnemyObject* next)
 {
-	return _physics;
+	_state.next = next;
 }
 
-const std::unique_ptr<EnemyGraphics>& EnemyObject::GetGraphics() const
+sf::Sprite& EnemyObject::GetSprite()
 {
-	return _graphics;
+	return _sprite;
 }
 
-void EnemyObject::SetPhysics(std::unique_ptr<EnemyPhysics>& physics)
+EnemyObject::STATUS EnemyObject::GetStatus() const
 {
-	_physics = std::move(physics);
-}
-
-void EnemyObject::SetGraphics(std::unique_ptr<EnemyGraphics>& graphics)
-{
-	_graphics = std::move(graphics);
+	return _state.live.stats;
 }
 
 void EnemyObject::ResetStats()
 {
-	_currentStats.HP = _defaultStats.HP;
-	_currentStats.SPD = _defaultStats.SPD;
-	_currentStats.ATTACK_SPEED = _defaultStats.ATTACK_SPEED;
+	_state.live.stats.CURRENT_HP = _state.live.stats.DEFAULT_HP;
+	_state.live.stats.CURRENT_SPD = _state.live.stats.DEFAULT_SPD;
+	_state.live.stats.CURRENT_ATTACK_SPEED = _state.live.stats.DEFAULT_ATTACK_SPEED;
 }
 
-void EnemyObject::AugmentHealth(const float& newHealth)
+void EnemyObject::SetHealth(const float& newHealth)
 {
-	_defaultStats.HP = newHealth;
+	_state.live.stats.DEFAULT_HP = newHealth;
 }
 
-void EnemyObject::AugmentSpeed(const float& newSpeed)
+void EnemyObject::SetSpeed(const float& newSpeed)
 {
-	_defaultStats.SPD = newSpeed;
+	_state.live.stats.DEFAULT_SPD = newSpeed;
 }
 
-void EnemyObject::AugmentAttackSpeed(const float& newAttackSpeed)
+void EnemyObject::SetAttackSpeed(const float& newAttackSpeed)
 {
-	_defaultStats.ATTACK_SPEED = newAttackSpeed;
+	_state.live.stats.DEFAULT_ATTACK_SPEED = newAttackSpeed;
 }
 
-void EnemyObject::PhysicsUpdate(const float& deltaTime)
+void EnemyObject::SetRepeatPath(const bool& repeat)
 {
-	_physics->Update(_graphics->GetSprite(), _currentStats.SPD, deltaTime);
+	_state.live.repeat = repeat;
 }
 
-void EnemyObject::GraphicsUpdate(const std::unique_ptr<sf::RenderWindow>& rw, const float& interpolation)
+sf::Vector2f EnemyObject::TraversePattern(const float& deltaTime)
 {
-	_graphics->Render(rw, interpolation);
+	if (_state.live.movePattern == nullptr)
+		return sf::Vector2f(0.f, 0.f);
+
+	WayPoint* headPtr = _state.live.path;
+	WayPoint* nextPtr = headPtr->_nextWP.get();
+
+	if (nextPtr == nullptr)
+	{
+		if (_state.live.repeat)
+		{
+			_state.live.path = _state.live.movePattern;
+			_state.live.distance = 0.f;
+		}
+		return sf::Vector2f(0.f, 0.f);
+	}
+
+	_state.live.distance += _state.live.stats.CURRENT_SPD * deltaTime;
+	if (_state.live.distance > nextPtr->_distanceTotal)
+		_state.live.path = nextPtr;
+
+	sf::Vector2f unitDist;
+	unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
+	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
+
+	sf::Vector2f velocity;
+	velocity.x = unitDist.x * _state.live.stats.CURRENT_SPD * deltaTime;
+	velocity.y = unitDist.y * _state.live.stats.CURRENT_SPD * deltaTime;
+
+	return velocity;
+}
+
+bool EnemyObject::Update(const float& deltaTime)
+{
+	if (!_inUse)
+		return false;
+
+	_sprite.move(TraversePattern(deltaTime));
+
+	return _state.live.stats.CURRENT_HP == 0.f;
+}
+
+void EnemyObject::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
+{
+	if (_inUse)
+		rw->draw(_sprite);
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
@@ -14,7 +13,7 @@ class ShotParticle
 	friend class ObjectPool;
 
 private:
-	union UState
+	union USTATE
 	{
 		struct
 		{
@@ -28,7 +27,7 @@ private:
 	};
 
 	bool _inUse;
-	UState _state;
+	USTATE _state;
 	sf::Sprite _sprite;
 
 public:
@@ -36,6 +35,7 @@ public:
 	~ShotParticle();
 	void Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
 	ShotParticle* GetNext() const;
+	sf::Sprite& GetSprite();
 	void SetNext(ShotParticle* next);
 	sf::Vector2f TraversePattern(const float& deltaTime);
 	bool Update(const float& deltaTime);

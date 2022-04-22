@@ -65,10 +65,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EnemyGraphics.cpp">
+    <ClCompile Include="src\UEnemyGraphics.cpp">
       <Filter>Source Files\Components\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\EnemyPhysics.cpp">
+    <ClCompile Include="src\UEnemyPhysics.cpp">
       <Filter>Source Files\Components\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\PlayerGraphics.cpp">
@@ -116,6 +116,9 @@
     <ClCompile Include="src\WayPoint.cpp">
       <Filter>Source Files\MovementType</Filter>
     </ClCompile>
+    <ClCompile Include="src\UEnemyObject.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DebugScene.hpp">
@@ -142,13 +145,13 @@
     <ClInclude Include="src\PlayerInput.hpp">
       <Filter>Header Files\Components\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\EnemyGraphics.hpp">
+    <ClInclude Include="src\UEnemyGraphics.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerGraphics.hpp">
       <Filter>Header Files\Components\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\EnemyPhysics.hpp">
+    <ClInclude Include="src\UEnemyPhysics.hpp">
       <Filter>Header Files\Components\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\PlayerPhysics.hpp">
@@ -186,6 +189,9 @@
     </ClInclude>
     <ClInclude Include="src\MStraight.hpp">
       <Filter>Header Files\MovementType</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UEnemyObject.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

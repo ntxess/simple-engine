@@ -8,14 +8,17 @@
 template <class TObject>
 class ObjectPool
 {
+public:
+	static const int POOL_SIZE = 10000; // Upper limit - 80000@~60fps
+
 private:
-	static const int POOL_SIZE = 10000;
 	TObject* _firstAvailable;
 	TObject _entity[POOL_SIZE];
 
 public:
 	ObjectPool();
 	~ObjectPool();
+	TObject& GetObject(const unsigned int& position);
 	void Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos);
 	void Update(const float& deltaTime);
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
@@ -38,6 +41,12 @@ ObjectPool<TObject>::ObjectPool()
 template<class TObject>
 ObjectPool<TObject>::~ObjectPool()
 {}
+
+template<class TObject>
+TObject& ObjectPool<TObject>::GetObject(const unsigned int& position)
+{
+	return _entity[position];
+}
 
 template<class TObject>
 void ObjectPool<TObject>::Create(sf::Texture& texture, WayPoint* wps, const sf::Vector2f spawnPos)

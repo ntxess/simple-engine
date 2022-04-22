@@ -28,6 +28,11 @@ void ShotParticle::SetNext(ShotParticle* next)
 	_state.next = next;
 }
 
+sf::Sprite& ShotParticle::GetSprite()
+{
+	return _sprite;
+}
+
 sf::Vector2f ShotParticle::TraversePattern(const float& deltaTime)
 {
 	WayPoint* headPtr = _state.live.path;

@@ -1,11 +1,7 @@
 #pragma once
-#include <iostream>
-#include "EnemyObject.hpp"
 #include "WayPoint.hpp"
 
-class EnemyObject;
-
-class EnemyPhysics
+class UEnemyPhysics
 {
 private:
 	WayPoint* _movePattern;
@@ -15,8 +11,8 @@ private:
 	bool _repeat;
 
 public:
-	EnemyPhysics();
-	~EnemyPhysics();
+	UEnemyPhysics();
+	~UEnemyPhysics();
 
 	void SetMovePattern(WayPoint* wps, const bool& repeat = false);
 	sf::Vector2f TraversePattern(const float& speed, const float& deltaTime);

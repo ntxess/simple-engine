@@ -1,23 +1,23 @@
-#include "EnemyPhysics.hpp"
+#include "UEnemyPhysics.hpp"
 
-EnemyPhysics::EnemyPhysics()
+UEnemyPhysics::UEnemyPhysics()
 	: _movePattern(nullptr)
 	, _path(nullptr)
 	, _distance(0.f)
 	, _repeat(false)
 {}
 
-EnemyPhysics::~EnemyPhysics()
+UEnemyPhysics::~UEnemyPhysics()
 {}
 
-void EnemyPhysics::SetMovePattern(WayPoint* wps, const bool& repeat)
+void UEnemyPhysics::SetMovePattern(WayPoint* wps, const bool& repeat)
 {
 	_movePattern = &*wps;
 	_path = &*wps;
 	_repeat = repeat;
 }
 
-sf::Vector2f EnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
+sf::Vector2f UEnemyPhysics::TraversePattern(const float& speed, const float& deltaTime)
 {
 	if (_movePattern == nullptr)
 		return sf::Vector2f(0.f, 0.f);
@@ -50,7 +50,7 @@ sf::Vector2f EnemyPhysics::TraversePattern(const float& speed, const float& delt
 	return velocity;
 }
 
-void EnemyPhysics::Update(sf::Sprite& object, const float& speed, const float& deltaTime)
+void UEnemyPhysics::Update(sf::Sprite& object, const float& speed, const float& deltaTime)
 {
 	object.move(TraversePattern(speed, deltaTime));
 }
