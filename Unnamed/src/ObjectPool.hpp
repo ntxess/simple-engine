@@ -9,7 +9,7 @@ template <class TObject>
 class ObjectPool
 {
 public:
-	static const unsigned int POOL_SIZE = 10; // Upper limit - 80000@~60fps
+	static const unsigned int POOL_SIZE = 100; // Upper limit - 15000@~60fps
 
 private:
 	TObject* _firstAvailable;

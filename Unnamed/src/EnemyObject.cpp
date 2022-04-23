@@ -11,6 +11,7 @@ void EnemyObject::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f s
 {
 	_sprite.setTexture(texture);
 	_sprite.setScale(1.f, 1.f);
+	_sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
 	_sprite.setPosition(spawnPos);
 	_state.live.stats.DEFAULT_HP = 100.f;
 	_state.live.stats.DEFAULT_SPD = 500.f;
@@ -34,7 +35,8 @@ void EnemyObject::SetNext(EnemyObject* next)
 
 sf::Sprite& EnemyObject::GetSprite()
 {
-	return _sprite;
+	if (_inUse)
+		return _sprite;
 }
 
 EnemyObject::STATUS EnemyObject::GetStatus() const

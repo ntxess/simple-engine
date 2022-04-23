@@ -9,28 +9,26 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
-    //_background = std::make_unique<UIObject>(_data->_holder, "Background");
-
     _player = std::make_unique<PlayerObject>(_data->_holder["Ship"]);
-    //_uEnemy = std::make_unique<UEnemyObject>(_data->_holder["Ship"]);
-    //_uEnemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
+    _uEnemy = std::make_unique<UEnemyObject>(_data->_holder["Ship"]);
+    _uEnemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);
 
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 1800);
     
-    for (int i = 0; i < enemyPool.POOL_SIZE; i++)
+    for (int i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
         sf::Texture& ship = _data->_holder["Ship"];
-        //WayPoint * pathPattern = _data->_pathMap.at("mRandom").get();
+        WayPoint* pathPattern = _data->_pathMap.at("mRandom").get();
         sf::Vector2f randomPos = sf::Vector2f(float(dist6(rng)), float(dist6(rng) - 790));
-        //enemyPool.Create(ship, pathPattern, randomPos);
-        enemyPool.Create(ship, nullptr, randomPos);
-        //enemyPool.GetObject(i).SetRepeatPath(true);
+        _enemyPool.Create(ship, pathPattern, randomPos);
+        _enemyPool.GetObject(i).SetRepeatPath(true);
     }
 
-    sf::FloatRect rect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
-    qTree = std::make_unique<QuadTree>(rect, 4);
+    _boundary = sf::FloatRect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
+    _range = sf::FloatRect(0.f, 0.f, 50.0f, 50.0f);
+    _qTree = std::make_unique<QuadTree>(_boundary);
 }
 
 void DebugScene::ProcessEvent(const sf::Event& event)
@@ -45,7 +43,7 @@ void DebugScene::ProcessEvent(const sf::Event& event)
             sf::Texture& basicAttack = _data->_holder["Shot"];
             WayPoint* pathPattern = _data->_pathMap.at("mStraight").get();
             sf::Vector2f playerPos = _player->GetGraphics()->GetSprite().getPosition();
-            weaponPool.Create(basicAttack, pathPattern, playerPos);
+            _weaponPool.Create(basicAttack, pathPattern, playerPos);
         }
     }
 }
@@ -60,30 +58,33 @@ void DebugScene::Update(const float& deltaTime)
     _player->Update(deltaTime);
     CheckBoundary(_player->GetGraphics()->GetSprite());
 
-    //_uEnemy->Update(deltaTime);
-    //CheckBoundary(_uEnemy->GetGraphics()->GetSprite());
+    _uEnemy->Update(deltaTime);
+    CheckBoundary(_uEnemy->GetGraphics()->GetSprite());
 
-    enemyPool.Update(deltaTime);
-    weaponPool.Update(deltaTime);
+    _enemyPool.Update(deltaTime);
+    _weaponPool.Update(deltaTime);
 
-    qTree->Insert(&_player->GetGraphics()->GetSprite());
-    for (unsigned int i = 0; i < enemyPool.POOL_SIZE; i++)
+    _qTree = std::make_unique<QuadTree>(_boundary);
+    _qTree->Insert(&_player.get()->GetGraphics().get()->GetSprite());
+    for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
-        qTree->Insert(&enemyPool.GetObject(i).GetSprite());
-        //CheckBoundary(enemyPool.GetObject(i).GetSprite());
+        _qTree->Insert(&_enemyPool.GetObject(i).GetSprite());
+        CheckBoundary(_enemyPool.GetObject(i).GetSprite());
     }
+
+    //for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
+    //{
+    //    std::vector <sf::Sprite*> found = _qTree->QueryRange(_range);
+    //}
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-    qTree->DrawBox(rw);
-    qTree->Clear();
-
     _player->Render(rw, interpolation);
-    //_uEnemy->Render(rw, interpolation);
+    _uEnemy->Render(rw, interpolation);
 
-    enemyPool.Render(rw, deltaTime, interpolation);
-    weaponPool.Render(rw, deltaTime, interpolation);
+    _enemyPool.Render(rw, deltaTime, interpolation);
+    _weaponPool.Render(rw, deltaTime, interpolation);
 
     _fps.Update();
     _fps.Render(rw);

@@ -1,10 +1,15 @@
 #include "QuadTree.hpp"
 
-QuadTree::QuadTree(const sf::FloatRect& rect, const unsigned int& capacity)
-	: QT_NODE_CAPACITY(capacity)
+QuadTree::QuadTree(const sf::FloatRect& rect)
+	: _boundary(rect)
 	, _divided(false)
-	, _boundary(rect)
-{}
+{
+	//_rectangle.setPosition(_boundary.left, _boundary.top);
+	//_rectangle.setSize(sf::Vector2f(_boundary.width, _boundary.height));
+	//_rectangle.setOutlineThickness(1.0f);
+	//_rectangle.setFillColor(sf::Color(0, 0, 0));
+	//_rectangle.setOutlineColor(sf::Color(0, 150, 100));
+}
 
 QuadTree::~QuadTree()
 {}
@@ -32,7 +37,7 @@ bool QuadTree::Insert(sf::Sprite* object)
 	if (_northEast->Insert(object)) return true;
 	if (_southWest->Insert(object)) return true;
 	if (_southEast->Insert(object)) return true;
-
+	
 	// Otherwise, the point cannot be inserted for some unknown reason (this should never happen)
 	return false;
 }
@@ -44,10 +49,10 @@ void QuadTree::Subdivide()
 	float width = _boundary.width;
 	float height = _boundary.height;
 
-	_northWest = std::make_unique<QuadTree>(sf::FloatRect(x, y, width / 2.0f, height / 2.0f), QT_NODE_CAPACITY);
-	_northEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y, width / 2.0f, height / 2.0f), QT_NODE_CAPACITY);
-	_southWest = std::make_unique<QuadTree>(sf::FloatRect(x, y + height / 2.0f, width / 2.0f, height / 2.0f), QT_NODE_CAPACITY);
-	_southEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y + height / 2.0f, width / 2.0f, height / 2.0f), QT_NODE_CAPACITY);
+	_northWest = std::make_unique<QuadTree>(sf::FloatRect(x, y, width / 2.0f, height / 2.0f));
+	_northEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y, width / 2.0f, height / 2.0f));
+	_southWest = std::make_unique<QuadTree>(sf::FloatRect(x, y + height / 2.0f, width / 2.0f, height / 2.0f));
+	_southEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y + height / 2.0f, width / 2.0f, height / 2.0f));
 
 	_divided = true;
 }
@@ -87,58 +92,32 @@ std::vector<sf::Sprite*> QuadTree::QueryRange(const sf::FloatRect& range)
 
 void QuadTree::Clear()
 {
-	//if (!_divided)
-	//{
-	//	_objects.clear();
-	//	return;
-	//}
-	//else
-	//{
-	//	_northWest->Clear();
-	//	_northEast->Clear();
-	//	_southWest->Clear();
-	//	_southEast->Clear();
-	//}
-
-	//if (!_objects.empty())
-	//	_objects.clear();
-}
-
-void QuadTree::DrawBox(const std::unique_ptr<sf::RenderWindow>& rw)
-{
-	sf::RectangleShape rectangle;
-	rectangle.setPosition(_boundary.left, _boundary.top);
-	rectangle.setSize(sf::Vector2f(_boundary.width, _boundary.height));
-	rectangle.setOutlineThickness(1.0f);
-	rectangle.setFillColor(sf::Color(0, 0, 0));
-	rectangle.setOutlineColor(sf::Color(0, 150, 100));
-
-	//sf::Text text;
-	//sf::Font font;
-	//if (!font.loadFromFile("resources/font/VCR_OSD_MONO_1.001.ttf"))
-	//{
-	//	std::cout << "FAILURE TO LOAD FONT TYPE!" << std::endl;
-	//	exit(-1);
-	//}
-	//text.setFont(font);
-	//text.setCharacterSize(20);
-	//text.setFillColor(sf::Color::White);
-	//text.setPosition(sf::Vector2f(_boundary.left, _boundary.top));
-
-	//std::stringstream ss;
-	//ss << _objects.size();
-	//std::string numObjectsStr = ss.str();
-	//text.setString(numObjectsStr);
-	//rw->draw(text);
-
-	rw->draw(rectangle);
-	//rw->draw(text);
-
-	if (_divided)
+	if (!_divided)
 	{
-		_northWest->DrawBox(rw);
-		_northEast->DrawBox(rw);
-		_southWest->DrawBox(rw);
-		_southEast->DrawBox(rw);
+		_objects.clear();
+		return;
 	}
+	else
+	{
+		_northWest->Clear();
+		_northEast->Clear();
+		_southWest->Clear();
+		_southEast->Clear();
+	}
+
+	if (!_objects.empty())
+		_objects.clear();
 }
+
+//void QuadTree::Render(const std::unique_ptr<sf::RenderWindow>& rw)
+//{
+//	rw->draw(_rectangle);
+//
+//	if (_divided)
+//	{
+//		_northWest->Render(rw);
+//		_northEast->Render(rw);
+//		_southWest->Render(rw);
+//		_southEast->Render(rw);
+//	}
+//}

@@ -11,6 +11,7 @@ void ShotParticle::Init(sf::Texture& texture, WayPoint* wps, const sf::Vector2f 
 {
 	_sprite.setTexture(texture);
 	_sprite.setScale(sf::Vector2f(2, 2));
+	_sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
 	_sprite.setPosition(spawnPos);
 	_state.live.speed = 2000;
 	_state.live.movePattern = &*wps;
@@ -30,7 +31,8 @@ void ShotParticle::SetNext(ShotParticle* next)
 
 sf::Sprite& ShotParticle::GetSprite()
 {
-	return _sprite;
+	if(_inUse)
+		return _sprite;
 }
 
 sf::Vector2f ShotParticle::TraversePattern(const float& deltaTime)

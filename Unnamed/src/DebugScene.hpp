@@ -19,14 +19,17 @@ class DebugScene : public State
 private:
 	std::shared_ptr<GameData> _data;
 
+	sf::FloatRect _boundary;
+	sf::FloatRect _range;
+
 	ResourceMonitor _fps;
 	std::unique_ptr<PlayerObject> _player;
 	std::unique_ptr<UEnemyObject> _uEnemy;
 
-	ObjectPool<ShotParticle> weaponPool;
-	ObjectPool<EnemyObject> enemyPool;
+	ObjectPool<ShotParticle> _weaponPool;
+	ObjectPool<EnemyObject> _enemyPool;
 
-	std::unique_ptr<QuadTree> qTree;
+	std::unique_ptr<QuadTree> _qTree;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);
