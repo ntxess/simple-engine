@@ -10,7 +10,7 @@ ResourceMonitor::ResourceMonitor() : _fps(0)
     _text.setFont(_font);
     _text.setCharacterSize(20);
     _text.setFillColor(sf::Color::White);
-    _text.setPosition(sf::Vector2f(0, 0));
+    _text.setPosition(sf::Vector2f(1750, 0));
 }
 
 ResourceMonitor::~ResourceMonitor()

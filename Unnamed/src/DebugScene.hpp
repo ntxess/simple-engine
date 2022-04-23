@@ -12,6 +12,7 @@
 #include "EnemyObject.hpp"
 #include "ObjectPool.hpp"
 #include "ShotParticle.hpp"
+#include "QuadTree.hpp"
 
 class DebugScene : public State
 {
@@ -24,6 +25,8 @@ private:
 
 	ObjectPool<ShotParticle> weaponPool;
 	ObjectPool<EnemyObject> enemyPool;
+
+	std::unique_ptr<QuadTree> qTree;
 
 public:
 	DebugScene(std::shared_ptr<GameData>& data);

@@ -119,6 +119,9 @@
     <ClCompile Include="src\UEnemyObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\QuadTree.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DebugScene.hpp">
@@ -192,6 +195,9 @@
     </ClInclude>
     <ClInclude Include="src\UEnemyObject.hpp">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\QuadTree.hpp">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

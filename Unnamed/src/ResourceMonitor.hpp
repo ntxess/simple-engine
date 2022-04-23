@@ -8,8 +8,8 @@ class ResourceMonitor
 {
 private:
     sf::Clock _clock;
-    sf::Text  _text;
-    sf::Font  _font;
+    sf::Text _text;
+    sf::Font _font;
     float _fps;
 
 public:

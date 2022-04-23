@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\QuadTree.cpp" />
     <ClCompile Include="src\UEnemyObject.cpp" />
     <ClCompile Include="src\EnemyObject.cpp" />
     <ClCompile Include="src\PlayerObject.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\QuadTree.hpp" />
     <ClInclude Include="src\UEnemyObject.hpp" />
     <ClInclude Include="src\MCircle.hpp" />
     <ClInclude Include="src\EnemyObject.hpp" />
