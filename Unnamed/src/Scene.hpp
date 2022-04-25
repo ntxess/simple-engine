@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <Thor/Animations.hpp>
 
-class State
+class Scene
 {
 public:
 	virtual void Init() = 0;

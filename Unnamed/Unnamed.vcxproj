@@ -65,7 +65,7 @@
     <ClInclude Include="src\DebugScene.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
-    <ClInclude Include="src\State.hpp" />
+    <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\ResourceMonitor.hpp" />

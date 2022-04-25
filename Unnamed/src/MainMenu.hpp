@@ -6,7 +6,7 @@
 #include "DebugScene.hpp"
 #include "ResourceMonitor.hpp"
 
-class MainMenu : public State
+class MainMenu : public Scene
 {
 private:
 	std::shared_ptr<GameData> _data;

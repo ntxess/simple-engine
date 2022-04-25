@@ -1,13 +1,13 @@
 #pragma once
 
 #include "entt/entt.hpp"
-#include "State.hpp"
+#include "Scene.hpp"
 
 class Entity
 {
 private:
 	entt::entity _entityHandle;
-	State* _scene;
+	Scene* _scene;
 
 public:
 };

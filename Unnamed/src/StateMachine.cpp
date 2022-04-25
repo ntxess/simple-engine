@@ -6,12 +6,12 @@ StateMachine::StateMachine()
 StateMachine::~StateMachine()
 {}
 
-void StateMachine::AddState(std::unique_ptr<State> newState, bool isReplacing)
+void StateMachine::AddState(std::unique_ptr<Scene> newState, bool isReplacing)
 {
 	_isAdding = true;
 	_isReplacing = isReplacing;
 
-	_newState = std::move(newState);
+	_newScene = std::move(newState);
 }
 
 void StateMachine::RemoveState()
@@ -21,36 +21,36 @@ void StateMachine::RemoveState()
 
 void StateMachine::ProcessStateChange()
 {
-	if (_isRemoving && !_states.empty())
+	if (_isRemoving && !_scenes.empty())
 	{
-		_states.pop();
-		if (!_states.empty())
+		_scenes.pop();
+		if (!_scenes.empty())
 		{
-			_states.top()->Resume();
+			_scenes.top()->Resume();
 		}
 		_isRemoving = false;
 	}
 
 	if (_isAdding)
 	{
-		if (!_states.empty())
+		if (!_scenes.empty())
 		{
 			if (_isReplacing)
 			{
-				_states.pop();
+				_scenes.pop();
 			}
 			else
 			{
-				_states.top()->Pause();
+				_scenes.top()->Pause();
 			}
 		}
-		_states.push(std::move(_newState));
-		_states.top()->Init();
+		_scenes.push(std::move(_newScene));
+		_scenes.top()->Init();
 		_isAdding = false;
 	}
 }
 
-std::unique_ptr<State>& StateMachine::GetActiveState()
+std::unique_ptr<Scene>& StateMachine::GetActiveState()
 {
-	return _states.top();
+	return _scenes.top();
 }

@@ -14,7 +14,7 @@
 #include "ShotParticle.hpp"
 #include "QuadTree.hpp"
 
-class DebugScene : public State
+class DebugScene : public Scene
 {
 private:
 	std::shared_ptr<GameData> _data;

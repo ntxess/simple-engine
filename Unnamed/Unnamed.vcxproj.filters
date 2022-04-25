@@ -142,7 +142,7 @@
     <ClInclude Include="src\GameData.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\State.hpp">
+    <ClInclude Include="src\Scene.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="src\ShotParticle.hpp">

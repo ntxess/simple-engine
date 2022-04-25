@@ -9,7 +9,7 @@
 
 #include "Component.hpp"
 
-class Sandbox : public State
+class Sandbox : public Scene
 {
 	static const unsigned int MAX_SIZE = 1000;
 
