@@ -16,8 +16,11 @@
 
 class DebugScene : public Scene
 {
+	friend class Entity;
+
 private:
 	std::shared_ptr<GameData> _data;
+	entt::registry _registry;
 
 	sf::FloatRect _boundary;
 	sf::FloatRect _range;
@@ -44,4 +47,5 @@ public:
 	void CheckCollision(sf::Sprite& player, sf::Sprite& object);
 	void Pause();
 	void Resume();
+	entt::registry& GetRegistry();
 };

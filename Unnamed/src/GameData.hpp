@@ -2,6 +2,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <Thor/Resources.hpp>
+#include <Thor/Animations.hpp>
 
 #include "StateMachine.hpp"
 #include "WayPoint.hpp"

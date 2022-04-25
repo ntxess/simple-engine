@@ -8,16 +8,16 @@ QuadTree::QuadTree(const sf::FloatRect& rect)
 QuadTree::~QuadTree()
 {}
 
-bool QuadTree::Insert(sf::Sprite* object)
+bool QuadTree::Insert(entt::entity entity, entt::registry* registry)
 {
 	// Ignore objects that do not belong in this quad tree
-	if (!_boundary.contains(object->getPosition()))
+	if (!_boundary.contains(registry->get<SpriteComponent>(entity).sprite.getPosition()))
 		return false;
 
 	// If there is space in this quad tree and if doesn't have subdivisions, add the object here
-	if (_objects.size() < QT_NODE_CAPACITY)
+	if (_nodes.size() < QT_NODE_CAPACITY)
 	{
-		_objects.push_back(object);
+		_nodes.push_back(entity);
 		return true;
 	}
 
@@ -27,11 +27,11 @@ bool QuadTree::Insert(sf::Sprite* object)
 
 	// We have to add the points/data contained into this quad array to the new quads if we only want
 	// the last node to hold the data
-	if (_northWest->Insert(object)) return true;
-	if (_northEast->Insert(object)) return true;
-	if (_southWest->Insert(object)) return true;
-	if (_southEast->Insert(object)) return true;
-	
+	if (_northWest->Insert(entity, registry)) return true;
+	if (_northEast->Insert(entity, registry)) return true;
+	if (_southWest->Insert(entity, registry)) return true;
+	if (_southEast->Insert(entity, registry)) return true;
+
 	// Otherwise, the point cannot be inserted for some unknown reason (this should never happen)
 	return false;
 }
@@ -51,44 +51,44 @@ void QuadTree::Subdivide()
 	_divided = true;
 }
 
-std::vector<sf::Sprite*> QuadTree::QueryRange(const sf::FloatRect& range)
+std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt::registry* registry)
 {
-	std::vector<sf::Sprite*> objectsFound;
+	std::vector<entt::entity> entityFound;
 
 	if (!_boundary.intersects(range))
-		return objectsFound;
+		return entityFound;
 
-	for (int i = 0; i < _objects.size(); i++)
+	for (auto entity : _nodes)
 	{
-		if (range.contains(_objects[i]->getPosition()))
-			objectsFound.push_back(_objects[i]);
+		if (range.contains(registry->get<SpriteComponent>(entity).sprite.getPosition()))
+			entityFound.push_back(entity);
 	}
 
 	if (!_divided)
-		return objectsFound;
+		return entityFound;
 
-	std::vector<sf::Sprite*> tempVec;
+	std::vector<entt::entity> tempVec;
 
-	tempVec = _northWest->QueryRange(range);
-	objectsFound.insert(objectsFound.end(), tempVec.begin(), tempVec.end());
+	tempVec = _northWest->QueryRange(range, registry);
+	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _northEast->QueryRange(range);
-	objectsFound.insert(objectsFound.end(), tempVec.begin(), tempVec.end());
+	tempVec = _northEast->QueryRange(range, registry);
+	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _southWest->QueryRange(range);
-	objectsFound.insert(objectsFound.end(), tempVec.begin(), tempVec.end());
+	tempVec = _southWest->QueryRange(range, registry);
+	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _southEast->QueryRange(range);
-	objectsFound.insert(objectsFound.end(), tempVec.begin(), tempVec.end());
+	tempVec = _southEast->QueryRange(range, registry);
+	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	return objectsFound;
+	return entityFound;
 }
 
 void QuadTree::Clear()
 {
 	if (!_divided)
 	{
-		_objects.clear();
+		_nodes.clear();
 		return;
 	}
 	else
@@ -99,6 +99,6 @@ void QuadTree::Clear()
 		_southEast->Clear();
 	}
 
-	if (!_objects.empty())
-		_objects.clear();
+	if (!_nodes.empty())
+		_nodes.clear();
 }

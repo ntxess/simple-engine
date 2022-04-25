@@ -67,11 +67,11 @@ void DebugScene::Update(const float& deltaTime)
     _weaponPool.Update(deltaTime);
 
     _qTree = std::make_unique<QuadTree>(_boundary);
-    _qTree->Insert(&_player.get()->GetGraphics().get()->GetSprite());
+    //_qTree->Insert(&_player.get()->GetGraphics().get()->GetSprite());
     for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
         CheckBoundary(_enemyPool.GetObject(i).GetSprite());
-        _qTree->Insert(&_enemyPool.GetObject(i).GetSprite());
+        //_qTree->Insert(&_enemyPool.GetObject(i).GetSprite());
     }
 }
 
@@ -123,4 +123,11 @@ void DebugScene::Pause()
 void DebugScene::Resume()
 {
 }
+
+entt::registry& DebugScene::GetRegistry()
+{
+    return _registry;
+}
+
+
 

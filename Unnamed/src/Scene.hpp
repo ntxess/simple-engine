@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Thor/Animations.hpp>
+#include <entt/entt.hpp>
 
 class Scene
 {
@@ -12,4 +12,5 @@ public:
 	virtual void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation) = 0;
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
+	virtual entt::registry& GetRegistry() = 0;
 };

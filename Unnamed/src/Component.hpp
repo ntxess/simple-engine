@@ -5,13 +5,13 @@
 
 #include "WayPoint.hpp"
 
-class TagComponent
+struct TagComponent
 {
-	std::string nametag;
+	std::string name;
 
 	TagComponent() = default;
-	TagComponent(const std::string& name)
-		: nametag(name) {}
+	TagComponent(const std::string& nametag)
+		: name(nametag) {}
 	TagComponent(const TagComponent&) = default;
 };
 
@@ -66,9 +66,10 @@ struct WayPointComponent
 	WayPoint* currentPath;
 	float distance;
 	bool repeat;
+	bool finish;
 
 	WayPointComponent() = default;
 	WayPointComponent(WayPoint* wp, const bool& repeat = false)
-		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat) {}
-	WayPointComponent(const WayPointComponent&) = default;
+		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat), finish(false) {}
+	WayPointComponent(const WayPointComponent& other) = default;
 };

@@ -8,8 +8,11 @@
 
 class MainMenu : public Scene
 {
+	friend class Entity;
+
 private:
 	std::shared_ptr<GameData> _data;
+	entt::registry _registry;
 
 	ResourceMonitor _fps;
 
@@ -24,4 +27,5 @@ public:
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 	void Pause();
 	void Resume();
+	entt::registry& GetRegistry();
 };

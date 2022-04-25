@@ -3,6 +3,9 @@
 #include <vector>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <entt/entt.hpp>
+
+#include "Component.hpp"
 
 class QuadTree
 {
@@ -10,7 +13,7 @@ private:
 	static const unsigned int QT_NODE_CAPACITY = 4;
 	sf::FloatRect _boundary;
 	bool _divided;
-	std::vector<sf::Sprite*> _objects;
+	std::vector<entt::entity> _nodes;
 	std::unique_ptr<QuadTree> _northWest;
 	std::unique_ptr<QuadTree> _northEast;
 	std::unique_ptr<QuadTree> _southWest;
@@ -20,9 +23,9 @@ public:
 	QuadTree(const sf::FloatRect& rect);
 	~QuadTree();
 
-	bool Insert(sf::Sprite* object);
+	bool Insert(entt::entity entity, entt::registry* registry);
 	void Subdivide();
-	std::vector<sf::Sprite*> QueryRange(const sf::FloatRect& range);
+	std::vector<entt::entity> QueryRange(const sf::FloatRect& range, entt::registry* registry);
 	void Clear();
 };
 

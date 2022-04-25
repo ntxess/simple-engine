@@ -72,3 +72,8 @@ void MainMenu::Pause()
 
 void MainMenu::Resume()
 {}
+
+entt::registry& MainMenu::GetRegistry()
+{
+    return _registry;
+}
