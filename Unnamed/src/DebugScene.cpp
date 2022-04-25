@@ -15,19 +15,21 @@ void DebugScene::Init()
 
     std::random_device dev;
     std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(100, 1800);
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
     
     for (int i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
         sf::Texture& ship = _data->_holder["Ship"];
         WayPoint* pathPattern = _data->_pathMap.at("mRandom").get();
-        sf::Vector2f randomPos = sf::Vector2f(float(dist6(rng)), float(dist6(rng) - 790));
+        sf::Vector2f randomPos = sf::Vector2f(float(dist6(rng)), float(dist6(rng) % 1080));
         _enemyPool.Create(ship, pathPattern, randomPos);
         _enemyPool.GetObject(i).SetRepeatPath(true);
+        _enemyPool.GetObject(i).SetSpeed(float(dist6(rng) % 500));
+        _enemyPool.GetObject(i).ResetStats();
     }
 
     _boundary = sf::FloatRect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
-    _range = sf::FloatRect(0.f, 0.f, 50.0f, 50.0f);
+    _range = sf::FloatRect(0.f, 0.f, 100.0f, 100.0f);
     _qTree = std::make_unique<QuadTree>(_boundary);
 }
 
@@ -68,14 +70,9 @@ void DebugScene::Update(const float& deltaTime)
     _qTree->Insert(&_player.get()->GetGraphics().get()->GetSprite());
     for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
-        _qTree->Insert(&_enemyPool.GetObject(i).GetSprite());
         CheckBoundary(_enemyPool.GetObject(i).GetSprite());
+        _qTree->Insert(&_enemyPool.GetObject(i).GetSprite());
     }
-
-    //for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
-    //{
-    //    std::vector <sf::Sprite*> found = _qTree->QueryRange(_range);
-    //}
 }
 
 void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)

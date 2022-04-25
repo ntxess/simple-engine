@@ -3,13 +3,7 @@
 QuadTree::QuadTree(const sf::FloatRect& rect)
 	: _boundary(rect)
 	, _divided(false)
-{
-	//_rectangle.setPosition(_boundary.left, _boundary.top);
-	//_rectangle.setSize(sf::Vector2f(_boundary.width, _boundary.height));
-	//_rectangle.setOutlineThickness(1.0f);
-	//_rectangle.setFillColor(sf::Color(0, 0, 0));
-	//_rectangle.setOutlineColor(sf::Color(0, 150, 100));
-}
+{}
 
 QuadTree::~QuadTree()
 {}
@@ -108,16 +102,3 @@ void QuadTree::Clear()
 	if (!_objects.empty())
 		_objects.clear();
 }
-
-//void QuadTree::Render(const std::unique_ptr<sf::RenderWindow>& rw)
-//{
-//	rw->draw(_rectangle);
-//
-//	if (_divided)
-//	{
-//		_northWest->Render(rw);
-//		_northEast->Render(rw);
-//		_southWest->Render(rw);
-//		_southEast->Render(rw);
-//	}
-//}

@@ -104,9 +104,6 @@
     <ClCompile Include="src\CommandExSkill.cpp">
       <Filter>Source Files\Components\Input\Commands</Filter>
     </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
     <ClCompile Include="src\PlayerObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -121,6 +118,15 @@
     </ClCompile>
     <ClCompile Include="src\QuadTree.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateMachine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sandbox.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +143,6 @@
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\State.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StateMachine.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="src\ShotParticle.hpp">
@@ -172,9 +175,6 @@
     <ClInclude Include="src\CommandExSkill.hpp">
       <Filter>Header Files\Components\Input\Commands</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectPool.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerObject.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
@@ -198,6 +198,21 @@
     </ClInclude>
     <ClInclude Include="src\QuadTree.hpp">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectPool.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateMachine.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sandbox.hpp">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

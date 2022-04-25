@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Sandbox.cpp" />
     <ClCompile Include="src\QuadTree.cpp" />
     <ClCompile Include="src\UEnemyObject.cpp" />
     <ClCompile Include="src\EnemyObject.cpp" />
@@ -40,6 +42,9 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entity.hpp" />
+    <ClInclude Include="src\Component.hpp" />
+    <ClInclude Include="src\Sandbox.hpp" />
     <ClInclude Include="src\QuadTree.hpp" />
     <ClInclude Include="src\UEnemyObject.hpp" />
     <ClInclude Include="src\MCircle.hpp" />
@@ -145,7 +150,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,7 +168,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -182,7 +187,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -200,7 +205,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

@@ -16,9 +16,6 @@ private:
 	std::unique_ptr<QuadTree> _southWest;
 	std::unique_ptr<QuadTree> _southEast;
 
-	//DEBUG
-	//sf::RectangleShape _rectangle;
-
 public:
 	QuadTree(const sf::FloatRect& rect);
 	~QuadTree();
@@ -27,6 +24,5 @@ public:
 	void Subdivide();
 	std::vector<sf::Sprite*> QueryRange(const sf::FloatRect& range);
 	void Clear();
-	//void Render(const std::unique_ptr<sf::RenderWindow>& rw);
 };
 

@@ -30,7 +30,7 @@ private:
 	ObjectPool<EnemyObject> _enemyPool;
 
 	std::unique_ptr<QuadTree> _qTree;
-
+	
 public:
 	DebugScene(std::shared_ptr<GameData>& data);
 	~DebugScene();
