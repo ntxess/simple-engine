@@ -4,6 +4,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "WayPoint.hpp"
+#include "CommandDodge.hpp"
+#include "CommandExSkill.hpp"
 
 struct TagComponent
 {
@@ -72,4 +74,19 @@ struct WayPointComponent
 	WayPointComponent(WayPoint* wp, const bool& repeat = false)
 		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat), finish(false) {}
 	WayPointComponent(const WayPointComponent& other) = default;
+};
+
+struct PlayerInputComponent
+{
+	sf::Vector2f direction;
+	std::shared_ptr<Command> command;
+	std::shared_ptr<Command> KeyLShift;
+	std::shared_ptr<Command> KeyRShift;
+
+	PlayerInputComponent()
+	{
+		KeyLShift = std::make_shared<CommandDodge>();
+		KeyRShift = std::make_shared<CommandExSkill>();
+	}
+	PlayerInputComponent(const PlayerInputComponent& other) = default;
 };

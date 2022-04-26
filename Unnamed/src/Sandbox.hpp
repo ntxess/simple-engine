@@ -7,14 +7,13 @@
 #include "QuadTree.hpp"
 #include "ObjectPool.hpp"
 
-#include "Entity.hpp"
 #include "Component.hpp"
 #include "ShotParticle.hpp"
 
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const unsigned int MAX_SIZE = 5000;
+	static const unsigned int MAX_SIZE = 100;
 
 private:
 	std::shared_ptr<GameData> _data;
@@ -25,7 +24,8 @@ private:
 	sf::FloatRect _boundary;
 	std::unique_ptr<QuadTree> _quadTree;
 
-	Entity _player;
+	entt::entity _player;
+	entt::entity _dummy;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);
@@ -40,8 +40,9 @@ public:
 	void Resume();
 	entt::registry& GetRegistry();
 
-	Entity CreateEntity(const std::string& name);
 	void CheckBoundary(sf::Sprite& object);
-	sf::Vector2f TraverseWayPoint(WayPointComponent& wpc, const float& speed, const float& deltaTime);
-	void TransformEntity(const float& deltaTime);
+	void PlayerUpdate(const float& deltaTime);
+	void WayPointUpdate(const float& deltaTime);
+	void QuadTreeUpdate();
+	void RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw);
 };

@@ -20,21 +20,29 @@ void Sandbox::Init()
 
 	for (unsigned int i = 0; i < MAX_SIZE; i++)
 	{
-		Entity entity = CreateEntity("generic_enemy");
-		entity.AddComponent<HealthComponent>(100.f);
-		entity.AddComponent<SpeedComponent>(float(dist6(rng) % 500));
-		entity.AddComponent<WayPointComponent>(_data->_pathMap.at("mRandom").get(), true);
-		entity.AddComponent<SpriteComponent>(_data->_holder["Ship"]);
-		entity.GetComponent<SpriteComponent>().sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
-		_quadTree->Insert(entity.GetHandle(), &_registry);
+		entt::entity entity = _registry.create();
+		_registry.emplace<TagComponent>(entity, "generic_enemy");
+		_registry.emplace<HealthComponent>(entity, 100.f);
+		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
+		_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
+		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
+		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
 	}
 
-	_player = CreateEntity("player");
-	_player.AddComponent<HealthComponent>(1000.f);
-	_player.AddComponent<SpeedComponent>(500.f);
-	_player.AddComponent<SpriteComponent>(_data->_holder["Ship"]);
-	_player.GetComponent<SpriteComponent>().sprite.setPosition(960, 1000);
-	_quadTree->Insert(_player.GetHandle(), &_registry);
+	_player = _registry.create();
+	_registry.emplace<TagComponent>(_player, "player");
+	_registry.emplace<HealthComponent>(_player, 1000.f);
+	_registry.emplace<SpeedComponent>(_player, 500.f);
+	_registry.emplace<PlayerInputComponent>(_player);
+	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
+	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
+
+	_dummy = _registry.create();
+	_registry.emplace<TagComponent>(_dummy, "dummy");
+	_registry.emplace<HealthComponent>(_dummy, 1000.f);
+	_registry.emplace<SpeedComponent>(_dummy, 500.f);
+	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
+	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -43,61 +51,81 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 	{
 		if (event.key.code == sf::Keyboard::L)
 		{
-			auto position = _player.GetComponent<SpriteComponent>().sprite.getPosition();
-			Entity entity = CreateEntity("shot_particle");
-			entity.AddComponent<SpeedComponent>(2000.f);
-			entity.AddComponent<WayPointComponent>(_data->_pathMap.at("mStraight").get());
-			entity.AddComponent<DamageComponent>(100.f);
-			entity.AddComponent<SpriteComponent>(_data->_holder["Shot"]);
-			entity.GetComponent<SpriteComponent>().sprite.setPosition(position);
-			_quadTree->Insert(entity.GetHandle(), &_registry);
+			auto position = _registry.get<SpriteComponent>(_player).sprite.getPosition();
+			entt::entity entity = _registry.create();
+			_registry.emplace<TagComponent>(entity, "shot_particle");
+			_registry.emplace<SpeedComponent>(entity, 2000.f);
+			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), true);
+			_registry.emplace<DamageComponent>(entity, 100.f);
+			_registry.emplace<SpriteComponent>(entity, _data->_holder["Shot"]);
+			_registry.get<SpriteComponent>(entity).sprite.setPosition(position);
+			_registry.get<SpriteComponent>(entity).sprite.setScale(2.f, 2.f);
 		}
+
+		//auto controller = _registry.get<PlayerInputComponent>(_player);
+		//controller.command = NULL;
+
+		//if (event.key.code == sf::Keyboard::LShift)
+		//	controller.command = controller.KeyLShift;
+
+		//if (event.key.code == sf::Keyboard::RShift)
+		//	controller.command = controller.KeyRShift;
+
+		//if (controller.command)
+		//	controller.command->Execute(player);
 	}
 }
 
 void Sandbox::ProcessInput(const sf::Event& event)
 {
+	auto& controller = _registry.get<PlayerInputComponent>(_player);
 
+	const float input = 1.f;
+	controller.direction = sf::Vector2f(0, 0);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		controller.direction.y -= input;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		controller.direction.x -= input;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		controller.direction.y += input;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		controller.direction.x += input;
 }
 
 void Sandbox::Update(const float& deltaTime)
 {
-	_quadTree->Insert(_player.GetHandle(), &_registry);
+	PlayerUpdate(deltaTime);
+	WayPointUpdate(deltaTime);
+	QuadTreeUpdate();
 
-	TransformEntity(deltaTime);
-
-	auto group = _registry.group<DamageComponent>(entt::get<TagComponent, SpriteComponent>);
+	auto group = _registry.group<DamageComponent>(entt::get<SpriteComponent>);
 	for (auto entity : group)
 	{
-		auto [dmg, tag, sp] = group.get<DamageComponent, TagComponent, SpriteComponent>(entity);
+		auto [dmg, sp] = group.get<DamageComponent, SpriteComponent>(entity);
+		sf::FloatRect range = sp.sprite.getGlobalBounds();
+		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
-		if (tag.name == "shot_particle")
+		for (auto other : found)
 		{
-			sf::FloatRect range = sp.sprite.getGlobalBounds();
-			std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
-			for (auto other : found)
+			if (sp.sprite.getGlobalBounds().intersects(_registry.get<SpriteComponent>(other).sprite.getGlobalBounds()))
 			{
-				if (_registry.get<TagComponent>(other).name != "shot_particle")
-				{
-					if (sp.sprite.getGlobalBounds().intersects(_registry.get<SpriteComponent>(other).sprite.getGlobalBounds()))
-					{
-						float hp = _registry.get<HealthComponent>(other).current - dmg.damage;
-					}
-				}
+				//float hp = _registry.get<HealthComponent>(other).current;
+				std::cout << "HIT" << std::endl;
+				//if (hp <= 0)
+				//{
+				//	_registry.destroy(other);
+				//}
 			}
 		}
 	}
-	_quadTree = std::make_unique<QuadTree>(_boundary);
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-	auto view = _registry.view<SpriteComponent>();
-	for (auto entity : view)
-	{
-		rw->draw(view.get<SpriteComponent>(entity).sprite);
-	}
+	RenderEntities(rw);
 
 	_fps.Update();
 	_fps.Render(rw);
@@ -118,14 +146,6 @@ void Sandbox::Resume()
 entt::registry& Sandbox::GetRegistry()
 {
 	return _registry;
-}
-
-Entity Sandbox::CreateEntity(const std::string& name)
-{
-	Entity entity(_registry.create(), this);
-	auto& tag = entity.AddComponent<TagComponent>();
-	tag.name = name.empty() ? "Entity" : name;
-	return entity;
 }
 
 void Sandbox::CheckBoundary(sf::Sprite& object)
@@ -149,63 +169,66 @@ void Sandbox::CheckBoundary(sf::Sprite& object)
 		object.setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
 }
 
-
-sf::Vector2f Sandbox::TraverseWayPoint(WayPointComponent& wpc, const float& speed, const float& deltaTime)
+void Sandbox::PlayerUpdate(const float& deltaTime)
 {
-	if (wpc.movePattern == nullptr)
-		return sf::Vector2f(0.f, 0.f);
+	auto& controller = _registry.get<PlayerInputComponent>(_player);
+	auto& sp = _registry.get<SpriteComponent>(_player);
+	auto speed = _registry.get<SpeedComponent>(_player);
 
-	WayPoint* headPtr = wpc.currentPath;
-	WayPoint* nextPtr = headPtr->_nextWP.get();
+	controller.direction *= deltaTime * speed.current;
 
-	if (nextPtr == nullptr)
-	{
-		if (wpc.repeat)
-		{
-			wpc.currentPath = wpc.movePattern;
-			wpc.distance = 0.f;
-			wpc.finish = false;
-		}
-		wpc.finish = true;
-		return sf::Vector2f(0.f, 0.f);
-	}
-
-	wpc.distance += speed * deltaTime;
-	if (wpc.distance > nextPtr->_distanceTotal)
-		wpc.currentPath = nextPtr;
-
-	sf::Vector2f unitDist;
-	unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
-	unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
-
-	sf::Vector2f velocity;
-	velocity.x = unitDist.x * speed * deltaTime;
-	velocity.y = unitDist.y * speed * deltaTime;
-
-	return velocity;
+	sp.sprite.move(controller.direction);
 }
 
-void Sandbox::TransformEntity(const float& deltaTime)
+void Sandbox::WayPointUpdate(const float& deltaTime)
 {
-	auto group = _registry.group<WayPointComponent, SpeedComponent>(entt::get<TagComponent, SpriteComponent>);
+	auto group = _registry.group<WayPointComponent, SpeedComponent>(entt::get<SpriteComponent>);
 	for (auto entity : group)
 	{
-		auto [wp, spd, tag, sp] = group.get<WayPointComponent, SpeedComponent, TagComponent, SpriteComponent>(entity);
-		sp.sprite.move(TraverseWayPoint(wp, spd.current, deltaTime));
+		auto [wpc, spd, sp] = group.get<WayPointComponent, SpeedComponent, SpriteComponent>(entity);
 
-		if (tag.name == "shot_particle")
+		WayPoint* headPtr = wpc.currentPath;
+		WayPoint* nextPtr = headPtr->_nextWP.get();
+
+		if (nextPtr == nullptr)
 		{
-			if (wp.finish)
+			if (wpc.repeat)
 			{
-				_registry.destroy(entity);
-				continue;
+				wpc.currentPath = wpc.movePattern;
+				wpc.distance = 0.f;
+				wpc.finish = false;
 			}
+			wpc.finish = true;
+			continue;
 		}
-		else
-		{
-			CheckBoundary(sp.sprite);
-		}
-		_quadTree->Insert(entity, &_registry);
+
+		wpc.distance += spd.current * deltaTime;
+		if (wpc.distance > nextPtr->_distanceTotal)
+			wpc.currentPath = nextPtr;
+
+		sf::Vector2f unitDist;
+		unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
+		unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
+
+		sf::Vector2f velocity;
+		velocity.x = unitDist.x * spd.current * deltaTime;
+		velocity.y = unitDist.y * spd.current * deltaTime;
+
+		sp.sprite.move(velocity);
 	}
 }
 
+void Sandbox::QuadTreeUpdate()
+{	
+	_quadTree = std::make_unique<QuadTree>(_boundary);
+	auto view = _registry.view<SpriteComponent>();
+	for (auto entity : view)
+		_quadTree->Insert(entity, &_registry);
+}
+
+void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
+{
+	auto view = _registry.view<SpriteComponent>();
+	for (auto entity : view)
+		rw->draw(view.get<SpriteComponent>(entity).sprite);
+}
