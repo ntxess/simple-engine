@@ -2,6 +2,7 @@
 
 #include "Command.hpp"
 #include "PlayerObject.hpp"
+#include "Component.hpp"
 
 class CommandExSkill : public Command
 {
@@ -14,4 +15,5 @@ public:
 	~CommandExSkill();
 
 	void Execute(const PlayerObject& player);
+	void Execute(entt::entity entity, entt::registry* registry);
 };

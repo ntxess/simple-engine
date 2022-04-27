@@ -9,6 +9,8 @@ DebugScene::~DebugScene()
 
 void DebugScene::Init()
 {
+    std::cout << "Debug" << std::endl;
+
     _player = std::make_unique<PlayerObject>(_data->_holder["Ship"]);
     _uEnemy = std::make_unique<UEnemyObject>(_data->_holder["Ship"]);
     _uEnemy->GetPhysics()->SetMovePattern(_data->_pathMap.at("mCircle").get(), true);

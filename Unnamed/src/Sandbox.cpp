@@ -9,6 +9,8 @@ Sandbox::~Sandbox()
 
 void Sandbox::Init()
 {
+	std::cout << "Sandbox" << std::endl;
+
 	float width = float(_data->_window->getSize().x);
 	float height = float(_data->_window->getSize().y);
 	_boundary = sf::FloatRect(0.f, 0.f, width, height);
@@ -33,7 +35,7 @@ void Sandbox::Init()
 	_registry.emplace<TagComponent>(_player, "player");
 	_registry.emplace<HealthComponent>(_player, 1000.f);
 	_registry.emplace<SpeedComponent>(_player, 500.f);
-	_registry.emplace<PlayerInputComponent>(_player);
+	_registry.emplace<PlayerInputComponent>(_player, std::make_shared<CommandDodge>(), std::make_shared<CommandExSkill>());
 	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
 
@@ -62,17 +64,17 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 			_registry.get<SpriteComponent>(entity).sprite.setScale(2.f, 2.f);
 		}
 
-		//auto controller = _registry.get<PlayerInputComponent>(_player);
-		//controller.command = NULL;
+		auto controller = _registry.get<PlayerInputComponent>(_player);
+		controller.command = NULL;
 
-		//if (event.key.code == sf::Keyboard::LShift)
-		//	controller.command = controller.KeyLShift;
+		if (event.key.code == sf::Keyboard::LShift)
+			controller.command = controller.KeyLShift;
 
-		//if (event.key.code == sf::Keyboard::RShift)
-		//	controller.command = controller.KeyRShift;
+		if (event.key.code == sf::Keyboard::RShift)
+			controller.command = controller.KeyRShift;
 
-		//if (controller.command)
-		//	controller.command->Execute(player);
+		if (controller.command)
+			controller.command->Execute(_player, &_registry);
 	}
 }
 
@@ -101,26 +103,26 @@ void Sandbox::Update(const float& deltaTime)
 	WayPointUpdate(deltaTime);
 	QuadTreeUpdate();
 
-	auto group = _registry.group<DamageComponent>(entt::get<SpriteComponent>);
-	for (auto entity : group)
-	{
-		auto [dmg, sp] = group.get<DamageComponent, SpriteComponent>(entity);
-		sf::FloatRect range = sp.sprite.getGlobalBounds();
-		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
+	//auto group = _registry.group<DamageComponent>(entt::get<SpriteComponent>);
+	//for (auto entity : group)
+	//{
+	//	auto [dmg, sp] = group.get<DamageComponent, SpriteComponent>(entity);
+	//	sf::FloatRect range = sp.sprite.getGlobalBounds();
+	//	std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
-		for (auto other : found)
-		{
-			if (sp.sprite.getGlobalBounds().intersects(_registry.get<SpriteComponent>(other).sprite.getGlobalBounds()))
-			{
-				//float hp = _registry.get<HealthComponent>(other).current;
-				std::cout << "HIT" << std::endl;
-				//if (hp <= 0)
-				//{
-				//	_registry.destroy(other);
-				//}
-			}
-		}
-	}
+	//	for (auto other : found)
+	//	{
+	//		if (sp.sprite.getGlobalBounds().intersects(_registry.get<SpriteComponent>(other).sprite.getGlobalBounds()))
+	//		{
+	//			//float hp = _registry.get<HealthComponent>(other).current;
+	//			//std::cout << "HIT" << std::endl;
+	//			//if (hp <= 0)
+	//			//{
+	//			//	_registry.destroy(other);
+	//			//}
+	//		}
+	//	}
+	//}
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -171,13 +173,14 @@ void Sandbox::CheckBoundary(sf::Sprite& object)
 
 void Sandbox::PlayerUpdate(const float& deltaTime)
 {
-	auto& controller = _registry.get<PlayerInputComponent>(_player);
+	auto controller = _registry.get<PlayerInputComponent>(_player);
 	auto& sp = _registry.get<SpriteComponent>(_player);
 	auto speed = _registry.get<SpeedComponent>(_player);
 
-	controller.direction *= deltaTime * speed.current;
+	sf::Vector2f direction = controller.direction;
+	direction *= deltaTime * speed.current;
 
-	sp.sprite.move(controller.direction);
+	sp.sprite.move(direction);
 }
 
 void Sandbox::WayPointUpdate(const float& deltaTime)

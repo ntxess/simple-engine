@@ -17,3 +17,14 @@ void CommandExSkill::Execute(const PlayerObject& player)
 		_timer.restart();
 	}
 }
+
+void CommandExSkill::Execute(entt::entity entity, entt::registry* registry)
+{
+	float currentTime = _timer.getElapsedTime().asSeconds();
+
+	if (currentTime > _cooldownTime)
+	{
+		std::cout << "USING EX SKILL" << std::endl;
+		_timer.restart();
+	}
+}

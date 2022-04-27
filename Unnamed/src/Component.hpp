@@ -83,10 +83,8 @@ struct PlayerInputComponent
 	std::shared_ptr<Command> KeyLShift;
 	std::shared_ptr<Command> KeyRShift;
 
-	PlayerInputComponent()
-	{
-		KeyLShift = std::make_shared<CommandDodge>();
-		KeyRShift = std::make_shared<CommandExSkill>();
-	}
+	PlayerInputComponent() = default;
+	PlayerInputComponent(std::shared_ptr<Command> lshift, std::shared_ptr<Command> rshift)
+		: KeyLShift(lshift), KeyRShift(rshift) {}
 	PlayerInputComponent(const PlayerInputComponent& other) = default;
 };

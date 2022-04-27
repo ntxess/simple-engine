@@ -2,6 +2,7 @@
 
 #include "Command.hpp"
 #include "PlayerObject.hpp"
+#include "Component.hpp"
 
 class CommandDodge : public Command
 {
@@ -15,4 +16,5 @@ public:
 	~CommandDodge();
 
 	void Execute(const PlayerObject& player);
+	void Execute(entt::entity entity, entt::registry* registry);
 };
