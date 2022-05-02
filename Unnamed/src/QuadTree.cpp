@@ -1,7 +1,8 @@
 #include "QuadTree.hpp"
 
-QuadTree::QuadTree(const sf::FloatRect& rect)
+QuadTree::QuadTree(const sf::FloatRect& rect, const size_t depth)
 	: _boundary(rect)
+	, _depth(depth)
 	, _divided(false)
 {}
 
@@ -22,15 +23,23 @@ bool QuadTree::Insert(const entt::entity& entity, entt::registry* registry)
 	}
 
 	// Otherwise, subdivide and then add the point to whichever node will accept it
-	if (!_divided)
-		Subdivide();
+	if (_depth + 1 < MAX_DEPTH)
+	{
+		if (!_divided)
+			Subdivide();
 
-	// We have to add the points/data contained into this quad array to the new quads if we only want
-	// the last node to hold the data
-	if (_northWest->Insert(entity, registry)) return true;
-	if (_northEast->Insert(entity, registry)) return true;
-	if (_southWest->Insert(entity, registry)) return true;
-	if (_southEast->Insert(entity, registry)) return true;
+		// We have to add the points/data contained into this quad array to the new quads if we only want
+		// the last node to hold the data
+		if (_northWest->Insert(entity, registry)) return true;
+		if (_northEast->Insert(entity, registry)) return true;
+		if (_southWest->Insert(entity, registry)) return true;
+		if (_southEast->Insert(entity, registry)) return true;
+	}
+	else
+	{
+		_nodes.push_back(entity);
+		return true;
+	}
 
 	// Otherwise, the point cannot be inserted for some unknown reason (this should never happen)
 	return false;
@@ -43,10 +52,10 @@ void QuadTree::Subdivide()
 	float width = _boundary.width;
 	float height = _boundary.height;
 
-	_northWest = std::make_unique<QuadTree>(sf::FloatRect(x, y, width / 2.0f, height / 2.0f));
-	_northEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y, width / 2.0f, height / 2.0f));
-	_southWest = std::make_unique<QuadTree>(sf::FloatRect(x, y + height / 2.0f, width / 2.0f, height / 2.0f));
-	_southEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y + height / 2.0f, width / 2.0f, height / 2.0f));
+	_northWest = std::make_unique<QuadTree>(sf::FloatRect(x, y, width / 2.0f, height / 2.0f), _depth + 1);
+	_northEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y, width / 2.0f, height / 2.0f), _depth + 1);
+	_southWest = std::make_unique<QuadTree>(sf::FloatRect(x, y + height / 2.0f, width / 2.0f, height / 2.0f), _depth + 1);
+	_southEast = std::make_unique<QuadTree>(sf::FloatRect(x + width / 2.0f, y + height / 2.0f, width / 2.0f, height / 2.0f), _depth + 1);
 
 	_divided = true;
 }

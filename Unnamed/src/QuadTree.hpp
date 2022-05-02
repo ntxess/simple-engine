@@ -7,11 +7,14 @@
 
 #include "Component.hpp"
 
+constexpr size_t MAX_DEPTH = 6;
+
 class QuadTree
 {
 private:
-	static const unsigned int QT_NODE_CAPACITY = 4;
+	static const size_t QT_NODE_CAPACITY = 4;
 	sf::FloatRect _boundary;
+	size_t _depth;
 	bool _divided;
 	std::vector<entt::entity> _nodes;
 	std::unique_ptr<QuadTree> _northWest;
@@ -20,7 +23,7 @@ private:
 	std::unique_ptr<QuadTree> _southEast;
 
 public:
-	QuadTree(const sf::FloatRect& rect);
+	QuadTree(const sf::FloatRect& rect, const size_t depth = 0);
 	~QuadTree();
 
 	bool Insert(const entt::entity& entity, entt::registry* registry);

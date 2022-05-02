@@ -239,6 +239,9 @@ void Sandbox::CheckCollision()
 
 void Sandbox::DamageUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
 {
+	if (!_registry.valid(inflictor) || !_registry.valid(inflicted))
+		return;
+
 	auto dmg = _registry.get<DamageComponent>(inflictor);
 	auto& hp = _registry.get<HealthComponent>(inflicted);
 	hp.current -= dmg.damage;
