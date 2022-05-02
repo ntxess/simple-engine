@@ -23,9 +23,10 @@ public:
 	QuadTree(const sf::FloatRect& rect);
 	~QuadTree();
 
-	bool Insert(entt::entity entity, entt::registry* registry);
+	bool Insert(const entt::entity& entity, entt::registry* registry);
 	void Subdivide();
 	std::vector<entt::entity> QueryRange(const sf::FloatRect& range, entt::registry* registry);
+	void Remove(const entt::entity& entity, entt::registry* registry);
 	void Clear();
 };
 

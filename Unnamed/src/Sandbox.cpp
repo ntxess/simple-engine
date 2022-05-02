@@ -9,7 +9,7 @@ Sandbox::~Sandbox()
 
 void Sandbox::Init()
 {
-	std::cout << "Sandbox" << std::endl;
+	std::cout << "<<Sandbox>>" << std::endl;
 
 	float width = float(_data->_window->getSize().x);
 	float height = float(_data->_window->getSize().y);
@@ -23,28 +23,33 @@ void Sandbox::Init()
 	for (unsigned int i = 0; i < MAX_SIZE; i++)
 	{
 		entt::entity entity = _registry.create();
-		_registry.emplace<TagComponent>(entity, "generic_enemy");
+		_registry.emplace<TagComponent>(entity, "generic_enemy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
 		_registry.emplace<HealthComponent>(entity, 100.f);
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
+		_registry.emplace<DamageComponent>(entity, 10.f);
 		_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
 		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+		//std::cout << "[ID]: " << (int)entity << " Enemy\n";
 	}
 
 	_player = _registry.create();
-	_registry.emplace<TagComponent>(_player, "player");
+	_registry.emplace<TagComponent>(_player, "player", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Interactable);
 	_registry.emplace<HealthComponent>(_player, 1000.f);
 	_registry.emplace<SpeedComponent>(_player, 500.f);
 	_registry.emplace<PlayerInputComponent>(_player, std::make_shared<CommandDodge>(), std::make_shared<CommandExSkill>());
 	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
+	//std::cout << "[ID]: " << (int)_player << " Player\n";
 
 	_dummy = _registry.create();
-	_registry.emplace<TagComponent>(_dummy, "dummy");
+	_registry.emplace<TagComponent>(_dummy, "dummy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
+	_registry.emplace<DamageComponent>(_dummy, 10.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
+	//std::cout << "[ID]: " << (int)_dummy << " Dummy\n";
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -55,13 +60,14 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 		{
 			auto position = _registry.get<SpriteComponent>(_player).sprite.getPosition();
 			entt::entity entity = _registry.create();
-			_registry.emplace<TagComponent>(entity, "shot_particle");
+			_registry.emplace<TagComponent>(entity, "shot_particle", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Particle);
 			_registry.emplace<SpeedComponent>(entity, 2000.f);
-			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), true);
+			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), false);
 			_registry.emplace<DamageComponent>(entity, 100.f);
 			_registry.emplace<SpriteComponent>(entity, _data->_holder["Shot"]);
 			_registry.get<SpriteComponent>(entity).sprite.setPosition(position);
 			_registry.get<SpriteComponent>(entity).sprite.setScale(2.f, 2.f);
+			//std::cout << "[ID]: " << (int)entity << " Shot Particle\n";
 		}
 
 		auto controller = _registry.get<PlayerInputComponent>(_player);
@@ -102,27 +108,10 @@ void Sandbox::Update(const float& deltaTime)
 	PlayerUpdate(deltaTime);
 	WayPointUpdate(deltaTime);
 	QuadTreeUpdate();
+	CheckCollision();
 
-	//auto group = _registry.group<DamageComponent>(entt::get<SpriteComponent>);
-	//for (auto entity : group)
-	//{
-	//	auto [dmg, sp] = group.get<DamageComponent, SpriteComponent>(entity);
-	//	sf::FloatRect range = sp.sprite.getGlobalBounds();
-	//	std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
-
-	//	for (auto other : found)
-	//	{
-	//		if (sp.sprite.getGlobalBounds().intersects(_registry.get<SpriteComponent>(other).sprite.getGlobalBounds()))
-	//		{
-	//			//float hp = _registry.get<HealthComponent>(other).current;
-	//			//std::cout << "HIT" << std::endl;
-	//			//if (hp <= 0)
-	//			//{
-	//			//	_registry.destroy(other);
-	//			//}
-	//		}
-	//	}
-	//}
+	
+	//EntitiesUpdate(deltaTime);
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -199,9 +188,7 @@ void Sandbox::WayPointUpdate(const float& deltaTime)
 			{
 				wpc.currentPath = wpc.movePattern;
 				wpc.distance = 0.f;
-				wpc.finish = false;
 			}
-			wpc.finish = true;
 			continue;
 		}
 
@@ -226,7 +213,71 @@ void Sandbox::QuadTreeUpdate()
 	_quadTree = std::make_unique<QuadTree>(_boundary);
 	auto view = _registry.view<SpriteComponent>();
 	for (auto entity : view)
-		_quadTree->Insert(entity, &_registry);
+	{
+		if(_registry.get<TagComponent>(entity).affiliation != TagComponent::AFFILIATION::Ally)
+			_quadTree->Insert(entity, &_registry);
+	}
+}
+
+void Sandbox::CheckCollision()
+{
+	auto view = _registry.view<TagComponent, SpriteComponent>();
+	for (auto entity : view)
+	{
+		auto [tag, sp] = _registry.get<TagComponent, SpriteComponent>(entity);
+		sf::FloatRect range = sp.sprite.getGlobalBounds();
+		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
+
+		for (auto other : found)
+		{
+			auto [tagOther, spOther] = _registry.get<TagComponent, SpriteComponent>(other);
+			if (tag.affiliation != tagOther.affiliation)
+			{
+				if(sp.sprite.getGlobalBounds().intersects(spOther.sprite.getGlobalBounds()))
+				{
+					CollisionUpdate(entity, other);
+				}
+			}
+		}
+	}
+
+	auto viewHp = _registry.view<HealthComponent>();
+	for (auto entity : viewHp)
+	{
+		auto health = _registry.get<HealthComponent>(entity);
+		if (health.current <= 0.f)
+		{
+			_registry.destroy(entity);
+		}
+	}
+
+	auto viewWp = _registry.view<WayPointComponent>();
+	for (auto entity : viewWp)
+	{
+		auto wp = _registry.get<WayPointComponent>(entity);
+		auto tag = _registry.get<TagComponent>(entity);
+
+		if (tag.type == TagComponent::TYPE::Particle && wp.currentPath->_distanceToNext == 0.f && !wp.repeat)
+		{
+			_registry.destroy(entity);
+		}
+	}
+}
+
+void Sandbox::CollisionUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
+{
+	if (inflictor == entt::null || !_registry.all_of<DamageComponent>(inflictor))
+		return;
+
+	if (inflicted == entt::null || !_registry.all_of<HealthComponent>(inflicted))
+		return;
+
+	auto dmg = _registry.get<DamageComponent>(inflictor);
+	auto& hp = _registry.get<HealthComponent>(inflicted);
+
+	hp.current -= dmg.damage;
+
+	_registry.destroy(inflictor);
 }
 
 void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
@@ -235,3 +286,4 @@ void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
 	for (auto entity : view)
 		rw->draw(view.get<SpriteComponent>(entity).sprite);
 }
+

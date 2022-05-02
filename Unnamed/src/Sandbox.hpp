@@ -27,6 +27,8 @@ private:
 	entt::entity _player;
 	entt::entity _dummy;
 
+	entt::observer _observer;
+
 public:
 	Sandbox(std::shared_ptr<GameData>& data);
 	~Sandbox();
@@ -44,5 +46,7 @@ public:
 	void PlayerUpdate(const float& deltaTime);
 	void WayPointUpdate(const float& deltaTime);
 	void QuadTreeUpdate();
+	void CheckCollision();
+	void CollisionUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
 	void RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw);
 };

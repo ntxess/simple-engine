@@ -9,11 +9,29 @@
 
 struct TagComponent
 {
+	enum class AFFILIATION
+	{
+		Ally,
+		Enemy, 
+		Neutral,
+		None
+	};
+
+	enum class TYPE
+	{
+		Interactable,
+		Particle,
+		UI,
+		None
+	};
+
 	std::string name;
+	AFFILIATION affiliation;
+	TYPE type;
 
 	TagComponent() = default;
-	TagComponent(const std::string& nametag)
-		: name(nametag) {}
+	TagComponent(const std::string& nametag, const AFFILIATION& af, const TYPE& ty)
+		: name(nametag) , affiliation(af), type(ty) {}
 	TagComponent(const TagComponent&) = default;
 };
 
@@ -68,11 +86,10 @@ struct WayPointComponent
 	WayPoint* currentPath;
 	float distance;
 	bool repeat;
-	bool finish;
 
 	WayPointComponent() = default;
 	WayPointComponent(WayPoint* wp, const bool& repeat = false)
-		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat), finish(false) {}
+		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat) {}
 	WayPointComponent(const WayPointComponent& other) = default;
 };
 

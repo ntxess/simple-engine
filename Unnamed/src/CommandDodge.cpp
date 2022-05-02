@@ -28,7 +28,6 @@ void CommandDodge::Execute(entt::entity entity, entt::registry* registry)
 	auto controller = registry->get<PlayerInputComponent>(entity);
 	auto& sp = registry->get<SpriteComponent>(entity);
 
-
 	float currentTime = _timer.getElapsedTime().asSeconds();
 	sf::Vector2f direction = controller.direction;
 
