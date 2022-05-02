@@ -13,7 +13,7 @@
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const unsigned int MAX_SIZE = 10;
+	static const unsigned int MAX_SIZE = 20;
 
 private:
 	std::shared_ptr<GameData> _data;
@@ -47,6 +47,7 @@ public:
 	void WayPointUpdate(const float& deltaTime);
 	void QuadTreeUpdate();
 	void CheckCollision();
-	void CollisionUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
+	void DamageUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
+	void CheckDestruction();
 	void RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw);
 };

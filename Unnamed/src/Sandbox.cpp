@@ -26,7 +26,6 @@ void Sandbox::Init()
 		_registry.emplace<TagComponent>(entity, "generic_enemy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
 		_registry.emplace<HealthComponent>(entity, 100.f);
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
-		_registry.emplace<DamageComponent>(entity, 10.f);
 		_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
 		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
@@ -46,7 +45,6 @@ void Sandbox::Init()
 	_registry.emplace<TagComponent>(_dummy, "dummy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
-	_registry.emplace<DamageComponent>(_dummy, 10.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 	//std::cout << "[ID]: " << (int)_dummy << " Dummy\n";
@@ -109,9 +107,7 @@ void Sandbox::Update(const float& deltaTime)
 	WayPointUpdate(deltaTime);
 	QuadTreeUpdate();
 	CheckCollision();
-
-	
-	//EntitiesUpdate(deltaTime);
+	CheckDestruction();
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -211,7 +207,7 @@ void Sandbox::WayPointUpdate(const float& deltaTime)
 void Sandbox::QuadTreeUpdate()
 {	
 	_quadTree = std::make_unique<QuadTree>(_boundary);
-	auto view = _registry.view<SpriteComponent>();
+	auto view = _registry.view<HealthComponent>();
 	for (auto entity : view)
 	{
 		if(_registry.get<TagComponent>(entity).affiliation != TagComponent::AFFILIATION::Ally)
@@ -221,26 +217,36 @@ void Sandbox::QuadTreeUpdate()
 
 void Sandbox::CheckCollision()
 {
-	auto view = _registry.view<TagComponent, SpriteComponent>();
-	for (auto entity : view)
+	// Focus on Components that do damage and take damage
+	// Collisions that do not have either of these two component are ignored
+	auto view = _registry.view<DamageComponent>();
+	for (auto inflictor : view)
 	{
-		auto [tag, sp] = _registry.get<TagComponent, SpriteComponent>(entity);
-		sf::FloatRect range = sp.sprite.getGlobalBounds();
+		auto [inflictorTag, inflictorSp] = _registry.get<TagComponent, SpriteComponent>(inflictor);
+		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
 		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
-		for (auto other : found)
+		for (auto inflicted : found)
 		{
-			auto [tagOther, spOther] = _registry.get<TagComponent, SpriteComponent>(other);
-			if (tag.affiliation != tagOther.affiliation)
+			auto [inflictedTag, inflictedSp] = _registry.get<TagComponent, SpriteComponent>(inflicted);
+			if(inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
 			{
-				if(sp.sprite.getGlobalBounds().intersects(spOther.sprite.getGlobalBounds()))
-				{
-					CollisionUpdate(entity, other);
-				}
+				DamageUpdate(inflictor, inflicted);
 			}
 		}
 	}
+}
 
+void Sandbox::DamageUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
+{
+	auto dmg = _registry.get<DamageComponent>(inflictor);
+	auto& hp = _registry.get<HealthComponent>(inflicted);
+	hp.current -= dmg.damage;
+	_registry.destroy(inflictor);
+}
+
+void Sandbox::CheckDestruction()
+{
 	auto viewHp = _registry.view<HealthComponent>();
 	for (auto entity : viewHp)
 	{
@@ -262,22 +268,6 @@ void Sandbox::CheckCollision()
 			_registry.destroy(entity);
 		}
 	}
-}
-
-void Sandbox::CollisionUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
-{
-	if (inflictor == entt::null || !_registry.all_of<DamageComponent>(inflictor))
-		return;
-
-	if (inflicted == entt::null || !_registry.all_of<HealthComponent>(inflicted))
-		return;
-
-	auto dmg = _registry.get<DamageComponent>(inflictor);
-	auto& hp = _registry.get<HealthComponent>(inflicted);
-
-	hp.current -= dmg.damage;
-
-	_registry.destroy(inflictor);
 }
 
 void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
