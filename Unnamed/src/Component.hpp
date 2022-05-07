@@ -105,3 +105,23 @@ struct PlayerInputComponent
 		: KeyLShift(lshift), KeyRShift(rshift) {}
 	PlayerInputComponent(const PlayerInputComponent& other) = default;
 };
+
+struct ScoreBoardComponent
+{
+	size_t score;
+	size_t distance;
+	size_t enemiesFelled;
+};
+
+struct BarComponent
+{
+	sf::Sprite sprite;
+
+	BarComponent() = default;
+	BarComponent(sf::Texture& texture)
+	{
+		sprite.setTexture(texture);
+		sprite.setScale(sf::Vector2f(0.0f, 0.0f));
+	}
+	BarComponent(const BarComponent& other) = default;
+};

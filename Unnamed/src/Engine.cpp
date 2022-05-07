@@ -1,6 +1,6 @@
 #include "Engine.hpp"
 
-Engine::Engine(unsigned int width, unsigned int height, std::string title) 
+Engine::Engine(unsigned int width, unsigned int height, std::string title)
     : _data(std::make_unique<GameData>())
     , _width(width)
     , _height(height)
@@ -33,6 +33,16 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
             thor::Resources::Reuse);
         _data->_holder.acquire("Shot", 
             thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 
+            thor::Resources::Reuse);
+
+        _data->_holder.acquire("bar01",
+            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_Bar.png"),
+            thor::Resources::Reuse);
+        _data->_holder.acquire("progressbar01",
+            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_ProgressBar.png"),
+            thor::Resources::Reuse);
+        _data->_holder.acquire("progressbarborder01",
+            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_ProgressBarBorder.png"),
             thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)

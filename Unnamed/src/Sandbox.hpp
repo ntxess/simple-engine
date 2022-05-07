@@ -5,15 +5,12 @@
 #include "GameData.hpp"
 #include "ResourceMonitor.hpp"
 #include "QuadTree.hpp"
-#include "ObjectPool.hpp"
-
 #include "Component.hpp"
-#include "ShotParticle.hpp"
 
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const unsigned int MAX_SIZE = 50;
+	static const size_t MAX_SIZE = 10;
 
 private:
 	std::shared_ptr<GameData> _data;
@@ -26,8 +23,7 @@ private:
 
 	entt::entity _player;
 	entt::entity _dummy;
-
-	entt::observer _observer;
+	entt::entity _skillMeter;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);
@@ -50,4 +46,6 @@ public:
 	void DamageUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
 	void CheckDestruction();
 	void RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw);
+	void ProgressBarUpdate(const float& deltaTime);
+	void PlayerTrackUpdate(const float& deltaTime);
 };

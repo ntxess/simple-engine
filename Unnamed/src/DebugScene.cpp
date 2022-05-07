@@ -19,7 +19,7 @@ void DebugScene::Init()
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
     
-    for (int i = 0; i < _enemyPool.POOL_SIZE; i++)
+    for (size_t i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
         sf::Texture& ship = _data->_holder["Ship"];
         WayPoint* pathPattern = _data->_pathMap.at("mRandom").get();
@@ -70,7 +70,7 @@ void DebugScene::Update(const float& deltaTime)
 
     _qTree = std::make_unique<QuadTree>(_boundary);
     //_qTree->Insert(&_player.get()->GetGraphics().get()->GetSprite());
-    for (unsigned int i = 0; i < _enemyPool.POOL_SIZE; i++)
+    for (size_t i = 0; i < _enemyPool.POOL_SIZE; i++)
     {
         CheckBoundary(_enemyPool.GetObject(i).GetSprite());
         //_qTree->Insert(&_enemyPool.GetObject(i).GetSprite());

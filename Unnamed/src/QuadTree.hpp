@@ -7,7 +7,7 @@
 
 #include "Component.hpp"
 
-constexpr size_t MAX_DEPTH = 6;
+constexpr size_t MAX_DEPTH = 7;
 
 class QuadTree
 {

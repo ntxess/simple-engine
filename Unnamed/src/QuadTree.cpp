@@ -95,7 +95,7 @@ std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt:
 
 void QuadTree::Remove(const entt::entity& entity, entt::registry* registry)
 {
-	for (unsigned int i = 0; i < _nodes.size(); i++)
+	for (size_t i = 0; i < _nodes.size(); i++)
 	{
 		if (_nodes[i] == entity)
 		{

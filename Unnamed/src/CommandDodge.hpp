@@ -6,15 +6,17 @@
 
 class CommandDodge : public Command
 {
-private:
+public:
 	sf::Clock _timer;
-	const float _cooldownTime;
-	const float _dodgeOffset;
+	float _cooldownTime;
+	float _dodgeOffset;
 
 public:
 	CommandDodge();
 	~CommandDodge();
 
+	float GetTime() const;
+	float GetMaxTime() const;
 	void Execute(const PlayerObject& player);
 	void Execute(entt::entity entity, entt::registry* registry);
 };

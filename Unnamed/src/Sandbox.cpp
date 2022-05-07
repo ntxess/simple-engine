@@ -20,7 +20,7 @@ void Sandbox::Init()
 	std::mt19937 rng(dev());
 	std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
 
-	for (unsigned int i = 0; i < MAX_SIZE; i++)
+	for (size_t i = 0; i < MAX_SIZE; i++)
 	{
 		entt::entity entity = _registry.create();
 		_registry.emplace<TagComponent>(entity, "generic_enemy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
@@ -48,6 +48,13 @@ void Sandbox::Init()
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 	//std::cout << "[ID]: " << (int)_dummy << " Dummy\n";
+
+	_skillMeter = _registry.create();
+	_registry.emplace<BarComponent>(_skillMeter, _data->_holder["progressbar01"]);
+	_registry.emplace<SpriteComponent>(_skillMeter, _data->_holder["progressbarborder01"]);
+	_registry.get<BarComponent>(_skillMeter).sprite.setPosition(52, 1002);
+	_registry.get<SpriteComponent>(_skillMeter).sprite.setOrigin(0,0);
+	_registry.get<SpriteComponent>(_skillMeter).sprite.setPosition(50, 1000);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -113,6 +120,8 @@ void Sandbox::Update(const float& deltaTime)
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	RenderEntities(rw);
+	ProgressBarUpdate(deltaTime);
+	rw->draw(_registry.get<BarComponent>(_skillMeter).sprite);
 
 	_fps.Update();
 	_fps.Render(rw);
@@ -166,6 +175,7 @@ void Sandbox::PlayerUpdate(const float& deltaTime)
 	direction *= deltaTime * speed.current;
 
 	sp.sprite.move(direction);
+	CheckBoundary(sp.sprite);
 }
 
 void Sandbox::WayPointUpdate(const float& deltaTime)
@@ -217,18 +227,16 @@ void Sandbox::QuadTreeUpdate()
 
 void Sandbox::CheckCollision()
 {
-	// Focus on Components that do damage and take damage
-	// Collisions that do not have either of these two component are ignored
 	auto view = _registry.view<DamageComponent>();
 	for (auto inflictor : view)
 	{
-		auto [inflictorTag, inflictorSp] = _registry.get<TagComponent, SpriteComponent>(inflictor);
+		auto& inflictorSp = _registry.get<SpriteComponent>(inflictor);
 		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
 		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
 		for (auto inflicted : found)
 		{
-			auto [inflictedTag, inflictedSp] = _registry.get<TagComponent, SpriteComponent>(inflicted);
+			auto& inflictedSp = _registry.get<SpriteComponent>(inflicted);
 			if(inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
 			{
 				DamageUpdate(inflictor, inflicted);
@@ -239,8 +247,7 @@ void Sandbox::CheckCollision()
 
 void Sandbox::DamageUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
 {
-	if (!_registry.valid(inflictor) || !_registry.valid(inflicted))
-		return;
+	//if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) return;
 
 	auto dmg = _registry.get<DamageComponent>(inflictor);
 	auto& hp = _registry.get<HealthComponent>(inflicted);
@@ -278,5 +285,19 @@ void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
 	auto view = _registry.view<SpriteComponent>();
 	for (auto entity : view)
 		rw->draw(view.get<SpriteComponent>(entity).sprite);
+}
+
+void Sandbox::ProgressBarUpdate(const float& deltaTime)
+{
+	auto entity = _registry.get<PlayerInputComponent>(_player).KeyLShift;
+	auto& progressBar = _registry.get<BarComponent>(_skillMeter);
+
+	float progress = entity->GetTime() / entity->GetMaxTime();
+	progressBar.sprite.setScale(std::clamp(progress, 0.f, 1.f), 1.f);
+}
+
+void Sandbox::PlayerTrackUpdate(const float& deltaTime)
+{
+	
 }
 

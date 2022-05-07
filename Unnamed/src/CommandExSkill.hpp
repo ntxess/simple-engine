@@ -6,14 +6,16 @@
 
 class CommandExSkill : public Command
 {
-private:
+public:
 	sf::Clock _timer;
-	const float _cooldownTime;
+	float _cooldownTime;
 
 public:
 	CommandExSkill();
 	~CommandExSkill();
 
+	float GetTime() const;
+	float GetMaxTime() const;
 	void Execute(const PlayerObject& player);
 	void Execute(entt::entity entity, entt::registry* registry);
 };

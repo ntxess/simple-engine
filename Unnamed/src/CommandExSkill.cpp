@@ -7,6 +7,16 @@ CommandExSkill::CommandExSkill()
 CommandExSkill::~CommandExSkill()
 {}
 
+float CommandExSkill::GetTime() const
+{
+	return _timer.getElapsedTime().asSeconds();
+}
+
+float CommandExSkill::GetMaxTime() const
+{
+	return _cooldownTime;
+}
+
 void CommandExSkill::Execute(const PlayerObject& player)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();

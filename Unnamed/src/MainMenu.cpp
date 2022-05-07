@@ -47,7 +47,7 @@ void MainMenu::ProcessInput(const sf::Event& event)
 
 void MainMenu::Update(const float& deltaTime)
 {
-    //for (int i = 0; i < _assets.size(); i++)
+    //for (size_t i = 0; i < _assets.size(); i++)
     //{
     //    _assets[i]->Update(deltaTime);
     //}
@@ -55,7 +55,7 @@ void MainMenu::Update(const float& deltaTime)
 
 void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-    //for (int i = 0; i < _assets.size(); i++)
+    //for (size_t i = 0; i < _assets.size(); i++)
     //{
     //    _assets[i]->Render(rw, deltaTime, interpolation);
     //}

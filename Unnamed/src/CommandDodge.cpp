@@ -8,6 +8,16 @@ CommandDodge::CommandDodge()
 CommandDodge::~CommandDodge()
 {}
 
+float CommandDodge::GetTime() const
+{
+	return _timer.getElapsedTime().asSeconds();
+}
+
+float CommandDodge::GetMaxTime() const
+{
+	return _cooldownTime;
+}
+
 void CommandDodge::Execute(const PlayerObject& player)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
