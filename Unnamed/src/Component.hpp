@@ -32,7 +32,7 @@ struct TagComponent
 
 	TagComponent() = default;
 	TagComponent(const std::string& nametag, const AFFILIATION& af, const TYPE& ty)
-		: name(nametag) , affiliation(af), type(ty) {}
+		: name(nametag) , affiliation(af), type(ty){}
 	TagComponent(const TagComponent&) = default;
 };
 
@@ -126,8 +126,20 @@ struct BarComponent
 	BarComponent(const BarComponent& other) = default;
 };
 
-struct DestructionTagComponent
+struct TopLayerTagComponent
 {
-	DestructionTagComponent() = default;
-	DestructionTagComponent(const DestructionTagComponent&) = default;
+	TopLayerTagComponent() = default;
+	TopLayerTagComponent(const TopLayerTagComponent&) = default;
+};
+
+struct MidLayerTagComponent
+{
+	MidLayerTagComponent() = default;
+	MidLayerTagComponent(const MidLayerTagComponent&) = default;
+};
+
+struct BotLayerTagComponent
+{
+	BotLayerTagComponent() = default;
+	BotLayerTagComponent(const BotLayerTagComponent&) = default;
 };

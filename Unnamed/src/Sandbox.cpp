@@ -25,42 +25,50 @@ void Sandbox::Init()
 	{
 		entt::entity entity = _registry.create();
 		_registry.emplace<TagComponent>(entity, "generic_enemy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
+		_registry.emplace<MidLayerTagComponent>(entity);
 		_registry.emplace<HealthComponent>(entity, 100.f);
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
 		_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
 		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
-		//std::cout << "[ID]: " << (int)entity << " Enemy\n";
 	}
 
 	_player = _registry.create();
 	_registry.emplace<TagComponent>(_player, "player", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Interactable);
+	_registry.emplace<MidLayerTagComponent>(_player);
 	_registry.emplace<HealthComponent>(_player, 1000.f);
 	_registry.emplace<SpeedComponent>(_player, 500.f);
 	_registry.emplace<PlayerInputComponent>(_player, std::make_shared<CommandDodge>(), std::make_shared<CommandExSkill>());
 	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
-	//std::cout << "[ID]: " << (int)_player << " Player\n";
 
 	_dummy = _registry.create();
 	_registry.emplace<TagComponent>(_dummy, "dummy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
+	_registry.emplace<MidLayerTagComponent>(_dummy);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
-	//std::cout << "[ID]: " << (int)_dummy << " Dummy\n";
 
-	_skillMeter = _registry.create();
-	_registry.emplace<BarComponent>(_skillMeter, _data->_holder["progressbar01"]);
-	_registry.emplace<SpriteComponent>(_skillMeter, _data->_holder["progressbarborder01"]);
-	_registry.get<BarComponent>(_skillMeter).sprite.setPosition(52, 1002);
-	_registry.get<SpriteComponent>(_skillMeter).sprite.setOrigin(0,0);
-	_registry.get<SpriteComponent>(_skillMeter).sprite.setPosition(50, 1000);
+	_progressionBorder = _registry.create();
+	_registry.emplace<TagComponent>(_progressionBorder, "dodge_border", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<TopLayerTagComponent>(_progressionBorder);
+	_registry.emplace<SpriteComponent>(_progressionBorder, _data->_holder["progressbarborder01"]);
+	_registry.get<SpriteComponent>(_progressionBorder).sprite.setOrigin(0, 0);
+	_registry.get<SpriteComponent>(_progressionBorder).sprite.setPosition(50, 1000);
 
-	//_background = _registry.create();
-	//_registry.emplace<TagComponent>(_background, "prototype_bg", TagComponent::AFFILIATION::None, TagComponent::TYPE::None);
-	//_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
+	_progressionBar = _registry.create();
+	_registry.emplace<TagComponent>(_progressionBar, "dodge_bar", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<TopLayerTagComponent>(_progressionBar);
+	_registry.emplace<SpriteComponent>(_progressionBar, _data->_holder["progressbar01"]);
+	_registry.get<SpriteComponent>(_progressionBar).sprite.setOrigin(0, 0);
+	_registry.get<SpriteComponent>(_progressionBar).sprite.setPosition(52, 1002);
+
+	_background = _registry.create();
+	_registry.emplace<TagComponent>(_background, "prototype_bg", TagComponent::AFFILIATION::None, TagComponent::TYPE::None);
+	_registry.emplace<BotLayerTagComponent>(_background);
+	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -72,13 +80,13 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 			auto position = _registry.get<SpriteComponent>(_player).sprite.getPosition();
 			entt::entity entity = _registry.create();
 			_registry.emplace<TagComponent>(entity, "shot_particle", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Particle);
+			_registry.emplace<MidLayerTagComponent>(entity);
 			_registry.emplace<SpeedComponent>(entity, 2000.f);
 			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), false);
 			_registry.emplace<DamageComponent>(entity, 100.f);
 			_registry.emplace<SpriteComponent>(entity, _data->_holder["Shot"]);
 			_registry.get<SpriteComponent>(entity).sprite.setPosition(position);
 			_registry.get<SpriteComponent>(entity).sprite.setScale(2.f, 2.f);
-			//std::cout << "[ID]: " << (int)entity << " Shot Particle\n";
 		}
 
 		auto controller = _registry.get<PlayerInputComponent>(_player);
@@ -118,6 +126,7 @@ void Sandbox::Update(const float& deltaTime)
 {
 	PlayerUpdate(deltaTime);
 	WayPointUpdate(deltaTime);
+	ProgressBarUpdate(deltaTime);
 	QuadTreeUpdate();
 	CheckCollision();
 	CheckDestruction();
@@ -125,9 +134,7 @@ void Sandbox::Update(const float& deltaTime)
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-	RenderEntities(rw);
-	ProgressBarUpdate(deltaTime);
-	rw->draw(_registry.get<BarComponent>(_skillMeter).sprite);
+	RenderLayers(rw);
 
 	_fps.Update();
 	_fps.Render(rw);
@@ -239,10 +246,6 @@ void Sandbox::CheckCollision()
 	{
 		auto& inflictorSp = _registry.get<SpriteComponent>(inflictor);
 		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
-		//range.left += -50; 
-		//range.top += -50;
-		//range.width += 50;
-		//range.height += 50;
 		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
 		for (auto inflicted : found)
@@ -298,17 +301,25 @@ void Sandbox::CheckDestruction()
 	//}
 }
 
-void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
+void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 {
-	auto view = _registry.view<SpriteComponent>();
-	for (auto entity : view)
-		rw->draw(view.get<SpriteComponent>(entity).sprite);
+	auto botLayer = _registry.view<SpriteComponent, BotLayerTagComponent>();
+	for (auto entity : botLayer)
+		rw->draw(botLayer.get<SpriteComponent>(entity).sprite);
+
+	auto midLayer = _registry.view<SpriteComponent, MidLayerTagComponent>();
+	for (auto entity : midLayer)
+		rw->draw(midLayer.get<SpriteComponent>(entity).sprite);
+
+	auto topLayer = _registry.view<SpriteComponent, TopLayerTagComponent>();
+	for (auto entity : topLayer)
+		rw->draw(topLayer.get<SpriteComponent>(entity).sprite);
 }
 
 void Sandbox::ProgressBarUpdate(const float& deltaTime)
 {
 	auto skill = _registry.get<PlayerInputComponent>(_player).dash;
-	auto& progressBar = _registry.get<BarComponent>(_skillMeter);
+	auto& progressBar = _registry.get<SpriteComponent>(_progressionBar);
 
 	float progress = skill->GetTime() / skill->GetMaxTime();
 	progressBar.sprite.setScale(std::clamp(progress, 0.f, 1.f), 1.f);

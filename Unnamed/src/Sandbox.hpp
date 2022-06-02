@@ -23,7 +23,8 @@ private:
 	entt::entity _background;
 	entt::entity _player;
 	entt::entity _dummy;
-	entt::entity _skillMeter;
+	entt::entity _progressionBorder;
+	entt::entity _progressionBar;
 
 
 public:
@@ -46,7 +47,7 @@ public:
 	void CheckCollision();
 	void DamageUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
 	void CheckDestruction();
-	void RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw);
+	void RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw);
 	void ProgressBarUpdate(const float& deltaTime);
 	void PlayerTrackUpdate(const float& deltaTime);
 };
