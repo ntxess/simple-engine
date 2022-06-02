@@ -6,6 +6,7 @@
 #include "WayPoint.hpp"
 #include "CommandDodge.hpp"
 #include "CommandExSkill.hpp"
+#include "CommandBasic.hpp"
 
 struct TagComponent
 {
@@ -96,13 +97,12 @@ struct WayPointComponent
 struct PlayerInputComponent
 {
 	sf::Vector2f direction;
-	std::shared_ptr<Command> command;
-	std::shared_ptr<Command> KeyLShift;
-	std::shared_ptr<Command> KeyRShift;
+	std::shared_ptr<Command> dash;
+	std::shared_ptr<Command> exSkill;
 
 	PlayerInputComponent() = default;
-	PlayerInputComponent(std::shared_ptr<Command> lshift, std::shared_ptr<Command> rshift)
-		: KeyLShift(lshift), KeyRShift(rshift) {}
+	PlayerInputComponent(std::shared_ptr<Command> dash, std::shared_ptr<Command> exskill)
+		: dash(dash), exSkill(exskill) {}
 	PlayerInputComponent(const PlayerInputComponent& other) = default;
 };
 
@@ -124,4 +124,10 @@ struct BarComponent
 		sprite.setScale(sf::Vector2f(0.0f, 0.0f));
 	}
 	BarComponent(const BarComponent& other) = default;
+};
+
+struct DestructionTagComponent
+{
+	DestructionTagComponent() = default;
+	DestructionTagComponent(const DestructionTagComponent&) = default;
 };

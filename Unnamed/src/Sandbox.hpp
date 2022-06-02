@@ -10,20 +10,21 @@
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const size_t MAX_SIZE = 10;
+	static const size_t MAX_SIZE = 100;
 
 private:
 	std::shared_ptr<GameData> _data;
-	entt::registry _registry;
-
 	ResourceMonitor _fps;
 
 	sf::FloatRect _boundary;
 	std::unique_ptr<QuadTree> _quadTree;
 
+	entt::registry _registry;
+	entt::entity _background;
 	entt::entity _player;
 	entt::entity _dummy;
 	entt::entity _skillMeter;
+
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);

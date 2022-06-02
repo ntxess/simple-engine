@@ -23,7 +23,7 @@ void CommandExSkill::Execute(const PlayerObject& player)
 
 	if (currentTime > _cooldownTime)
 	{
-		std::cout << "USING EX SKILL" << std::endl;
+		std::cout << "Using EX Skill\n";
 		_timer.restart();
 	}
 }
@@ -34,7 +34,15 @@ void CommandExSkill::Execute(entt::entity entity, entt::registry* registry)
 
 	if (currentTime > _cooldownTime)
 	{
-		std::cout << "USING EX SKILL" << std::endl;
+		std::cout << "Using EX Skill\n";
+		//auto view = registry->view<TagComponent>();
+		//for (auto enemy : view)
+		//{
+		//	if (registry->get<TagComponent>(enemy).affiliation == TagComponent::AFFILIATION::Enemy)
+		//	{
+		//		registry->emplace<DestructionTagComponent>(enemy);
+		//	}
+		//}
 		_timer.restart();
 	}
 }

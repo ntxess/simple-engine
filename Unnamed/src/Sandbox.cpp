@@ -15,6 +15,7 @@ void Sandbox::Init()
 	float height = float(_data->_window->getSize().y);
 	_boundary = sf::FloatRect(0.f, 0.f, width, height);
 	_quadTree = std::make_unique<QuadTree>(_boundary);
+	_data->_mainView.setSize(width, height);
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -47,6 +48,7 @@ void Sandbox::Init()
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
+	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
 	//std::cout << "[ID]: " << (int)_dummy << " Dummy\n";
 
 	_skillMeter = _registry.create();
@@ -55,6 +57,10 @@ void Sandbox::Init()
 	_registry.get<BarComponent>(_skillMeter).sprite.setPosition(52, 1002);
 	_registry.get<SpriteComponent>(_skillMeter).sprite.setOrigin(0,0);
 	_registry.get<SpriteComponent>(_skillMeter).sprite.setPosition(50, 1000);
+
+	//_background = _registry.create();
+	//_registry.emplace<TagComponent>(_background, "prototype_bg", TagComponent::AFFILIATION::None, TagComponent::TYPE::None);
+	//_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -76,16 +82,16 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 		}
 
 		auto controller = _registry.get<PlayerInputComponent>(_player);
-		controller.command = NULL;
+		Command* command = NULL;
 
 		if (event.key.code == sf::Keyboard::LShift)
-			controller.command = controller.KeyLShift;
+			command = controller.dash.get();
 
 		if (event.key.code == sf::Keyboard::RShift)
-			controller.command = controller.KeyRShift;
+			command = controller.exSkill.get();
 
-		if (controller.command)
-			controller.command->Execute(_player, &_registry);
+		if (command)
+			command->Execute(_player, &_registry);
 	}
 }
 
@@ -175,7 +181,8 @@ void Sandbox::PlayerUpdate(const float& deltaTime)
 	direction *= deltaTime * speed.current;
 
 	sp.sprite.move(direction);
-	CheckBoundary(sp.sprite);
+	_data->_mainView.setCenter(sp.sprite.getPosition());
+	//CheckBoundary(sp.sprite);
 }
 
 void Sandbox::WayPointUpdate(const float& deltaTime)
@@ -232,6 +239,10 @@ void Sandbox::CheckCollision()
 	{
 		auto& inflictorSp = _registry.get<SpriteComponent>(inflictor);
 		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
+		//range.left += -50; 
+		//range.top += -50;
+		//range.width += 50;
+		//range.height += 50;
 		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
 
 		for (auto inflicted : found)
@@ -247,12 +258,13 @@ void Sandbox::CheckCollision()
 
 void Sandbox::DamageUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
 {
-	//if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) return;
+	if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) return;
 
 	auto dmg = _registry.get<DamageComponent>(inflictor);
 	auto& hp = _registry.get<HealthComponent>(inflicted);
 	hp.current -= dmg.damage;
 	_registry.destroy(inflictor);
+	//_registry.emplace<DestructionTagComponent>(inflictor);
 }
 
 void Sandbox::CheckDestruction()
@@ -278,6 +290,12 @@ void Sandbox::CheckDestruction()
 			_registry.destroy(entity);
 		}
 	}
+
+	//auto viewDest = _registry.view<DestructionTagComponent>();
+	//for (auto entity : viewDest)
+	//{
+	//	_registry.destroy(entity);
+	//}
 }
 
 void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
@@ -289,10 +307,10 @@ void Sandbox::RenderEntities(const std::unique_ptr<sf::RenderWindow>& rw)
 
 void Sandbox::ProgressBarUpdate(const float& deltaTime)
 {
-	auto entity = _registry.get<PlayerInputComponent>(_player).KeyLShift;
+	auto skill = _registry.get<PlayerInputComponent>(_player).dash;
 	auto& progressBar = _registry.get<BarComponent>(_skillMeter);
 
-	float progress = entity->GetTime() / entity->GetMaxTime();
+	float progress = skill->GetTime() / skill->GetMaxTime();
 	progressBar.sprite.setScale(std::clamp(progress, 0.f, 1.f), 1.f);
 }
 

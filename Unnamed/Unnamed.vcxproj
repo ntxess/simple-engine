@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CommandBasic.cpp" />
     <ClCompile Include="src\EntitySystem.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Sandbox.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CommandBasic.hpp" />
     <ClInclude Include="src\EntitySystem.hpp" />
     <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Component.hpp" />

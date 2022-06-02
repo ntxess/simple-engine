@@ -131,6 +131,9 @@
     <ClCompile Include="src\EntitySystem.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\CommandBasic.cpp">
+      <Filter>Source Files\Components\Input\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DebugScene.hpp">
@@ -219,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="src\EntitySystem.hpp">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommandBasic.hpp">
+      <Filter>Header Files\Components\Input\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

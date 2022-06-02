@@ -16,6 +16,9 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
 
     try
     {
+        _data->_holder.acquire("Prototype",
+            thor::Resources::fromFile<sf::Texture>("resources/bg/prototype_texture_5120x5120.png"),
+            thor::Resources::Reuse);
         _data->_holder.acquire("Background", 
             thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), 
             thor::Resources::Reuse);
@@ -64,8 +67,6 @@ Engine::~Engine()
 
 void Engine::Run()
 {
-    //_data->_machine->AddState(std::make_unique<MainMenu>(_data));
-    //_data->_machine->AddState(std::make_unique<DebugScene>(_data));
     _data->_machine->AddState(std::make_unique<Sandbox>(_data));
 
     float newTime, frameTime, interpolation;
@@ -84,10 +85,17 @@ void Engine::Run()
 
         while (_data->_window->pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            switch (event.type)
+            {
+            case sf::Event::Closed:
                 _data->_window->close();
-
-            _data->_machine->GetActiveState()->ProcessEvent(event);
+                break;
+            case sf::Event::Resized:
+                ResizeView(_data->_window, _data->_mainView);
+                break;
+            default:
+                _data->_machine->GetActiveState()->ProcessEvent(event);
+            }
         }
 
         _data->_machine->GetActiveState()->ProcessInput(event);
@@ -102,9 +110,16 @@ void Engine::Run()
 
         _data->_window->clear();
         _data->_animator.update(sf::seconds(deltaTime));
+        _data->_window->setView(_data->_mainView);
         _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
         _data->_window->display();
     }
+}
+
+void Engine::ResizeView(const std::unique_ptr<sf::RenderWindow>& rw, sf::View& view)
+{
+    float aspectRatio = float(_data->_window->getSize().x) / float(_data->_window->getSize().y);
+    _data->_mainView.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
 
