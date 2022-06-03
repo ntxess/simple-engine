@@ -69,6 +69,13 @@ void Sandbox::Init()
 	_registry.emplace<TagComponent>(_background, "prototype_bg", TagComponent::AFFILIATION::None, TagComponent::TYPE::None);
 	_registry.emplace<BotLayerTagComponent>(_background);
 	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
+
+	_fpsTracker = _registry.create();
+	_registry.emplace<TagComponent>(_fpsTracker, "fps_tracker", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<TopLayerTagComponent>(_fpsTracker);
+	_registry.emplace<ClockComponent>(_fpsTracker);
+	_registry.emplace<DataComponent<float>>(_fpsTracker);
+	_registry.emplace<TextComponent>(_fpsTracker, "resources/font/VCR_OSD_MONO_1.001.ttf");
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -135,9 +142,7 @@ void Sandbox::Update(const float& deltaTime)
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	RenderLayers(rw);
-
-	_fps.Update();
-	_fps.Render(rw);
+	FramesAnalyticUpdate();
 }
 
 void Sandbox::Pause()
@@ -303,17 +308,29 @@ void Sandbox::CheckDestruction()
 
 void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 {
-	auto botLayer = _registry.view<SpriteComponent, BotLayerTagComponent>();
-	for (auto entity : botLayer)
-		rw->draw(botLayer.get<SpriteComponent>(entity).sprite);
+	auto botLayerSp = _registry.view<SpriteComponent, BotLayerTagComponent>();
+	for (auto entity : botLayerSp)
+		rw->draw(botLayerSp.get<SpriteComponent>(entity).sprite);
 
-	auto midLayer = _registry.view<SpriteComponent, MidLayerTagComponent>();
-	for (auto entity : midLayer)
-		rw->draw(midLayer.get<SpriteComponent>(entity).sprite);
+	auto botLayerTx = _registry.view<TextComponent, BotLayerTagComponent>();
+	for (auto entity : botLayerTx)
+		rw->draw(botLayerTx.get<TextComponent>(entity).text);
 
-	auto topLayer = _registry.view<SpriteComponent, TopLayerTagComponent>();
-	for (auto entity : topLayer)
-		rw->draw(topLayer.get<SpriteComponent>(entity).sprite);
+	auto midLayerSp = _registry.view<SpriteComponent, MidLayerTagComponent>();
+	for (auto entity : midLayerSp)
+		rw->draw(midLayerSp.get<SpriteComponent>(entity).sprite);
+
+	auto midLayerTx = _registry.view<TextComponent, MidLayerTagComponent>();
+	for (auto entity : midLayerTx)
+		rw->draw(midLayerTx.get<TextComponent>(entity).text);
+
+	auto topLayerSp = _registry.view<SpriteComponent, TopLayerTagComponent>();
+	for (auto entity : topLayerSp)
+		rw->draw(topLayerSp.get<SpriteComponent>(entity).sprite);
+
+	auto topLayerTx = _registry.view<TextComponent, TopLayerTagComponent>();
+	for (auto entity : topLayerTx)
+		rw->draw(topLayerTx.get<TextComponent>(entity).text);
 }
 
 void Sandbox::ProgressBarUpdate(const float& deltaTime)
@@ -330,3 +347,25 @@ void Sandbox::PlayerTrackUpdate(const float& deltaTime)
 	
 }
 
+void Sandbox::FramesAnalyticUpdate()
+{
+	//auto& tracker = _registry.get<ClockComponent>(_fpsTracker);
+	//auto& data = _registry.get<DataComponent<float>>(_fpsTracker);
+	//auto& str = _registry.get<TextComponent>(_fpsTracker);
+
+
+	auto [tracker, data, str] = _registry.get<ClockComponent, DataComponent<float>, TextComponent>(_fpsTracker);
+	if (tracker.clock.getElapsedTime().asSeconds() >= 1.f)
+	{
+		str.text.setString("FPS: " + FloatToString(data.value) + "\n" + FloatToString(1000 / data.value) + "m/s");
+		data.value = 0;
+		tracker.clock.restart();
+	}
+	++data.value;
+}
+std::string Sandbox::FloatToString(const float& d)
+{
+	std::stringstream ss;
+	ss << d;
+	return ss.str();
+}

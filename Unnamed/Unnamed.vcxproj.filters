@@ -83,9 +83,6 @@
     <ClCompile Include="src\Engine.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\ResourceMonitor.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\ShotParticle.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -168,9 +165,6 @@
     </ClInclude>
     <ClInclude Include="src\PlayerPhysics.hpp">
       <Filter>Header Files\Components\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ResourceMonitor.hpp">
-      <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Command.hpp">
       <Filter>Header Files\Components\Input\Commands</Filter>

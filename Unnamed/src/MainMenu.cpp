@@ -63,8 +63,6 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
     //_background->Render(rw, deltaTime, interpolation);
     //_startButton->Render(rw, deltaTime, interpolation);
     //_quitButton->Render(rw, deltaTime, interpolation);
-    _fps.Update();
-    _fps.Render(rw);
 }
 
 void MainMenu::Pause()

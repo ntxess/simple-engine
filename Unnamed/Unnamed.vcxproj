@@ -39,7 +39,6 @@
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\ResourceMonitor.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
@@ -72,7 +71,6 @@
     <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Engine.hpp" />
-    <ClInclude Include="src\ResourceMonitor.hpp" />
     <ClInclude Include="src\WayPoint.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

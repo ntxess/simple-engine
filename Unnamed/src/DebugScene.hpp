@@ -5,7 +5,6 @@
 #include <random>
 
 #include "GameData.hpp"
-#include "ResourceMonitor.hpp"
 #include "MainMenu.hpp"
 #include "PlayerObject.hpp"
 #include "UEnemyObject.hpp"
@@ -25,7 +24,6 @@ private:
 	sf::FloatRect _boundary;
 	sf::FloatRect _range;
 
-	ResourceMonitor _fps;
 	std::unique_ptr<PlayerObject> _player;
 	std::unique_ptr<UEnemyObject> _uEnemy;
 

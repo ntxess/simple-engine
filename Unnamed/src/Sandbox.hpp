@@ -3,7 +3,6 @@
 #include <random>
 
 #include "GameData.hpp"
-#include "ResourceMonitor.hpp"
 #include "QuadTree.hpp"
 #include "Component.hpp"
 
@@ -14,7 +13,6 @@ class Sandbox : public Scene
 
 private:
 	std::shared_ptr<GameData> _data;
-	ResourceMonitor _fps;
 
 	sf::FloatRect _boundary;
 	std::unique_ptr<QuadTree> _quadTree;
@@ -25,7 +23,7 @@ private:
 	entt::entity _dummy;
 	entt::entity _progressionBorder;
 	entt::entity _progressionBar;
-
+	entt::entity _fpsTracker;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);
@@ -50,4 +48,6 @@ public:
 	void RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw);
 	void ProgressBarUpdate(const float& deltaTime);
 	void PlayerTrackUpdate(const float& deltaTime);
+	void FramesAnalyticUpdate();
+	std::string FloatToString(const float& d);
 };

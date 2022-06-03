@@ -49,6 +49,28 @@ struct SpriteComponent
 	SpriteComponent(const SpriteComponent&) = default;
 };
 
+struct TextComponent
+{
+	sf::Text text;
+	sf::Font font;
+
+	TextComponent() = default;
+	TextComponent(const std::string& pathToFont)
+	{
+		if (!font.loadFromFile(pathToFont))
+		{
+			std::cout << "FAILURE TO LOAD FONT TYPE!" << std::endl;
+			exit(-1);
+		}
+		text.setFont(font);
+		text.setCharacterSize(20);
+		text.setFillColor(sf::Color::White);
+		text.setPosition(sf::Vector2f(0.f, 0.f));
+	}
+
+	TextComponent(const TextComponent&) = default;
+};
+
 struct HealthComponent
 {
 	float max;
@@ -91,7 +113,7 @@ struct WayPointComponent
 	WayPointComponent() = default;
 	WayPointComponent(WayPoint* wp, const bool& repeat = false)
 		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat) {}
-	WayPointComponent(const WayPointComponent& other) = default;
+	WayPointComponent(const WayPointComponent&) = default;
 };
 
 struct PlayerInputComponent
@@ -103,7 +125,7 @@ struct PlayerInputComponent
 	PlayerInputComponent() = default;
 	PlayerInputComponent(std::shared_ptr<Command> dash, std::shared_ptr<Command> exskill)
 		: dash(dash), exSkill(exskill) {}
-	PlayerInputComponent(const PlayerInputComponent& other) = default;
+	PlayerInputComponent(const PlayerInputComponent&) = default;
 };
 
 struct ScoreBoardComponent
@@ -123,7 +145,7 @@ struct BarComponent
 		sprite.setTexture(texture);
 		sprite.setScale(sf::Vector2f(0.0f, 0.0f));
 	}
-	BarComponent(const BarComponent& other) = default;
+	BarComponent(const BarComponent&) = default;
 };
 
 struct TopLayerTagComponent
@@ -142,4 +164,21 @@ struct BotLayerTagComponent
 {
 	BotLayerTagComponent() = default;
 	BotLayerTagComponent(const BotLayerTagComponent&) = default;
+};
+
+struct ClockComponent
+{
+	sf::Clock clock;
+
+	ClockComponent() = default;
+	ClockComponent(const ClockComponent&) = default;
+};
+
+template<typename T>
+struct DataComponent
+{
+	T value;
+
+	DataComponent() = default;
+	DataComponent(const DataComponent&) = default;
 };

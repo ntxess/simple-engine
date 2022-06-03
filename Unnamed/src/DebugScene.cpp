@@ -84,9 +84,6 @@ void DebugScene::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float
 
     _enemyPool.Render(rw, deltaTime, interpolation);
     _weaponPool.Render(rw, deltaTime, interpolation);
-
-    _fps.Update();
-    _fps.Render(rw);
 }
 
 void DebugScene::CheckBoundary(sf::Sprite& object)

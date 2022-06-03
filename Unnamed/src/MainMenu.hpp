@@ -4,7 +4,6 @@
 
 #include "GameData.hpp"
 #include "DebugScene.hpp"
-#include "ResourceMonitor.hpp"
 
 class MainMenu : public Scene
 {
@@ -14,7 +13,6 @@ private:
 	std::shared_ptr<GameData> _data;
 	entt::registry _registry;
 
-	ResourceMonitor _fps;
 
 public:
 	MainMenu(std::shared_ptr<GameData>& data);
