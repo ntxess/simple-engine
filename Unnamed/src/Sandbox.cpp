@@ -15,7 +15,8 @@ void Sandbox::Init()
 	float height = float(_data->_window->getSize().y);
 	_boundary = sf::FloatRect(0.f, 0.f, width, height);
 	_quadTree = std::make_unique<QuadTree>(_boundary);
-	_data->_mainView.setSize(width, height);
+	_data->_defaultView.setSize(width, height);
+	_data->_focusedView.setSize(width, height);
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -193,7 +194,8 @@ void Sandbox::PlayerUpdate(const float& deltaTime)
 	direction *= deltaTime * speed.current;
 
 	sp.sprite.move(direction);
-	_data->_mainView.setCenter(sp.sprite.getPosition());
+	_data->_focusedView.setCenter(sp.sprite.getPosition());
+	//std::cout << "Player Pos: " << sp.sprite.getPosition().x << " " << sp.sprite.getPosition().y << "\n";
 	//CheckBoundary(sp.sprite);
 }
 
@@ -235,6 +237,9 @@ void Sandbox::WayPointUpdate(const float& deltaTime)
 
 void Sandbox::QuadTreeUpdate()
 {	
+	_boundary.left = _data->_focusedView.getCenter().x - (float(_data->_window->getSize().x) / 2);
+	_boundary.top = _data->_focusedView.getCenter().y - (float(_data->_window->getSize().y) / 2);
+
 	_quadTree = std::make_unique<QuadTree>(_boundary);
 	auto view = _registry.view<HealthComponent>();
 	for (auto entity : view)
@@ -308,6 +313,8 @@ void Sandbox::CheckDestruction()
 
 void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 {
+	_data->_window->setView(_data->_focusedView);
+
 	auto botLayerSp = _registry.view<SpriteComponent, BotLayerTagComponent>();
 	for (auto entity : botLayerSp)
 		rw->draw(botLayerSp.get<SpriteComponent>(entity).sprite);
@@ -323,6 +330,10 @@ void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 	auto midLayerTx = _registry.view<TextComponent, MidLayerTagComponent>();
 	for (auto entity : midLayerTx)
 		rw->draw(midLayerTx.get<TextComponent>(entity).text);
+
+	//_quadTree->Render(rw);
+
+	_data->_window->setView(_data->_defaultView);
 
 	auto topLayerSp = _registry.view<SpriteComponent, TopLayerTagComponent>();
 	for (auto entity : topLayerSp)
@@ -349,11 +360,6 @@ void Sandbox::PlayerTrackUpdate(const float& deltaTime)
 
 void Sandbox::FramesAnalyticUpdate()
 {
-	//auto& tracker = _registry.get<ClockComponent>(_fpsTracker);
-	//auto& data = _registry.get<DataComponent<float>>(_fpsTracker);
-	//auto& str = _registry.get<TextComponent>(_fpsTracker);
-
-
 	auto [tracker, data, str] = _registry.get<ClockComponent, DataComponent<float>, TextComponent>(_fpsTracker);
 	if (tracker.clock.getElapsedTime().asSeconds() >= 1.f)
 	{

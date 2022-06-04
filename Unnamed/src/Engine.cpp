@@ -37,7 +37,6 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
         _data->_holder.acquire("Shot", 
             thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 
             thor::Resources::Reuse);
-
         _data->_holder.acquire("bar01",
             thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_Bar.png"),
             thor::Resources::Reuse);
@@ -91,7 +90,8 @@ void Engine::Run()
                 _data->_window->close();
                 break;
             case sf::Event::Resized:
-                ResizeView(_data->_window, _data->_mainView);
+                ResizeView(_data->_window, _data->_defaultView);
+                ResizeView(_data->_window, _data->_focusedView);
                 break;
             default:
                 _data->_machine->GetActiveState()->ProcessEvent(event);
@@ -110,7 +110,6 @@ void Engine::Run()
 
         _data->_window->clear();
         _data->_animator.update(sf::seconds(deltaTime));
-        _data->_window->setView(_data->_mainView);
         _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
         _data->_window->display();
     }
@@ -119,7 +118,7 @@ void Engine::Run()
 void Engine::ResizeView(const std::unique_ptr<sf::RenderWindow>& rw, sf::View& view)
 {
     float aspectRatio = float(_data->_window->getSize().x) / float(_data->_window->getSize().y);
-    _data->_mainView.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
+    view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
 

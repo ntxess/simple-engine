@@ -15,7 +15,8 @@ public:
     std::unordered_map<std::string, std::unique_ptr<WayPoint>> _pathMap;
     thor::ResourceHolder<sf::Texture, std::string> _holder;
     thor::Animator<sf::Sprite, std::string> _animator;
-    sf::View _mainView;
+    sf::View _defaultView;
+    sf::View _focusedView;
 
     GameData()
     {
