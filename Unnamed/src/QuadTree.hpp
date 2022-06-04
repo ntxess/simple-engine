@@ -22,8 +22,6 @@ private:
 	std::unique_ptr<QuadTree> _southWest;
 	std::unique_ptr<QuadTree> _southEast;
 
-	sf::RectangleShape _rectangle;
-
 public:
 	QuadTree(const sf::FloatRect& rect, const size_t depth = 0);
 	~QuadTree();
@@ -33,7 +31,5 @@ public:
 	std::vector<entt::entity> QueryRange(const sf::FloatRect& range, entt::registry* registry);
 	void Remove(const entt::entity& entity, entt::registry* registry);
 	void Clear();
-
-	void Render(const std::unique_ptr<sf::RenderWindow>& rw);
 };
 

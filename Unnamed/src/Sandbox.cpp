@@ -13,10 +13,10 @@ void Sandbox::Init()
 
 	float width = float(_data->_window->getSize().x);
 	float height = float(_data->_window->getSize().y);
-	_boundary = sf::FloatRect(0.f, 0.f, width, height);
-	_quadTree = std::make_unique<QuadTree>(_boundary);
 	_data->_defaultView.setSize(width, height);
 	_data->_focusedView.setSize(width, height);
+	_boundary = sf::FloatRect(0.f, 0.f, width, height);
+	_quadTree = std::make_unique<QuadTree>(_boundary);
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -195,7 +195,6 @@ void Sandbox::PlayerUpdate(const float& deltaTime)
 
 	sp.sprite.move(direction);
 	_data->_focusedView.setCenter(sp.sprite.getPosition());
-	//std::cout << "Player Pos: " << sp.sprite.getPosition().x << " " << sp.sprite.getPosition().y << "\n";
 	//CheckBoundary(sp.sprite);
 }
 
@@ -330,8 +329,6 @@ void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 	auto midLayerTx = _registry.view<TextComponent, MidLayerTagComponent>();
 	for (auto entity : midLayerTx)
 		rw->draw(midLayerTx.get<TextComponent>(entity).text);
-
-	//_quadTree->Render(rw);
 
 	_data->_window->setView(_data->_defaultView);
 
