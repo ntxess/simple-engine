@@ -71,6 +71,10 @@ void MainMenu::Pause()
 void MainMenu::Resume()
 {}
 
+void MainMenu::Resize(const unsigned int& width, const unsigned int& height)
+{
+}
+
 entt::registry& MainMenu::GetRegistry()
 {
     return _registry;

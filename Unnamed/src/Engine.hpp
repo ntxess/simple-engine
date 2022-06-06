@@ -24,6 +24,6 @@ public:
 
     Engine(unsigned int width, unsigned int height, std::string title);
     ~Engine();
+
     void Run();
-    void ResizeView(const std::unique_ptr<sf::RenderWindow>& rw, sf::View& view);
 };

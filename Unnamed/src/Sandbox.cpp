@@ -17,6 +17,7 @@ void Sandbox::Init()
 	_data->_focusedView.setSize(width, height);
 	_boundary = sf::FloatRect(0.f, 0.f, width, height);
 	_quadTree = std::make_unique<QuadTree>(_boundary);
+	_data->_defaultView.setCenter(width / 2, height / 2);
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -25,7 +26,8 @@ void Sandbox::Init()
 	for (size_t i = 0; i < MAX_SIZE; i++)
 	{
 		entt::entity entity = _registry.create();
-		_registry.emplace<TagComponent>(entity, "generic_enemy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
+		_registry.emplace<EnemyTagComponent>(entity);
+		_registry.emplace<InteractableTagComponent>(entity);
 		_registry.emplace<MidLayerTagComponent>(entity);
 		_registry.emplace<HealthComponent>(entity, 100.f);
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
@@ -35,7 +37,8 @@ void Sandbox::Init()
 	}
 
 	_player = _registry.create();
-	_registry.emplace<TagComponent>(_player, "player", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Interactable);
+	_registry.emplace<AllyTagComponent>(_player);
+	_registry.emplace<InteractableTagComponent>(_player);
 	_registry.emplace<MidLayerTagComponent>(_player);
 	_registry.emplace<HealthComponent>(_player, 1000.f);
 	_registry.emplace<SpeedComponent>(_player, 500.f);
@@ -44,7 +47,8 @@ void Sandbox::Init()
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
 
 	_dummy = _registry.create();
-	_registry.emplace<TagComponent>(_dummy, "dummy", TagComponent::AFFILIATION::Enemy, TagComponent::TYPE::Interactable);
+	_registry.emplace<EnemyTagComponent>(_dummy);
+	_registry.emplace<InteractableTagComponent>(_dummy);
 	_registry.emplace<MidLayerTagComponent>(_dummy);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
@@ -53,30 +57,36 @@ void Sandbox::Init()
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
 
 	_progressionBorder = _registry.create();
-	_registry.emplace<TagComponent>(_progressionBorder, "dodge_border", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<InterfaceTagComponent>(_progressionBorder);
 	_registry.emplace<TopLayerTagComponent>(_progressionBorder);
 	_registry.emplace<SpriteComponent>(_progressionBorder, _data->_holder["progressbarborder01"]);
-	_registry.get<SpriteComponent>(_progressionBorder).sprite.setOrigin(0, 0);
-	_registry.get<SpriteComponent>(_progressionBorder).sprite.setPosition(50, 1000);
+	auto& pborder = _registry.get<SpriteComponent>(_progressionBorder).sprite;
+	pborder.setOrigin(0, 0);
+	pborder.setPosition(50, 1000);
+	_registry.emplace<TransformComponent>(_progressionBorder, pborder.getPosition());
 
 	_progressionBar = _registry.create();
-	_registry.emplace<TagComponent>(_progressionBar, "dodge_bar", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<InterfaceTagComponent>(_progressionBar);
 	_registry.emplace<TopLayerTagComponent>(_progressionBar);
 	_registry.emplace<SpriteComponent>(_progressionBar, _data->_holder["progressbar01"]);
-	_registry.get<SpriteComponent>(_progressionBar).sprite.setOrigin(0, 0);
-	_registry.get<SpriteComponent>(_progressionBar).sprite.setPosition(52, 1002);
+	auto& pbar = _registry.get<SpriteComponent>(_progressionBar).sprite;
+	pbar.setOrigin(0, 0);
+	pbar.setPosition(52, 1002);
+	_registry.emplace<TransformComponent>(_progressionBar, pbar.getPosition());
 
 	_background = _registry.create();
-	_registry.emplace<TagComponent>(_background, "prototype_bg", TagComponent::AFFILIATION::None, TagComponent::TYPE::None);
 	_registry.emplace<BotLayerTagComponent>(_background);
 	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
 
 	_fpsTracker = _registry.create();
-	_registry.emplace<TagComponent>(_fpsTracker, "fps_tracker", TagComponent::AFFILIATION::None, TagComponent::TYPE::UI);
+	_registry.emplace<InterfaceTagComponent>(_fpsTracker);
 	_registry.emplace<TopLayerTagComponent>(_fpsTracker);
 	_registry.emplace<ClockComponent>(_fpsTracker);
 	_registry.emplace<DataComponent<float>>(_fpsTracker);
 	_registry.emplace<TextComponent>(_fpsTracker, "resources/font/VCR_OSD_MONO_1.001.ttf");
+	auto& fpsText = _registry.get<TextComponent>(_fpsTracker).text;
+	fpsText.setPosition(10, 5);
+	_registry.emplace<TransformComponent>(_fpsTracker, fpsText.getPosition());
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -87,7 +97,8 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 		{
 			auto position = _registry.get<SpriteComponent>(_player).sprite.getPosition();
 			entt::entity entity = _registry.create();
-			_registry.emplace<TagComponent>(entity, "shot_particle", TagComponent::AFFILIATION::Ally, TagComponent::TYPE::Particle);
+			_registry.emplace<AllyTagComponent>(entity);
+			_registry.emplace<ParticleTagComponent>(entity);
 			_registry.emplace<MidLayerTagComponent>(entity);
 			_registry.emplace<SpeedComponent>(entity, 2000.f);
 			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), false);
@@ -144,6 +155,8 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 {
 	RenderLayers(rw);
 	FramesAnalyticUpdate();
+	//sf::Mouse mouse;
+	//std::cout << mouse.getPosition(*rw).x << " " << mouse.getPosition(*rw).y << "\n";
 }
 
 void Sandbox::Pause()
@@ -156,6 +169,28 @@ void Sandbox::Resume()
 {
 
 
+}
+
+void Sandbox::Resize(const unsigned int& width, const unsigned int& height)
+{
+	auto view = _registry.view<TransformComponent, TopLayerTagComponent>();
+
+	for (auto entity : view)
+	{
+		auto& transform = view.get<TransformComponent>(entity);
+
+		if (_registry.all_of<SpriteComponent>(entity))
+		{
+			auto& sp = _registry.get<SpriteComponent>(entity).sprite;
+			sp.setPosition(_data->_window->mapPixelToCoords(sf::Vector2i(transform.position), _data->_defaultView));
+		}
+
+		if (_registry.all_of<TextComponent>(entity))
+		{
+			auto& str = _registry.get<TextComponent>(entity).text;
+			str.setPosition(_data->_window->mapPixelToCoords(sf::Vector2i(transform.position), _data->_defaultView));
+		}
+	}
 }
 
 entt::registry& Sandbox::GetRegistry()
@@ -236,14 +271,19 @@ void Sandbox::WayPointUpdate(const float& deltaTime)
 
 void Sandbox::QuadTreeUpdate()
 {	
-	_boundary.left = _data->_focusedView.getCenter().x - (float(_data->_window->getSize().x) / 2);
-	_boundary.top = _data->_focusedView.getCenter().y - (float(_data->_window->getSize().y) / 2);
+	float left = _data->_focusedView.getCenter().x - (float(_data->_window->getSize().x) / 2);
+	float top = _data->_focusedView.getCenter().y - (float(_data->_window->getSize().y) / 2);
+	float width = float(_data->_window->getSize().x);
+	float height = float(_data->_window->getSize().y);
 
+	_boundary = sf::FloatRect(left, top, width, height);
 	_quadTree = std::make_unique<QuadTree>(_boundary);
+
 	auto view = _registry.view<HealthComponent>();
+
 	for (auto entity : view)
 	{
-		if(_registry.get<TagComponent>(entity).affiliation != TagComponent::AFFILIATION::Ally)
+		if (!_registry.all_of<AllyTagComponent>(entity))
 			_quadTree->Insert(entity, &_registry);
 	}
 }
@@ -295,9 +335,9 @@ void Sandbox::CheckDestruction()
 	for (auto entity : viewWp)
 	{
 		auto wp = _registry.get<WayPointComponent>(entity);
-		auto tag = _registry.get<TagComponent>(entity);
 
-		if (tag.type == TagComponent::TYPE::Particle && wp.currentPath->_distanceToNext == 0.f && !wp.repeat)
+		if (_registry.all_of<ParticleTagComponent, WayPointComponent>(entity) && 
+			wp.currentPath->_distanceToNext == 0.f && !wp.repeat)
 		{
 			_registry.destroy(entity);
 		}
@@ -329,6 +369,8 @@ void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 	auto midLayerTx = _registry.view<TextComponent, MidLayerTagComponent>();
 	for (auto entity : midLayerTx)
 		rw->draw(midLayerTx.get<TextComponent>(entity).text);
+
+	_quadTree->Render(rw);
 
 	_data->_window->setView(_data->_defaultView);
 

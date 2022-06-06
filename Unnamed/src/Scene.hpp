@@ -12,5 +12,6 @@ public:
 	virtual void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation) = 0;
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
+	virtual void Resize(const unsigned int& width, const unsigned int& height) = 0;
 	virtual entt::registry& GetRegistry() = 0;
 };

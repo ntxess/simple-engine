@@ -123,6 +123,10 @@ void DebugScene::Resume()
 {
 }
 
+void DebugScene::Resize(const unsigned int& width, const unsigned int& height)
+{
+}
+
 entt::registry& DebugScene::GetRegistry()
 {
     return _registry;

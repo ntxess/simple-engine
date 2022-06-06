@@ -1,10 +1,8 @@
-#include <iostream>
 #include "Engine.hpp"
 
 int main() 
 {
-    std::cout << "Ver 1.0" << std::endl;
-    Engine engine(1920, 1080, "Unnamed");
+    Engine engine(1920, 1080, "Engine 9 | Ver 0.30.rev.2");
     engine.Run();
     return 0;
 }

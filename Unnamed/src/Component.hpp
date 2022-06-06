@@ -8,32 +8,24 @@
 #include "CommandExSkill.hpp"
 #include "CommandBasic.hpp"
 
-struct TagComponent
+template<typename T>
+struct DataComponent
 {
-	enum class AFFILIATION
-	{
-		Ally,
-		Enemy, 
-		Neutral,
-		None
-	};
+	T value;
 
-	enum class TYPE
-	{
-		Interactable,
-		Particle,
-		UI,
-		None
-	};
+	DataComponent() = default;
+	DataComponent(const DataComponent&) = default;
+};
 
-	std::string name;
-	AFFILIATION affiliation;
-	TYPE type;
+struct TransformComponent
+{
+	sf::Vector2f position;
+	float rotation;
 
-	TagComponent() = default;
-	TagComponent(const std::string& nametag, const AFFILIATION& af, const TYPE& ty)
-		: name(nametag) , affiliation(af), type(ty){}
-	TagComponent(const TagComponent&) = default;
+	TransformComponent() = default;
+	TransformComponent(const sf::Vector2f& pos, const float& rotationDeg = 0)
+		: position(pos), rotation(rotationDeg) {}
+	TransformComponent(const TransformComponent&) = default;
 };
 
 struct SpriteComponent
@@ -65,7 +57,7 @@ struct TextComponent
 		text.setFont(font);
 		text.setCharacterSize(20);
 		text.setFillColor(sf::Color::White);
-		text.setPosition(sf::Vector2f(0.f, 0.f));
+		text.setPosition(sf::Vector2f(10.f, 5.f));
 	}
 
 	TextComponent(const TextComponent&) = default;
@@ -148,6 +140,14 @@ struct BarComponent
 	BarComponent(const BarComponent&) = default;
 };
 
+struct ClockComponent
+{
+	sf::Clock clock;
+
+	ClockComponent() = default;
+	ClockComponent(const ClockComponent&) = default;
+};
+
 struct TopLayerTagComponent
 {
 	TopLayerTagComponent() = default;
@@ -166,19 +166,38 @@ struct BotLayerTagComponent
 	BotLayerTagComponent(const BotLayerTagComponent&) = default;
 };
 
-struct ClockComponent
+struct AllyTagComponent
 {
-	sf::Clock clock;
-
-	ClockComponent() = default;
-	ClockComponent(const ClockComponent&) = default;
+	AllyTagComponent() = default;
+	AllyTagComponent(const AllyTagComponent&) = default;
 };
 
-template<typename T>
-struct DataComponent
+struct EnemyTagComponent
 {
-	T value;
+	EnemyTagComponent() = default;
+	EnemyTagComponent(const EnemyTagComponent&) = default;
+};
 
-	DataComponent() = default;
-	DataComponent(const DataComponent&) = default;
+struct NeutralTagComponent
+{
+	NeutralTagComponent() = default;
+	NeutralTagComponent(const NeutralTagComponent&) = default;
+};
+
+struct InteractableTagComponent
+{
+	InteractableTagComponent() = default;
+	InteractableTagComponent(const InteractableTagComponent&) = default;
+};
+
+struct ParticleTagComponent
+{
+	ParticleTagComponent() = default;
+	ParticleTagComponent(const ParticleTagComponent&) = default;
+};
+
+struct InterfaceTagComponent
+{
+	InterfaceTagComponent() = default;
+	InterfaceTagComponent(const InterfaceTagComponent&) = default;
 };

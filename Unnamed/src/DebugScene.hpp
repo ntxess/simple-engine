@@ -45,5 +45,6 @@ public:
 	void CheckCollision(sf::Sprite& player, sf::Sprite& object);
 	void Pause();
 	void Resume();
+	void Resize(const unsigned int& width, const unsigned int& height);
 	entt::registry& GetRegistry();
 };

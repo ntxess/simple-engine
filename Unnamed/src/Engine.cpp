@@ -90,8 +90,9 @@ void Engine::Run()
                 _data->_window->close();
                 break;
             case sf::Event::Resized:
-                ResizeView(_data->_window, _data->_defaultView);
-                ResizeView(_data->_window, _data->_focusedView);
+                _data->_focusedView.setSize(float(event.size.width), float(event.size.height));
+                _data->_defaultView.setSize(float(event.size.width), float(event.size.height));
+                _data->_machine->GetActiveState()->Resize(event.size.width, event.size.height);
                 break;
             default:
                 _data->_machine->GetActiveState()->ProcessEvent(event);
@@ -114,14 +115,6 @@ void Engine::Run()
         _data->_window->display();
     }
 }
-
-void Engine::ResizeView(const std::unique_ptr<sf::RenderWindow>& rw, sf::View& view)
-{
-    float aspectRatio = float(_data->_window->getSize().x) / float(_data->_window->getSize().y);
-    view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
-}
-
-
 
 
 
