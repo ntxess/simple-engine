@@ -25,6 +25,5 @@ public:
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation);
 	void Pause();
 	void Resume();
-	void Resize(const unsigned int& width, const unsigned int& height);
 	entt::registry& GetRegistry();
 };

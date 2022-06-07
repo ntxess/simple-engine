@@ -91,8 +91,6 @@ void Engine::Run()
                 break;
             case sf::Event::Resized:
                 _data->_focusedView.setSize(float(event.size.width), float(event.size.height));
-                _data->_defaultView.setSize(float(event.size.width), float(event.size.height));
-                _data->_machine->GetActiveState()->Resize(event.size.width, event.size.height);
                 break;
             default:
                 _data->_machine->GetActiveState()->ProcessEvent(event);

@@ -63,7 +63,6 @@ void Sandbox::Init()
 	auto& pborder = _registry.get<SpriteComponent>(_progressionBorder).sprite;
 	pborder.setOrigin(0, 0);
 	pborder.setPosition(50, 1000);
-	_registry.emplace<TransformComponent>(_progressionBorder, pborder.getPosition());
 
 	_progressionBar = _registry.create();
 	_registry.emplace<InterfaceTagComponent>(_progressionBar);
@@ -72,7 +71,6 @@ void Sandbox::Init()
 	auto& pbar = _registry.get<SpriteComponent>(_progressionBar).sprite;
 	pbar.setOrigin(0, 0);
 	pbar.setPosition(52, 1002);
-	_registry.emplace<TransformComponent>(_progressionBar, pbar.getPosition());
 
 	_background = _registry.create();
 	_registry.emplace<BotLayerTagComponent>(_background);
@@ -86,7 +84,6 @@ void Sandbox::Init()
 	_registry.emplace<TextComponent>(_fpsTracker, "resources/font/VCR_OSD_MONO_1.001.ttf");
 	auto& fpsText = _registry.get<TextComponent>(_fpsTracker).text;
 	fpsText.setPosition(10, 5);
-	_registry.emplace<TransformComponent>(_fpsTracker, fpsText.getPosition());
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -157,6 +154,7 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 	FramesAnalyticUpdate();
 	//sf::Mouse mouse;
 	//std::cout << mouse.getPosition(*rw).x << " " << mouse.getPosition(*rw).y << "\n";
+	//std::cout << _data->_defaultView.getCenter().x << " " << _data->_defaultView.getCenter().y << "\n";
 }
 
 void Sandbox::Pause()
@@ -169,28 +167,6 @@ void Sandbox::Resume()
 {
 
 
-}
-
-void Sandbox::Resize(const unsigned int& width, const unsigned int& height)
-{
-	auto view = _registry.view<TransformComponent, TopLayerTagComponent>();
-
-	for (auto entity : view)
-	{
-		auto& transform = view.get<TransformComponent>(entity);
-
-		if (_registry.all_of<SpriteComponent>(entity))
-		{
-			auto& sp = _registry.get<SpriteComponent>(entity).sprite;
-			sp.setPosition(_data->_window->mapPixelToCoords(sf::Vector2i(transform.position), _data->_defaultView));
-		}
-
-		if (_registry.all_of<TextComponent>(entity))
-		{
-			auto& str = _registry.get<TextComponent>(entity).text;
-			str.setPosition(_data->_window->mapPixelToCoords(sf::Vector2i(transform.position), _data->_defaultView));
-		}
-	}
 }
 
 entt::registry& Sandbox::GetRegistry()
@@ -370,7 +346,7 @@ void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
 	for (auto entity : midLayerTx)
 		rw->draw(midLayerTx.get<TextComponent>(entity).text);
 
-	_quadTree->Render(rw);
+	//_quadTree->Render(rw);
 
 	_data->_window->setView(_data->_defaultView);
 

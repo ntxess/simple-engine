@@ -17,17 +17,6 @@ struct DataComponent
 	DataComponent(const DataComponent&) = default;
 };
 
-struct TransformComponent
-{
-	sf::Vector2f position;
-	float rotation;
-
-	TransformComponent() = default;
-	TransformComponent(const sf::Vector2f& pos, const float& rotationDeg = 0)
-		: position(pos), rotation(rotationDeg) {}
-	TransformComponent(const TransformComponent&) = default;
-};
-
 struct SpriteComponent
 {
 	sf::Sprite sprite;
