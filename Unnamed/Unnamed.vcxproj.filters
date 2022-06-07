@@ -9,85 +9,40 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{312e3042-a7a8-4181-bee6-9809c3954c3a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\States">
       <UniqueIdentifier>{6bf35503-5632-410e-80dd-f2b2be2831fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{43ffb782-4226-4dd1-bd7e-5fe32e0c3722}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objects">
-      <UniqueIdentifier>{d450d57b-e720-445e-a089-c88a93c3a3c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Input">
-      <UniqueIdentifier>{02349e48-d5ff-4e1f-bf2f-9306cf9716ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Graphics">
-      <UniqueIdentifier>{1ef22ed2-62eb-43d9-b29e-ce3888e6e3d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Physics">
-      <UniqueIdentifier>{f593c18a-5bd6-49b1-bd31-13d92a0485c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{a3fa9b0e-db9c-4cd2-99f2-bfd7824985ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components\Input">
-      <UniqueIdentifier>{e89b31f3-27e9-4738-bbd1-67dbe804aa81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components\Graphics">
-      <UniqueIdentifier>{b0e88d7e-d640-48fb-a8fb-44a73dbc387d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Components\Physics">
-      <UniqueIdentifier>{cd4af765-f05e-4ae4-9a8e-284c5b05c7b9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{310db1d6-3118-4a3c-924b-148aaf2a6011}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Objects">
-      <UniqueIdentifier>{9ea5679c-2280-4213-84c6-a95ca31a78f3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\States">
       <UniqueIdentifier>{d5990af1-7ee9-460a-9085-41427ed572ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components\Input\Commands">
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{02349e48-d5ff-4e1f-bf2f-9306cf9716ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input\Commands">
       <UniqueIdentifier>{c37ff0bc-8ab3-40ff-9ea7-bf3b9c9def84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\Input\Commands">
-      <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\MovementType">
+    <Filter Include="Header Files\Input\MovementType">
       <UniqueIdentifier>{96c97064-856a-4942-a2d9-6a3aa2dd827f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\MovementType">
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{e89b31f3-27e9-4738-bbd1-67dbe804aa81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input\Commands">
+      <UniqueIdentifier>{dd445fcf-0d7d-4fef-b6a9-6fb6d1eb669c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input\MovementType">
       <UniqueIdentifier>{f0d22942-ba8d-4f3c-9e17-33d747aec99d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\UEnemyGraphics.cpp">
-      <Filter>Source Files\Components\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UEnemyPhysics.cpp">
-      <Filter>Source Files\Components\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerGraphics.cpp">
-      <Filter>Source Files\Components\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerInput.cpp">
-      <Filter>Source Files\Components\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerPhysics.cpp">
-      <Filter>Source Files\Components\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShotParticle.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DebugScene.cpp">
-      <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="src\MainMenu.cpp">
       <Filter>Source Files\States</Filter>
@@ -96,22 +51,13 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\CommandDodge.cpp">
-      <Filter>Source Files\Components\Input\Commands</Filter>
+      <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
     <ClCompile Include="src\CommandExSkill.cpp">
-      <Filter>Source Files\Components\Input\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PlayerObject.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EnemyObject.cpp">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
     <ClCompile Include="src\WayPoint.cpp">
-      <Filter>Source Files\MovementType</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UEnemyObject.cpp">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Input\MovementType</Filter>
     </ClCompile>
     <ClCompile Include="src\QuadTree.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -122,20 +68,17 @@
     <ClCompile Include="src\Sandbox.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entity.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\EntitySystem.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\CommandBasic.cpp">
-      <Filter>Source Files\Components\Input\Commands</Filter>
+      <Filter>Source Files\Input\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DebugScene.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
     <ClInclude Include="src\MainMenu.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
@@ -148,53 +91,26 @@
     <ClInclude Include="src\Scene.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShotParticle.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerInput.hpp">
-      <Filter>Header Files\Components\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UEnemyGraphics.hpp">
-      <Filter>Header Files\Components\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerGraphics.hpp">
-      <Filter>Header Files\Components\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UEnemyPhysics.hpp">
-      <Filter>Header Files\Components\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerPhysics.hpp">
-      <Filter>Header Files\Components\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Command.hpp">
-      <Filter>Header Files\Components\Input\Commands</Filter>
+      <Filter>Header Files\Input\Commands</Filter>
     </ClInclude>
     <ClInclude Include="src\CommandDodge.hpp">
-      <Filter>Header Files\Components\Input\Commands</Filter>
+      <Filter>Header Files\Input\Commands</Filter>
     </ClInclude>
     <ClInclude Include="src\CommandExSkill.hpp">
-      <Filter>Header Files\Components\Input\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PlayerObject.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EnemyObject.hpp">
-      <Filter>Header Files\Objects</Filter>
+      <Filter>Header Files\Input\Commands</Filter>
     </ClInclude>
     <ClInclude Include="src\WayPoint.hpp">
-      <Filter>Header Files\MovementType</Filter>
+      <Filter>Header Files\Input\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MCircle.hpp">
-      <Filter>Header Files\MovementType</Filter>
+      <Filter>Header Files\Input\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MRandom.hpp">
-      <Filter>Header Files\MovementType</Filter>
+      <Filter>Header Files\Input\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\MStraight.hpp">
-      <Filter>Header Files\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UEnemyObject.hpp">
-      <Filter>Header Files\Objects</Filter>
+      <Filter>Header Files\Input\MovementType</Filter>
     </ClInclude>
     <ClInclude Include="src\QuadTree.hpp">
       <Filter>Header Files\Engine</Filter>
@@ -208,17 +124,17 @@
     <ClInclude Include="src\Sandbox.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\Component.hpp">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\EntitySystem.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\CommandBasic.hpp">
-      <Filter>Header Files\Components\Input\Commands</Filter>
+      <Filter>Header Files\Input\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.hpp">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -152,9 +152,6 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 {
 	RenderLayers(rw);
 	FramesAnalyticUpdate();
-	//sf::Mouse mouse;
-	//std::cout << mouse.getPosition(*rw).x << " " << mouse.getPosition(*rw).y << "\n";
-	//std::cout << _data->_defaultView.getCenter().x << " " << _data->_defaultView.getCenter().y << "\n";
 }
 
 void Sandbox::Pause()

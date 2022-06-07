@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "GameData.hpp"
-#include "DebugScene.hpp"
 
 class MainMenu : public Scene
 {
@@ -12,7 +11,6 @@ class MainMenu : public Scene
 private:
 	std::shared_ptr<GameData> _data;
 	entt::registry _registry;
-
 
 public:
 	MainMenu(std::shared_ptr<GameData>& data);
