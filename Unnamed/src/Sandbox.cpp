@@ -210,14 +210,23 @@ void Sandbox::CheckBoundary(sf::Sprite& object)
 void Sandbox::PlayerUpdate(const float& deltaTime)
 {
 	auto controller = _registry.get<PlayerInputComponent>(_player);
-	auto& sp = _registry.get<SpriteComponent>(_player);
-	auto speed = _registry.get<SpeedComponent>(_player);
+	auto& player = _registry.get<SpriteComponent>(_player).sprite;
+	auto speed = _registry.get<SpeedComponent>(_player).current;
 
 	sf::Vector2f direction = controller.direction;
-	direction *= deltaTime * speed.current;
 
-	sp.sprite.move(direction);
-	_data->_focusedView.setCenter(sp.sprite.getPosition());
+	float length = sqrt((direction.x * direction.x) + (direction.y * direction.y));
+
+	if (length != 0.f)
+	{
+		direction.x = direction.x / length;
+		direction.y = direction.y / length;
+	}
+
+	direction = direction * speed * deltaTime;
+
+	player.move(direction);
+	_data->_focusedView.setCenter(player.getPosition());
 	//CheckBoundary(sp.sprite);
 }
 

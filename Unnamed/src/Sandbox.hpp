@@ -9,7 +9,7 @@
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const size_t MAX_SIZE = 100;
+	static const size_t MAX_SIZE = 20;
 
 private:
 	std::shared_ptr<GameData> _data;
