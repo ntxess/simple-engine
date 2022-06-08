@@ -17,7 +17,7 @@ float CommandBasic::GetMaxTime() const
 	return _cooldownTime;
 }
 
-void CommandBasic::Execute(entt::entity entity, entt::registry* registry)
+void CommandBasic::Execute(entt::entity entity, entt::registry& registry)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
 

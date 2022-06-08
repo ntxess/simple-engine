@@ -15,6 +15,6 @@ public:
 
 	float GetTime() const;
 	float GetMaxTime() const;
-	void Execute(entt::entity entity, entt::registry* registry);
+	void Execute(entt::entity entity, entt::registry& registry);
 };
 

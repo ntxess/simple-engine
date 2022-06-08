@@ -155,6 +155,12 @@ struct BotLayerTagComponent
 	BotLayerTagComponent(const BotLayerTagComponent&) = default;
 };
 
+struct PlayerTagComponent
+{
+	PlayerTagComponent() = default;
+	PlayerTagComponent(const PlayerTagComponent&) = default;
+};
+
 struct AllyTagComponent
 {
 	AllyTagComponent() = default;
@@ -189,4 +195,12 @@ struct InterfaceTagComponent
 {
 	InterfaceTagComponent() = default;
 	InterfaceTagComponent(const InterfaceTagComponent&) = default;
+};
+
+struct FollowComponent
+{
+	float distance;
+
+	FollowComponent() = default;
+	FollowComponent(const FollowComponent&) = default;
 };

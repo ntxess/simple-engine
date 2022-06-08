@@ -15,10 +15,10 @@ QuadTree::QuadTree(const sf::FloatRect& rect, const size_t depth)
 QuadTree::~QuadTree()
 {}
 
-bool QuadTree::Insert(const entt::entity& entity, entt::registry* registry)
+bool QuadTree::Insert(const entt::entity& entity, entt::registry& registry)
 {
 	// Ignore objects that do not belong in this quad tree
-	if (!_boundary.contains(registry->get<SpriteComponent>(entity).sprite.getPosition()))
+	if (!_boundary.contains(registry.get<SpriteComponent>(entity).sprite.getPosition()))
 		return false;
 
 	// If there is space in this quad tree and if doesn't have subdivisions, add the object here
@@ -66,7 +66,7 @@ void QuadTree::Subdivide()
 	_divided = true;
 }
 
-std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt::registry* registry)
+std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt::registry& registry)
 {
 	std::vector<entt::entity> entityFound;
 
@@ -75,7 +75,7 @@ std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt:
 
 	for (auto entity : _nodes)
 	{
-		if (range.contains(registry->get<SpriteComponent>(entity).sprite.getPosition()))
+		if (range.contains(registry.get<SpriteComponent>(entity).sprite.getPosition()))
 			entityFound.push_back(entity);
 	}
 
@@ -99,7 +99,7 @@ std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt:
 	return entityFound;
 }
 
-void QuadTree::Remove(const entt::entity& entity, entt::registry* registry)
+void QuadTree::Remove(const entt::entity& entity, entt::registry& registry)
 {
 	for (size_t i = 0; i < _nodes.size(); i++)
 	{

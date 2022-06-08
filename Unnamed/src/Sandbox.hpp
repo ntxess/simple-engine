@@ -42,12 +42,12 @@ public:
 	void PlayerUpdate(const float& deltaTime);
 	void WayPointUpdate(const float& deltaTime);
 	void QuadTreeUpdate();
-	void CheckCollision();
+	void CollisionUpdate();
 	void DamageUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
 	void CheckDestruction();
-	void RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw);
+	void RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw);
 	void ProgressBarUpdate(const float& deltaTime);
-	void PlayerTrackUpdate(const float& deltaTime);
-	void FramesAnalyticUpdate();
+	void TrackingUpdate(const float& deltaTime);
+	void FrameAnalyticsUpdate();
 	std::string FloatToString(const float& d);
 };

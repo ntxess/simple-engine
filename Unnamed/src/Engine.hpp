@@ -9,8 +9,6 @@
 #include "MRandom.hpp"
 #include "MStraight.hpp"
 
-static const float VIEW_HEIGHT = 1080.f;
-
 class Engine
 {
 private:

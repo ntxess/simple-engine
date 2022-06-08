@@ -68,9 +68,6 @@
     <ClCompile Include="src\Sandbox.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
-    <ClCompile Include="src\EntitySystem.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\CommandBasic.cpp">
       <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
@@ -115,17 +112,11 @@
     <ClInclude Include="src\QuadTree.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectPool.hpp">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\StateMachine.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Sandbox.hpp">
       <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="src\EntitySystem.hpp">
-      <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\CommandBasic.hpp">
       <Filter>Header Files\Input\Commands</Filter>

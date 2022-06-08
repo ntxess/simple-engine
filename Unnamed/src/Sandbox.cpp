@@ -36,8 +36,21 @@ void Sandbox::Init()
 		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
 	}
 
+	for (size_t i = 0; i < MAX_SIZE; i++)
+	{
+		entt::entity entity = _registry.create();
+		_registry.emplace<EnemyTagComponent>(entity);
+		_registry.emplace<InteractableTagComponent>(entity);
+		_registry.emplace<MidLayerTagComponent>(entity);
+		_registry.emplace<HealthComponent>(entity, 100.f);
+		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
+		_registry.emplace<FollowComponent>(entity);
+		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
+		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+	}
+
 	_player = _registry.create();
-	_registry.emplace<AllyTagComponent>(_player);
+	_registry.emplace<PlayerTagComponent>(_player);
 	_registry.emplace<InteractableTagComponent>(_player);
 	_registry.emplace<MidLayerTagComponent>(_player);
 	_registry.emplace<HealthComponent>(_player, 1000.f);
@@ -52,6 +65,7 @@ void Sandbox::Init()
 	_registry.emplace<MidLayerTagComponent>(_dummy);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
 	_registry.emplace<SpeedComponent>(_dummy, 500.f);
+	_registry.emplace<FollowComponent>(_dummy);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
@@ -115,7 +129,7 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 			command = controller.exSkill.get();
 
 		if (command)
-			command->Execute(_player, &_registry);
+			command->Execute(_player, _registry);
 	}
 }
 
@@ -142,16 +156,17 @@ void Sandbox::Update(const float& deltaTime)
 {
 	PlayerUpdate(deltaTime);
 	WayPointUpdate(deltaTime);
+	TrackingUpdate(deltaTime);
 	ProgressBarUpdate(deltaTime);
 	QuadTreeUpdate();
-	CheckCollision();
+	CollisionUpdate();
 	CheckDestruction();
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-	RenderLayers(rw);
-	FramesAnalyticUpdate();
+	RenderLayer(rw);
+	FrameAnalyticsUpdate();
 }
 
 void Sandbox::Pause()
@@ -256,19 +271,19 @@ void Sandbox::QuadTreeUpdate()
 
 	for (auto entity : view)
 	{
-		if (!_registry.all_of<AllyTagComponent>(entity))
-			_quadTree->Insert(entity, &_registry);
+		if (_registry.all_of<EnemyTagComponent>(entity))
+			_quadTree->Insert(entity, _registry);
 	}
 }
 
-void Sandbox::CheckCollision()
+void Sandbox::CollisionUpdate()
 {
 	auto view = _registry.view<DamageComponent>();
 	for (auto inflictor : view)
 	{
 		auto& inflictorSp = _registry.get<SpriteComponent>(inflictor);
 		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
-		std::vector<entt::entity> found = _quadTree->QueryRange(range, &_registry);
+		std::vector<entt::entity> found = _quadTree->QueryRange(range, _registry);
 
 		for (auto inflicted : found)
 		{
@@ -323,7 +338,7 @@ void Sandbox::CheckDestruction()
 	//}
 }
 
-void Sandbox::RenderLayers(const std::unique_ptr<sf::RenderWindow>& rw)
+void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
 {
 	_data->_window->setView(_data->_focusedView);
 
@@ -365,12 +380,37 @@ void Sandbox::ProgressBarUpdate(const float& deltaTime)
 	progressBar.sprite.setScale(std::clamp(progress, 0.f, 1.f), 1.f);
 }
 
-void Sandbox::PlayerTrackUpdate(const float& deltaTime)
+void Sandbox::TrackingUpdate(const float& deltaTime)
 {
-	
+	auto view = _registry.view<FollowComponent>();
+
+	for (auto entity : view)
+	{
+		auto& traveler = _registry.get<SpriteComponent>(entity).sprite;
+		auto target = _registry.get<SpriteComponent>(_player).sprite;
+
+		auto speed = _registry.get<SpeedComponent>(entity).current;
+
+		float targetX = target.getPosition().x;
+		float targetY = target.getPosition().y;
+		float travelerX = traveler.getPosition().x;
+		float travelerY = traveler.getPosition().y;
+
+		float distance = sqrt((targetX - travelerX) * (targetX - travelerX) + (targetY - travelerY) * (targetY - travelerY));
+
+		sf::Vector2f unitDist;
+		unitDist.x = (targetX - travelerX) / distance;
+		unitDist.y = (targetY - travelerY) / distance;
+
+		sf::Vector2f velocity;
+		velocity.x = unitDist.x * speed * deltaTime;
+		velocity.y = unitDist.y * speed * deltaTime;
+
+		traveler.move(velocity);
+	}
 }
 
-void Sandbox::FramesAnalyticUpdate()
+void Sandbox::FrameAnalyticsUpdate()
 {
 	auto [tracker, data, str] = _registry.get<ClockComponent, DataComponent<float>, TextComponent>(_fpsTracker);
 	if (tracker.clock.getElapsedTime().asSeconds() >= 1.f)
@@ -381,6 +421,7 @@ void Sandbox::FramesAnalyticUpdate()
 	}
 	++data.value;
 }
+
 std::string Sandbox::FloatToString(const float& d)
 {
 	std::stringstream ss;
