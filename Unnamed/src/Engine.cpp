@@ -97,7 +97,7 @@ void Engine::Run()
             }
         }
 
-        _data->_machine->GetActiveState()->ProcessInput(event);
+        _data->_machine->GetActiveState()->ProcessInput();
 
         while (accumulator >= deltaTime)
         {

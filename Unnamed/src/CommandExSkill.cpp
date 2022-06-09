@@ -17,13 +17,13 @@ float CommandExSkill::GetMaxTime() const
 	return _cooldownTime;
 }
 
-void CommandExSkill::Execute(entt::entity entity, entt::registry& registry)
+void CommandExSkill::Execute(entt::registry& registry, entt::entity entity, std::shared_ptr<GameData>& data)
 {
 	float currentTime = _timer.getElapsedTime().asSeconds();
 
 	if (currentTime > _cooldownTime)
 	{
-		std::cout << "Using EX Skill\n";
+		//std::cout << "Using EX Skill\n";
 		//auto view = registry->view<TagComponent>();
 		//for (auto enemy : view)
 		//{

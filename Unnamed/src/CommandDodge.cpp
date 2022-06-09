@@ -18,7 +18,7 @@ float CommandDodge::GetMaxTime() const
 	return _cooldownTime;
 }
 
-void CommandDodge::Execute(entt::entity entity, entt::registry& registry)
+void CommandDodge::Execute(entt::registry& registry, entt::entity entity, std::shared_ptr<GameData>& data)
 {
 	auto controller = registry.get<PlayerInputComponent>(entity);
 	auto& sp = registry.get<SpriteComponent>(entity);

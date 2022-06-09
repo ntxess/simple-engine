@@ -23,9 +23,6 @@ void MainMenu::Init()
 }
 
 void MainMenu::ProcessEvent(const sf::Event& event)
-{}
-
-void MainMenu::ProcessInput(const sf::Event& event)
 {
     //sf::Vector2f mousePos = _data->_window->mapPixelToCoords(sf::Mouse::getPosition(*_data->_window));
     //if (_startButton->GetSprite().getGlobalBounds().contains(mousePos))
@@ -43,6 +40,11 @@ void MainMenu::ProcessInput(const sf::Event& event)
     //        _data->_window->close();
     //    }
     //}
+}
+
+void MainMenu::ProcessInput()
+{
+
 }
 
 void MainMenu::Update(const float& deltaTime)

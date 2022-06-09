@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -100,12 +101,13 @@ struct WayPointComponent
 struct PlayerInputComponent
 {
 	sf::Vector2f direction;
-	std::shared_ptr<Command> dash;
+	std::shared_ptr<Command> dodge;
 	std::shared_ptr<Command> exSkill;
+	std::shared_ptr<Command> attack;
 
 	PlayerInputComponent() = default;
-	PlayerInputComponent(std::shared_ptr<Command> dash, std::shared_ptr<Command> exskill)
-		: dash(dash), exSkill(exskill) {}
+	PlayerInputComponent(std::shared_ptr<Command> dodge, std::shared_ptr<Command> exSkill, std::shared_ptr<Command> attack)
+		: dodge(dodge), exSkill(exSkill), attack(attack) {}
 	PlayerInputComponent(const PlayerInputComponent&) = default;
 };
 
@@ -197,10 +199,24 @@ struct InterfaceTagComponent
 	InterfaceTagComponent(const InterfaceTagComponent&) = default;
 };
 
-struct FollowComponent
+struct AttractionComponent
 {
-	float distance;
+	union Power 
+	{
+		bool fullStrength;
+		float strength;
+	};
 
-	FollowComponent() = default;
-	FollowComponent(const FollowComponent&) = default;
+	Power power;
+
+	AttractionComponent() = default;
+	AttractionComponent(const float& strength)
+	{
+		power.strength = strength;
+	}
+	AttractionComponent(const bool& fullStrength)
+	{
+		power.fullStrength = fullStrength;
+	}
+	AttractionComponent(const AttractionComponent&) = default;
 };

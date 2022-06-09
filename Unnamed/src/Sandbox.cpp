@@ -43,8 +43,8 @@ void Sandbox::Init()
 		_registry.emplace<InteractableTagComponent>(entity);
 		_registry.emplace<MidLayerTagComponent>(entity);
 		_registry.emplace<HealthComponent>(entity, 100.f);
-		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
-		_registry.emplace<FollowComponent>(entity);
+		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 400));
+		_registry.emplace<AttractionComponent>(entity, true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
 		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
 	}
@@ -55,7 +55,10 @@ void Sandbox::Init()
 	_registry.emplace<MidLayerTagComponent>(_player);
 	_registry.emplace<HealthComponent>(_player, 1000.f);
 	_registry.emplace<SpeedComponent>(_player, 500.f);
-	_registry.emplace<PlayerInputComponent>(_player, std::make_shared<CommandDodge>(), std::make_shared<CommandExSkill>());
+	_registry.emplace<PlayerInputComponent>(_player, 
+		std::make_shared<CommandDodge>(), 
+		std::make_shared<CommandExSkill>(), 
+		std::make_shared<CommandBasic>());
 	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
 
@@ -64,8 +67,8 @@ void Sandbox::Init()
 	_registry.emplace<InteractableTagComponent>(_dummy);
 	_registry.emplace<MidLayerTagComponent>(_dummy);
 	_registry.emplace<HealthComponent>(_dummy, 1000.f);
-	_registry.emplace<SpeedComponent>(_dummy, 500.f);
-	_registry.emplace<FollowComponent>(_dummy);
+	_registry.emplace<SpeedComponent>(_dummy, 300.f);
+	_registry.emplace<AttractionComponent>(_dummy, 500.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
@@ -104,41 +107,17 @@ void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::L)
-		{
-			auto position = _registry.get<SpriteComponent>(_player).sprite.getPosition();
-			entt::entity entity = _registry.create();
-			_registry.emplace<AllyTagComponent>(entity);
-			_registry.emplace<ParticleTagComponent>(entity);
-			_registry.emplace<MidLayerTagComponent>(entity);
-			_registry.emplace<SpeedComponent>(entity, 2000.f);
-			_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mStraight").get(), false);
-			_registry.emplace<DamageComponent>(entity, 100.f);
-			_registry.emplace<SpriteComponent>(entity, _data->_holder["Shot"]);
-			_registry.get<SpriteComponent>(entity).sprite.setPosition(position);
-			_registry.get<SpriteComponent>(entity).sprite.setScale(2.f, 2.f);
-		}
 
-		auto controller = _registry.get<PlayerInputComponent>(_player);
-		Command* command = NULL;
-
-		if (event.key.code == sf::Keyboard::LShift)
-			command = controller.dash.get();
-
-		if (event.key.code == sf::Keyboard::RShift)
-			command = controller.exSkill.get();
-
-		if (command)
-			command->Execute(_player, _registry);
 	}
 }
 
-void Sandbox::ProcessInput(const sf::Event& event)
+void Sandbox::ProcessInput()
 {
 	auto& controller = _registry.get<PlayerInputComponent>(_player);
 
 	const float input = 1.f;
 	controller.direction = sf::Vector2f(0, 0);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		controller.direction.y -= input;
 
@@ -150,6 +129,20 @@ void Sandbox::ProcessInput(const sf::Event& event)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		controller.direction.x += input;
+
+	Command* command = NULL;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		command = controller.dodge.get();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+		command = controller.exSkill.get();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		command = controller.attack.get();
+
+	if (command)
+		command->Execute(_registry, _player, _data);
 }
 
 void Sandbox::Update(const float& deltaTime)
@@ -382,7 +375,7 @@ void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
 
 void Sandbox::ProgressBarUpdate(const float& deltaTime)
 {
-	auto skill = _registry.get<PlayerInputComponent>(_player).dash;
+	auto skill = _registry.get<PlayerInputComponent>(_player).dodge;
 	auto& progressBar = _registry.get<SpriteComponent>(_progressionBar);
 
 	float progress = skill->GetTime() / skill->GetMaxTime();
@@ -391,13 +384,14 @@ void Sandbox::ProgressBarUpdate(const float& deltaTime)
 
 void Sandbox::TrackingUpdate(const float& deltaTime)
 {
-	auto view = _registry.view<FollowComponent>();
+	auto view = _registry.view<AttractionComponent>();
 
 	for (auto entity : view)
 	{
 		auto& traveler = _registry.get<SpriteComponent>(entity).sprite;
 		auto target = _registry.get<SpriteComponent>(_player).sprite;
 
+		auto attraction = _registry.get<AttractionComponent>(entity);
 		auto speed = _registry.get<SpeedComponent>(entity).current;
 
 		float targetX = target.getPosition().x;
@@ -407,15 +401,18 @@ void Sandbox::TrackingUpdate(const float& deltaTime)
 
 		float distance = sqrt((targetX - travelerX) * (targetX - travelerX) + (targetY - travelerY) * (targetY - travelerY));
 
-		sf::Vector2f unitDist;
-		unitDist.x = (targetX - travelerX) / distance;
-		unitDist.y = (targetY - travelerY) / distance;
+		if (distance <= attraction.power.strength || attraction.power.fullStrength)
+		{
+			sf::Vector2f unitDist;
+			unitDist.x = (targetX - travelerX) / distance;
+			unitDist.y = (targetY - travelerY) / distance;
 
-		sf::Vector2f velocity;
-		velocity.x = unitDist.x * speed * deltaTime;
-		velocity.y = unitDist.y * speed * deltaTime;
+			sf::Vector2f velocity;
+			velocity.x = unitDist.x * speed * deltaTime;
+			velocity.y = unitDist.y * speed * deltaTime;
 
-		traveler.move(velocity);
+			traveler.move(velocity);		
+		}
 	}
 }
 
