@@ -15,7 +15,7 @@ QuadTree::QuadTree(const sf::FloatRect& rect, const size_t depth)
 QuadTree::~QuadTree()
 {}
 
-bool QuadTree::Insert(const entt::entity& entity, entt::registry& registry)
+bool QuadTree::Insert(entt::entity entity, entt::registry& registry)
 {
 	// Ignore objects that do not belong in this quad tree
 	if (!_boundary.contains(registry.get<SpriteComponent>(entity).sprite.getPosition()))
@@ -99,7 +99,7 @@ std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt:
 	return entityFound;
 }
 
-void QuadTree::Remove(const entt::entity& entity, entt::registry& registry)
+void QuadTree::Remove(entt::entity entity, entt::registry& registry)
 {
 	for (size_t i = 0; i < _nodes.size(); i++)
 	{

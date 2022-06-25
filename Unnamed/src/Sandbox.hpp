@@ -9,7 +9,7 @@
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const size_t MAX_SIZE = 20;
+	static const size_t MAX_SIZE = 10000;
 
 private:
 	std::shared_ptr<GameData> _data;
@@ -43,11 +43,10 @@ public:
 	void WayPointUpdate(const float& deltaTime);
 	void QuadTreeUpdate();
 	void CollisionUpdate();
-	void DamageUpdate(const entt::entity& inflictor, const entt::entity& afflicted);
+	void DamageUpdate(entt::entity inflictor, entt::entity afflicted);
 	void CheckDestruction();
 	void RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw);
 	void ProgressBarUpdate(const float& deltaTime);
 	void TrackingUpdate(const float& deltaTime);
 	void FrameAnalyticsUpdate();
-	std::string FloatToString(const float& d);
 };

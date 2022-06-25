@@ -204,7 +204,7 @@ struct AttractionComponent
 	union Power 
 	{
 		bool fullStrength;
-		float strength;
+		float level;
 	};
 
 	Power power;
@@ -212,7 +212,7 @@ struct AttractionComponent
 	AttractionComponent() = default;
 	AttractionComponent(const float& strength)
 	{
-		power.strength = strength;
+		power.level = strength;
 	}
 	AttractionComponent(const bool& fullStrength)
 	{

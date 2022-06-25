@@ -7,7 +7,7 @@
 
 #include "Component.hpp"
 
-constexpr size_t MAX_DEPTH = 7;
+constexpr size_t MAX_DEPTH = 6;
 
 class QuadTree
 {
@@ -28,10 +28,10 @@ public:
 	QuadTree(const sf::FloatRect& rect, const size_t depth = 0);
 	~QuadTree();
 
-	bool Insert(const entt::entity& entity, entt::registry& registry);
+	bool Insert(entt::entity entity, entt::registry& registry);
 	void Subdivide();
 	std::vector<entt::entity> QueryRange(const sf::FloatRect& range, entt::registry& registry);
-	void Remove(const entt::entity& entity, entt::registry& registry);
+	void Remove(entt::entity entity, entt::registry& registry);
 	void Clear();
 	void Render(const std::unique_ptr<sf::RenderWindow>& rw);
 };

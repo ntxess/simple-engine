@@ -23,15 +23,12 @@ void CommandExSkill::Execute(entt::registry& registry, entt::entity entity, std:
 
 	if (currentTime > _cooldownTime)
 	{
-		//std::cout << "Using EX Skill\n";
-		//auto view = registry->view<TagComponent>();
-		//for (auto enemy : view)
-		//{
-		//	if (registry->get<TagComponent>(enemy).affiliation == TagComponent::AFFILIATION::Enemy)
-		//	{
-		//		registry->emplace<DestructionTagComponent>(enemy);
-		//	}
-		//}
+		std::cout << "Using EX Skill\n";
+		auto view = registry.view<EnemyTagComponent>();
+		for (auto enemy : view)
+		{
+			registry.destroy(enemy);
+		}
 		_timer.restart();
 	}
 }

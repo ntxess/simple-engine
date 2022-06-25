@@ -94,13 +94,8 @@ void Sandbox::Init()
 	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
 
 	_fpsTracker = _registry.create();
-	_registry.emplace<InterfaceTagComponent>(_fpsTracker);
-	_registry.emplace<TopLayerTagComponent>(_fpsTracker);
 	_registry.emplace<ClockComponent>(_fpsTracker);
 	_registry.emplace<DataComponent<float>>(_fpsTracker);
-	_registry.emplace<TextComponent>(_fpsTracker, "resources/font/VCR_OSD_MONO_1.001.ttf");
-	auto& fpsText = _registry.get<TextComponent>(_fpsTracker).text;
-	fpsText.setPosition(10, 5);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
@@ -132,14 +127,14 @@ void Sandbox::ProcessInput()
 
 	Command* command = NULL;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		command = controller.attack.get();
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 		command = controller.dodge.get();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		command = controller.exSkill.get();
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
-		command = controller.attack.get();
 
 	if (command)
 		command->Execute(_registry, _player, _data);
@@ -163,16 +158,10 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 }
 
 void Sandbox::Pause()
-{
-
-
-}
+{}
 
 void Sandbox::Resume()
-{
-
-
-}
+{}
 
 entt::registry& Sandbox::GetRegistry()
 {
@@ -216,11 +205,11 @@ void Sandbox::PlayerUpdate(const float& deltaTime)
 		direction.y = direction.y / length;
 	}
 
-	direction = direction * speed * deltaTime;
+	direction *= speed * deltaTime;
 
 	player.move(direction);
+	//CheckBoundary(player);
 	_data->_focusedView.setCenter(player.getPosition());
-	//CheckBoundary(sp.sprite);
 }
 
 void Sandbox::WayPointUpdate(const float& deltaTime)
@@ -298,15 +287,15 @@ void Sandbox::CollisionUpdate()
 	}
 }
 
-void Sandbox::DamageUpdate(const entt::entity& inflictor, const entt::entity& inflicted)
+void Sandbox::DamageUpdate(entt::entity inflictor, entt::entity inflicted)
 {
-	if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) return;
+	if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) 
+		return;
 
 	auto dmg = _registry.get<DamageComponent>(inflictor);
 	auto& hp = _registry.get<HealthComponent>(inflicted);
 	hp.current -= dmg.damage;
 	_registry.destroy(inflictor);
-	//_registry.emplace<DestructionTagComponent>(inflictor);
 }
 
 void Sandbox::CheckDestruction()
@@ -332,12 +321,6 @@ void Sandbox::CheckDestruction()
 			_registry.destroy(entity);
 		}
 	}
-
-	//auto viewDest = _registry.view<DestructionTagComponent>();
-	//for (auto entity : viewDest)
-	//{
-	//	_registry.destroy(entity);
-	//}
 }
 
 void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
@@ -359,8 +342,6 @@ void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
 	auto midLayerTx = _registry.view<TextComponent, MidLayerTagComponent>();
 	for (auto entity : midLayerTx)
 		rw->draw(midLayerTx.get<TextComponent>(entity).text);
-
-	//_quadTree->Render(rw);
 
 	_data->_window->setView(_data->_defaultView);
 
@@ -399,9 +380,10 @@ void Sandbox::TrackingUpdate(const float& deltaTime)
 		float travelerX = traveler.getPosition().x;
 		float travelerY = traveler.getPosition().y;
 
-		float distance = sqrt((targetX - travelerX) * (targetX - travelerX) + (targetY - travelerY) * (targetY - travelerY));
+		float distance = sqrt((targetX - travelerX) * (targetX - travelerX) + 
+			(targetY - travelerY) * (targetY - travelerY));
 
-		if (distance <= attraction.power.strength || attraction.power.fullStrength)
+		if (distance <= attraction.power.level || attraction.power.fullStrength)
 		{
 			sf::Vector2f unitDist;
 			unitDist.x = (targetX - travelerX) / distance;
@@ -418,19 +400,18 @@ void Sandbox::TrackingUpdate(const float& deltaTime)
 
 void Sandbox::FrameAnalyticsUpdate()
 {
-	auto [tracker, data, str] = _registry.get<ClockComponent, DataComponent<float>, TextComponent>(_fpsTracker);
+	auto [tracker, fps] = _registry.get<ClockComponent, DataComponent<float>>(_fpsTracker);
 	if (tracker.clock.getElapsedTime().asSeconds() >= 1.f)
 	{
-		str.text.setString("FPS: " + FloatToString(data.value) + "\n" + FloatToString(1000 / data.value) + "m/s");
-		data.value = 0;
+		std::string title = "Engine 9 | Ver 0.30.2 | FPS: ";
+		title += std::to_string(int(fps.value));
+		title += " | ";
+		title += std::to_string(1000 / fps.value);
+		title += "m/s";
+		_data->_window->setTitle(title);
+
+		fps.value = 0.f;
 		tracker.clock.restart();
 	}
-	++data.value;
-}
-
-std::string Sandbox::FloatToString(const float& d)
-{
-	std::stringstream ss;
-	ss << d;
-	return ss.str();
+	++fps.value;
 }

@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\EventHandler.cpp" />
+    <ClCompile Include="src\EventListener.cpp" />
+    <ClCompile Include="src\CollisionEvent.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventDispatcher.cpp" />
     <ClCompile Include="src\CommandBasic.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Sandbox.cpp" />
@@ -32,6 +37,11 @@
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EventHandler.hpp" />
+    <ClInclude Include="src\EventListener.hpp" />
+    <ClInclude Include="src\CollisionEvent.hpp" />
+    <ClInclude Include="src\Event.hpp" />
+    <ClInclude Include="src\EventDispatcher.hpp" />
     <ClInclude Include="src\CommandBasic.hpp" />
     <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Component.hpp" />
