@@ -96,14 +96,14 @@ void Sandbox::Init()
 	_fpsTracker = _registry.create();
 	_registry.emplace<ClockComponent>(_fpsTracker);
 	_registry.emplace<DataComponent<float>>(_fpsTracker);
+
+	//ImGui::SFML::Init(*_data->_window);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
-	if (event.type == sf::Event::KeyPressed)
-	{
-
-	}
+	// Useful for determining what keypresses will do when in different scenes
+	//ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
@@ -142,6 +142,8 @@ void Sandbox::ProcessInput()
 
 void Sandbox::Update(const float& deltaTime)
 {
+	//ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+
 	PlayerUpdate(deltaTime);
 	WayPointUpdate(deltaTime);
 	TrackingUpdate(deltaTime);
@@ -153,6 +155,12 @@ void Sandbox::Update(const float& deltaTime)
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
+	//ImGui::ShowDemoWindow();
+	//ImGui::Begin("Hello, world!");
+	//ImGui::Button("Look at this pretty button");
+	//ImGui::End();
+	//ImGui::SFML::Render(*_data->_window);
+
 	RenderLayer(rw);
 	FrameAnalyticsUpdate();
 }
@@ -281,6 +289,10 @@ void Sandbox::CollisionUpdate()
 			auto& inflictedSp = _registry.get<SpriteComponent>(inflicted);
 			if(inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
 			{
+				std::unique_ptr<Event> collisionEvent = std::make_unique<CollisionEvent>(inflictor, inflicted);
+				std::unique_ptr<CollisionHandler> collisionHandler = std::make_unique<CollisionHandler>();
+				_dispatcher->Dispatch(collisionEvent.get(), collisionHandler.get(), &CollisionHandler::OnEvent);
+
 				DamageUpdate(inflictor, inflicted);
 			}
 		}
@@ -307,6 +319,10 @@ void Sandbox::CheckDestruction()
 		if (health.current <= 0.f)
 		{
 			_registry.destroy(entity);
+
+			std::unique_ptr<Event> destructionEvent = std::make_unique<DestructionEvent>(entity);
+			std::unique_ptr<DestructionHandler> destructionHandler = std::make_unique<DestructionHandler>();
+			_dispatcher->Dispatch(destructionEvent.get(), destructionHandler.get(), &DestructionHandler::OnEvent);
 		}
 	}
 

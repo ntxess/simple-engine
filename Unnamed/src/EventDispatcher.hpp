@@ -1,48 +1,19 @@
 #pragma once
 
 #include "Event.hpp"
-#include "EventHandler.hpp"
-
-#include <memory>
-#include "CollisionEvent.hpp"
 
 class EventDispatcher
 {
-private:
-	Event _event;
-
 public:
-	EventDispatcher(Event event);
-	~EventDispatcher();
-
-	void Dispatch(Event::Type type, EventHandler handler);
+	EventDispatcher() {}
+	~EventDispatcher() {}
 
 	template<typename T, typename EventType>
-	void Dispatch(Event::Type type, T const&t, void(T::* callbackEvent)(Event event));
+	void Dispatch(Event* evnt, T* instance, void (T::* callbackEvent)(EventType*));
 };
 
 template<typename T, typename EventType>
-void EventDispatcher::Dispatch(Event::Type type, T const& t, void(T::*callbackEvent)(Event event))
-{
-	if (_event.handled)
-		return;
-
-	if (_event.GetType() == type)
-		t.*callbackEvent(static_cast<EventType>(Event));
+void EventDispatcher::Dispatch(Event* evnt, T* instance, void (T::*callbackEvent)(EventType *))
+{	
+	(instance->*callbackEvent)(static_cast<EventType*>(evnt));
 }
-
-//bool onCollision(CollisionEvent e)
-//{
-//	_registry.destroy(e.GetInflictor());
-//	_registry.destroy(e.GetInflicted());
-//	return false;
-//}
-//
-//entt::entity inflictor, inflicted;
-//std::unique_ptr<CollisionEvent> collisionEvent = std::make_unique<CollisionEvent>(inflictor, inflicted);
-//
-//
-//std::unique_ptr<EventDispatcher> dispatcher = std::make_unique<EventDispatcher>(collisionEvent.get());
-//dispatcher->Dispatch(Event::Type::Collision, std::make_unqiue<EventHandler>());
-
-

@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 
+#include "SFML/Graphics/Texture.hpp"
+#include "SFML/Graphics/Sprite.hpp"
 #include "WayPoint.hpp"
 #include "CommandDodge.hpp"
 #include "CommandExSkill.hpp"

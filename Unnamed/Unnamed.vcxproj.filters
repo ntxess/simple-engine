@@ -42,15 +42,6 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{44f6325e-4aa1-4567-86ec-b257b6166180}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Events">
-      <UniqueIdentifier>{498043e3-6e04-4265-a52c-10adb50e215b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Events\Concrete Types">
-      <UniqueIdentifier>{8a04a0a0-29d6-40e8-9bae-ffb14faf8068}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Events\Concrete Types">
-      <UniqueIdentifier>{f4f08541-490e-48b6-8ee4-d4b7e22028df}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine.cpp">
@@ -86,20 +77,23 @@
     <ClCompile Include="src\Entity.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Event.cpp">
-      <Filter>Source Files\Events</Filter>
+    <ClCompile Include="src\SFML-imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventDispatcher.cpp">
-      <Filter>Source Files\Events</Filter>
+    <ClCompile Include="src\SFML-imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventListener.cpp">
-      <Filter>Source Files\Events</Filter>
+    <ClCompile Include="src\SFML-imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventHandler.cpp">
-      <Filter>Source Files\Events</Filter>
+    <ClCompile Include="src\SFML-imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionEvent.cpp">
-      <Filter>Source Files\Events\Concrete Types</Filter>
+    <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,14 +154,35 @@
     <ClInclude Include="src\EventDispatcher.hpp">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\EventListener.hpp">
-      <Filter>Header Files\Events</Filter>
-    </ClInclude>
     <ClInclude Include="src\EventHandler.hpp">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionEvent.hpp">
-      <Filter>Header Files\Events\Concrete Types</Filter>
+    <ClInclude Include="src\SFML-imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imconfig-SFML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imgui-SFML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imgui-SFML_export.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SFML-imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

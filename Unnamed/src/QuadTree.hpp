@@ -1,10 +1,10 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <entt/entt.hpp>
 
+#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Sprite.hpp"
+#include "entt/entt.hpp"
 #include "Component.hpp"
 
 constexpr size_t MAX_DEPTH = 6;

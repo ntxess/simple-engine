@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <stack>
+
 #include "Scene.hpp"
 
 class StateMachine

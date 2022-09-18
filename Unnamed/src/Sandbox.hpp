@@ -2,14 +2,19 @@
 #include <iostream>
 #include <random>
 
+#include "SFML-imgui/imgui.h"
+#include "SFML-imgui/imgui-SFML.h"
 #include "GameData.hpp"
 #include "QuadTree.hpp"
 #include "Component.hpp"
+#include "Event.hpp"
+#include "EventDispatcher.hpp"
+#include "EventHandler.hpp"
 
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const size_t MAX_SIZE = 10000;
+	static const size_t MAX_SIZE = 20;
 
 private:
 	std::shared_ptr<GameData> _data;
@@ -24,6 +29,8 @@ private:
 	entt::entity _progressionBorder;
 	entt::entity _progressionBar;
 	entt::entity _fpsTracker;
+
+	std::unique_ptr<EventDispatcher> _dispatcher;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);

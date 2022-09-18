@@ -19,11 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EventHandler.cpp" />
-    <ClCompile Include="src\EventListener.cpp" />
-    <ClCompile Include="src\CollisionEvent.cpp" />
-    <ClCompile Include="src\Event.cpp" />
-    <ClCompile Include="src\EventDispatcher.cpp" />
     <ClCompile Include="src\CommandBasic.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Sandbox.cpp" />
@@ -31,20 +26,24 @@
     <ClCompile Include="src\CommandExSkill.cpp" />
     <ClCompile Include="src\CommandDodge.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\WayPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\EventHandler.hpp" />
-    <ClInclude Include="src\EventListener.hpp" />
-    <ClInclude Include="src\CollisionEvent.hpp" />
     <ClInclude Include="src\Event.hpp" />
     <ClInclude Include="src\EventDispatcher.hpp" />
     <ClInclude Include="src\CommandBasic.hpp" />
     <ClInclude Include="src\Entity.hpp" />
     <ClInclude Include="src\Component.hpp" />
+    <ClInclude Include="src\EventHandler.hpp" />
     <ClInclude Include="src\Sandbox.hpp" />
     <ClInclude Include="src\QuadTree.hpp" />
     <ClInclude Include="src\MCircle.hpp" />
@@ -56,6 +55,15 @@
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\MainMenu.hpp" />
     <ClInclude Include="src\Scene.hpp" />
+    <ClInclude Include="src\SFML-imgui\imconfig-SFML.h" />
+    <ClInclude Include="src\SFML-imgui\imconfig.h" />
+    <ClInclude Include="src\SFML-imgui\imgui-SFML.h" />
+    <ClInclude Include="src\SFML-imgui\imgui-SFML_export.h" />
+    <ClInclude Include="src\SFML-imgui\imgui.h" />
+    <ClInclude Include="src\SFML-imgui\imgui_internal.h" />
+    <ClInclude Include="src\SFML-imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\SFML-imgui\imstb_textedit.h" />
+    <ClInclude Include="src\SFML-imgui\imstb_truetype.h" />
     <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\WayPoint.hpp" />
@@ -139,7 +147,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\ImGui-SFML\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -157,7 +165,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,7 +184,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\ImGui-SFML\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -194,7 +202,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

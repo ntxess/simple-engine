@@ -13,7 +13,8 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     settings.minorVersion = 3;
 
     _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
-
+    ImGui::SFML::Init(*_data->_window);
+    
     try
     {
         _data->_holder.acquire("Prototype",
@@ -59,6 +60,8 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     _data->_pathMap["mCircle"] = std::move(mCircle->head);
     _data->_pathMap["mRandom"] = std::move(mRandom->head);
     _data->_pathMap["mStraight"] = std::move(mStraight->head);
+
+    _data->_machine->AddState(std::make_unique<Sandbox>(_data));
 }
 
 Engine::~Engine()
@@ -66,13 +69,12 @@ Engine::~Engine()
 
 void Engine::Run()
 {
-    _data->_machine->AddState(std::make_unique<Sandbox>(_data));
-
     float newTime, frameTime, interpolation;
     float currentTime = _clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
 
     sf::Event event;
+
     while (_data->_window->isOpen())
     {
         newTime = _clock.getElapsedTime().asSeconds();
@@ -82,6 +84,7 @@ void Engine::Run()
 
         _data->_machine->ProcessStateChange();
 
+        // Input Block
         while (_data->_window->pollEvent(event))
         {
             switch (event.type)
@@ -93,25 +96,38 @@ void Engine::Run()
                 _data->_focusedView.setSize(float(event.size.width), float(event.size.height));
                 break;
             default:
+                ImGui::SFML::ProcessEvent(*_data->_window, event);
                 _data->_machine->GetActiveState()->ProcessEvent(event);
             }
         }
-
         _data->_machine->GetActiveState()->ProcessInput();
+
+        // Update Block
+        ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+        ImGui::ShowDemoWindow();
+        ImGui::Begin("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End();
 
         while (accumulator >= deltaTime)
         {
             _data->_machine->GetActiveState()->Update(deltaTime);
             accumulator -= deltaTime;
         }
+        _data->_animator.update(sf::seconds(deltaTime));
 
         interpolation = accumulator / deltaTime;
 
+        // Render Block
         _data->_window->clear();
-        _data->_animator.update(sf::seconds(deltaTime));
+
+        ImGui::SFML::Render(*_data->_window);
         _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
+
         _data->_window->display();
     }
+
+    ImGui::SFML::Shutdown();
 }
 
 
