@@ -13,7 +13,6 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     settings.minorVersion = 3;
 
     _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
-    ImGui::SFML::Init(*_data->_window);
     
     try
     {
@@ -84,7 +83,7 @@ void Engine::Run()
 
         _data->_machine->ProcessStateChange();
 
-        // Input Block
+        // Input/Event Block
         while (_data->_window->pollEvent(event))
         {
             switch (event.type)
@@ -96,19 +95,12 @@ void Engine::Run()
                 _data->_focusedView.setSize(float(event.size.width), float(event.size.height));
                 break;
             default:
-                ImGui::SFML::ProcessEvent(*_data->_window, event);
                 _data->_machine->GetActiveState()->ProcessEvent(event);
             }
         }
         _data->_machine->GetActiveState()->ProcessInput();
 
         // Update Block
-        ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
-        ImGui::ShowDemoWindow();
-        ImGui::Begin("Hello, world!");
-        ImGui::Button("Look at this pretty button");
-        ImGui::End();
-
         while (accumulator >= deltaTime)
         {
             _data->_machine->GetActiveState()->Update(deltaTime);
@@ -120,10 +112,7 @@ void Engine::Run()
 
         // Render Block
         _data->_window->clear();
-
-        ImGui::SFML::Render(*_data->_window);
         _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
-
         _data->_window->display();
     }
 

@@ -15,8 +15,6 @@ void Sandbox::Init()
 	float height = float(_data->_window->getSize().y);
 	_data->_defaultView.setSize(width, height);
 	_data->_focusedView.setSize(width, height);
-	_boundary = sf::FloatRect(0.f, 0.f, width, height);
-	_quadTree = std::make_unique<QuadTree>(_boundary);
 	_data->_defaultView.setCenter(width / 2, height / 2);
 
 	std::random_device dev;
@@ -93,17 +91,16 @@ void Sandbox::Init()
 	_registry.emplace<BotLayerTagComponent>(_background);
 	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
 
-	_fpsTracker = _registry.create();
-	_registry.emplace<ClockComponent>(_fpsTracker);
-	_registry.emplace<DataComponent<float>>(_fpsTracker);
+	_performanceTracker = _registry.create();
+	_registry.emplace<PerformanceMonitorComponent>(_performanceTracker);
 
-	//ImGui::SFML::Init(*_data->_window);
+	ImGui::SFML::Init(*_data->_window);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	// Useful for determining what keypresses will do when in different scenes
-	//ImGui::SFML::ProcessEvent(*_data->_window, event);
+	ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
@@ -142,27 +139,34 @@ void Sandbox::ProcessInput()
 
 void Sandbox::Update(const float& deltaTime)
 {
-	//ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+	SystemHelper::InputMovementUpdate(_registry, _player, deltaTime);
+	SystemHelper::CheckBoundary(_data->_window->getSize(), _registry.get<SpriteComponent>(_player).sprite);
+	SystemHelper::FocusCameraOn(_data->_focusedView, _registry.get<SpriteComponent>(_player).sprite);
+	SystemHelper::MobWaypointUpdate(_registry, deltaTime);
+	SystemHelper::MobTrackingUpdate(_registry, _player, deltaTime);
 
-	PlayerUpdate(deltaTime);
-	WayPointUpdate(deltaTime);
-	TrackingUpdate(deltaTime);
+	sf::Vector2f vwCenter = _data->_focusedView.getCenter();
+	sf::Vector2f rwSize = sf::Vector2f(_data->_window->getSize());
+	_quadTree = std::move(SystemHelper::QuadTreeUpdate(_registry, vwCenter, rwSize));
+
+	SystemHelper::CollisionUpdate(_registry, _quadTree);
+	SystemHelper::CheckDestruction(_registry);
+
 	ProgressBarUpdate(deltaTime);
-	QuadTreeUpdate();
-	CollisionUpdate();
-	CheckDestruction();
 }
 
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
-	//ImGui::ShowDemoWindow();
-	//ImGui::Begin("Hello, world!");
-	//ImGui::Button("Look at this pretty button");
-	//ImGui::End();
-	//ImGui::SFML::Render(*_data->_window);
-
 	RenderLayer(rw);
-	FrameAnalyticsUpdate();
+
+	ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+	ImGui::ShowDemoWindow();
+	ImGui::Begin("Hello, world!");
+	ImGui::Button("Look at this pretty button");
+	ImGui::End();
+	ImGui::SFML::Render(*_data->_window);
+
+	SystemHelper::PerformanceMetricUpdate(_registry, _performanceTracker, rw);
 }
 
 void Sandbox::Pause()
@@ -174,169 +178,6 @@ void Sandbox::Resume()
 entt::registry& Sandbox::GetRegistry()
 {
 	return _registry;
-}
-
-void Sandbox::CheckBoundary(sf::Sprite& object)
-{
-	sf::Vector2f position = object.getPosition();
-	sf::FloatRect rect = object.getGlobalBounds();
-	sf::Vector2u bounds = _data->_window->getSize();
-
-	if (position.x < 0)
-		object.setPosition(sf::Vector2f(0.f, position.y));
-
-	if (position.x + rect.width > bounds.x)
-		object.setPosition(sf::Vector2f(bounds.x - rect.width, position.y));
-
-	position = object.getPosition();
-
-	if (position.y < 0)
-		object.setPosition(sf::Vector2f(position.x, 0.f));
-
-	if (position.y + rect.height > bounds.y)
-		object.setPosition(sf::Vector2f(position.x, bounds.y - rect.height));
-}
-
-void Sandbox::PlayerUpdate(const float& deltaTime)
-{
-	auto controller = _registry.get<PlayerInputComponent>(_player);
-	auto& player = _registry.get<SpriteComponent>(_player).sprite;
-	auto speed = _registry.get<SpeedComponent>(_player).current;
-
-	sf::Vector2f direction = controller.direction;
-
-	float length = sqrt((direction.x * direction.x) + (direction.y * direction.y));
-
-	if (length != 0.f)
-	{
-		direction.x = direction.x / length;
-		direction.y = direction.y / length;
-	}
-
-	direction *= speed * deltaTime;
-
-	player.move(direction);
-	//CheckBoundary(player);
-	_data->_focusedView.setCenter(player.getPosition());
-}
-
-void Sandbox::WayPointUpdate(const float& deltaTime)
-{
-	auto group = _registry.group<WayPointComponent, SpeedComponent>(entt::get<SpriteComponent>);
-	for (auto entity : group)
-	{
-		auto [wpc, spd, sp] = group.get<WayPointComponent, SpeedComponent, SpriteComponent>(entity);
-
-		WayPoint* headPtr = wpc.currentPath;
-		WayPoint* nextPtr = headPtr->_nextWP.get();
-
-		if (nextPtr == nullptr)
-		{
-			if (wpc.repeat)
-			{
-				wpc.currentPath = wpc.movePattern;
-				wpc.distance = 0.f;
-			}
-			continue;
-		}
-
-		wpc.distance += spd.current * deltaTime;
-		if (wpc.distance > nextPtr->_distanceTotal)
-			wpc.currentPath = nextPtr;
-
-		sf::Vector2f unitDist;
-		unitDist.x = (nextPtr->_location.x - headPtr->_location.x) / headPtr->_distanceToNext;
-		unitDist.y = (nextPtr->_location.y - headPtr->_location.y) / headPtr->_distanceToNext;
-
-		sf::Vector2f velocity;
-		velocity.x = unitDist.x * spd.current * deltaTime;
-		velocity.y = unitDist.y * spd.current * deltaTime;
-
-		sp.sprite.move(velocity);
-	}
-}
-
-void Sandbox::QuadTreeUpdate()
-{	
-	float left = _data->_focusedView.getCenter().x - (float(_data->_window->getSize().x) / 2);
-	float top = _data->_focusedView.getCenter().y - (float(_data->_window->getSize().y) / 2);
-	float width = float(_data->_window->getSize().x);
-	float height = float(_data->_window->getSize().y);
-
-	_boundary = sf::FloatRect(left, top, width, height);
-	_quadTree = std::make_unique<QuadTree>(_boundary);
-
-	auto view = _registry.view<HealthComponent>();
-
-	for (auto entity : view)
-	{
-		if (_registry.all_of<EnemyTagComponent>(entity))
-			_quadTree->Insert(entity, _registry);
-	}
-}
-
-void Sandbox::CollisionUpdate()
-{
-	auto view = _registry.view<DamageComponent>();
-	for (auto inflictor : view)
-	{
-		auto& inflictorSp = _registry.get<SpriteComponent>(inflictor);
-		sf::FloatRect range = inflictorSp.sprite.getGlobalBounds();
-		std::vector<entt::entity> found = _quadTree->QueryRange(range, _registry);
-
-		for (auto inflicted : found)
-		{
-			auto& inflictedSp = _registry.get<SpriteComponent>(inflicted);
-			if(inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
-			{
-				std::unique_ptr<Event> collisionEvent = std::make_unique<CollisionEvent>(inflictor, inflicted);
-				std::unique_ptr<CollisionHandler> collisionHandler = std::make_unique<CollisionHandler>();
-				_dispatcher->Dispatch(collisionEvent.get(), collisionHandler.get(), &CollisionHandler::OnEvent);
-
-				DamageUpdate(inflictor, inflicted);
-			}
-		}
-	}
-}
-
-void Sandbox::DamageUpdate(entt::entity inflictor, entt::entity inflicted)
-{
-	if (!_registry.valid(inflictor) || !_registry.valid(inflicted)) 
-		return;
-
-	auto dmg = _registry.get<DamageComponent>(inflictor);
-	auto& hp = _registry.get<HealthComponent>(inflicted);
-	hp.current -= dmg.damage;
-	_registry.destroy(inflictor);
-}
-
-void Sandbox::CheckDestruction()
-{
-	auto viewHp = _registry.view<HealthComponent>();
-	for (auto entity : viewHp)
-	{
-		auto health = _registry.get<HealthComponent>(entity);
-		if (health.current <= 0.f)
-		{
-			_registry.destroy(entity);
-
-			std::unique_ptr<Event> destructionEvent = std::make_unique<DestructionEvent>(entity);
-			std::unique_ptr<DestructionHandler> destructionHandler = std::make_unique<DestructionHandler>();
-			_dispatcher->Dispatch(destructionEvent.get(), destructionHandler.get(), &DestructionHandler::OnEvent);
-		}
-	}
-
-	auto viewWp = _registry.view<WayPointComponent>();
-	for (auto entity : viewWp)
-	{
-		auto wp = _registry.get<WayPointComponent>(entity);
-
-		if (_registry.all_of<ParticleTagComponent, WayPointComponent>(entity) && 
-			wp.currentPath->_distanceToNext == 0.f && !wp.repeat)
-		{
-			_registry.destroy(entity);
-		}
-	}
 }
 
 void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
@@ -377,57 +218,4 @@ void Sandbox::ProgressBarUpdate(const float& deltaTime)
 
 	float progress = skill->GetTime() / skill->GetMaxTime();
 	progressBar.sprite.setScale(std::clamp(progress, 0.f, 1.f), 1.f);
-}
-
-void Sandbox::TrackingUpdate(const float& deltaTime)
-{
-	auto view = _registry.view<AttractionComponent>();
-
-	for (auto entity : view)
-	{
-		auto& traveler = _registry.get<SpriteComponent>(entity).sprite;
-		auto target = _registry.get<SpriteComponent>(_player).sprite;
-
-		auto attraction = _registry.get<AttractionComponent>(entity);
-		auto speed = _registry.get<SpeedComponent>(entity).current;
-
-		float targetX = target.getPosition().x;
-		float targetY = target.getPosition().y;
-		float travelerX = traveler.getPosition().x;
-		float travelerY = traveler.getPosition().y;
-
-		float distance = sqrt((targetX - travelerX) * (targetX - travelerX) + 
-			(targetY - travelerY) * (targetY - travelerY));
-
-		if (distance <= attraction.power.level || attraction.power.fullStrength)
-		{
-			sf::Vector2f unitDist;
-			unitDist.x = (targetX - travelerX) / distance;
-			unitDist.y = (targetY - travelerY) / distance;
-
-			sf::Vector2f velocity;
-			velocity.x = unitDist.x * speed * deltaTime;
-			velocity.y = unitDist.y * speed * deltaTime;
-
-			traveler.move(velocity);		
-		}
-	}
-}
-
-void Sandbox::FrameAnalyticsUpdate()
-{
-	auto [tracker, fps] = _registry.get<ClockComponent, DataComponent<float>>(_fpsTracker);
-	if (tracker.clock.getElapsedTime().asSeconds() >= 1.f)
-	{
-		std::string title = "Engine 9 | Ver 0.30.2 | FPS: ";
-		title += std::to_string(int(fps.value));
-		title += " | ";
-		title += std::to_string(1000 / fps.value);
-		title += "m/s";
-		_data->_window->setTitle(title);
-
-		fps.value = 0.f;
-		tracker.clock.restart();
-	}
-	++fps.value;
 }

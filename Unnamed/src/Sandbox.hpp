@@ -10,16 +10,16 @@
 #include "Event.hpp"
 #include "EventDispatcher.hpp"
 #include "EventHandler.hpp"
+#include "SystemHelper.hpp"
 
 class Sandbox : public Scene
 {
 	friend class Entity;
-	static const size_t MAX_SIZE = 20;
+	static const size_t MAX_SIZE = 10;
 
 private:
 	std::shared_ptr<GameData> _data;
 
-	sf::FloatRect _boundary;
 	std::unique_ptr<QuadTree> _quadTree;
 
 	entt::registry _registry;
@@ -28,7 +28,7 @@ private:
 	entt::entity _dummy;
 	entt::entity _progressionBorder;
 	entt::entity _progressionBar;
-	entt::entity _fpsTracker;
+	entt::entity _performanceTracker;
 
 	std::unique_ptr<EventDispatcher> _dispatcher;
 
@@ -45,15 +45,6 @@ public:
 	void Resume();
 	entt::registry& GetRegistry();
 
-	void CheckBoundary(sf::Sprite& object);
-	void PlayerUpdate(const float& deltaTime);
-	void WayPointUpdate(const float& deltaTime);
-	void QuadTreeUpdate();
-	void CollisionUpdate();
-	void DamageUpdate(entt::entity inflictor, entt::entity afflicted);
-	void CheckDestruction();
 	void RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw);
 	void ProgressBarUpdate(const float& deltaTime);
-	void TrackingUpdate(const float& deltaTime);
-	void FrameAnalyticsUpdate();
 };

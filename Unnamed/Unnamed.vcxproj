@@ -36,6 +36,7 @@
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\WayPoint.cpp" />
+    <ClCompile Include="src\SystemHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Event.hpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="src\StateMachine.hpp" />
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\WayPoint.hpp" />
+    <ClInclude Include="src\SystemHelper.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

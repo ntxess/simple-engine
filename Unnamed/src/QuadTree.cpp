@@ -15,7 +15,7 @@ QuadTree::QuadTree(const sf::FloatRect& rect, const size_t depth)
 QuadTree::~QuadTree()
 {}
 
-bool QuadTree::Insert(entt::entity entity, entt::registry& registry)
+bool QuadTree::Insert(entt::registry& registry, entt::entity entity)
 {
 	// Ignore objects that do not belong in this quad tree
 	if (!_boundary.contains(registry.get<SpriteComponent>(entity).sprite.getPosition()))
@@ -36,10 +36,10 @@ bool QuadTree::Insert(entt::entity entity, entt::registry& registry)
 
 		// We have to add the points/data contained into this quad array to the new quads if we only want
 		// the last node to hold the data
-		if (_northWest->Insert(entity, registry)) return true;
-		if (_northEast->Insert(entity, registry)) return true;
-		if (_southWest->Insert(entity, registry)) return true;
-		if (_southEast->Insert(entity, registry)) return true;
+		if (_northWest->Insert(registry, entity)) return true;
+		if (_northEast->Insert(registry, entity)) return true;
+		if (_southWest->Insert(registry, entity)) return true;
+		if (_southEast->Insert(registry, entity)) return true;
 	}
 	else
 	{
@@ -66,7 +66,7 @@ void QuadTree::Subdivide()
 	_divided = true;
 }
 
-std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt::registry& registry)
+std::vector<entt::entity> QuadTree::QueryRange(entt::registry& registry, const sf::FloatRect& range)
 {
 	std::vector<entt::entity> entityFound;
 
@@ -84,22 +84,22 @@ std::vector<entt::entity> QuadTree::QueryRange(const sf::FloatRect& range, entt:
 
 	std::vector<entt::entity> tempVec;
 
-	tempVec = _northWest->QueryRange(range, registry);
+	tempVec = _northWest->QueryRange(registry, range);
 	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _northEast->QueryRange(range, registry);
+	tempVec = _northEast->QueryRange(registry, range);
 	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _southWest->QueryRange(range, registry);
+	tempVec = _southWest->QueryRange(registry, range);
 	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
-	tempVec = _southEast->QueryRange(range, registry);
+	tempVec = _southEast->QueryRange(registry, range);
 	entityFound.insert(entityFound.end(), tempVec.begin(), tempVec.end());
 
 	return entityFound;
 }
 
-void QuadTree::Remove(entt::entity entity, entt::registry& registry)
+void QuadTree::Remove(entt::registry& registry, entt::entity entity)
 {
 	for (size_t i = 0; i < _nodes.size(); i++)
 	{
@@ -113,10 +113,10 @@ void QuadTree::Remove(entt::entity entity, entt::registry& registry)
 	if (!_divided)
 		return;
 
-	_northWest->Remove(entity, registry);
-	_northEast->Remove(entity, registry);
-	_southWest->Remove(entity, registry);
-	_southEast->Remove(entity, registry);
+	_northWest->Remove(registry, entity);
+	_northEast->Remove(registry, entity);
+	_southWest->Remove(registry, entity);
+	_southEast->Remove(registry, entity);
 }
 
 void QuadTree::Clear()

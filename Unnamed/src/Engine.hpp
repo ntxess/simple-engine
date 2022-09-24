@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 
-//#include "SFML-imgui/imgui.h"
-#include "SFML-imgui/imgui-SFML.h"
 #include "Thor/Animations/FrameAnimation.hpp"
 #include "GameData.hpp"
 #include "MainMenu.hpp"

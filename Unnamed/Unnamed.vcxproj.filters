@@ -42,6 +42,12 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{44f6325e-4aa1-4567-86ec-b257b6166180}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ImGui">
+      <UniqueIdentifier>{b1567428-84d5-4418-a251-187b3ecc2821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImGui">
+      <UniqueIdentifier>{cede9fd3-c465-4a17-9a9b-280aae4e6a7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine.cpp">
@@ -78,22 +84,25 @@
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui_demo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui_tables.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SystemHelper.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,31 +167,34 @@
       <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imconfig.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imconfig-SFML.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imgui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imgui_internal.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imgui-SFML.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imgui-SFML_export.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imstb_rectpack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imstb_textedit.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\SFML-imgui\imstb_truetype.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SystemHelper.hpp">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

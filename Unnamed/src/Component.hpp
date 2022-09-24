@@ -220,3 +220,12 @@ struct AttractionComponent
 	}
 	AttractionComponent(const AttractionComponent&) = default;
 };
+
+struct PerformanceMonitorComponent
+{
+	sf::Clock clock;
+	float value;
+
+	PerformanceMonitorComponent() = default;
+	PerformanceMonitorComponent(const PerformanceMonitorComponent&) = default;
+};
