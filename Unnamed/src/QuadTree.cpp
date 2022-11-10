@@ -8,7 +8,7 @@ QuadTree::QuadTree(const sf::FloatRect& rect, const size_t depth)
 	_rectangle.setPosition(_boundary.left, _boundary.top);
 	_rectangle.setSize(sf::Vector2f(_boundary.width, _boundary.height));
 	_rectangle.setOutlineThickness(1.0f);
-	_rectangle.setFillColor(sf::Color(0, 0, 0));
+	_rectangle.setFillColor(sf::Color::Transparent);
 	_rectangle.setOutlineColor(sf::Color(0, 150, 100));
 }
 

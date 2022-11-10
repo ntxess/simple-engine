@@ -15,7 +15,6 @@ void MainMenu::Init()
     _windowFlags |= ImGuiWindowFlags_NoMove;
     _windowFlags |= ImGuiWindowFlags_NoResize;
     _windowFlags |= ImGuiWindowFlags_NoTitleBar;
-    _windowFlags |= ImGuiWindowFlags_AlwaysAutoResize;
 
     _performanceTracker = _registry.create();
     _registry.emplace<PerformanceMonitorComponent>(_performanceTracker);

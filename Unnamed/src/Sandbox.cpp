@@ -57,7 +57,7 @@ void Sandbox::Init()
 		std::make_shared<CommandDodge>(), 
 		std::make_shared<CommandExSkill>(), 
 		std::make_shared<CommandBasic>());
-	_registry.emplace<SpriteComponent>(_player, _data->_holder["Ship"]);
+	_registry.emplace<SpriteComponent>(_player, _data->_holder["ShipAlt"]);
 	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
 
 	_dummy = _registry.create();
@@ -94,12 +94,23 @@ void Sandbox::Init()
 	_performanceTracker = _registry.create();
 	_registry.emplace<PerformanceMonitorComponent>(_performanceTracker);
 
-	//ImGui::SFML::Init(*_data->_window);
+	sf::FloatRect rect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
+	_quadTree = std::make_unique<QuadTree>(rect);
+
+
+	_windowFlags = 0;
+	_windowFlags |= ImGuiWindowFlags_NoMove;
+	_windowFlags |= ImGuiWindowFlags_NoResize;
+	_windowFlags |= ImGuiWindowFlags_NoTitleBar;
+	_windowFlags |= ImGuiWindowFlags_NoBackground;
+
+	ImGui::SFML::Init(*_data->_window);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	// Useful for determining what keypresses will do when in different scenes
+	ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
@@ -147,7 +158,13 @@ void Sandbox::Update(const float& deltaTime)
 	SystemHelper::MobWaypointUpdate(_registry, deltaTime);
 	SystemHelper::MobTrackingUpdate(_registry, _player, deltaTime);
 
-	sf::Vector2f vwCenter = _data->_focusedView.getCenter();
+	// Quadtree drawn with player focus
+	//sf::Vector2f vwCenter = _data->_focusedView.getCenter();
+	//sf::Vector2f rwSize = sf::Vector2f(_data->_window->getSize());
+	//_quadTree = std::move(SystemHelper::QuadTreeUpdate(_registry, vwCenter, rwSize));
+
+	// Quadtree draw with screen focus
+	sf::Vector2f vwCenter = _data->_defaultView.getCenter();
 	sf::Vector2f rwSize = sf::Vector2f(_data->_window->getSize());
 	_quadTree = std::move(SystemHelper::QuadTreeUpdate(_registry, vwCenter, rwSize));
 
@@ -160,6 +177,20 @@ void Sandbox::Update(const float& deltaTime)
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	RenderLayer(rw);
+
+	{
+		ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+		ImGui::SetNextWindowPos(ImVec2(0, 0));
+		ImGui::SetWindowSize({ 10, 20 });
+		ImGui::Begin("Demo", NULL, _windowFlags);
+		ImGui::Checkbox("Toggle QuadTree Visualizer", &_quadTreeDemo);
+		ImGui::End();
+		ImGui::SFML::Render(*_data->_window);
+		
+		if (_quadTreeDemo)
+			_quadTree->Render(_data->_window);
+	}
+
 	SystemHelper::PerformanceMetricUpdate(_registry, _performanceTracker, rw);
 }
 

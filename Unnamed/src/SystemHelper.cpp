@@ -25,19 +25,19 @@ void SystemHelper::CheckBoundary(const sf::Vector2u& boundary, sf::Sprite& obj)
 	sf::Vector2f position = obj.getPosition();
 	sf::FloatRect rect = obj.getGlobalBounds();
 
-	if (position.x < 0)
-		obj.setPosition(sf::Vector2f(0.f, position.y));
+	if (position.x < 0 + (rect.width / 2))
+		obj.setPosition(sf::Vector2f(0.f + (rect.width / 2), position.y));
 
-	if (position.x + rect.width > boundary.x)
-		obj.setPosition(sf::Vector2f(boundary.x - rect.width, position.y));
+	if (position.x + (rect.width / 2) > boundary.x) 
+		obj.setPosition(sf::Vector2f(boundary.x - (rect.width / 2), position.y));
 
 	position = obj.getPosition();
 
-	if (position.y < 0)
-		obj.setPosition(sf::Vector2f(position.x, 0.f));
+	if (position.y < 0 + (rect.height / 2))
+		obj.setPosition(sf::Vector2f(position.x, 0.f + (rect.height / 2)));
 
-	if (position.y + rect.height > boundary.y)
-		obj.setPosition(sf::Vector2f(position.x, boundary.y - rect.height));
+	if (position.y + rect.height/2 > boundary.y)
+		obj.setPosition(sf::Vector2f(position.x, boundary.y - (rect.height / 2)));
 }
 
 void SystemHelper::FocusCameraOn(sf::View& vw, sf::Sprite& obj)
