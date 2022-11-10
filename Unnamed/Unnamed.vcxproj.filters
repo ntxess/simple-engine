@@ -104,6 +104,9 @@
     <ClCompile Include="src\SystemHelper.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\PowerThrower.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MainMenu.hpp">
@@ -196,42 +199,8 @@
     <ClInclude Include="src\SystemHelper.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="resources\font\VCR_OSD_MONO_1.001.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resources\bg\bg1.png" />
-    <Image Include="resources\bg\prototype_texture_5120x5120.png" />
-    <Image Include="resources\bg\quit.png" />
-    <Image Include="resources\bg\start.png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\beer (1).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\beer (2).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\beer (3).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\Darkupdate.png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\greenbar (1).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\greenbar (2).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\greenbar (3).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\HealthBar DARK.png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\redblue (1).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\redblue (2).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\redblue (3).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\rpg (1).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\rpg (2).png" />
-    <Image Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\rpg (3).png" />
-    <Image Include="resources\player\ship.png" />
-    <Image Include="resources\player\ship0.png" />
-    <Image Include="resources\player\ship1.png" />
-    <Image Include="resources\player\shotParticle.png" />
-    <Image Include="resources\player\triangle.png" />
-    <Image Include="resources\sp\p1.png" />
-    <Image Include="resources\Space\Space Sprite Sheet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\desktop.ini" />
-    <None Include="resources\Health Bar Asset Pack 2 by Adwit Rahman\Health Bar Asset Pack 2.2 by Adwit Rahman.psd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resources\Space\public-license.txt" />
+    <ClInclude Include="src\PowerThrower.hpp">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

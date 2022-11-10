@@ -12,24 +12,12 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     settings.majorVersion = 4;
     settings.minorVersion = 3;
 
-    _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
+    _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close, settings);
     
     try
     {
         _data->_holder.acquire("Prototype",
-            thor::Resources::fromFile<sf::Texture>("resources/bg/prototype_texture_5120x5120.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("Background", 
-            thor::Resources::fromFile<sf::Texture>("resources/bg/bg1.png"), 
-            thor::Resources::Reuse);
-        _data->_holder.acquire("StartButton", 
-            thor::Resources::fromFile<sf::Texture>("resources/bg/start.png"), 
-            thor::Resources::Reuse);
-        _data->_holder.acquire("QuitButton", 
-            thor::Resources::fromFile<sf::Texture>("resources/bg/quit.png"), 
-            thor::Resources::Reuse);
-        _data->_holder.acquire("Triangle", 
-            thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"), 
+            thor::Resources::fromFile<sf::Texture>("resources/Space/PNG/Space_Stars2.png"),
             thor::Resources::Reuse);
         _data->_holder.acquire("Ship", 
             thor::Resources::fromFile<sf::Texture>("resources/player/ship0.png"), 

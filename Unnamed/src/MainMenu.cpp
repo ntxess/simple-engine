@@ -60,10 +60,11 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         {
             ImGui::SetWindowFontScale(2.5f);
             ImGui::SetCursorPos(ImVec2(1100, 400));
-            ImGui::Text("Vertical scroller shoot-em-up\n\n"
+            ImGui::Text("Sandbox shoot-em-up\n\n"
                 "Showcase features:\n"
                 "\tQuadtree collision detection\n"
                 "\tCPU player waypoint and tracking\n"
+                "\tEntity component system\n"
             );
         }
 
@@ -71,7 +72,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         ImGui::SetCursorPos(ImVec2(250, 550));
         if (ImGui::Button("Game 2"))
         {
-
+            _data->_machine->AddState(std::make_unique<PowerThrower>(_data));
         }
         if (ImGui::IsItemHovered())
         {
@@ -124,7 +125,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
 
         ImGui::SetWindowFontScale(5.f);
         ImGui::SetCursorPos(ImVec2(250, 850));
-        if (ImGui::Button("Game 4"))
+        if (ImGui::Button("Game 5"))
         {
 
         }
@@ -141,7 +142,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
 
         ImGui::SetWindowFontScale(5.f);
         ImGui::SetCursorPos(ImVec2(1200, 300));
-        ImGui::Text("Description");
+        ImGui::Text("Description:");
     }
 
     ImGui::End();

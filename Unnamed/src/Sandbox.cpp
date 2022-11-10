@@ -1,7 +1,7 @@
 #include "Sandbox.hpp"
 
 Sandbox::Sandbox(std::shared_ptr<GameData>& data)
-	:_data(data)
+	: _data(data)
 {}
 
 Sandbox::~Sandbox()
@@ -89,7 +89,7 @@ void Sandbox::Init()
 
 	_background = _registry.create();
 	_registry.emplace<BotLayerTagComponent>(_background);
-	_registry.emplace<SpriteComponent>(_background, _data->_holder["Prototype"]);
+	_registry.emplace<BackgroundComponent>(_background, _data->_holder["Prototype"], sf::IntRect(0, 0, _data->_window->getSize().x, _data->_window->getSize().y));
 
 	_performanceTracker = _registry.create();
 	_registry.emplace<PerformanceMonitorComponent>(_performanceTracker);
@@ -185,7 +185,9 @@ entt::registry& Sandbox::GetRegistry()
 
 void Sandbox::RenderLayer(const std::unique_ptr<sf::RenderWindow>& rw)
 {
-	_data->_window->setView(_data->_focusedView);
+	rw->draw(_registry.get<BackgroundComponent>(_background).sprite);
+
+	//_data->_window->setView(_data->_focusedView);
 
 	auto botLayerSp = _registry.view<SpriteComponent, BotLayerTagComponent>();
 	for (auto entity : botLayerSp)

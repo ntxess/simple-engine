@@ -229,3 +229,17 @@ struct PerformanceMonitorComponent
 	PerformanceMonitorComponent() = default;
 	PerformanceMonitorComponent(const PerformanceMonitorComponent&) = default;
 };
+
+struct BackgroundComponent
+{
+	sf::Sprite sprite;
+
+	BackgroundComponent() = default;
+	BackgroundComponent(sf::Texture& texture, const sf::IntRect& bgCanvas)
+	{
+		texture.setRepeated(true);
+		sprite.setTexture(texture);
+		sprite.setTextureRect(bgCanvas);
+	}
+	BackgroundComponent(const BackgroundComponent&) = default;
+};
