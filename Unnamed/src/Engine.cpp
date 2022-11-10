@@ -60,7 +60,7 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     _data->_pathMap["mRandom"] = std::move(mRandom->head);
     _data->_pathMap["mStraight"] = std::move(mStraight->head);
 
-    _data->_machine->AddState(std::make_unique<Sandbox>(_data));
+    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
 }
 
 Engine::~Engine()
@@ -72,8 +72,6 @@ void Engine::Run()
     float currentTime = _clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
 
-    sf::Event event;
-
     while (_data->_window->isOpen())
     {
         newTime = _clock.getElapsedTime().asSeconds();
@@ -84,6 +82,7 @@ void Engine::Run()
         _data->_machine->ProcessStateChange();
 
         // Input/Event Block
+        sf::Event event;
         while (_data->_window->pollEvent(event))
         {
             switch (event.type)

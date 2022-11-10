@@ -4,6 +4,7 @@
 
 #include "SFML-imgui/imgui.h"
 #include "SFML-imgui/imgui-SFML.h"
+#include "MainMenu.hpp"
 #include "GameData.hpp"
 #include "QuadTree.hpp"
 #include "Component.hpp"
@@ -14,7 +15,6 @@
 
 class Sandbox : public Scene
 {
-	friend class Entity;
 	static const size_t MAX_SIZE = 10;
 
 private:

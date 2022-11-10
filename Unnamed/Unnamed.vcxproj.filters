@@ -197,4 +197,7 @@
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\font\VCR_OSD_MONO_1.001.ttf" />
+  </ItemGroup>
 </Project>

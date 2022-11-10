@@ -4,7 +4,6 @@
 #include "Thor/Animations/FrameAnimation.hpp"
 #include "GameData.hpp"
 #include "MainMenu.hpp"
-#include "Sandbox.hpp"
 #include "MCircle.hpp"
 #include "MRandom.hpp"
 #include "MStraight.hpp"

@@ -70,6 +70,9 @@
     <ClInclude Include="src\WayPoint.hpp" />
     <ClInclude Include="src\SystemHelper.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\font\VCR_OSD_MONO_1.001.ttf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

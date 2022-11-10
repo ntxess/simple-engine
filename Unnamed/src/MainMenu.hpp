@@ -2,15 +2,21 @@
 #include <iostream>
 #include <vector>
 
+#include "SFML-imgui/imgui.h"
+#include "SFML-imgui/imgui-SFML.h"
+#include "Sandbox.hpp"
 #include "GameData.hpp"
+#include "SystemHelper.hpp"
+
 
 class MainMenu : public Scene
 {
-	friend class Entity;
-
 private:
 	std::shared_ptr<GameData> _data;
 	entt::registry _registry;
+
+	ImGuiWindowFlags _windowFlags;
+	entt::entity _performanceTracker;
 
 public:
 	MainMenu(std::shared_ptr<GameData>& data);

@@ -94,17 +94,20 @@ void Sandbox::Init()
 	_performanceTracker = _registry.create();
 	_registry.emplace<PerformanceMonitorComponent>(_performanceTracker);
 
-	ImGui::SFML::Init(*_data->_window);
+	//ImGui::SFML::Init(*_data->_window);
 }
 
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	// Useful for determining what keypresses will do when in different scenes
-	ImGui::SFML::ProcessEvent(*_data->_window, event);
+	//ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+
 	auto& controller = _registry.get<PlayerInputComponent>(_player);
 
 	const float input = 1.f;
@@ -159,12 +162,12 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 {
 	RenderLayer(rw);
 
-	ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
-	ImGui::ShowDemoWindow();
-	ImGui::Begin("Hello, world!");
-	ImGui::Button("Look at this pretty button");
-	ImGui::End();
-	ImGui::SFML::Render(*_data->_window);
+	//ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
+	//ImGui::ShowDemoWindow();
+	//ImGui::Begin("Hello, world!");
+	//ImGui::Button("Look at this pretty button");
+	//ImGui::End();
+	//ImGui::SFML::Render(*_data->_window);
 
 	SystemHelper::PerformanceMetricUpdate(_registry, _performanceTracker, rw);
 }
