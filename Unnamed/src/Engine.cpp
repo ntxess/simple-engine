@@ -34,6 +34,15 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
         _data->_holder.acquire("progressbarborder01",
             thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_ProgressBarBorder.png"),
             thor::Resources::Reuse);
+        _data->_holder.acquire("TankTop",
+            thor::Resources::fromFile<sf::Texture>("resources/player/tank_top.png"),
+            thor::Resources::Reuse);
+        _data->_holder.acquire("TankBot",
+            thor::Resources::fromFile<sf::Texture>("resources/player/tank_bot.png"),
+            thor::Resources::Reuse);
+        _data->_holder.acquire("TankTurret",
+            thor::Resources::fromFile<sf::Texture>("resources/player/tank_turret.png"),
+            thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)
     {

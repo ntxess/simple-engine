@@ -22,4 +22,5 @@ namespace SystemHelper
 	void DamageUpdate(entt::registry& reg, entt::entity inflictor, entt::entity inflicted);
 	void CheckDestruction(entt::registry& reg);
 	void PerformanceMetricUpdate(entt::registry& reg, entt::entity ent, const std::unique_ptr<sf::RenderWindow>& rw);
+	void RotateTurretUpdate(entt::registry& reg, entt::entity ent, const float& dt);
 }

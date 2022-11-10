@@ -13,7 +13,11 @@ class PowerThrower : public Scene
 {
 private:
 	std::shared_ptr<GameData> _data;
+
 	entt::registry _registry;
+	entt::entity _projectile;
+	entt::entity _cannon;
+	entt::entity _performanceTracker;
 
 public:
 	PowerThrower(std::shared_ptr<GameData>& data);

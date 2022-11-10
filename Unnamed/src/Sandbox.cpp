@@ -100,7 +100,6 @@ void Sandbox::Init()
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	// Useful for determining what keypresses will do when in different scenes
-	//ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
@@ -161,14 +160,6 @@ void Sandbox::Update(const float& deltaTime)
 void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
 {
 	RenderLayer(rw);
-
-	//ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
-	//ImGui::ShowDemoWindow();
-	//ImGui::Begin("Hello, world!");
-	//ImGui::Button("Look at this pretty button");
-	//ImGui::End();
-	//ImGui::SFML::Render(*_data->_window);
-
 	SystemHelper::PerformanceMetricUpdate(_registry, _performanceTracker, rw);
 }
 

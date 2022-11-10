@@ -214,3 +214,25 @@ void SystemHelper::PerformanceMetricUpdate(entt::registry& reg, entt::entity ent
 	}
 	++fps;
 }
+
+void SystemHelper::RotateTurretUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+{
+	auto& currentDegree = reg.get<RotateTurretComponent>(ent).degree;
+	auto speed = reg.get<RotateTurretComponent>(ent).speed;
+	auto& currentOrientation = reg.get<RotateTurretComponent>(ent).flip;
+
+	auto& sprite = reg.get<SpriteComponent>(ent).sprite;
+
+	if (currentOrientation)
+		currentDegree += dt * speed;
+	else
+		currentDegree -= dt * speed;
+
+	if (currentDegree >= 370)
+		currentOrientation = false;
+
+	if (currentDegree <= 280)
+		currentOrientation = true;
+
+	sprite.setRotation(currentDegree);
+}

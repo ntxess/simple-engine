@@ -243,3 +243,14 @@ struct BackgroundComponent
 	}
 	BackgroundComponent(const BackgroundComponent&) = default;
 };
+
+struct RotateTurretComponent
+{
+	float degree;
+	float speed;
+	int flip;
+	
+	RotateTurretComponent() : degree(275.f), speed(1.f), flip(true) {};
+	RotateTurretComponent(const float& speed) : degree(275.f), speed(speed), flip(true) {};
+	RotateTurretComponent(const RotateTurretComponent&) = default;
+};
