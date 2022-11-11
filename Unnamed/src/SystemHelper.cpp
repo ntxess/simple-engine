@@ -145,22 +145,7 @@ void SystemHelper::CollisionUpdate(entt::registry& reg, const std::unique_ptr<Qu
 		for (auto inflicted : found)
 		{
 			auto& inflictedSp = reg.get<SpriteComponent>(inflicted);
-			
-			auto targetHitbox = inflictedSp.sprite.getGlobalBounds();
-			//sf::RectangleShape box;
-			//box.setPosition(inflictedSp.sprite.getPosition());
-			//box.setSize({ targetHitbox.width, targetHitbox.height });
-			//box.setOutlineThickness(1.0f);
-			//box.setFillColor(sf::Color::Transparent);
-			//box.setOutlineColor(sf::Color(0, 150, 100));
-			//rw->draw(box);
-
-			//targetHitbox.left = ;
-			//targetHitbox.top = ;
-			//targetHitbox.width = ;
-			//targetHitbox.hjeight = ;
-
-			if (inflictorSp.sprite.getGlobalBounds().intersects(targetHitbox))
+			if (inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
 			{
 				//std::unique_ptr<Event> collisionEvent = std::make_unique<CollisionEvent>(inflictor, inflicted);
 				//std::unique_ptr<CollisionHandler> collisionHandler = std::make_unique<CollisionHandler>();

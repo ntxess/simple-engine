@@ -75,7 +75,7 @@ std::vector<entt::entity> QuadTree::QueryRange(entt::registry& registry, const s
 
 	for (auto entity : _nodes)
 	{
-		if (range.contains(registry.get<SpriteComponent>(entity).sprite.getPosition()))
+		if (range.intersects(registry.get<SpriteComponent>(entity).sprite.getGlobalBounds()))
 			entityFound.push_back(entity);
 	}
 
