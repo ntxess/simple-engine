@@ -21,8 +21,11 @@ void PowerThrower::Init()
 	_registry.emplace<PlayerTagComponent>(_projectile);
 	_registry.emplace<MidLayerTagComponent>(_projectile);
 	_registry.emplace<SpeedComponent>(_projectile, 500);
-	_registry.emplace<SpriteComponent>(_projectile, _data->_holder["Shot"]);
-	_registry.get<SpriteComponent>(_projectile).sprite.setPosition(960, 1000);
+	_registry.emplace<SpriteComponent>(_projectile, _data->_holder["TankBullet"]);
+	//_registry.get<SpriteComponent>(_projectile).sprite.setPosition(205, 840);
+	_registry.get<SpriteComponent>(_projectile).sprite.setPosition(700, 840);
+	_registry.get<SpriteComponent>(_projectile).sprite.setScale({0.5f, 0.5f});
+
 
 	{
 		entt::entity tanktop = _registry.create();
@@ -33,13 +36,13 @@ void PowerThrower::Init()
 		entt::entity tankbot = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(tankbot);
 		_registry.emplace<SpriteComponent>(tankbot, _data->_holder["TankBot"]);
-		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(195, 840);
+		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(205, 840);
 
 		_cannon = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(_cannon);
 		_registry.emplace<RotateTurretComponent>(_cannon, 100.f);
 		_registry.emplace<SpriteComponent>(_cannon, _data->_holder["TankTurret"]);
-		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(220, 770);
+		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(300, 815);
 		_registry.get<SpriteComponent>(_cannon).sprite.setOrigin(0, 0);
 
 	}
@@ -55,11 +58,19 @@ void PowerThrower::ProcessInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		float rotation = _registry.get<SpriteComponent>(_cannon).sprite.getRotation();
+		_registry.get<SpriteComponent>(_projectile).sprite.setRotation(rotation);
+		_launch = true;
+	}
 }
 
 void PowerThrower::Update(const float& deltaTime)
 {
-	SystemHelper::RotateTurretUpdate(_registry, _cannon, deltaTime);
+	if(!_launch)
+		SystemHelper::RotateTurretUpdate(_registry, _cannon, deltaTime);
 }
 
 void PowerThrower::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime, const float& interpolation)
@@ -88,4 +99,9 @@ void PowerThrower::Resume()
 entt::registry& PowerThrower::GetRegistry()
 {
 	return _registry;
+}
+
+void PowerThrower::GameReset()
+{
+	_launch = false;
 }

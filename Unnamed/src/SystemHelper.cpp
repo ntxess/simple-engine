@@ -94,7 +94,7 @@ void SystemHelper::MobTrackingUpdate(entt::registry& reg, entt::entity ent, cons
 		auto attraction = reg.get<AttractionComponent>(entity);
 		auto speed = reg.get<SpeedComponent>(entity).current;
 
-		float targetX = target.getPosition().x;
+		float targetX = target.getPosition().x + (target.getGlobalBounds().width / 2) - (tracker.getGlobalBounds().width / 2);
 		float targetY = target.getPosition().y;
 		float trackerX = tracker.getPosition().x;
 		float trackerY = tracker.getPosition().y;

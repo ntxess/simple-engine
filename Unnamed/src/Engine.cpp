@@ -46,6 +46,9 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
         _data->_holder.acquire("TankTurret",
             thor::Resources::fromFile<sf::Texture>("resources/player/tank_turret.png"),
             thor::Resources::Reuse);
+        _data->_holder.acquire("TankBullet",
+            thor::Resources::fromFile<sf::Texture>("resources/other/tank_bullet.png"),
+            thor::Resources::Reuse);
     }
     catch (thor::ResourceLoadingException& e)
     {

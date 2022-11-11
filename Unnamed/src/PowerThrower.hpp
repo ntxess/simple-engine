@@ -19,6 +19,8 @@ private:
 	entt::entity _cannon;
 	entt::entity _performanceTracker;
 
+	bool _launch;
+
 public:
 	PowerThrower(std::shared_ptr<GameData>& data);
 	~PowerThrower();
@@ -31,5 +33,7 @@ public:
 	void Pause();
 	void Resume();
 	entt::registry& GetRegistry();
+
+	void GameReset();
 };
 
