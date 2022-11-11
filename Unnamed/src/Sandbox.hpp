@@ -15,13 +15,15 @@
 
 class Sandbox : public Scene
 {
-	static const size_t MAX_SIZE = 30;
+	static const size_t MAX_SIZE = 20;
 
 private:
 	std::shared_ptr<GameData> _data;
 
 	std::unique_ptr<QuadTree> _quadTree;
 	bool _quadTreeDemo = false;
+	bool _hitBoxDemo = false;
+
 
 	entt::registry _registry;
 	entt::entity _background;

@@ -23,7 +23,7 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
             thor::Resources::fromFile<sf::Texture>("resources/player/ship0.png"), 
             thor::Resources::Reuse);
         _data->_holder.acquire("ShipAlt",
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship1_alt.png"),
+            thor::Resources::fromFile<sf::Texture>("resources/player/ship_alt.png"),
             thor::Resources::Reuse);
         _data->_holder.acquire("Shot", 
             thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 

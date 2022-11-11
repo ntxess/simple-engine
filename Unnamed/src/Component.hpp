@@ -26,7 +26,6 @@ struct SpriteComponent
 	SpriteComponent(sf::Texture& texture)
 	{
 		sprite.setTexture(texture);
-		sprite.setOrigin(float(texture.getSize().x / 2), float(texture.getSize().y / 2));
 	}
 	SpriteComponent(const SpriteComponent&) = default;
 };

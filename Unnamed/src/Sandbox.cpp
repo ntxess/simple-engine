@@ -153,6 +153,11 @@ void Sandbox::ProcessInput()
 void Sandbox::Update(const float& deltaTime)
 {
 	SystemHelper::InputMovementUpdate(_registry, _player, deltaTime);
+
+	auto enemyView = _registry.view<EnemyTagComponent>();
+	for (auto entity : enemyView)
+		SystemHelper::CheckBoundary(_data->_window->getSize(), _registry.get<SpriteComponent>(entity).sprite);
+
 	SystemHelper::CheckBoundary(_data->_window->getSize(), _registry.get<SpriteComponent>(_player).sprite);
 	SystemHelper::FocusCameraOn(_data->_focusedView, _registry.get<SpriteComponent>(_player).sprite);
 	SystemHelper::MobWaypointUpdate(_registry, deltaTime);
@@ -184,11 +189,28 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 		ImGui::SetWindowSize({ 10, 20 });
 		ImGui::Begin("Demo", NULL, _windowFlags);
 		ImGui::Checkbox("Toggle QuadTree Visualizer", &_quadTreeDemo);
+		ImGui::Checkbox("Toggle HitBox Visualizer", &_hitBoxDemo);
 		ImGui::End();
 		ImGui::SFML::Render(*_data->_window);
 		
 		if (_quadTreeDemo)
 			_quadTree->Render(_data->_window);
+
+		if (_hitBoxDemo)
+		{
+			auto midLayerSp = _registry.view<SpriteComponent, MidLayerTagComponent>();
+			for (auto entity : midLayerSp)
+			{
+				auto targetHitbox = midLayerSp.get<SpriteComponent>(entity).sprite.getGlobalBounds();
+				sf::RectangleShape box;
+				box.setPosition(midLayerSp.get<SpriteComponent>(entity).sprite.getPosition());
+				box.setSize({ targetHitbox.width, targetHitbox.height });
+				box.setOutlineThickness(1.0f);
+				box.setFillColor(sf::Color::Transparent);
+				box.setOutlineColor(sf::Color(0, 150, 100));
+				rw->draw(box);
+			}
+		}
 	}
 
 	SystemHelper::PerformanceMetricUpdate(_registry, _performanceTracker, rw);

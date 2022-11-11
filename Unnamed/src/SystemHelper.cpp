@@ -8,6 +8,7 @@ void SystemHelper::InputMovementUpdate(entt::registry& reg, entt::entity ent, co
 
 	sf::Vector2f direction = controller.direction;
 
+	// Normalizing the vector to prevent diagonal movement from being faster than the cardinal directions
 	float length = sqrt((direction.x * direction.x) + (direction.y * direction.y));
 
 	if (length != 0.f)
@@ -25,19 +26,19 @@ void SystemHelper::CheckBoundary(const sf::Vector2u& boundary, sf::Sprite& obj)
 	sf::Vector2f position = obj.getPosition();
 	sf::FloatRect rect = obj.getGlobalBounds();
 
-	if (position.x < 0 + (rect.width / 2))
-		obj.setPosition(sf::Vector2f(0.f + (rect.width / 2), position.y));
+	if (position.x < 0)
+		obj.setPosition(sf::Vector2f(0.f, position.y));
 
-	if (position.x + (rect.width / 2) > boundary.x) 
-		obj.setPosition(sf::Vector2f(boundary.x - (rect.width / 2), position.y));
+	if (position.x + rect.width > boundary.x)
+		obj.setPosition(sf::Vector2f(boundary.x - rect.width, position.y));
 
 	position = obj.getPosition();
 
-	if (position.y < 0 + (rect.height / 2))
-		obj.setPosition(sf::Vector2f(position.x, 0.f + (rect.height / 2)));
+	if (position.y < 0)
+		obj.setPosition(sf::Vector2f(position.x, 0.f));
 
-	if (position.y + rect.height/2 > boundary.y)
-		obj.setPosition(sf::Vector2f(position.x, boundary.y - (rect.height / 2)));
+	if (position.y + rect.height > boundary.y)
+		obj.setPosition(sf::Vector2f(position.x, boundary.y - rect.height));
 }
 
 void SystemHelper::FocusCameraOn(sf::View& vw, sf::Sprite& obj)
@@ -144,7 +145,22 @@ void SystemHelper::CollisionUpdate(entt::registry& reg, const std::unique_ptr<Qu
 		for (auto inflicted : found)
 		{
 			auto& inflictedSp = reg.get<SpriteComponent>(inflicted);
-			if (inflictorSp.sprite.getGlobalBounds().intersects(inflictedSp.sprite.getGlobalBounds()))
+			
+			auto targetHitbox = inflictedSp.sprite.getGlobalBounds();
+			//sf::RectangleShape box;
+			//box.setPosition(inflictedSp.sprite.getPosition());
+			//box.setSize({ targetHitbox.width, targetHitbox.height });
+			//box.setOutlineThickness(1.0f);
+			//box.setFillColor(sf::Color::Transparent);
+			//box.setOutlineColor(sf::Color(0, 150, 100));
+			//rw->draw(box);
+
+			//targetHitbox.left = ;
+			//targetHitbox.top = ;
+			//targetHitbox.width = ;
+			//targetHitbox.hjeight = ;
+
+			if (inflictorSp.sprite.getGlobalBounds().intersects(targetHitbox))
 			{
 				//std::unique_ptr<Event> collisionEvent = std::make_unique<CollisionEvent>(inflictor, inflicted);
 				//std::unique_ptr<CollisionHandler> collisionHandler = std::make_unique<CollisionHandler>();

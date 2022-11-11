@@ -23,7 +23,6 @@ void CommandBasic::Execute(entt::registry& registry, entt::entity entity, std::s
 
 	if (currentTime > _cooldownTime)
 	{
-		sf::Vector2f position = registry.get<SpriteComponent>(entity).sprite.getPosition();
 		entt::entity attackParticle = registry.create();
 		registry.emplace<AllyTagComponent>(attackParticle);
 		registry.emplace<ParticleTagComponent>(attackParticle);
@@ -32,8 +31,13 @@ void CommandBasic::Execute(entt::registry& registry, entt::entity entity, std::s
 		registry.emplace<WayPointComponent>(attackParticle, data->_pathMap.at("mStraight").get(), false);
 		registry.emplace<DamageComponent>(attackParticle, 100.f);
 		registry.emplace<SpriteComponent>(attackParticle, data->_holder["Shot"]);
+
+		sf::Vector2f position = registry.get<SpriteComponent>(entity).sprite.getPosition();
+		position.x += registry.get<SpriteComponent>(entity).sprite.getTexture()->getSize().x / 2;
+		position.x -= registry.get<SpriteComponent>(attackParticle).sprite.getTexture()->getSize().x;
 		registry.get<SpriteComponent>(attackParticle).sprite.setPosition(position);
 		registry.get<SpriteComponent>(attackParticle).sprite.setScale(2.f, 2.f);
+
 		_timer.restart();
 	}
 }
