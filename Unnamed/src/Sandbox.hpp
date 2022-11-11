@@ -20,11 +20,6 @@ class Sandbox : public Scene
 private:
 	std::shared_ptr<GameData> _data;
 
-	std::unique_ptr<QuadTree> _quadTree;
-	bool _quadTreeDemo = false;
-	bool _hitBoxDemo = false;
-
-
 	entt::registry _registry;
 	entt::entity _background;
 	entt::entity _player;
@@ -33,9 +28,14 @@ private:
 	entt::entity _progressionBar;
 	entt::entity _performanceTracker;
 
+	std::unique_ptr<QuadTree> _quadTree;
+
 	std::unique_ptr<EventDispatcher> _dispatcher;
 
 	ImGuiWindowFlags _windowFlags;
+	bool _quadTreeDemo = false;
+	bool _hitBoxDemo = false;
+	int _enemyCount;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);

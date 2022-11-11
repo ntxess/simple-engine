@@ -164,7 +164,7 @@ void SystemHelper::DamageUpdate(entt::registry& reg, entt::entity inflictor, ent
 
 	auto dmg = reg.get<DamageComponent>(inflictor);
 	auto& hp = reg.get<HealthComponent>(inflicted);
-	hp.current -= dmg.damage;
+	hp.DecreaseHealth(dmg.damage);
 	reg.destroy(inflictor);
 }
 
@@ -236,4 +236,17 @@ void SystemHelper::RotateTurretUpdate(entt::registry& reg, entt::entity ent, con
 		currentOrientation = true;
 
 	sprite.setRotation(currentDegree);
+}
+
+void SystemHelper::AccelerationUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+{
+	auto acceleration = reg.get<AccelerationComponent>(ent);
+}
+
+void SystemHelper::GravitySimUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+{
+	auto& speed = reg.get<SpeedComponent>(ent).current;
+	auto acceleration = reg.get<AccelerationComponent>(ent);
+	speed *= acceleration.current;
+	acceleration.DecreaseAcceleration(dt);
 }

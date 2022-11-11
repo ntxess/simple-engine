@@ -38,6 +38,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\WayPoint.cpp" />
     <ClCompile Include="src\SystemHelper.cpp" />
+    <ClCompile Include="src\Sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PowerThrower.hpp" />
@@ -71,6 +72,7 @@
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\WayPoint.hpp" />
     <ClInclude Include="src\SystemHelper.hpp" />
+    <ClInclude Include="src\Sudoku.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

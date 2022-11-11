@@ -1,28 +1,23 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include <random>
 
 #include "SFML-imgui/imgui.h"
 #include "SFML-imgui/imgui-SFML.h"
-#include "Sandbox.hpp"
-#include "PowerThrower.hpp"
-#include "Sudoku.hpp"
+#include "MainMenu.hpp"
 #include "GameData.hpp"
+#include "Component.hpp"
 #include "SystemHelper.hpp"
 
-
-class MainMenu : public Scene
+class Sudoku : public Scene
 {
 private:
 	std::shared_ptr<GameData> _data;
 	entt::registry _registry;
 
-	ImGuiWindowFlags _windowFlags;
-	entt::entity _performanceTracker;
-
 public:
-	MainMenu(std::shared_ptr<GameData>& data);
-	~MainMenu();
+	Sudoku(std::shared_ptr<GameData>& data);
+	~Sudoku();
 
 	void Init();
 	void ProcessEvent(const sf::Event& event);

@@ -21,6 +21,7 @@ void PowerThrower::Init()
 	_registry.emplace<PlayerTagComponent>(_projectile);
 	_registry.emplace<MidLayerTagComponent>(_projectile);
 	_registry.emplace<SpeedComponent>(_projectile, 500);
+	_registry.emplace<AccelerationComponent>(_projectile);
 	_registry.emplace<SpriteComponent>(_projectile, _data->_holder["TankBullet"]);
 	//_registry.get<SpriteComponent>(_projectile).sprite.setPosition(205, 840);
 	_registry.get<SpriteComponent>(_projectile).sprite.setPosition(700, 840);

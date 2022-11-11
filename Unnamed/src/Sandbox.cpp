@@ -97,7 +97,6 @@ void Sandbox::Init()
 	sf::FloatRect rect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
 	_quadTree = std::make_unique<QuadTree>(rect);
 
-
 	_windowFlags = 0;
 	_windowFlags |= ImGuiWindowFlags_NoMove;
 	_windowFlags |= ImGuiWindowFlags_NoResize;
@@ -186,13 +185,42 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 	{
 		ImGui::SFML::Update(*_data->_window, sf::seconds(deltaTime));
 		ImGui::SetNextWindowPos(ImVec2(0, 0));
-		ImGui::SetWindowSize({ 10, 20 });
+		ImGui::SetWindowSize({ 10, 50 });
 		ImGui::Begin("Demo", NULL, _windowFlags);
 		ImGui::Checkbox("Toggle QuadTree Visualizer", &_quadTreeDemo);
 		ImGui::Checkbox("Toggle HitBox Visualizer", &_hitBoxDemo);
+		ImGui::PushItemWidth(100.f);
+		ImGui::InputInt("Enemy Count", &_enemyCount);
+		ImGui::SameLine(); 
+		if (ImGui::Button("Apply"))
+		{
+			if (_enemyCount < 0)
+				_enemyCount = 0;
+
+			auto view = _registry.view<EnemyTagComponent>();
+			for (auto enemy : view)
+				_registry.destroy(enemy);
+
+			std::random_device dev;
+			std::mt19937 rng(dev());
+			std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
+
+			for (size_t i = 0; i < _enemyCount; i++)
+			{
+				entt::entity entity = _registry.create();
+				_registry.emplace<EnemyTagComponent>(entity);
+				_registry.emplace<InteractableTagComponent>(entity);
+				_registry.emplace<MidLayerTagComponent>(entity);
+				_registry.emplace<HealthComponent>(entity, 100.f);
+				_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
+				_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
+				_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
+				_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+			}
+		}
 		ImGui::End();
 		ImGui::SFML::Render(*_data->_window);
-		
+
 		if (_quadTreeDemo)
 			_quadTree->Render(_data->_window);
 

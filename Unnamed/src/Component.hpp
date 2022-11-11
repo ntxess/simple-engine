@@ -48,7 +48,6 @@ struct TextComponent
 		text.setFillColor(sf::Color::White);
 		text.setPosition(sf::Vector2f(10.f, 5.f));
 	}
-
 	TextComponent(const TextComponent&) = default;
 };
 
@@ -61,6 +60,18 @@ struct HealthComponent
 	HealthComponent(const float& health)
 		: max(health), current(health) {}
 	HealthComponent(const HealthComponent&) = default;
+	void IncreaseHealth(float increaseUnit)
+	{
+		current += increaseUnit;
+		if (current > max)
+			current = max;
+	}
+	void DecreaseHealth(float decreaseUnit)
+	{
+		current -= decreaseUnit;
+		if (current < 0.f)
+			current = 0.f;
+	}
 };
 
 struct SpeedComponent
@@ -72,6 +83,26 @@ struct SpeedComponent
 	SpeedComponent(const float& speed)
 		: max(speed), current(speed) {}
 	SpeedComponent(const SpeedComponent&) = default;
+};
+
+struct AccelerationComponent
+{
+	float current;
+
+	AccelerationComponent() = default;
+	AccelerationComponent(const AccelerationComponent&) = default;
+	void IncreaseAcceleration(float increaseUnit)
+	{
+		current += increaseUnit;
+		if (current > 1.f)
+			current = 1.f;
+	}
+	void DecreaseAcceleration(float decreaseUnit)
+	{
+		current -= decreaseUnit;
+		if (current < 0.f)
+			current = 0.f;
+	}
 };
 
 struct DamageComponent
@@ -196,6 +227,16 @@ struct InterfaceTagComponent
 {
 	InterfaceTagComponent() = default;
 	InterfaceTagComponent(const InterfaceTagComponent&) = default;
+};
+
+
+struct GravityTagComponent
+{
+	bool gravityOn;
+
+	GravityTagComponent()
+		: gravityOn(false) {}
+	GravityTagComponent(const GravityTagComponent&) = default;
 };
 
 struct AttractionComponent

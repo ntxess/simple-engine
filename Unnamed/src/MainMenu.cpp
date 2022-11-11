@@ -91,7 +91,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         ImGui::SetCursorPos(ImVec2(250, 650));
         if (ImGui::Button("Game 3"))
         {
-
+            _data->_machine->AddState(std::make_unique<Sudoku>(_data));
         }
         if (ImGui::IsItemHovered())
         {
