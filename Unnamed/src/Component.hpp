@@ -87,17 +87,17 @@ struct SpeedComponent
 
 struct AccelerationComponent
 {
-	float current;
+	float current = 1.f;
 
 	AccelerationComponent() = default;
 	AccelerationComponent(const AccelerationComponent&) = default;
-	void IncreaseAcceleration(float increaseUnit)
+	void Accelerate(float increaseUnit)
 	{
 		current += increaseUnit;
 		if (current > 1.f)
 			current = 1.f;
 	}
-	void DecreaseAcceleration(float decreaseUnit)
+	void Decelerate(float decreaseUnit)
 	{
 		current -= decreaseUnit;
 		if (current < 0.f)

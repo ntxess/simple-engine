@@ -68,7 +68,7 @@ void Sandbox::Init()
 	_registry.emplace<SpeedComponent>(_dummy, 300.f);
 	_registry.emplace<AttractionComponent>(_dummy, 500.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
-	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(960, 400);
+	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(950, 400);
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
 
 	_progressionBorder = _registry.create();
@@ -109,14 +109,16 @@ void Sandbox::Init()
 void Sandbox::ProcessEvent(const sf::Event& event)
 {
 	// Useful for determining what keypresses will do when in different scenes
+	if (event.type == sf::Event::KeyPressed)
+	{
+		if (event.key.code == sf::Keyboard::Escape)
+			_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+	}
 	ImGui::SFML::ProcessEvent(*_data->_window, event);
 }
 
 void Sandbox::ProcessInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		_data->_machine->AddState(std::make_unique<MainMenu>(_data));
-
 	auto& controller = _registry.get<PlayerInputComponent>(_player);
 
 	const float input = 1.f;
@@ -158,7 +160,7 @@ void Sandbox::Update(const float& deltaTime)
 		SystemHelper::CheckBoundary(_data->_window->getSize(), _registry.get<SpriteComponent>(entity).sprite);
 
 	SystemHelper::CheckBoundary(_data->_window->getSize(), _registry.get<SpriteComponent>(_player).sprite);
-	SystemHelper::FocusCameraOn(_data->_focusedView, _registry.get<SpriteComponent>(_player).sprite);
+	//SystemHelper::FocusCameraOn(_data->_focusedView, _registry.get<SpriteComponent>(_player).sprite);
 	SystemHelper::MobWaypointUpdate(_registry, deltaTime);
 	SystemHelper::MobTrackingUpdate(_registry, _player, deltaTime);
 

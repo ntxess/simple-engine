@@ -16,13 +16,16 @@ void Sudoku::Init()
 
 void Sudoku::ProcessEvent(const sf::Event& event)
 {
-
+	if (event.type == sf::Event::KeyPressed)
+	{
+		if (event.key.code == sf::Keyboard::Escape)
+			_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+	}
 }
 
 void Sudoku::ProcessInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		_data->_machine->AddState(std::make_unique<MainMenu>(_data));
+
 }
 
 void Sudoku::Update(const float& deltaTime)

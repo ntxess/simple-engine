@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <numbers>
 
 #include "SFML/Graphics/Sprite.hpp"
 #include "entt/entt.hpp" 
@@ -23,6 +24,5 @@ namespace SystemHelper
 	void CheckDestruction(entt::registry& reg);
 	void PerformanceMetricUpdate(entt::registry& reg, entt::entity ent, const std::unique_ptr<sf::RenderWindow>& rw);
 	void RotateTurretUpdate(entt::registry& reg, entt::entity ent, const float& dt);
-	void AccelerationUpdate(entt::registry& reg, entt::entity ent, const float& dt);
-	void GravitySimUpdate(entt::registry& reg, entt::entity ent, const float& dt);
+	void ProjectileVelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
 }

@@ -35,7 +35,7 @@ private:
 	ImGuiWindowFlags _windowFlags;
 	bool _quadTreeDemo = false;
 	bool _hitBoxDemo = false;
-	int _enemyCount;
+	int _enemyCount = MAX_SIZE;
 
 public:
 	Sandbox(std::shared_ptr<GameData>& data);

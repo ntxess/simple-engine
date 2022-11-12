@@ -238,15 +238,19 @@ void SystemHelper::RotateTurretUpdate(entt::registry& reg, entt::entity ent, con
 	sprite.setRotation(currentDegree);
 }
 
-void SystemHelper::AccelerationUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+void SystemHelper::ProjectileVelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt)
 {
-	auto acceleration = reg.get<AccelerationComponent>(ent);
-}
-
-void SystemHelper::GravitySimUpdate(entt::registry& reg, entt::entity ent, const float& dt)
-{
+	auto& sprite = reg.get<SpriteComponent>(ent).sprite;
 	auto& speed = reg.get<SpeedComponent>(ent).current;
-	auto acceleration = reg.get<AccelerationComponent>(ent);
-	speed *= acceleration.current;
-	acceleration.DecreaseAcceleration(dt);
+	auto& acceleration = reg.get<AccelerationComponent>(ent);
+
+	if (acceleration.current > 0.f)
+		acceleration.Decelerate(dt / 10);
+
+	float radians = sprite.getRotation() * (std::numbers::pi * 2 / 360);
+	sf::Vector2f velocity;
+	velocity.x = speed * dt * cos(radians) * acceleration.current;
+	velocity.y = speed * dt * sin(radians) * acceleration.current;
+	
+	sprite.move(velocity);
 }
