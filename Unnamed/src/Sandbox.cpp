@@ -71,6 +71,7 @@ void Sandbox::Init()
 	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(950, 400);
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
 
+
 	_progressionBorder = _registry.create();
 	_registry.emplace<InterfaceTagComponent>(_progressionBorder);
 	_registry.emplace<TopLayerTagComponent>(_progressionBorder);
@@ -232,9 +233,13 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 			for (auto entity : midLayerSp)
 			{
 				auto targetHitbox = midLayerSp.get<SpriteComponent>(entity).sprite.getGlobalBounds();
+
 				sf::RectangleShape box;
+				box.setOrigin(sf::Vector2f(targetHitbox.width / 2.f, targetHitbox.height / 2.f));
+				box.setRotation(_registry.get<SpriteComponent>(entity).sprite.getRotation());
+				box.setSize(sf::Vector2f(targetHitbox.width, targetHitbox.height));
+				box.setTextureRect(sf::IntRect(-targetHitbox.width /2, -targetHitbox.height / 2, targetHitbox.width / 2, targetHitbox.height / 2));
 				box.setPosition(midLayerSp.get<SpriteComponent>(entity).sprite.getPosition());
-				box.setSize({ targetHitbox.width, targetHitbox.height });
 				box.setOutlineThickness(1.0f);
 				box.setFillColor(sf::Color::Transparent);
 				box.setOutlineColor(sf::Color(0, 150, 100));

@@ -33,8 +33,6 @@ void CommandBasic::Execute(entt::registry& registry, entt::entity entity, std::s
 		registry.emplace<SpriteComponent>(attackParticle, data->_holder["Shot"]);
 
 		sf::Vector2f position = registry.get<SpriteComponent>(entity).sprite.getPosition();
-		position.x += registry.get<SpriteComponent>(entity).sprite.getGlobalBounds().width / 2;
-		position.x -= registry.get<SpriteComponent>(attackParticle).sprite.getGlobalBounds().width;
 		registry.get<SpriteComponent>(attackParticle).sprite.setPosition(position);
 		registry.get<SpriteComponent>(attackParticle).sprite.setScale(2.f, 2.f);
 

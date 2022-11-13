@@ -6,19 +6,21 @@ void SystemHelper::InputMovementUpdate(entt::registry& reg, entt::entity ent, co
 	auto& player = reg.get<SpriteComponent>(ent).sprite;
 	auto speed = reg.get<SpeedComponent>(ent).current;
 
-	sf::Vector2f direction = controller.direction;
+	sf::Vector2f velocity = controller.direction;
 
 	// Normalizing the vector to prevent diagonal movement from being faster than the cardinal directions
-	float length = sqrt((direction.x * direction.x) + (direction.y * direction.y));
+	float length = sqrt((velocity.x * velocity.x) + (velocity.y * velocity.y));
 
 	if (length != 0.f)
 	{
-		direction.x = direction.x / length;
-		direction.y = direction.y / length;
+		velocity.x = velocity.x / length;
+		velocity.y = velocity.y / length;
 	}
 
-	direction *= speed * dt;
-	player.move(direction);
+	velocity *= speed * dt;
+	//float theta = (atan2(velocity.y, velocity.x)) * (180.f / std::numbers::pi);
+	//player.setRotation(theta + 90);
+	player.move(velocity);
 }
 
 void SystemHelper::CheckBoundary(const sf::Vector2u& boundary, sf::Sprite& obj)
@@ -26,19 +28,19 @@ void SystemHelper::CheckBoundary(const sf::Vector2u& boundary, sf::Sprite& obj)
 	sf::Vector2f position = obj.getPosition();
 	sf::FloatRect rect = obj.getGlobalBounds();
 
-	if (position.x < 0)
-		obj.setPosition(sf::Vector2f(0.f, position.y));
+	if (position.x < 0 + (rect.width / 2))
+		obj.setPosition(sf::Vector2f(0.f + (rect.width / 2), position.y));
 
-	if (position.x + rect.width > boundary.x)
-		obj.setPosition(sf::Vector2f(boundary.x - rect.width, position.y));
+	if (position.x + (rect.width / 2) > boundary.x)
+		obj.setPosition(sf::Vector2f(boundary.x - (rect.width / 2), position.y));
 
 	position = obj.getPosition();
 
-	if (position.y < 0)
-		obj.setPosition(sf::Vector2f(position.x, 0.f));
+	if (position.y < 0 + (rect.height / 2))
+		obj.setPosition(sf::Vector2f(position.x, 0.f + (rect.height / 2)));
 
-	if (position.y + rect.height > boundary.y)
-		obj.setPosition(sf::Vector2f(position.x, boundary.y - rect.height));
+	if (position.y + rect.height / 2 > boundary.y)
+		obj.setPosition(sf::Vector2f(position.x, boundary.y - (rect.height / 2)));
 }
 
 void SystemHelper::FocusCameraOn(sf::View& vw, sf::Sprite& obj)
@@ -78,6 +80,8 @@ void SystemHelper::MobWaypointUpdate(entt::registry& reg, const float& dt)
 		velocity.x = unitDist.x * spd.current * dt;
 		velocity.y = unitDist.y * spd.current * dt;
 
+		float theta = (atan2(velocity.y, velocity.x)) * (180.f / std::numbers::pi);
+		sp.sprite.setRotation(theta + 90);
 		sp.sprite.move(velocity);
 	}
 }
@@ -94,7 +98,7 @@ void SystemHelper::MobTrackingUpdate(entt::registry& reg, entt::entity ent, cons
 		auto attraction = reg.get<AttractionComponent>(entity);
 		auto speed = reg.get<SpeedComponent>(entity).current;
 
-		float targetX = target.getPosition().x + (target.getGlobalBounds().width / 2) - (tracker.getGlobalBounds().width / 2);
+		float targetX = target.getPosition().x;
 		float targetY = target.getPosition().y;
 		float trackerX = tracker.getPosition().x;
 		float trackerY = tracker.getPosition().y;
@@ -112,6 +116,8 @@ void SystemHelper::MobTrackingUpdate(entt::registry& reg, entt::entity ent, cons
 			velocity.x = unitDist.x * speed * deltaTime;
 			velocity.y = unitDist.y * speed * deltaTime;
 
+			float theta = (atan2(velocity.y, velocity.x)) * (180.f / std::numbers::pi);
+			tracker.setRotation(theta + 90);
 			tracker.move(velocity);
 		}
 	}
@@ -238,7 +244,7 @@ void SystemHelper::RotateTurretUpdate(entt::registry& reg, entt::entity ent, con
 	sprite.setRotation(currentDegree);
 }
 
-void SystemHelper::ProjectileVelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+void SystemHelper::VelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt)
 {
 	auto& sprite = reg.get<SpriteComponent>(ent).sprite;
 	auto& speed = reg.get<SpeedComponent>(ent).current;
@@ -253,4 +259,20 @@ void SystemHelper::ProjectileVelocityUpdate(entt::registry& reg, entt::entity en
 	velocity.y = speed * dt * sin(radians) * acceleration.current;
 	
 	sprite.move(velocity);
+}
+
+void SystemHelper::GravityUpdate(entt::registry& reg, entt::entity ent, const float& dt)
+{
+
+}
+
+void SystemHelper::RotateTowards(entt::registry& reg, entt::entity ent, sf::Vector2f velocity)
+{
+	auto& sprite = reg.get<SpriteComponent>(ent).sprite;
+	float theta = (atan2(velocity.y, velocity.x)) * (180.f / std::numbers::pi);
+	sprite.setRotation(theta + 90);
+}
+
+void SystemHelper::GetTrueOrigin(entt::registry& reg, entt::entity ent)
+{
 }

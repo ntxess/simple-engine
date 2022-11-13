@@ -22,19 +22,18 @@ void PowerThrower::Init()
 		_registry.emplace<TopLayerTagComponent>(tanktop);
 		_registry.emplace<SpriteComponent>(tanktop, _data->_holder["TankTop"]);
 		_registry.get<SpriteComponent>(tanktop).sprite.setPosition(200, 800);
-	
+
 		entt::entity tankbot = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(tankbot);
 		_registry.emplace<SpriteComponent>(tankbot, _data->_holder["TankBot"]);
-		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(205, 840);
+		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(195, 840);
 
 		_cannon = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(_cannon);
 		_registry.emplace<RotateTurretComponent>(_cannon, 100.f);
 		_registry.emplace<SpriteComponent>(_cannon, _data->_holder["TankTurret"]);
-		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(300, 815);
+		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(220, 770);
 		_registry.get<SpriteComponent>(_cannon).sprite.setOrigin(0, 0);
-
 	}
 
 	_performanceTracker = _registry.create();
@@ -50,18 +49,21 @@ void PowerThrower::ProcessEvent(const sf::Event& event)
 
 		if (event.key.code == sf::Keyboard::Space)
 		{
-			_projectile = _registry.create();
-			_registry.emplace<PlayerTagComponent>(_projectile);
-			_registry.emplace<MidLayerTagComponent>(_projectile);
-			_registry.emplace<SpeedComponent>(_projectile, 500);
-			_registry.emplace<AccelerationComponent>(_projectile);
-			_registry.emplace<SpriteComponent>(_projectile, _data->_holder["TankBullet"]);
-			_registry.get<SpriteComponent>(_projectile).sprite.setPosition(300, 840);
-			_registry.get<SpriteComponent>(_projectile).sprite.setScale({ 0.5f, 0.5f });
+			if (!_launch)
+			{
+				_projectile = _registry.create();
+				_registry.emplace<PlayerTagComponent>(_projectile);
+				_registry.emplace<MidLayerTagComponent>(_projectile);
+				_registry.emplace<SpeedComponent>(_projectile, 500);
+				_registry.emplace<AccelerationComponent>(_projectile);
+				_registry.emplace<SpriteComponent>(_projectile, _data->_holder["TankBullet"]);
+				_registry.get<SpriteComponent>(_projectile).sprite.setPosition(200, 840);
+				_registry.get<SpriteComponent>(_projectile).sprite.setScale({ 0.5f, 0.5f });
 
-			float rotation = _registry.get<SpriteComponent>(_cannon).sprite.getRotation();
-			_registry.get<SpriteComponent>(_projectile).sprite.setRotation(rotation);
-			_launch = true;
+				float rotation = _registry.get<SpriteComponent>(_cannon).sprite.getRotation();
+				_registry.get<SpriteComponent>(_projectile).sprite.setRotation(rotation);
+				_launch = true;
+			}
 		}
 	}
 }
@@ -78,7 +80,7 @@ void PowerThrower::Update(const float& deltaTime)
 	else
 	{
 		SystemHelper::FocusCameraOn(_data->_focusedView, _registry.get<SpriteComponent>(_projectile).sprite);
-		SystemHelper::ProjectileVelocityUpdate(_registry, _projectile, deltaTime);
+		SystemHelper::VelocityUpdate(_registry, _projectile, deltaTime);
 
 		auto accel = _registry.get<AccelerationComponent>(_projectile).current;
 		if (accel <= 0.f)

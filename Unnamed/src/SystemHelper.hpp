@@ -24,5 +24,8 @@ namespace SystemHelper
 	void CheckDestruction(entt::registry& reg);
 	void PerformanceMetricUpdate(entt::registry& reg, entt::entity ent, const std::unique_ptr<sf::RenderWindow>& rw);
 	void RotateTurretUpdate(entt::registry& reg, entt::entity ent, const float& dt);
-	void ProjectileVelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
+	void VelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
+	void GravityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
+	void RotateTowards(entt::registry& reg, entt::entity ent, sf::Vector2f velocity);
+	void GetTrueOrigin(entt::registry& reg, entt::entity ent);
 }
