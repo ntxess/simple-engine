@@ -11,6 +11,13 @@ void MainMenu::Init()
 {
     std::cout << "<<Main Menu>>" << std::endl;
 
+    float width = float(_data->_window->getSize().x);
+    float height = float(_data->_window->getSize().y);
+    _data->_defaultView.setSize(width, height);
+    _data->_focusedView.setSize(width, height);
+    _data->_defaultView.setCenter(width / 2, height / 2);
+    _data->_window->setView(_data->_defaultView);
+
     _windowFlags = 0;
     _windowFlags |= ImGuiWindowFlags_NoMove;
     _windowFlags |= ImGuiWindowFlags_NoResize;

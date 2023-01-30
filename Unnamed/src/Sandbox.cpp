@@ -16,10 +16,11 @@ void Sandbox::Init()
 	_data->_defaultView.setSize(width, height);
 	_data->_focusedView.setSize(width, height);
 	_data->_defaultView.setCenter(width / 2, height / 2);
+	_data->_window->setView(_data->_defaultView);
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
+	std::uniform_int_distribution<std::mt19937::result_type> dist6(0, width);
 
 	for (size_t i = 0; i < MAX_SIZE; i++)
 	{
@@ -31,7 +32,7 @@ void Sandbox::Init()
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
 		_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
-		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % int(height)));
 	}
 
 	for (size_t i = 0; i < MAX_SIZE; i++)
@@ -44,7 +45,7 @@ void Sandbox::Init()
 		_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 400));
 		_registry.emplace<AttractionComponent>(entity, true);
 		_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
-		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+		_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % int(height)));
 	}
 
 	_player = _registry.create();
@@ -58,7 +59,7 @@ void Sandbox::Init()
 		std::make_shared<CommandExSkill>(), 
 		std::make_shared<CommandBasic>());
 	_registry.emplace<SpriteComponent>(_player, _data->_holder["ShipAlt"]);
-	_registry.get<SpriteComponent>(_player).sprite.setPosition(960, 1000);
+	_registry.get<SpriteComponent>(_player).sprite.setPosition(960 % int(width), 1000 % int(height));
 
 	_dummy = _registry.create();
 	_registry.emplace<EnemyTagComponent>(_dummy);
@@ -68,7 +69,7 @@ void Sandbox::Init()
 	_registry.emplace<SpeedComponent>(_dummy, 300.f);
 	_registry.emplace<AttractionComponent>(_dummy, 500.f);
 	_registry.emplace<SpriteComponent>(_dummy, _data->_holder["Ship"]);
-	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(950, 400);
+	_registry.get<SpriteComponent>(_dummy).sprite.setPosition(950 % int(width), 400 % int(height));
 	_registry.get<SpriteComponent>(_dummy).sprite.setScale(sf::Vector2f(5.f, 5.f));
 
 
@@ -78,7 +79,9 @@ void Sandbox::Init()
 	_registry.emplace<SpriteComponent>(_progressionBorder, _data->_holder["progressbarborder01"]);
 	auto& pborder = _registry.get<SpriteComponent>(_progressionBorder).sprite;
 	pborder.setOrigin(0, 0);
-	pborder.setPosition(50, 1000);
+	pborder.setPosition(50 % int(width), 1000 % int(height));
+	pborder.setScale(sf::Vector2f(1.f, 1.f));
+
 
 	_progressionBar = _registry.create();
 	_registry.emplace<InterfaceTagComponent>(_progressionBar);
@@ -86,16 +89,18 @@ void Sandbox::Init()
 	_registry.emplace<SpriteComponent>(_progressionBar, _data->_holder["progressbar01"]);
 	auto& pbar = _registry.get<SpriteComponent>(_progressionBar).sprite;
 	pbar.setOrigin(0, 0);
-	pbar.setPosition(52, 1002);
+	pbar.setPosition(52 % int(width), 1002 % int(height));
+	pbar.setScale(sf::Vector2f(1.f, 1.f));
+
 
 	_background = _registry.create();
 	_registry.emplace<BotLayerTagComponent>(_background);
-	_registry.emplace<BackgroundComponent>(_background, _data->_holder["Prototype"], sf::IntRect(0, 0, _data->_window->getSize().x, _data->_window->getSize().y));
+	_registry.emplace<BackgroundComponent>(_background, _data->_holder["Prototype"], sf::IntRect(0, 0, width, height));
 
 	_performanceTracker = _registry.create();
 	_registry.emplace<PerformanceMonitorComponent>(_performanceTracker);
 
-	sf::FloatRect rect(0.f, 0.f, float(_data->_window->getSize().x), float(_data->_window->getSize().y));
+	sf::FloatRect rect(0.f, 0.f, float(width), float(height));
 	_quadTree = std::make_unique<QuadTree>(rect);
 
 	_windowFlags = 0;
@@ -206,7 +211,7 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 
 			std::random_device dev;
 			std::mt19937 rng(dev());
-			std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 1920);
+			std::uniform_int_distribution<std::mt19937::result_type> dist6(0, rw->getSize().x);
 
 			for (size_t i = 0; i < _enemyCount; i++)
 			{
@@ -218,7 +223,7 @@ void Sandbox::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& d
 				_registry.emplace<SpeedComponent>(entity, float(dist6(rng) % 500));
 				_registry.emplace<WayPointComponent>(entity, _data->_pathMap.at("mRandom").get(), true);
 				_registry.emplace<SpriteComponent>(entity, _data->_holder["Ship"]);
-				_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng)), float(dist6(rng) % 1080));
+				_registry.get<SpriteComponent>(entity).sprite.setPosition(float(dist6(rng) % int(rw->getSize().x)), float(dist6(rng) % int(rw->getSize().y)));
 			}
 		}
 		ImGui::End();

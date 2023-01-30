@@ -16,23 +16,25 @@ void PowerThrower::Init()
 	_data->_defaultView.setSize(width, height);
 	_data->_focusedView.setSize(width, height);
 	_data->_defaultView.setCenter(width / 2, height / 2);
+	_data->_window->setView(_data->_defaultView);
+
 
 	{ // tank initialization
 		entt::entity tanktop = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(tanktop);
 		_registry.emplace<SpriteComponent>(tanktop, _data->_holder["TankTop"]);
-		_registry.get<SpriteComponent>(tanktop).sprite.setPosition(200, 800);
+		_registry.get<SpriteComponent>(tanktop).sprite.setPosition(200 % int(width), 800 % int(height));
 
 		entt::entity tankbot = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(tankbot);
 		_registry.emplace<SpriteComponent>(tankbot, _data->_holder["TankBot"]);
-		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(195, 840);
+		_registry.get<SpriteComponent>(tankbot).sprite.setPosition(195 % int(width), 840 % int(height));
 
 		_cannon = _registry.create();
 		_registry.emplace<TopLayerTagComponent>(_cannon);
 		_registry.emplace<RotateTurretComponent>(_cannon, 100.f);
 		_registry.emplace<SpriteComponent>(_cannon, _data->_holder["TankTurret"]);
-		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(220, 770);
+		_registry.get<SpriteComponent>(_cannon).sprite.setPosition(220 % int(width), 770 % int(height));
 		_registry.get<SpriteComponent>(_cannon).sprite.setOrigin(0, 0);
 	}
 
@@ -40,14 +42,14 @@ void PowerThrower::Init()
 		_currentBg = _registry.create();
 		_registry.emplace<BotLayerTagComponent>(_currentBg);
 		_registry.emplace<SpriteComponent>(_currentBg);
-		_registry.emplace<BackgroundComponent>(_currentBg, _data->_holder["Prototype"], sf::IntRect(0, 0, _data->_window->getSize().x, _data->_window->getSize().y));
+		_registry.emplace<BackgroundComponent>(_currentBg, _data->_holder["Prototype"], sf::IntRect(0, 0, width, height));
 		_registry.get<BackgroundComponent>(_currentBg).sprite.setPosition(0, 0);
 
 
 		_nextBg = _registry.create();
 		_registry.emplace<BotLayerTagComponent>(_nextBg);
 		_registry.emplace<SpriteComponent>(_nextBg);
-		_registry.emplace<BackgroundComponent>(_nextBg, _data->_holder["Prototype"], sf::IntRect(0, 0, _data->_window->getSize().x, _data->_window->getSize().y));
+		_registry.emplace<BackgroundComponent>(_nextBg, _data->_holder["Prototype"], sf::IntRect(0, 0, width, height));
 		_registry.get<BackgroundComponent>(_nextBg).sprite.setPosition(width, 0);
 	}
 
@@ -80,7 +82,8 @@ void PowerThrower::ProcessEvent(const sf::Event& event)
 				_registry.emplace<SpeedComponent>(_projectile, 500);
 				_registry.emplace<AccelerationComponent>(_projectile);
 				_registry.emplace<SpriteComponent>(_projectile, _data->_holder["TankBullet"]);
-				_registry.get<SpriteComponent>(_projectile).sprite.setPosition(200, 840);
+				_registry.get<SpriteComponent>(_projectile).sprite
+					.setPosition(200 % int(_data->_window->getSize().x), 840 % int(_data->_window->getSize().x));
 				_registry.get<SpriteComponent>(_projectile).sprite.setScale({ 0.5f, 0.5f });
 
 				float rotation = _registry.get<SpriteComponent>(_cannon).sprite.getRotation();

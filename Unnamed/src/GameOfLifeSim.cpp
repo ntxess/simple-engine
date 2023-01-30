@@ -15,6 +15,8 @@ void GameOfLifeSim::Init()
 	float height = float(_data->_window->getSize().y);
 	_data->_defaultView.setSize(width, height);
 	_data->_focusedView.setSize(width, height);
+	_data->_defaultView.setCenter(width / 2, height / 2);
+	_data->_window->setView(_data->_defaultView);
 
 	gridWorld = std::vector<std::vector<int>>(width, std::vector<int>(height, 0));
 	buffer = std::vector<std::vector<int>>(gridWorld.size(), std::vector<int>(gridWorld[0].size(), 0));
