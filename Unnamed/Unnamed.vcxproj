@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameOfLifeSim.cpp" />
     <ClCompile Include="src\PowerThrower.cpp" />
     <ClCompile Include="src\CommandBasic.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\Sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameOfLifeSim.hpp" />
     <ClInclude Include="src\PowerThrower.hpp" />
     <ClInclude Include="src\Event.hpp" />
     <ClInclude Include="src\EventDispatcher.hpp" />
@@ -73,6 +75,12 @@
     <ClInclude Include="src\WayPoint.hpp" />
     <ClInclude Include="src\SystemHelper.hpp" />
     <ClInclude Include="src\Sudoku.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="halfmax.txt" />
+    <Text Include="max.txt" />
+    <Text Include="spacefill1.txt" />
+    <Text Include="spacefill2.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -7,6 +7,7 @@
 #include "Sandbox.hpp"
 #include "PowerThrower.hpp"
 #include "Sudoku.hpp"
+#include "GameOfLifeSim.hpp"
 #include "GameData.hpp"
 #include "SystemHelper.hpp"
 

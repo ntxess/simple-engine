@@ -53,7 +53,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         ImGui::SetCursorPos(ImVec2(250, 450));
         if (ImGui::Button("Game 1"))
         {
-            _data->_machine->AddState(std::make_unique<Sandbox>(_data));
+            _data->_machine->AddState(std::make_unique<Sandbox>(_data), true);
         }
         if (ImGui::IsItemHovered())
         {
@@ -71,7 +71,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         ImGui::SetCursorPos(ImVec2(250, 550));
         if (ImGui::Button("Game 2"))
         {
-            _data->_machine->AddState(std::make_unique<PowerThrower>(_data));
+            _data->_machine->AddState(std::make_unique<PowerThrower>(_data), true);
         }
         if (ImGui::IsItemHovered())
         {
@@ -91,7 +91,7 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         ImGui::SetCursorPos(ImVec2(250, 650));
         if (ImGui::Button("Game 3"))
         {
-            _data->_machine->AddState(std::make_unique<Sudoku>(_data));
+            _data->_machine->AddState(std::make_unique<Sudoku>(_data), true);
         }
         if (ImGui::IsItemHovered())
         {
@@ -104,21 +104,19 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
             );
         }
 
-
         ImGui::SetWindowFontScale(5.f);
         ImGui::SetCursorPos(ImVec2(250, 750));
         if (ImGui::Button("Game 4"))
         {
-
+            _data->_machine->AddState(std::make_unique<GameOfLifeSim>(_data), true);
         }
         if (ImGui::IsItemHovered())
         {
             ImGui::SetWindowFontScale(2.5f);
             ImGui::SetCursorPos(ImVec2(1100, 400));
-            ImGui::Text("Vertical scroller shoot-em-up\n\n"
+            ImGui::Text("Game of Life Simulation\n\n"
                 "Showcase features:\n"
-                "\tQuadtree collision detection\n"
-                "\tCPU player waypoint and tracking\n"
+                "\tGrid-type\n"
             );
         }
 
@@ -140,8 +138,14 @@ void MainMenu::Render(const std::unique_ptr<sf::RenderWindow>& rw, const float& 
         }
 
         ImGui::SetWindowFontScale(5.f);
-        ImGui::SetCursorPos(ImVec2(1200, 300));
-        ImGui::Text("Description:");
+        ImGui::SetCursorPos(ImVec2(250, 950));
+        if (ImGui::Button("Quit"))
+        {
+            exit(0);
+        }
+        //ImGui::SetWindowFontScale(5.f);
+        //ImGui::SetCursorPos(ImVec2(1200, 300));
+        //ImGui::Text("Description:");
     }
 
     ImGui::End();

@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <random>
+#include <fstream>
+#include <algorithm>
+#include <sstream>
 
 #include "SFML-imgui/imgui.h"
 #include "SFML-imgui/imgui-SFML.h"
@@ -9,26 +12,20 @@
 #include "Component.hpp"
 #include "SystemHelper.hpp"
 
-class PowerThrower : public Scene
+class GameOfLifeSim : public Scene
 {
 private:
 	std::shared_ptr<GameData> _data;
-
 	entt::registry _registry;
-	entt::entity _projectile;
-	entt::entity _cannon;
-	entt::entity _performanceTracker;
-	entt::entity _currentBg;
-	entt::entity _nextBg;
+
+	std::vector<std::vector<int>> gridWorld;
+	std::vector<std::vector<int>> buffer;
 
 	ImGuiWindowFlags _windowFlags;
-	bool _launch;
-	float _distanceTraveled;
-	float _pastPosition;
 
 public:
-	PowerThrower(std::shared_ptr<GameData>& data);
-	~PowerThrower();
+	GameOfLifeSim(std::shared_ptr<GameData>& data);
+	~GameOfLifeSim();
 
 	void Init();
 	void ProcessEvent(const sf::Event& event);
@@ -39,7 +36,8 @@ public:
 	void Resume();
 	entt::registry& GetRegistry();
 
-	void GameReset();
-	void GetDistanceTraveled();
-};
+	void DrawOptions(const std::unique_ptr<sf::RenderWindow>& rw, const float& deltaTime);
+	int GetNeighbors(std::vector<std::vector<int>>& board, int i, int j);
+	void ReadFile(const std::string& fileName);
 
+};

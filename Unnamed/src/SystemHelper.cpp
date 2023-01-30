@@ -273,6 +273,10 @@ void SystemHelper::RotateTowards(entt::registry& reg, entt::entity ent, sf::Vect
 	sprite.setRotation(theta + 90);
 }
 
-void SystemHelper::GetTrueOrigin(entt::registry& reg, entt::entity ent)
+void SystemHelper::ScrollBackground(entt::registry& reg, entt::entity current, entt::entity next, const float& dt)
 {
+	auto& currentBg = reg.get<SpriteComponent>(current).sprite;
+	auto& nextBg = reg.get<SpriteComponent>(next).sprite;
 }
+
+

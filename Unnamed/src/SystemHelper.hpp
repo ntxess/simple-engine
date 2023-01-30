@@ -27,5 +27,5 @@ namespace SystemHelper
 	void VelocityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
 	void GravityUpdate(entt::registry& reg, entt::entity ent, const float& dt);
 	void RotateTowards(entt::registry& reg, entt::entity ent, sf::Vector2f velocity);
-	void GetTrueOrigin(entt::registry& reg, entt::entity ent);
+	void ScrollBackground(entt::registry& reg, entt::entity current, entt::entity next, const float& dt);
 }
