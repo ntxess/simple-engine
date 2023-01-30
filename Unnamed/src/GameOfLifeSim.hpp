@@ -20,6 +20,8 @@ private:
 
 	std::vector<std::vector<int>> gridWorld;
 	std::vector<std::vector<int>> buffer;
+	bool drawMode = false;
+	bool mouseHold = false;
 
 	ImGuiWindowFlags _windowFlags;
 

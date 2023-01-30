@@ -37,6 +37,26 @@ void GameOfLifeSim::Init()
 
 void GameOfLifeSim::ProcessEvent(const sf::Event& event)
 {
+	if (drawMode)
+	{
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			mouseHold = true;
+		}
+
+		if (drawMode && event.type == sf::Event::MouseButtonReleased)
+		{
+			mouseHold = false;
+		}
+
+		if (mouseHold)
+		{
+			int posX = sf::Mouse::getPosition(*_data->_window).x;
+			int posY = sf::Mouse::getPosition(*_data->_window).y;
+			gridWorld[posX][posY] = 1;
+		}
+	}
+
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Escape)
@@ -54,20 +74,24 @@ void GameOfLifeSim::Render(const std::unique_ptr<sf::RenderWindow>& rw, const fl
 {
 	DrawOptions(rw, deltaTime);
 
-	for (int i = 0; i < gridWorld.size(); i++) {
-		for (int j = 0; j < gridWorld[i].size(); j++) {
-			int neighbors = GetNeighbors(gridWorld, i, j);
-			if (gridWorld[i][j] && neighbors < 2)
-				buffer[i][j] = 0;
-			else if (gridWorld[i][j] && (neighbors == 2 || neighbors == 3))
-				buffer[i][j] = gridWorld[i][j];
-			else if (gridWorld[i][j] && neighbors > 3)
-				buffer[i][j] = 0;
-			else if (!gridWorld[i][j] && neighbors == 3)
-				buffer[i][j] = 1;
+	if (!drawMode)
+	{
+		for (int i = 0; i < gridWorld.size(); i++) {
+			for (int j = 0; j < gridWorld[i].size(); j++) {
+				int neighbors = GetNeighbors(gridWorld, i, j);
+				if (gridWorld[i][j] && neighbors < 2)
+					buffer[i][j] = 0;
+				else if (gridWorld[i][j] && (neighbors == 2 || neighbors == 3))
+					buffer[i][j] = gridWorld[i][j];
+				else if (gridWorld[i][j] && neighbors > 3)
+					buffer[i][j] = 0;
+				else if (!gridWorld[i][j] && neighbors == 3)
+					buffer[i][j] = 1;
+			}
 		}
+		gridWorld = buffer;
 	}
-	gridWorld = buffer;
+
 
 	for (int i = 0; i < gridWorld.size(); i++) {
 		for (int j = 0; j < gridWorld[i].size(); j++) {
@@ -137,6 +161,16 @@ void GameOfLifeSim::DrawOptions(const std::unique_ptr<sf::RenderWindow>& rw, con
 				return rand() % 10 == 0 ? 1 : 0;
 				});
 		}
+	}
+
+	if (ImGui::Button("Draw Mode"))
+	{
+		drawMode = true;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Apply"))
+	{
+		drawMode = false;
 	}
 
 	ImGui::End();
