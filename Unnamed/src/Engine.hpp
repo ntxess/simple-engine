@@ -1,4 +1,6 @@
 #pragma once
+#include <thread>
+#include <atomic>
 #include <string>
 
 #include "Thor/Animations/FrameAnimation.hpp"

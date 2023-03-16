@@ -215,10 +215,4 @@
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="halfmax.txt" />
-    <Text Include="max.txt" />
-    <Text Include="spacefill1.txt" />
-    <Text Include="spacefill2.txt" />
-  </ItemGroup>
 </Project>

@@ -76,12 +76,6 @@
     <ClInclude Include="src\SystemHelper.hpp" />
     <ClInclude Include="src\Sudoku.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="halfmax.txt" />
-    <Text Include="max.txt" />
-    <Text Include="spacefill1.txt" />
-    <Text Include="spacefill2.txt" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

@@ -40,21 +40,10 @@ void GameOfLifeSim::ProcessEvent(const sf::Event& event)
 	if (drawMode)
 	{
 		if (event.type == sf::Event::MouseButtonPressed)
-		{
 			mouseHold = true;
-		}
 
 		if (drawMode && event.type == sf::Event::MouseButtonReleased)
-		{
 			mouseHold = false;
-		}
-
-		if (mouseHold)
-		{
-			int posX = sf::Mouse::getPosition(*_data->_window).x;
-			int posY = sf::Mouse::getPosition(*_data->_window).y;
-			gridWorld[posX][posY] = 1;
-		}
 	}
 
 	if (event.type == sf::Event::KeyPressed)
@@ -74,7 +63,16 @@ void GameOfLifeSim::Render(const std::unique_ptr<sf::RenderWindow>& rw, const fl
 {
 	DrawOptions(rw, deltaTime);
 
-	if (!drawMode)
+	if (drawMode)
+	{
+		if (mouseHold)
+		{
+			int posX = sf::Mouse::getPosition(*_data->_window).x;
+			int posY = sf::Mouse::getPosition(*_data->_window).y;
+			gridWorld[posX][posY] = 1;
+		}
+	}
+	else 
 	{
 		for (int i = 0; i < gridWorld.size(); i++) {
 			for (int j = 0; j < gridWorld[i].size(); j++) {
