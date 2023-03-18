@@ -365,7 +365,7 @@ namespace ImGui
     IMGUI_API void          SetNextWindowContentSize(const ImVec2& size);                               // set next window content size (~ scrollable client area, which enforce the range of scrollbars). Not including window decorations (title bar, menu bar, etc.) nor WindowPadding. set an axis to 0.0f to leave it automatic. call before Begin()
     IMGUI_API void          SetNextWindowCollapsed(bool collapsed, ImGuiCond cond = 0);                 // set next window collapsed state. call before Begin()
     IMGUI_API void          SetNextWindowFocus();                                                       // set next window to be focused / top-most. call before Begin()
-    IMGUI_API void          SetNextWindowBgAlpha(float alpha);                                          // set next window background color alpha. helper to easily override the Alpha component of ImGuiCol_WindowBg/ChildBg/PopupBg. you may also use ImGuiWindowFlags_NoBackground.
+    IMGUI_API void          SetNextWindowBgAlpha(float alpha);                                          // set next window background color alpha. helper to easily override the Alpha component of ImGuiColwindowBg/ChildBg/PopupBg. you may also use ImGuiWindowFlags_NoBackground.
     IMGUI_API void          SetNextWindowViewport(ImGuiID viewport_id);                                 // set next window viewport
     IMGUI_API void          SetWindowPos(const ImVec2& pos, ImGuiCond cond = 0);                        // (not recommended) set current window position - call within Begin()/End(). prefer using SetNextWindowPos(), as this may incur tearing and side-effects.
     IMGUI_API void          SetWindowSize(const ImVec2& size, ImGuiCond cond = 0);                      // (not recommended) set current window size - call within Begin()/End(). set to ImVec2(0, 0) to force an auto-fit. prefer using SetNextWindowSize(), as this may incur tearing and minor side-effects.
@@ -789,7 +789,7 @@ namespace ImGui
     IMGUI_API bool          BeginTabItem(const char* label, bool* p_open = NULL, ImGuiTabItemFlags flags = 0); // create a Tab. Returns true if the Tab is selected.
     IMGUI_API void          EndTabItem();                                                       // only call EndTabItem() if BeginTabItem() returns true!
     IMGUI_API bool          TabItemButton(const char* label, ImGuiTabItemFlags flags = 0);      // create a Tab behaving like a button. return true when clicked. cannot be selected in the tab bar.
-    IMGUI_API void          SetTabItemClosed(const char* tab_or_docked_window_label);           // notify TabBar or Docking system of a closed tab/window ahead (useful to reduce visual flicker on reorderable tab bars). For tab-bar: call after BeginTabBar() and before Tab submissions. Otherwise call with a window name.
+    IMGUI_API void          SetTabItemClosed(const char* tab_or_dockedwindow_label);           // notify TabBar or Docking system of a closed tab/window ahead (useful to reduce visual flicker on reorderable tab bars). For tab-bar: call after BeginTabBar() and before Tab submissions. Otherwise call with a window name.
 
     // Docking
     // [BETA API] Enable with io.ConfigFlags |= ImGuiConfigFlags_DockingEnable.
@@ -1344,7 +1344,7 @@ enum ImGuiDockNodeFlags_
     ImGuiDockNodeFlags_KeepAliveOnly                = 1 << 0,   // Shared       // Don't display the dockspace node but keep it alive. Windows docked into this dockspace node won't be undocked.
     //ImGuiDockNodeFlags_NoCentralNode              = 1 << 1,   // Shared       // Disable Central Node (the node which can stay empty)
     ImGuiDockNodeFlags_NoDockingInCentralNode       = 1 << 2,   // Shared       // Disable docking inside the Central Node, which will be always kept empty.
-    ImGuiDockNodeFlags_PassthruCentralNode          = 1 << 3,   // Shared       // Enable passthru dockspace: 1) DockSpace() will render a ImGuiCol_WindowBg background covering everything excepted the Central Node when empty. Meaning the host window should probably use SetNextWindowBgAlpha(0.0f) prior to Begin() when using this. 2) When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background. See demo for details.
+    ImGuiDockNodeFlags_PassthruCentralNode          = 1 << 3,   // Shared       // Enable passthru dockspace: 1) DockSpace() will render a ImGuiColwindowBg background covering everything excepted the Central Node when empty. Meaning the host window should probably use SetNextWindowBgAlpha(0.0f) prior to Begin() when using this. 2) When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background. See demo for details.
     ImGuiDockNodeFlags_NoSplit                      = 1 << 4,   // Shared/Local // Disable splitting the node into smaller nodes. Useful e.g. when embedding dockspaces into a main root one (the root one may have splitting disabled to reduce confusion). Note: when turned off, existing splits will be preserved.
     ImGuiDockNodeFlags_NoResize                     = 1 << 5,   // Shared/Local // Disable resizing node using the splitter/separators. Useful with programmatically setup dockspaces.
     ImGuiDockNodeFlags_AutoHideTabBar               = 1 << 6,   // Shared/Local // Tab bar will automatically hide when there is a single window in the dock node.
@@ -1563,7 +1563,7 @@ enum ImGuiConfigFlags_
     ImGuiConfigFlags_DockingEnable          = 1 << 6,   // Docking enable flags.
 
     // [BETA] Viewports
-    // When using viewports it is recommended that your default value for ImGuiCol_WindowBg is opaque (Alpha=1.0) so transition to a viewport won't be noticeable.
+    // When using viewports it is recommended that your default value for ImGuiColwindowBg is opaque (Alpha=1.0) so transition to a viewport won't be noticeable.
     ImGuiConfigFlags_ViewportsEnable        = 1 << 10,  // Viewport enable flags (require both ImGuiBackendFlags_PlatformHasViewports + ImGuiBackendFlags_RendererHasViewports set by the respective backends)
     ImGuiConfigFlags_DpiEnableScaleViewports= 1 << 14,  // [BETA: Don't use] FIXME-DPI: Reposition and resize imgui windows when the DpiScale of a viewport changed (mostly useful for the main viewport hosting other window). Note that resizing the main window itself is up to your application.
     ImGuiConfigFlags_DpiEnableScaleFonts    = 1 << 15,  // [BETA: Don't use] FIXME-DPI: Request bitmap-scaled fonts to match DpiScale. This is a very low-quality workaround. The correct way to handle DPI is _currently_ to replace the atlas and/or fonts in the Platform_OnChangedViewport callback, but this is all early work in progress.
@@ -1593,7 +1593,7 @@ enum ImGuiCol_
 {
     ImGuiCol_Text,
     ImGuiCol_TextDisabled,
-    ImGuiCol_WindowBg,              // Background of normal windows
+    ImGuiColwindowBg,              // Background of normal windows
     ImGuiCol_ChildBg,               // Background of child windows
     ImGuiCol_PopupBg,               // Background of popups, menus, tooltips windows
     ImGuiCol_Border,
@@ -1661,11 +1661,11 @@ enum ImGuiStyleVar_
     // Enum name --------------------- // Member in ImGuiStyle structure (see ImGuiStyle for descriptions)
     ImGuiStyleVar_Alpha,               // float     Alpha
     ImGuiStyleVar_DisabledAlpha,       // float     DisabledAlpha
-    ImGuiStyleVar_WindowPadding,       // ImVec2    WindowPadding
-    ImGuiStyleVar_WindowRounding,      // float     WindowRounding
-    ImGuiStyleVar_WindowBorderSize,    // float     WindowBorderSize
-    ImGuiStyleVar_WindowMinSize,       // ImVec2    WindowMinSize
-    ImGuiStyleVar_WindowTitleAlign,    // ImVec2    WindowTitleAlign
+    ImGuiStyleVarwindowPadding,       // ImVec2    WindowPadding
+    ImGuiStyleVarwindowRounding,      // float     WindowRounding
+    ImGuiStyleVarwindowBorderSize,    // float     WindowBorderSize
+    ImGuiStyleVarwindowMinSize,       // ImVec2    WindowMinSize
+    ImGuiStyleVarwindowTitleAlign,    // ImVec2    WindowTitleAlign
     ImGuiStyleVar_ChildRounding,       // float     ChildRounding
     ImGuiStyleVar_ChildBorderSize,     // float     ChildBorderSize
     ImGuiStyleVar_PopupRounding,       // float     PopupRounding
@@ -3051,8 +3051,8 @@ struct ImGuiViewport
     // The library never uses those fields, they are merely storage to facilitate backend implementation.
     void*               RendererUserData;       // void* to hold custom data structure for the renderer (e.g. swap chain, framebuffers etc.). generally set by your Renderer_CreateWindow function.
     void*               PlatformUserData;       // void* to hold custom data structure for the OS / platform (e.g. windowing info, render context). generally set by your Platform_CreateWindow function.
-    void*               PlatformHandle;         // void* for FindViewportByPlatformHandle(). (e.g. suggested to use natural platform handle such as HWND, GLFWWindow*, SDL_Window*)
-    void*               PlatformHandleRaw;      // void* to hold lower-level, platform-native window handle (under Win32 this is expected to be a HWND, unused for other platforms), when using an abstraction layer like GLFW or SDL (where PlatformHandle would be a SDL_Window*)
+    void*               PlatformHandle;         // void* for FindViewportByPlatformHandle(). (e.g. suggested to use natural platform handle such as HWND, GLFWWindow*, SDLwindow*)
+    void*               PlatformHandleRaw;      // void* to hold lower-level, platform-native window handle (under Win32 this is expected to be a HWND, unused for other platforms), when using an abstraction layer like GLFW or SDL (where PlatformHandle would be a SDLwindow*)
     bool                PlatformRequestMove;    // Platform window requested move (e.g. window was moved by the OS / host window manager, authoritative position will be OS window position)
     bool                PlatformRequestResize;  // Platform window requested resize (e.g. window was resized by the OS / host window manager, authoritative size will be OS window size)
     bool                PlatformRequestClose;   // Platform window requested closure (e.g. window was moved by the OS / host window manager, e.g. pressing ALT-F4)
@@ -3295,12 +3295,12 @@ enum ImGuiKeyModFlags_ { ImGuiKeyModFlags_None = ImGuiModFlags_None, ImGuiKeyMod
 
 #endif // #ifndef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
 
-// RENAMED IMGUI_DISABLE_METRICS_WINDOW > IMGUI_DISABLE_DEBUG_TOOLS in 1.88 (from June 2022)
-#if defined(IMGUI_DISABLE_METRICS_WINDOW) && !defined(IMGUI_DISABLE_OBSOLETE_FUNCTIONS) && !defined(IMGUI_DISABLE_DEBUG_TOOLS)
+// RENAMED IMGUI_DISABLE_METRICSwindow > IMGUI_DISABLE_DEBUG_TOOLS in 1.88 (from June 2022)
+#if defined(IMGUI_DISABLE_METRICSwindow) && !defined(IMGUI_DISABLE_OBSOLETE_FUNCTIONS) && !defined(IMGUI_DISABLE_DEBUG_TOOLS)
 #define IMGUI_DISABLE_DEBUG_TOOLS
 #endif
-#if defined(IMGUI_DISABLE_METRICS_WINDOW) && defined(IMGUI_DISABLE_OBSOLETE_FUNCTIONS)
-#error IMGUI_DISABLE_METRICS_WINDOW was renamed to IMGUI_DISABLE_DEBUG_TOOLS, please use new name.
+#if defined(IMGUI_DISABLE_METRICSwindow) && defined(IMGUI_DISABLE_OBSOLETE_FUNCTIONS)
+#error IMGUI_DISABLE_METRICSwindow was renamed to IMGUI_DISABLE_DEBUG_TOOLS, please use new name.
 #endif
 
 //-----------------------------------------------------------------------------

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Event.hpp"
 
 class EventHandler

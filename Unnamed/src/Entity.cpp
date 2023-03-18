@@ -1,13 +1,13 @@
 #include "Entity.hpp"
 
 Entity::Entity() 
-	: _entityHandle((entt::entity)0)
-	, _scene(nullptr)
+	: m_entityHandle((entt::entity)0)
+	, m_scene(nullptr)
 {}
 
 Entity::Entity(entt::entity handle, Scene* scene)
-	: _entityHandle(handle)
-	, _scene(scene)
+	: m_entityHandle(handle)
+	, m_scene(scene)
 {}
 
 Entity::~Entity()
@@ -15,5 +15,5 @@ Entity::~Entity()
 
 entt::entity Entity::GetHandle()
 {
-	return _entityHandle;
+	return m_entityHandle;
 }

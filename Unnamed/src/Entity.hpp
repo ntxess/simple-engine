@@ -1,13 +1,12 @@
 #pragma once
-
-#include "entt/entt.hpp"
 #include "Scene.hpp"
+#include "entt/entt.hpp"
 
 class Entity
 {
 private:
-	entt::entity _entityHandle;
-	Scene* _scene;
+	entt::entity m_entityHandle;
+	Scene* m_scene;
 
 public:
 	Entity();
@@ -29,29 +28,29 @@ public:
 	template<typename T>
 	void RemoveComponent();
 
-	operator bool() const { return _entityHandle != (entt::entity)0; }
+	operator bool() const { return m_entityHandle != (entt::entity)0; }
 };
 
 template<typename T, typename... Args>
 inline T& Entity::AddComponent(Args&&... args)
 {
-	return _scene->GetRegistry().emplace<T>(_entityHandle, std::forward<Args>(args)...);
+	return m_scene->GetRegistry().emplace<T>(m_entityHandle, std::forward<Args>(args)...);
 }
 
 template<typename T>
 inline T& Entity::GetComponent()
 {
-	return _scene->GetRegistry().get<T>(_entityHandle);
+	return m_scene->GetRegistry().get<T>(m_entityHandle);
 }
 
 template<typename T>
 inline bool Entity::HasComponent()
 {
-	return _scene->GetRegistry().all_of<T>(_entityHandle);
+	return m_scene->GetRegistry().all_of<T>(m_entityHandle);
 }
 
 template<typename T>
 inline void Entity::RemoveComponent()
 {
-	_scene->GetRegistry().remove<T>(_entityHandle);
+	m_scene->GetRegistry().remove<T>(m_entityHandle);
 }

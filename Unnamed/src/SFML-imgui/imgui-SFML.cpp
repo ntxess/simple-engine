@@ -241,7 +241,7 @@ struct WindowContext {
     ~WindowContext() { ImGui::DestroyContext(imContext); }
 };
 
-std::vector<std::unique_ptr<WindowContext>> s_windowContexts;
+std::vector<std::unique_ptr<WindowContext>> swindowContexts;
 WindowContext* s_currWindowCtx = nullptr;
 
 } // end of anonymous namespace
@@ -263,9 +263,9 @@ bool Init(sf::Window& window, const sf::Vector2f& displaySize, bool loadDefaultF
                                                    // GLuint.
 #endif
 
-    s_windowContexts.emplace_back(new WindowContext(&window));
+    swindowContexts.emplace_back(new WindowContext(&window));
 
-    s_currWindowCtx = s_windowContexts.back().get();
+    s_currWindowCtx = swindowContexts.back().get();
     ImGui::SetCurrentContext(s_currWindowCtx->imContext);
 
     ImGuiIO& io = ImGui::GetIO();
@@ -307,11 +307,11 @@ bool Init(sf::Window& window, const sf::Vector2f& displaySize, bool loadDefaultF
 }
 
 void SetCurrentWindow(const sf::Window& window) {
-    auto found = std::find_if(s_windowContexts.begin(), s_windowContexts.end(),
+    auto found = std::find_if(swindowContexts.begin(), swindowContexts.end(),
                               [&](std::unique_ptr<WindowContext>& ctx) {
                                   return ctx->window->getSystemHandle() == window.getSystemHandle();
                               });
-    assert(found != s_windowContexts.end() &&
+    assert(found != swindowContexts.end() &&
            "Failed to find the window. Forgot to call ImGui::SFML::Init for the window?");
     s_currWindowCtx = found->get();
     ImGui::SetCurrentContext(s_currWindowCtx->imContext);
@@ -744,18 +744,18 @@ void Shutdown(const sf::Window& window) {
     bool needReplacement = (s_currWindowCtx->window->getSystemHandle() == window.getSystemHandle());
 
     // remove window's context
-    auto found = std::find_if(s_windowContexts.begin(), s_windowContexts.end(),
+    auto found = std::find_if(swindowContexts.begin(), swindowContexts.end(),
                               [&](std::unique_ptr<WindowContext>& ctx) {
                                   return ctx->window->getSystemHandle() == window.getSystemHandle();
                               });
-    assert(found != s_windowContexts.end() &&
+    assert(found != swindowContexts.end() &&
            "Window wasn't inited properly: forgot to call ImGui::SFML::Init(window)?");
-    s_windowContexts.erase(found); // s_currWindowCtx can become invalid here!
+    swindowContexts.erase(found); // s_currWindowCtx can become invalid here!
 
     // set current context to some window for convenience if needed
     if (needReplacement) {
-        auto it = s_windowContexts.begin();
-        if (it != s_windowContexts.end()) {
+        auto it = swindowContexts.begin();
+        if (it != swindowContexts.end()) {
             // set to some other window
             s_currWindowCtx = it->get();
             ImGui::SetCurrentContext(s_currWindowCtx->imContext);
@@ -771,7 +771,7 @@ void Shutdown() {
     s_currWindowCtx = nullptr;
     ImGui::SetCurrentContext(nullptr);
 
-    s_windowContexts.clear();
+    swindowContexts.clear();
 }
 
 bool UpdateFontTexture() {

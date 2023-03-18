@@ -15,7 +15,7 @@
 // in your team, likely leading you to poorer usage of the library.
 // Everything in this file will be stripped out by the linker if you don't call ImGui::ShowDemoWindow().
 // If you want to link core Dear ImGui in your shipped builds but want a thorough guarantee that the demo will not be
-// linked, you can setup your imconfig.h with #define IMGUI_DISABLE_DEMO_WINDOWS and those functions will be empty.
+// linked, you can setup your imconfig.h with #define IMGUI_DISABLE_DEMOwindowS and those functions will be empty.
 // In another situation, whenever you have Dear ImGui available you probably want this to be available for reference.
 // Thank you,
 // -Your beloved friend, imgui_demo.cpp (which you won't delete)
@@ -169,7 +169,7 @@ Index of this file:
 // [SECTION] Forward Declarations, Helpers
 //-----------------------------------------------------------------------------
 
-#if !defined(IMGUI_DISABLE_DEMO_WINDOWS)
+#if !defined(IMGUI_DISABLE_DEMOwindowS)
 
 // Forward Declarations
 static void ShowExampleAppDockSpace(bool* p_open);
@@ -295,7 +295,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     static bool show_app_constrained_resize = false;
     static bool show_app_simple_overlay = false;
     static bool show_app_fullscreen = false;
-    static bool show_app_window_titles = false;
+    static bool show_appwindow_titles = false;
     static bool show_app_custom_rendering = false;
 
     if (show_app_main_menu_bar)       ShowExampleAppMainMenuBar();
@@ -311,7 +311,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
     if (show_app_constrained_resize)  ShowExampleAppConstrainedResize(&show_app_constrained_resize);
     if (show_app_simple_overlay)      ShowExampleAppSimpleOverlay(&show_app_simple_overlay);
     if (show_app_fullscreen)          ShowExampleAppFullscreen(&show_app_fullscreen);
-    if (show_app_window_titles)       ShowExampleAppWindowTitles(&show_app_window_titles);
+    if (show_appwindow_titles)       ShowExampleAppWindowTitles(&show_appwindow_titles);
     if (show_app_custom_rendering)    ShowExampleAppCustomRendering(&show_app_custom_rendering);
 
     // Dear ImGui Apps (accessible from the "Tools" menu)
@@ -408,7 +408,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             ImGui::MenuItem("Constrained-resizing window", NULL, &show_app_constrained_resize);
             ImGui::MenuItem("Simple overlay", NULL, &show_app_simple_overlay);
             ImGui::MenuItem("Fullscreen window", NULL, &show_app_fullscreen);
-            ImGui::MenuItem("Manipulating window titles", NULL, &show_app_window_titles);
+            ImGui::MenuItem("Manipulating window titles", NULL, &show_appwindow_titles);
             ImGui::MenuItem("Custom rendering", NULL, &show_app_custom_rendering);
             ImGui::MenuItem("Dockspace", NULL, &show_app_dockspace);
             ImGui::MenuItem("Documents", NULL, &show_app_documents);
@@ -2487,9 +2487,9 @@ static void ShowDemoWindowWidgets()
     IMGUI_DEMO_MARKER("Widgets/Querying Window Status (Focused,Hovered etc.)");
     if (ImGui::TreeNode("Querying Window Status (Focused/Hovered etc.)"))
     {
-        static bool embed_all_inside_a_child_window = false;
-        ImGui::Checkbox("Embed everything inside a child window for testing _RootWindow flag.", &embed_all_inside_a_child_window);
-        if (embed_all_inside_a_child_window)
+        static bool embed_all_inside_a_childwindow = false;
+        ImGui::Checkbox("Embed everything inside a child window for testing _RootWindow flag.", &embed_all_inside_a_childwindow);
+        if (embed_all_inside_a_childwindow)
             ImGui::BeginChild("outer_child", ImVec2(0, ImGui::GetFontSize() * 20.0f), true);
 
         // Testing IsWindowFocused() function with its various flags.
@@ -2551,22 +2551,22 @@ static void ShowDemoWindowWidgets()
         ImGui::BeginChild("child", ImVec2(0, 50), true);
         ImGui::Text("This is another child window for testing the _ChildWindows flag.");
         ImGui::EndChild();
-        if (embed_all_inside_a_child_window)
+        if (embed_all_inside_a_childwindow)
             ImGui::EndChild();
 
         // Calling IsItemHovered() after begin returns the hovered status of the title bar.
         // This is useful in particular if you want to create a context menu associated to the title bar of a window.
         // This will also work when docked into a Tab (the Tab replace the Title Bar and guarantee the same properties).
-        static bool test_window = false;
-        ImGui::Checkbox("Hovered/Active tests after Begin() for title bar testing", &test_window);
-        if (test_window)
+        static bool testwindow = false;
+        ImGui::Checkbox("Hovered/Active tests after Begin() for title bar testing", &testwindow);
+        if (testwindow)
         {
             // FIXME-DOCK: This window cannot be docked within the ImGui Demo window, this will cause a feedback loop and get them stuck.
             // Could we fix this through an ImGuiWindowClass feature? Or an API call to tag our parent as "don't skip items"?
-            ImGui::Begin("Title bar Hovered/Active tests", &test_window);
+            ImGui::Begin("Title bar Hovered/Active tests", &testwindow);
             if (ImGui::BeginPopupContextItem()) // <-- This is using IsItemHovered()
             {
-                if (ImGui::MenuItem("Close")) { test_window = false; }
+                if (ImGui::MenuItem("Close")) { testwindow = false; }
                 ImGui::EndPopup();
             }
             ImGui::Text(
@@ -3225,10 +3225,10 @@ static void ShowDemoWindowLayout()
         }
         ImGui::Spacing();
 
-        static bool show_horizontal_contents_size_demo_window = false;
-        ImGui::Checkbox("Show Horizontal contents size demo window", &show_horizontal_contents_size_demo_window);
+        static bool show_horizontal_contents_size_demowindow = false;
+        ImGui::Checkbox("Show Horizontal contents size demo window", &show_horizontal_contents_size_demowindow);
 
-        if (show_horizontal_contents_size_demo_window)
+        if (show_horizontal_contents_size_demowindow)
         {
             static bool show_h_scrollbar = true;
             static bool show_button = true;
@@ -3241,7 +3241,7 @@ static void ShowDemoWindowLayout()
             static float contents_size_x = 300.0f;
             if (explicit_content_size)
                 ImGui::SetNextWindowContentSize(ImVec2(contents_size_x, 0.0f));
-            ImGui::Begin("Horizontal contents size demo window", &show_horizontal_contents_size_demo_window, show_h_scrollbar ? ImGuiWindowFlags_HorizontalScrollbar : 0);
+            ImGui::Begin("Horizontal contents size demo window", &show_horizontal_contents_size_demowindow, show_h_scrollbar ? ImGuiWindowFlags_HorizontalScrollbar : 0);
             IMGUI_DEMO_MARKER("Layout/Scrolling/Horizontal contents size demo window");
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(2, 0));
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
@@ -7434,7 +7434,7 @@ static void ShowExampleAppConstrainedResize(bool* p_open)
 
     // Submit window
     if (!window_padding)
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        ImGui::PushStyleVar(ImGuiStyleVarwindowPadding, ImVec2(0.0f, 0.0f));
     const ImGuiWindowFlags window_flags = auto_resize ? ImGuiWindowFlags_AlwaysAutoResize : 0;
     const bool window_open = ImGui::Begin("Example: Constrained Resize", p_open, window_flags);
     if (!window_padding)
@@ -7737,7 +7737,7 @@ static void ShowExampleAppCustomRendering(bool* p_open)
             // Typically you would use a BeginChild()/EndChild() pair to benefit from a clipping region + own scrolling.
             // Here we demonstrate that this can be replaced by simple offsetting + custom drawing + PushClipRect/PopClipRect() calls.
             // To use a child window instead we could use, e.g:
-            //      ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));      // Disable padding
+            //      ImGui::PushStyleVar(ImGuiStyleVarwindowPadding, ImVec2(0, 0));      // Disable padding
             //      ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(50, 50, 50, 255));  // Set a background color
             //      ImGui::BeginChild("canvas", ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoMove);
             //      ImGui::PopStyleColor();
@@ -7890,8 +7890,8 @@ void ShowExampleAppDockSpace(bool* p_open)
         ImGui::SetNextWindowPos(viewport->WorkPos);
         ImGui::SetNextWindowSize(viewport->WorkSize);
         ImGui::SetNextWindowViewport(viewport->ID);
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVarwindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVarwindowBorderSize, 0.0f);
         window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
         window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
     }
@@ -7911,7 +7911,7 @@ void ShowExampleAppDockSpace(bool* p_open)
     // We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
     // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
     if (!opt_padding)
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        ImGui::PushStyleVar(ImGuiStyleVarwindowPadding, ImVec2(0.0f, 0.0f));
     ImGui::Begin("DockSpace Demo", p_open, window_flags);
     if (!opt_padding)
         ImGui::PopStyleVar();

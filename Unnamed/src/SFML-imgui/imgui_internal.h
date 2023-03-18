@@ -200,7 +200,7 @@ namespace ImStb
 //-----------------------------------------------------------------------------
 
 // Internal Drag and Drop payload types. String starting with '_' are reserved for Dear ImGui.
-#define IMGUI_PAYLOAD_TYPE_WINDOW       "_IMWINDOW"     // Payload == ImGuiWindow*
+#define IMGUI_PAYLOAD_TYPEwindow       "_IMWINDOW"     // Payload == ImGuiWindow*
 
 // Debug Printing Into TTY
 // (since IMGUI_VERSION_NUM >= 18729: IMGUI_DEBUG_LOG was reworked into IMGUI_DEBUG_PRINTF (and removed framecount from it). If you were using a #define IMGUI_DEBUG_LOG please rename)
@@ -1489,7 +1489,7 @@ enum ImGuiDataAuthority_
 {
     ImGuiDataAuthority_Auto,
     ImGuiDataAuthority_DockNode,
-    ImGuiDataAuthority_Window,
+    ImGuiDataAuthoritywindow,
 };
 
 enum ImGuiDockNodeState
@@ -2779,7 +2779,7 @@ namespace ImGui
     inline    ImGuiWindow*  GetCurrentWindow()          { ImGuiContext& g = *GImGui; g.CurrentWindow->WriteAccessed = true; return g.CurrentWindow; }
     IMGUI_API ImGuiWindow*  FindWindowByID(ImGuiID id);
     IMGUI_API ImGuiWindow*  FindWindowByName(const char* name);
-    IMGUI_API void          UpdateWindowParentAndRootLinks(ImGuiWindow* window, ImGuiWindowFlags flags, ImGuiWindow* parent_window);
+    IMGUI_API void          UpdateWindowParentAndRootLinks(ImGuiWindow* window, ImGuiWindowFlags flags, ImGuiWindow* parentwindow);
     IMGUI_API ImVec2        CalcWindowNextAutoFitSize(ImGuiWindow* window);
     IMGUI_API bool          IsWindowChildOf(ImGuiWindow* window, ImGuiWindow* potential_parent, bool popup_hierarchy, bool dock_hierarchy);
     IMGUI_API bool          IsWindowWithinBeginStackOf(ImGuiWindow* window, ImGuiWindow* potential_parent);
@@ -2794,11 +2794,11 @@ namespace ImGui
 
     // Windows: Display Order and Focus Order
     IMGUI_API void          FocusWindow(ImGuiWindow* window);
-    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_this_window, ImGuiWindow* ignore_window);
+    IMGUI_API void          FocusTopMostWindowUnderOne(ImGuiWindow* under_thiswindow, ImGuiWindow* ignorewindow);
     IMGUI_API void          BringWindowToFocusFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayFront(ImGuiWindow* window);
     IMGUI_API void          BringWindowToDisplayBack(ImGuiWindow* window);
-    IMGUI_API void          BringWindowToDisplayBehind(ImGuiWindow* window, ImGuiWindow* above_window);
+    IMGUI_API void          BringWindowToDisplayBehind(ImGuiWindow* window, ImGuiWindow* abovewindow);
     IMGUI_API int           FindWindowDisplayIndex(ImGuiWindow* window);
     IMGUI_API ImGuiWindow*  FindBottomMostVisibleWindowWithinBeginStack(ImGuiWindow* window);
 
@@ -2902,12 +2902,12 @@ namespace ImGui
     // Popups, Modals, Tooltips
     IMGUI_API bool          BeginChildEx(const char* name, ImGuiID id, const ImVec2& size_arg, bool border, ImGuiWindowFlags flags);
     IMGUI_API void          OpenPopupEx(ImGuiID id, ImGuiPopupFlags popup_flags = ImGuiPopupFlags_None);
-    IMGUI_API void          ClosePopupToLevel(int remaining, bool restore_focus_to_window_under_popup);
-    IMGUI_API void          ClosePopupsOverWindow(ImGuiWindow* ref_window, bool restore_focus_to_window_under_popup);
+    IMGUI_API void          ClosePopupToLevel(int remaining, bool restore_focus_towindow_under_popup);
+    IMGUI_API void          ClosePopupsOverWindow(ImGuiWindow* refwindow, bool restore_focus_towindow_under_popup);
     IMGUI_API void          ClosePopupsExceptModals();
     IMGUI_API bool          IsPopupOpen(ImGuiID id, ImGuiPopupFlags popup_flags);
     IMGUI_API bool          BeginPopupEx(ImGuiID id, ImGuiWindowFlags extra_flags);
-    IMGUI_API void          BeginTooltipEx(ImGuiTooltipFlags tooltip_flags, ImGuiWindowFlags extra_window_flags);
+    IMGUI_API void          BeginTooltipEx(ImGuiTooltipFlags tooltip_flags, ImGuiWindowFlags extrawindow_flags);
     IMGUI_API ImRect        GetPopupAllowedExtentRect(ImGuiWindow* window);
     IMGUI_API ImGuiWindow*  GetTopMostPopupModal();
     IMGUI_API ImGuiWindow*  GetTopMostAndVisiblePopupModal();
@@ -2984,7 +2984,7 @@ namespace ImGui
     IMGUI_API void          DockContextQueueDock(ImGuiContext* ctx, ImGuiWindow* target, ImGuiDockNode* target_node, ImGuiWindow* payload, ImGuiDir split_dir, float split_ratio, bool split_outer);
     IMGUI_API void          DockContextQueueUndockWindow(ImGuiContext* ctx, ImGuiWindow* window);
     IMGUI_API void          DockContextQueueUndockNode(ImGuiContext* ctx, ImGuiDockNode* node);
-    IMGUI_API bool          DockContextCalcDropPosForDocking(ImGuiWindow* target, ImGuiDockNode* target_node, ImGuiWindow* payload_window, ImGuiDockNode* payload_node, ImGuiDir split_dir, bool split_outer, ImVec2* out_pos);
+    IMGUI_API bool          DockContextCalcDropPosForDocking(ImGuiWindow* target, ImGuiDockNode* target_node, ImGuiWindow* payloadwindow, ImGuiDockNode* payload_node, ImGuiDir split_dir, bool split_outer, ImVec2* out_pos);
     IMGUI_API ImGuiDockNode*DockContextFindNodeByID(ImGuiContext* ctx, ImGuiID id);
     IMGUI_API bool          DockNodeBeginAmendTabBar(ImGuiDockNode* node);
     IMGUI_API void          DockNodeEndAmendTabBar();
@@ -3018,7 +3018,7 @@ namespace ImGui
     IMGUI_API void          DockBuilderSetNodePos(ImGuiID node_id, ImVec2 pos);
     IMGUI_API void          DockBuilderSetNodeSize(ImGuiID node_id, ImVec2 size);
     IMGUI_API ImGuiID       DockBuilderSplitNode(ImGuiID node_id, ImGuiDir split_dir, float size_ratio_for_node_at_dir, ImGuiID* out_id_at_dir, ImGuiID* out_id_at_opposite_dir); // Create 2 child nodes in this parent node.
-    IMGUI_API void          DockBuilderCopyDockSpace(ImGuiID src_dockspace_id, ImGuiID dst_dockspace_id, ImVector<const char*>* in_window_remap_pairs);
+    IMGUI_API void          DockBuilderCopyDockSpace(ImGuiID src_dockspace_id, ImGuiID dst_dockspace_id, ImVector<const char*>* inwindow_remap_pairs);
     IMGUI_API void          DockBuilderCopyNode(ImGuiID src_node_id, ImGuiID dst_node_id, ImVector<ImGuiID>* out_node_remap_pairs);
     IMGUI_API void          DockBuilderCopyWindowSettings(const char* src_name, const char* dst_name);
     IMGUI_API void          DockBuilderFinish(ImGuiID node_id);
@@ -3104,7 +3104,7 @@ namespace ImGui
     IMGUI_API void          TabBarQueueReorder(ImGuiTabBar* tab_bar, const ImGuiTabItem* tab, int offset);
     IMGUI_API void          TabBarQueueReorderFromMousePos(ImGuiTabBar* tab_bar, const ImGuiTabItem* tab, ImVec2 mouse_pos);
     IMGUI_API bool          TabBarProcessReorder(ImGuiTabBar* tab_bar);
-    IMGUI_API bool          TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, ImGuiTabItemFlags flags, ImGuiWindow* docked_window);
+    IMGUI_API bool          TabItemEx(ImGuiTabBar* tab_bar, const char* label, bool* p_open, ImGuiTabItemFlags flags, ImGuiWindow* dockedwindow);
     IMGUI_API ImVec2        TabItemCalcSize(const char* label, bool has_close_button);
     IMGUI_API void          TabItemBackground(ImDrawList* draw_list, const ImRect& bb, ImGuiTabItemFlags flags, ImU32 col);
     IMGUI_API void          TabItemLabelAndCloseButton(ImDrawList* draw_list, const ImRect& bb, ImGuiTabItemFlags flags, ImVec2 frame_padding, const char* label, ImGuiID tab_id, ImGuiID close_button_id, bool is_contents_visible, bool* out_just_closed, bool* out_text_clipped);

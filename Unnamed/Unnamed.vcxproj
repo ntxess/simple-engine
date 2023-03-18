@@ -19,47 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GameOfLifeSim.cpp" />
-    <ClCompile Include="src\PowerThrower.cpp" />
-    <ClCompile Include="src\CommandBasic.cpp" />
+    <ClCompile Include="src\Factory\NonInteractableFactory.cpp" />
+    <ClCompile Include="src\Factory\InteractableFactory.cpp" />
+    <ClCompile Include="src\Scenes\EmptyScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Sandbox.cpp" />
-    <ClCompile Include="src\QuadTree.cpp" />
-    <ClCompile Include="src\CommandExSkill.cpp" />
-    <ClCompile Include="src\CommandDodge.cpp" />
-    <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui_demo.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui_draw.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui_tables.cpp" />
     <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\StateMachine.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\WayPoint.cpp" />
-    <ClCompile Include="src\SystemHelper.cpp" />
-    <ClCompile Include="src\Sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameOfLifeSim.hpp" />
-    <ClInclude Include="src\PowerThrower.hpp" />
-    <ClInclude Include="src\Event.hpp" />
-    <ClInclude Include="src\EventDispatcher.hpp" />
-    <ClInclude Include="src\CommandBasic.hpp" />
+    <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />
+    <ClInclude Include="src\Factory\AnimationFactory.hpp" />
+    <ClInclude Include="src\Factory\InteractableFactory.hpp" />
+    <ClInclude Include="src\Factory\AbstractFactory.hpp" />
     <ClInclude Include="src\Entity.hpp" />
-    <ClInclude Include="src\Component.hpp" />
+    <ClInclude Include="src\EventDispatcher.hpp" />
     <ClInclude Include="src\EventHandler.hpp" />
-    <ClInclude Include="src\Sandbox.hpp" />
-    <ClInclude Include="src\QuadTree.hpp" />
-    <ClInclude Include="src\MCircle.hpp" />
-    <ClInclude Include="src\MRandom.hpp" />
-    <ClInclude Include="src\MStraight.hpp" />
-    <ClInclude Include="src\CommandExSkill.hpp" />
-    <ClInclude Include="src\CommandDodge.hpp" />
-    <ClInclude Include="src\Command.hpp" />
+    <ClInclude Include="src\Scenes\EmptyScene.hpp" />
+    <ClInclude Include="src\Component.hpp" />
     <ClInclude Include="src\GameData.hpp" />
-    <ClInclude Include="src\MainMenu.hpp" />
     <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\SFML-imgui\imconfig-SFML.h" />
     <ClInclude Include="src\SFML-imgui\imconfig.h" />
@@ -70,11 +54,11 @@
     <ClInclude Include="src\SFML-imgui\imstb_rectpack.h" />
     <ClInclude Include="src\SFML-imgui\imstb_textedit.h" />
     <ClInclude Include="src\SFML-imgui\imstb_truetype.h" />
-    <ClInclude Include="src\StateMachine.hpp" />
+    <ClInclude Include="src\SceneManager.hpp" />
     <ClInclude Include="src\Engine.hpp" />
-    <ClInclude Include="src\WayPoint.hpp" />
-    <ClInclude Include="src\SystemHelper.hpp" />
-    <ClInclude Include="src\Sudoku.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Factory\Data\AnimationData.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

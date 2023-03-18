@@ -1,9 +1,7 @@
 #include "Engine.hpp"
 
 Engine::Engine(unsigned int width, unsigned int height, std::string title)
-    : _data(std::make_unique<GameData>())
-    , _width(width)
-    , _height(height)
+    : m_data(std::make_unique<GameData>())
 {
     sf::ContextSettings settings;
     settings.depthBits = 24;
@@ -12,110 +10,54 @@ Engine::Engine(unsigned int width, unsigned int height, std::string title)
     settings.majorVersion = 4;
     settings.minorVersion = 3;
 
-    _data->_window->create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close, settings);
-    
-    try
-    {
-        _data->_holder.acquire("Prototype",
-            thor::Resources::fromFile<sf::Texture>("resources/Space/PNG/Space_Stars2.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("Ship", 
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship0.png"), 
-            thor::Resources::Reuse);
-        _data->_holder.acquire("ShipAlt",
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship_alt.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("Shot", 
-            thor::Resources::fromFile<sf::Texture>("resources/player/shotParticle.png"), 
-            thor::Resources::Reuse);
-        _data->_holder.acquire("bar01",
-            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_Bar.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("progressbar01",
-            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_ProgressBar.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("progressbarborder01",
-            thor::Resources::fromFile<sf::Texture>("resources/ui/ProgressBar_01/BarV1_ProgressBarBorder.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("TankTop",
-            thor::Resources::fromFile<sf::Texture>("resources/player/tank_top.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("TankBot",
-            thor::Resources::fromFile<sf::Texture>("resources/player/tank_bot.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("TankTurret",
-            thor::Resources::fromFile<sf::Texture>("resources/player/tank_turret.png"),
-            thor::Resources::Reuse);
-        _data->_holder.acquire("TankBullet",
-            thor::Resources::fromFile<sf::Texture>("resources/other/tank_bullet.png"),
-            thor::Resources::Reuse);
-    }
-    catch (thor::ResourceLoadingException& e)
-    {
-        std::cout << "Error: " << e.what() << std::endl;
-    }
-
-    std::unique_ptr<MCircle> mCircle = std::make_unique<MCircle>();
-    std::unique_ptr<MRandom> mRandom = std::make_unique<MRandom>();
-    std::unique_ptr<MStraight> mStraight = std::make_unique<MStraight>();
-
-    _data->_pathMap["mCircle"] = std::move(mCircle->head);
-    _data->_pathMap["mRandom"] = std::move(mRandom->head);
-    _data->_pathMap["mStraight"] = std::move(mStraight->head);
-
-    _data->_machine->AddState(std::make_unique<MainMenu>(_data));
+    m_data->window.create(sf::VideoMode(width, height), title, sf::Style::Default, settings);
+    m_data->sceneManager.AddScene(std::make_unique<EmptyScene>(m_data));
 }
-
-Engine::~Engine()
-{}
 
 void Engine::Run()
 {
     float newTime, frameTime, interpolation;
-    float currentTime = _clock.getElapsedTime().asSeconds();
+    float currentTime = m_clock.getElapsedTime().asSeconds();
     float accumulator = 0.0f;
 
-    while (_data->_window->isOpen())
+    while (m_data->window.isOpen())
     {
-        newTime = _clock.getElapsedTime().asSeconds();
+        newTime = m_clock.getElapsedTime().asSeconds();
         frameTime = newTime - currentTime;
         currentTime = newTime;
         accumulator += frameTime;
 
-        _data->_machine->ProcessStateChange();
+        m_data->sceneManager.ProcessSceneChange();
 
-        // Input/Event Block
         sf::Event event;
-        while (_data->_window->pollEvent(event))
+        while (m_data->window.pollEvent(event))
         {
             switch (event.type)
             {
             case sf::Event::Closed:
-                _data->_window->close();
+                m_data->window.close();
                 break;
             case sf::Event::Resized:
-                _data->_focusedView.setSize(float(event.size.width), float(event.size.height));
+                m_data->defaultViewPort.setSize(float(event.size.width), float(event.size.height));
                 break;
             default:
-                _data->_machine->GetActiveState()->ProcessEvent(event);
+                m_data->sceneManager.GetActiveScene()->ProcessEvent(event);
+                break;
             }
         }
-        _data->_machine->GetActiveState()->ProcessInput();
+        m_data->sceneManager.GetActiveScene()->ProcessInput();
 
-        // Update Block
-        while (accumulator >= deltaTime)
+        while (accumulator >= m_deltaTime)
         {
-            _data->_machine->GetActiveState()->Update(deltaTime);
-            accumulator -= deltaTime;
+            m_data->sceneManager.GetActiveScene()->Update(m_deltaTime);
+            accumulator -= m_deltaTime;
         }
-        _data->_animator.update(sf::seconds(deltaTime));
 
-        interpolation = accumulator / deltaTime;
+        interpolation = accumulator / m_deltaTime;
 
-        // Render Block
-        _data->_window->clear();
-        _data->_machine->GetActiveState()->Render(_data->_window, deltaTime, interpolation);
-        _data->_window->display();
+        m_data->window.clear();
+        m_data->sceneManager.GetActiveScene()->Render(m_data->window, m_deltaTime, interpolation);
+        m_data->window.display();
     }
 
     ImGui::SFML::Shutdown();
