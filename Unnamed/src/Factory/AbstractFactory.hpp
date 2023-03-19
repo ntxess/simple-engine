@@ -18,6 +18,6 @@ class AbstractFactory
 {
 public:
 	virtual ~AbstractFactory() = default;
-	virtual std::unique_ptr<Entity>	CreateEntity(TYPE type) const = 0;
+	virtual std::unique_ptr<Entity>	CreateEntity(TYPE type, sf::Texture& texture) const = 0;
 };
 

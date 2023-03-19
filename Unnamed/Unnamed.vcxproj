@@ -19,23 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AnimationManager.cpp" />
     <ClCompile Include="src\Factory\NonInteractableFactory.cpp" />
     <ClCompile Include="src\Factory\InteractableFactory.cpp" />
     <ClCompile Include="src\Scenes\EmptyScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui_demo.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui_draw.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui_tables.cpp" />
-    <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AnimationManager.hpp" />
     <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />
-    <ClInclude Include="src\Factory\AnimationFactory.hpp" />
     <ClInclude Include="src\Factory\InteractableFactory.hpp" />
     <ClInclude Include="src\Factory\AbstractFactory.hpp" />
     <ClInclude Include="src\Entity.hpp" />
@@ -45,20 +40,11 @@
     <ClInclude Include="src\Component.hpp" />
     <ClInclude Include="src\GameData.hpp" />
     <ClInclude Include="src\Scene.hpp" />
-    <ClInclude Include="src\SFML-imgui\imconfig-SFML.h" />
-    <ClInclude Include="src\SFML-imgui\imconfig.h" />
-    <ClInclude Include="src\SFML-imgui\imgui-SFML.h" />
-    <ClInclude Include="src\SFML-imgui\imgui-SFML_export.h" />
-    <ClInclude Include="src\SFML-imgui\imgui.h" />
-    <ClInclude Include="src\SFML-imgui\imgui_internal.h" />
-    <ClInclude Include="src\SFML-imgui\imstb_rectpack.h" />
-    <ClInclude Include="src\SFML-imgui\imstb_textedit.h" />
-    <ClInclude Include="src\SFML-imgui\imstb_truetype.h" />
     <ClInclude Include="src\SceneManager.hpp" />
     <ClInclude Include="src\Engine.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Factory\Data\AnimationData.txt" />
+    <Text Include="resources\framedata\data.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -139,7 +125,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\ImGui-SFML\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\src\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -157,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\src\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,14 +162,14 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\ImGui-SFML\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SFML\lib;$(SolutionDir)Dependencies\Thor\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;thor-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Lua\lib;$(SolutionDir)Dependencies\SFML\lib;$(SolutionDir)Dependencies\Thor\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;thor-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -194,7 +180,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\src\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -202,8 +188,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Thor\lib;$(SolutionDir)Dependencies\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;thor.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\Lua\lib;$(SolutionDir)Dependencies\Thor\lib;$(SolutionDir)Dependencies\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;thor.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

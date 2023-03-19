@@ -59,8 +59,6 @@ void Engine::Run()
         m_data->sceneManager.GetActiveScene()->Render(m_data->window, m_deltaTime, interpolation);
         m_data->window.display();
     }
-
-    ImGui::SFML::Shutdown();
 }
 
 

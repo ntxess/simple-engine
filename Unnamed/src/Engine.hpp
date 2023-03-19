@@ -1,10 +1,6 @@
 #pragma once
 #include "GameData.hpp"
 #include "Scenes/EmptyScene.hpp"
-#include "Thor/Animations/FrameAnimation.hpp"
-#include <thread>
-#include <atomic>
-#include <string>
 
 class Engine
 {

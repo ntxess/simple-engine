@@ -53,71 +53,29 @@
     <ClCompile Include="src\Engine.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainMenu.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CommandDodge.cpp">
-      <Filter>Source Files\Input\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CommandExSkill.cpp">
-      <Filter>Source Files\Input\Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WayPoint.cpp">
-      <Filter>Source Files\Input\MovementType</Filter>
-    </ClCompile>
-    <ClCompile Include="src\QuadTree.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sandbox.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CommandBasic.cpp">
-      <Filter>Source Files\Input\Commands</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui.cpp">
-      <Filter>Source Files\ImGui</Filter>
+    <ClCompile Include="src\AnimationManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui_demo.cpp">
-      <Filter>Source Files\ImGui</Filter>
+    <ClCompile Include="src\Factory\NonInteractableFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui_draw.cpp">
-      <Filter>Source Files\ImGui</Filter>
+    <ClCompile Include="src\Factory\InteractableFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui_tables.cpp">
-      <Filter>Source Files\ImGui</Filter>
+    <ClCompile Include="src\Scenes\EmptyScene.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui_widgets.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SFML-imgui\imgui-SFML.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SystemHelper.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PowerThrower.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Sudoku.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameOfLifeSim.cpp">
-      <Filter>Source Files\States</Filter>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\MainMenu.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
@@ -127,47 +85,11 @@
     <ClInclude Include="src\Scene.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
-    <ClInclude Include="src\Command.hpp">
-      <Filter>Header Files\Input\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandDodge.hpp">
-      <Filter>Header Files\Input\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandExSkill.hpp">
-      <Filter>Header Files\Input\Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="src\WayPoint.hpp">
-      <Filter>Header Files\Input\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MCircle.hpp">
-      <Filter>Header Files\Input\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MRandom.hpp">
-      <Filter>Header Files\Input\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MStraight.hpp">
-      <Filter>Header Files\Input\MovementType</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QuadTree.hpp">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StateMachine.hpp">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sandbox.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandBasic.hpp">
-      <Filter>Header Files\Input\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="src\Component.hpp">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity.hpp">
       <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Event.hpp">
-      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\EventDispatcher.hpp">
       <Filter>Header Files\Events</Filter>
@@ -175,44 +97,26 @@
     <ClInclude Include="src\EventHandler.hpp">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imconfig.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\AnimationManager.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imconfig-SFML.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\Factory\NonInteractableFactory.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imgui.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\Factory\InteractableFactory.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imgui_internal.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\Factory\AbstractFactory.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imgui-SFML.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\Scenes\EmptyScene.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imgui-SFML_export.h">
-      <Filter>Header Files\ImGui</Filter>
+    <ClInclude Include="src\SceneManager.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imstb_rectpack.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imstb_textedit.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SFML-imgui\imstb_truetype.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SystemHelper.hpp">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PowerThrower.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Sudoku.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameOfLifeSim.hpp">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resources\framedata\data.txt" />
   </ItemGroup>
 </Project>

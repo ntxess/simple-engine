@@ -5,9 +5,8 @@
 #include "../Factory/AbstractFactory.hpp"
 #include "../Factory/InteractableFactory.hpp"
 #include "../Factory/NonInteractableFactory.hpp"
-#include "../SFML-imgui/imgui.h"
-#include "../SFML-imgui/imgui-SFML.h"
-
+#include "../../SFML-imgui/imgui.h"
+#include "../../SFML-imgui/imgui-SFML.h"
 class EmptyScene : public Scene
 {
 private:

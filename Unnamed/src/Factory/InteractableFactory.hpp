@@ -12,6 +12,6 @@ public:
 		: m_data(data), m_currentScene(currentScene) {}
 	~InteractableFactory() = default;
 
-	std::unique_ptr<Entity> CreateEntity(TYPE type) const override;
+	std::unique_ptr<Entity> CreateEntity(TYPE type, sf::Texture& texture) const override;
 };
 
