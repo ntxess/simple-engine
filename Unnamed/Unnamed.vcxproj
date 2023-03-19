@@ -44,7 +44,10 @@
     <ClInclude Include="src\Engine.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="resources\framedata\data.txt" />
+    <Text Include="resources\data\data.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\data\framedata.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -162,7 +165,7 @@
       <PreprocessorDefinitions>
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\include\;$(SolutionDir)Dependencies\RapidJson\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -180,7 +183,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\EnTT\include\;$(SolutionDir)Dependencies\SFML\include\;$(SolutionDir)Dependencies\Thor\include\;$(SolutionDir)Dependencies\SFML-imgui\include\;$(SolutionDir)Dependencies\Lua\src\;$(SolutionDir)Dependencies\RapidJson\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

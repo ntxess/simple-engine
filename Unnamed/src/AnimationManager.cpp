@@ -2,95 +2,66 @@
 
 AnimationManager::AnimationManager()
 {
-	ParseDataFromFile("resources/framedata/data.txt");
+	ParseJsonData("resources/data/framedata.json");
 }
 
-void AnimationManager::ParseDataFromFile(std::string filename)
+void AnimationManager::ParseJsonData(std::string filename)
 {
 	std::ifstream input(filename);
-	std::vector<std::unique_ptr<AnimationData>> animationData;
-	std::string line;
-	while (std::getline(input, line)) 
+	std::stringstream ss;
+	ss << input.rdbuf();
+	std::string jsonStr = ss.str();
+
+	rapidjson::Document doc;
+	doc.Parse(jsonStr.c_str());
+
+	const rapidjson::Value& animationDataArray = doc["animationdata"];
+
+	std::vector<AnimationData> animationDataList;
+	for (rapidjson::SizeType i = 0; i < animationDataArray.Size(); i++)
 	{
-		if (line.empty() || line[0] == '#' || line == "END")
-			continue; 
+		const rapidjson::Value& animationDataObj = animationDataArray[i];
 
-		if (line == "START")
+		AnimationData animationData;
+
+		animationData.name = animationDataObj["id"].GetString();
+		animationData.totalFrames = animationDataObj["totalframe"].GetInt();
+
+		const rapidjson::Value& frameBoxArray = animationDataObj["framebox"];
+		for (rapidjson::SizeType j = 0; j < frameBoxArray.Size(); j++)
 		{
-			std::getline(input, line);
-			std::unique_ptr<AnimationData> data = std::make_unique<AnimationData>();
-			std::stringstream ssLine(line);
-			std::string token;
+			const rapidjson::Value& frameBoxArrayElem = frameBoxArray[j];
+			std::vector<int> frameBox;
 
-			ssLine >> token;
-			if (token == "Name:")
-				ssLine >> data->name;
+			for (rapidjson::SizeType k = 0; k < frameBoxArrayElem.Size(); k++)
+				frameBox.push_back(frameBoxArrayElem[k].GetInt());
 			
-			ssLine.clear();
-			std::getline(input, line);
-			ssLine.str(line);
-
-			ssLine >> token;
-			if (token == "TotalFrame:")
-				ssLine >> token;
-			data->totalFrames = (stoi(token));
-			
-			ssLine.clear();
-			std::getline(input, line);
-			ssLine.str(line);
-
-			ssLine >> token;
-			if (token == "FrameBox:")
-			{
-				for (int i = 0; i < data->totalFrames; ++i)
-				{
-					ssLine.clear();
-					std::getline(input, line);
-					ssLine.str(line);
-					std::vector<int> points;
-					while (getline(ssLine, token, ','))
-						points.push_back(int(stoi(token)));
-					data->frameBox.push_back(points);
-				}
-			}
-
-			ssLine.clear();
-			std::getline(input, line);
-			ssLine.str(line);
-
-			ssLine >> token;
-			if (token == "FrameTiming:")
-			{
-				ssLine.clear();
-				std::getline(input, line);
-				ssLine.str(line);
-				for (int i = 0; i < data->totalFrames; ++i)
-				{
-					ssLine >> token;
-					data->frameTiming.push_back(stoi(token));
-				}
-			}
-
-			animationData.push_back(std::move(data));
+			animationData.frameBox.push_back(frameBox);
 		}
-	}
-	input.close();
 
-	ProcessData(animationData);
+		const rapidjson::Value& frameTimingArray = animationDataObj["frametiming"];
+		
+		for (rapidjson::SizeType j = 0; j < frameTimingArray.Size(); j++)
+			animationData.frameTiming.push_back(frameTimingArray[j].GetFloat());
+
+		animationDataList.push_back(animationData);
+	}
+
+	ProcessData(animationDataList);
 }
 
-void AnimationManager::ProcessData(const std::vector<std::unique_ptr<AnimationData>>& data)
+void AnimationManager::ProcessData(const std::vector<AnimationData>& data)
 {
-	for (auto& frameData : data)
+	for (auto frameData : data)
 	{
 		thor::FrameAnimation animation;
-		for (int i = 0; i < frameData->totalFrames; ++i)
+		for (int i = 0; i < frameData.totalFrames; ++i)
 		{
-			std::vector coords = frameData->frameBox[i];
+			std::vector coords = frameData.frameBox[i];
 			sf::IntRect frame(coords[0], coords[1], coords[2], coords[3]);
-			animation.addFrame(frameData->frameTiming[i], frame);
+			animation.addFrame(frameData.frameTiming[i], frame);
 		}
-		animationMap[frameData->name] = animation;
+		animationMap[frameData.name] = animation;
 	}
 }
 

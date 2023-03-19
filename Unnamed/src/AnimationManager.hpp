@@ -1,5 +1,6 @@
 #pragma once
 #include "Thor/Animations.hpp"
+#include "rapidjson/document.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -18,8 +19,8 @@ class AnimationManager
 private:
 	std::unordered_map<std::string, thor::FrameAnimation> animationMap;
 
-	void ParseDataFromFile(std::string filename);
-	void ProcessData(const std::vector<std::unique_ptr<AnimationData>>& data);
+	void ParseJsonData(std::string filename);
+	void ProcessData(const std::vector<AnimationData>& data);
 public:
 	AnimationManager();
 	~AnimationManager() = default;

@@ -14,7 +14,7 @@ std::unique_ptr<Entity> InteractableFactory::CreateEntity(TYPE type, sf::Texture
 		entity->AddComponent<Attack>(10.f);
 		entity->GetComponent<AnimatedSprite>().animator.addAnimation(
 			"playerIdle", 
-			m_data->animationManager.GetAnimation("Player_Idle"), 
+			m_data->animationManager.GetAnimation("player_idle"), 
 			sf::seconds(1.f)
 		);
 		break;
