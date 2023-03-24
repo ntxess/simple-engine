@@ -16,7 +16,12 @@ void EmptyScene::Init()
 
 void EmptyScene::ProcessEvent(const sf::Event& event)
 {
-
+    if (event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::A)
+            std::cout << "PRESSED" << std::endl;
+           
+    }
 }
 
 void EmptyScene::ProcessInput()
@@ -91,7 +96,6 @@ void EmptyScene::SetupScene()
     m_entity["Player"]->GetComponent<AnimatedSprite>().sprite.setScale(10, 10);
     m_entity["Player"]->GetComponent<AnimatedSprite>().sprite.setPosition(960, 500);
     m_entity["Enemy"]->GetComponent<AnimatedSprite>().sprite.setPosition(200, 500);
-
 }
 
 void EmptyScene::WaypointUpdate(const float& dt)

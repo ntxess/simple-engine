@@ -15,8 +15,9 @@ std::unique_ptr<Entity> InteractableFactory::CreateEntity(TYPE type, sf::Texture
 		entity->GetComponent<AnimatedSprite>().animator.addAnimation(
 			"playerIdle", 
 			m_data->animationManager.GetAnimation("player_idle"), 
-			sf::seconds(1.f)
-		);
+			sf::seconds(1.f));
+		entity->AddComponent<MovementPattern>(
+			m_data->waypointManager.GetWaypoint("straight-up"));
 		break;
 	case TYPE::ENEMY:
 		entity->AddComponent<AnimatedSprite>(texture);
