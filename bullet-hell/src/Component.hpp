@@ -4,8 +4,8 @@
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "Thor/Animations/Animator.hpp"
-#include <iostream>
 #include "Waypoint.hpp"
+#include <iostream>
 //#include "CommandDodge.hpp"
 //#include "CommandExSkill.hpp"
 //#include "CommandBasic.hpp"
@@ -39,14 +39,6 @@ struct AnimatedSprite
 		sprite.setTexture(texture);
 	}
 	AnimatedSprite(const AnimatedSprite&) = default;
-	void Update(sf::Time dt)
-	{
-		animator.update(dt);
-	}
-	void Animate()
-	{
-		animator.animate(sprite);
-	}
 };
 
 struct Text
@@ -147,18 +139,18 @@ struct MovementPattern
 	MovementPattern(const MovementPattern&) = default;
 };
 
-//struct PlayerInput
-//{
-//	sf::Vector2f direction;
-//	std::shared_ptr<Command> dodge;
-//	std::shared_ptr<Command> exSkill;
-//	std::shared_ptr<Command> attack;
-//
-//	PlayerInput() = default;
-//	PlayerInput(std::shared_ptr<Command> dodge, std::shared_ptr<Command> exSkill, std::shared_ptr<Command> attack)
-//		: dodge(dodge), exSkill(exSkill), attack(attack) {}
-//	PlayerInput(const PlayerInput&) = default;
-//};
+struct PlayerInput
+{
+	sf::Vector2f direction;
+	//std::shared_ptr<Command> dodge;
+	//std::shared_ptr<Command> exSkill;
+	//std::shared_ptr<Command> attack;
+
+	PlayerInput() = default;
+	//PlayerInput(std::shared_ptr<Command> dodge, std::shared_ptr<Command> exSkill, std::shared_ptr<Command> attack)
+	//	: dodge(dodge), exSkill(exSkill), attack(attack) {}
+	PlayerInput(const PlayerInput&) = default;
+};
 
 struct Clock
 {

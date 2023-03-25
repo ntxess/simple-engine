@@ -5,6 +5,7 @@
 class Scene
 {
 public:
+	virtual ~Scene() = default;
 	virtual void Init() = 0;
 	virtual void ProcessEvent(const sf::Event& event) = 0;
 	virtual void ProcessInput() = 0;

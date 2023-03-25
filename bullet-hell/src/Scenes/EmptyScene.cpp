@@ -12,39 +12,48 @@ void EmptyScene::Init()
     LoadResources();
     BuildEntities();
     SetupScene();
+    SetupSystems();
 }
 
 void EmptyScene::ProcessEvent(const sf::Event& event)
 {
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::A)
-            std::cout << "PRESSED" << std::endl;
-           
-    }
+
 }
 
 void EmptyScene::ProcessInput()
 {
+    auto& controller = m_entity["Player"]->GetComponent<PlayerInput>();
 
+    const float input = 1.f;
+    controller.direction = sf::Vector2f(0, 0);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        controller.direction.y -= input;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        controller.direction.x -= input;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        controller.direction.y += input;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        controller.direction.x += input;
 }
 
 void EmptyScene::Update(const float& deltaTime)
 {
-    if (!m_entity["Player"]->GetComponent<AnimatedSprite>().animator.isPlayingAnimation()) {
-        m_entity["Player"]->GetComponent<AnimatedSprite>().animator.playAnimation("playerIdle");
-    }
-    m_entity["Player"]->GetComponent<AnimatedSprite>().Update(sf::seconds(deltaTime));
-    m_entity["Player"]->GetComponent<AnimatedSprite>().Animate();
+    //if (!m_entity["Player"]->GetComponent<AnimatedSprite>().animator.isPlayingAnimation()) {
+    //    m_entity["Player"]->GetComponent<AnimatedSprite>().animator.playAnimation("playerIdle");
+    //}
 
-    WaypointUpdate(deltaTime);
+    m_system.GetSystem<InputSystem>()->Update(deltaTime, m_reg, m_entity["Player"]->GetHandle());
+    m_system.GetSystem<WaypointSystem>()->Update(deltaTime, m_reg);
+    m_system.GetSystem<AnimationSystem>()->Update(deltaTime, m_reg);
 }
 
 void EmptyScene::Render(sf::RenderWindow& rw, const float& deltaTime, const float& interpolation)
 {
-    rw.draw(m_entity["Background"]->GetComponent<Sprite>().sprite);
-    rw.draw(m_entity["Player"]->GetComponent<AnimatedSprite>().sprite);
-    rw.draw(m_entity["Enemy"]->GetComponent<AnimatedSprite>().sprite);
+    m_system.GetSystem<RenderSystem>()->Render(rw, m_reg);
 }
 
 void EmptyScene::Pause()
@@ -93,45 +102,14 @@ void EmptyScene::BuildEntities()
 
 void EmptyScene::SetupScene()
 {
-    m_entity["Player"]->GetComponent<AnimatedSprite>().sprite.setScale(10, 10);
     m_entity["Player"]->GetComponent<AnimatedSprite>().sprite.setPosition(960, 500);
     m_entity["Enemy"]->GetComponent<AnimatedSprite>().sprite.setPosition(200, 500);
 }
 
-void EmptyScene::WaypointUpdate(const float& dt)
+void EmptyScene::SetupSystems()
 {
-    auto group = m_reg.group<MovementPattern, Speed>(entt::get<AnimatedSprite>);
-    for (auto entity : group)
-    {
-        auto [wpc, spd, sp] = group.get<MovementPattern, Speed, AnimatedSprite>(entity);
-
-        Waypoint* headPtr = wpc.currentPath;
-        Waypoint* nextPtr = headPtr->nextWP.get();
-
-        if (nextPtr == nullptr)
-        {
-            if (wpc.repeat)
-            {
-                wpc.currentPath = wpc.movePattern;
-                wpc.distance = 0.f;
-            }
-            continue;
-        }
-
-        wpc.distance += spd.current * dt;
-        if (wpc.distance > nextPtr->distanceTotal)
-            wpc.currentPath = nextPtr;
-
-        sf::Vector2f unitDist;
-        unitDist.x = (nextPtr->location.x - headPtr->location.x) / headPtr->distanceToNext;
-        unitDist.y = (nextPtr->location.y - headPtr->location.y) / headPtr->distanceToNext;
-
-        sf::Vector2f velocity;
-        velocity.x = unitDist.x * spd.current * dt;
-        velocity.y = unitDist.y * spd.current * dt;
-
-        float theta = (atan2(velocity.y, velocity.x)) * (180.f / float(std::numbers::pi));
-        sp.sprite.setRotation(theta + 90);
-        sp.sprite.move(velocity);
-    }
+    m_system.AddSystem<InputSystem>();
+    m_system.AddSystem<WaypointSystem>();
+    m_system.AddSystem<AnimationSystem>();
+    m_system.AddSystem<RenderSystem>();
 }

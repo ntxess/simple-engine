@@ -31,6 +31,7 @@
     <ClCompile Include="src\Managers\WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\RenderSystem.hpp" />
     <ClInclude Include="src\Managers\AnimationManager.hpp" />
     <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />
     <ClInclude Include="src\Factory\InteractableFactory.hpp" />
@@ -44,12 +45,19 @@
     <ClInclude Include="src\Scene.hpp" />
     <ClInclude Include="src\Managers\SceneManager.hpp" />
     <ClInclude Include="src\Engine.hpp" />
+    <ClInclude Include="src\Systems\AnimationSystem.hpp" />
+    <ClInclude Include="src\Systems\CollisionSystem.hpp" />
+    <ClInclude Include="src\Systems\TrackingSystem.hpp" />
+    <ClInclude Include="src\Systems\WaypointSystem.hpp" />
     <ClInclude Include="src\Waypoint.hpp" />
     <ClInclude Include="src\Managers\WaypointManager.hpp" />
+    <ClInclude Include="src\Managers\SystemManager.hpp" />
+    <ClInclude Include="src\System.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\data\framedata.json" />
     <None Include="resources\data\waypointdata.json" />
+    <None Include="src\Systems\InputSystem.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
