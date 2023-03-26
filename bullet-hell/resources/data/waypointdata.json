@@ -1,0 +1,32 @@
+{
+  "waypointdata": [
+    {
+      "id": "straight-up",
+      "movement-coords": [
+        [ 0, 0 ],
+        [ 0, -1000 ]
+      ]
+    },
+    {
+      "id": "straight-down",
+      "movement-coords": [
+        [ 0, 0 ],
+        [ 0, 1000 ]
+      ]
+    },
+    {
+      "id": "straight-left",
+      "movement-coords": [
+        [ 0, 0 ],
+        [ -1000, 0 ]
+      ]
+    },
+    {
+      "id": "straight-right",
+      "movement-coords": [
+        [ 0, 0 ],
+        [ 1000, 0 ]
+      ]
+    }
+  ]
+}
