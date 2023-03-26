@@ -1,38 +1,32 @@
 #pragma once
 #include "../System.hpp"
-#include <vector>
+#include <typeindex>
+#include <unordered_map>
 
-class SystemManager 
+class SystemManager
 {
 private:
-    std::vector<std::unique_ptr<System>> m_systems;
+    std::unordered_map<std::type_index, std::unique_ptr<System>> m_systems;
 
 public:
     template<typename T, typename... Args>
-    void AddSystem(Args&&... args) 
+    void AddSystem(Args&&... args)
     {
-        m_systems.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
+        m_systems.emplace(typeid(T), std::make_unique<T>(std::forward<Args>(args)...));
     }
 
     template<typename T>
     T* GetSystem() {
-        for (auto& system : m_systems) 
-        {
-            if (typeid(*system) == typeid(T)) 
-            {
-                return static_cast<T*>(system.get());
-            }
-        }
+        auto it = m_systems.find(typeid(T));
+        if (it != m_systems.end())
+            return static_cast<T*>(it->second.get());
         return nullptr;
     }
 
     void Update(const float& dt, entt::registry& reg)
     {
-        for (auto& system : m_systems) 
-        {
-            system->Update(dt, reg);
-        }
+        for (auto& system : m_systems)
+            system.second->Update(dt, reg);
     }
 };
-
 

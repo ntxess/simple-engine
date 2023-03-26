@@ -257,10 +257,13 @@ struct Attraction
 
 struct PerformanceMonitor
 {
+	sf::RenderWindow* rw;
 	sf::Clock clock;
 	float value;
 
 	PerformanceMonitor() = default;
+	PerformanceMonitor(sf::RenderWindow* renderWindow)
+		: rw(renderWindow), value(0.f) {}
 	PerformanceMonitor(const PerformanceMonitor&) = default;
 };
 

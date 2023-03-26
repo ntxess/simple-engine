@@ -31,6 +31,7 @@
     <ClCompile Include="src\Managers\WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\DebugSystem.hpp" />
     <ClInclude Include="src\Managers\SpriteManager.hpp" />
     <ClInclude Include="src\Systems\RenderSystem.hpp" />
     <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />

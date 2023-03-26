@@ -10,6 +10,7 @@ private:
 
 public:
 	Entity();
+	Entity(Scene* scene);
 	Entity(entt::entity handle, Scene* scene);
 	~Entity();
 	Entity(const Entity& other) = default;

@@ -5,6 +5,12 @@ Entity::Entity()
 	, m_scene(nullptr)
 {}
 
+Entity::Entity(Scene * scene)
+	: m_scene(scene)
+{
+	m_entityHandle = scene->GetRegistry().create();
+}
+
 Entity::Entity(entt::entity handle, Scene* scene)
 	: m_entityHandle(handle)
 	, m_scene(scene)

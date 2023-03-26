@@ -10,6 +10,8 @@
 #include "../Systems/InputSystem.hpp"
 #include "../Systems/AnimationSystem.hpp"
 #include "../Systems/RenderSystem.hpp"
+#include "../Systems/DebugSystem.hpp"
+
 
 class EmptyScene : public Scene
 {
