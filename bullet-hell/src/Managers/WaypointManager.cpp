@@ -44,7 +44,7 @@ void WaypointManager::ParseJsonData(std::string filename)
 	}
 }
 
-Waypoint* WaypointManager::GetWaypoint(const std::string name)
+Waypoint* WaypointManager::GetWaypoint(const std::string id)
 {
-	return waypointMap[name].get();
+	return waypointMap[id].get();
 }

@@ -1,0 +1,63 @@
+{
+  "entitydata": [
+    {
+      "id": "BG_Space",
+      "path": "resources/bg/Space_Stars2.png",
+      "animation": []
+    },
+    {
+      "id": "SP_Player",
+      "path": "resources/player/ship.png",
+      "animation": [
+        {
+          "id": "idle",
+          "duration": 10,
+          "totalframe": 5,
+          "framebox": [
+            [ 0, 0, 16, 24 ],
+            [ 16, 0, 16, 24 ],
+            [ 32, 0, 16, 24 ],
+            [ 48, 0, 16, 24 ],
+            [ 64, 0, 16, 24 ]
+          ],
+          "frametiming": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "id": "idle2",
+          "duration": 1,
+          "totalframe": 5,
+          "framebox": [
+            [ 0, 0, 16, 24 ],
+            [ 16, 0, 16, 24 ],
+            [ 32, 0, 16, 24 ],
+            [ 48, 0, 16, 24 ],
+            [ 64, 0, 16, 24 ]
+          ],
+          "frametiming": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SP_Enemy",
+      "path": "resources/player/triangle.png",
+      "animation": []
+    },
+    {
+      "id": "SP_Player2",
+      "path": "resources/player/ship_alt.png",
+      "animation": []
+    }
+  ]
+}

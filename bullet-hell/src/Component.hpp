@@ -39,6 +39,10 @@ struct AnimatedSprite
 		sprite.setTexture(texture);
 	}
 	AnimatedSprite(const AnimatedSprite&) = default;
+	void AddAnimator(thor::Animator<sf::Sprite, std::string> ani)
+	{
+		animator = ani;
+	}
 };
 
 struct Text

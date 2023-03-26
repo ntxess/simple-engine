@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Managers\AnimationManager.cpp" />
+    <ClCompile Include="src\Managers\SpriteManager.cpp" />
     <ClCompile Include="src\Factory\NonInteractableFactory.cpp" />
     <ClCompile Include="src\Factory\InteractableFactory.cpp" />
     <ClCompile Include="src\Scenes\EmptyScene.cpp" />
@@ -31,8 +31,8 @@
     <ClCompile Include="src\Managers\WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Managers\SpriteManager.hpp" />
     <ClInclude Include="src\Systems\RenderSystem.hpp" />
-    <ClInclude Include="src\Managers\AnimationManager.hpp" />
     <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />
     <ClInclude Include="src\Factory\InteractableFactory.hpp" />
     <ClInclude Include="src\AbstractFactory.hpp" />
@@ -55,7 +55,9 @@
     <ClInclude Include="src\System.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\data\spritedata.json" />
     <None Include="resources\data\framedata.json" />
+    <None Include="resources\data\texturedata.json" />
     <None Include="resources\data\waypointdata.json" />
     <None Include="src\Systems\InputSystem.hpp" />
   </ItemGroup>

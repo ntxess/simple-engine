@@ -23,6 +23,6 @@ public:
 	~AnimationManager() = default;
 
 	void ParseJsonData(std::string filename);
-	thor::FrameAnimation GetAnimation(const std::string name);
+	thor::FrameAnimation GetAnimation(const std::string id);
 };
 

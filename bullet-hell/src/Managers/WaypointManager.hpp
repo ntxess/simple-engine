@@ -15,6 +15,6 @@ public:
 	~WaypointManager() = default;
 
 	void ParseJsonData(std::string filename);
-	Waypoint* GetWaypoint(const std::string name);
+	Waypoint* GetWaypoint(const std::string id);
 };
 

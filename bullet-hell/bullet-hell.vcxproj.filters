@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Managers\AnimationManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Factory\NonInteractableFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,12 +38,12 @@
     <ClCompile Include="src\Waypoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Managers\SpriteManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbstractFactory.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\AnimationManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Scenes\EmptyScene.hpp">
@@ -109,10 +106,15 @@
     <ClInclude Include="src\Systems\RenderSystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Managers\SpriteManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\data\framedata.json" />
     <None Include="resources\data\waypointdata.json" />
     <None Include="src\Systems\InputSystem.hpp" />
+    <None Include="resources\data\texturedata.json" />
+    <None Include="resources\data\spritedata.json" />
   </ItemGroup>
 </Project>

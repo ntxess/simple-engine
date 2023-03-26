@@ -1,0 +1,24 @@
+{
+  "texturedata": [
+    {
+      "id": "BG_Space",
+      "path": "resources/bg/Space_Stars2.png",
+      "reuse": true
+    },
+    {
+      "id": "SP_Player",
+      "path": "resources/player/ship.png",
+      "reuse": true
+    },
+    {
+      "id": "SP_Enemy",
+      "path": "resources/player/triangle.png",
+      "reuse": true
+    },
+    {
+      "id": "SP_Player2",
+      "path": "resources/player/ship_alt.png",
+      "reuse": true
+    }
+  ]
+}

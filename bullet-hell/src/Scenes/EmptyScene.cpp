@@ -9,7 +9,6 @@ EmptyScene::~EmptyScene()
 
 void EmptyScene::Init()
 {
-    LoadResources();
     BuildEntities();
     SetupScene();
     SetupSystems();
@@ -42,9 +41,9 @@ void EmptyScene::ProcessInput()
 
 void EmptyScene::Update(const float& deltaTime)
 {
-    //if (!m_entity["Player"]->GetComponent<AnimatedSprite>().animator.isPlayingAnimation()) {
-    //    m_entity["Player"]->GetComponent<AnimatedSprite>().animator.playAnimation("playerIdle");
-    //}
+    if (!m_entity["Player"]->GetComponent<AnimatedSprite>().animator.isPlayingAnimation()) {
+        m_entity["Player"]->GetComponent<AnimatedSprite>().animator.playAnimation("idle2");
+    }
 
     m_system.GetSystem<InputSystem>()->Update(deltaTime, m_reg, m_entity["Player"]->GetHandle());
     m_system.GetSystem<WaypointSystem>()->Update(deltaTime, m_reg);
@@ -67,37 +66,14 @@ entt::registry& EmptyScene::GetRegistry()
 	return m_reg;
 }
 
-void EmptyScene::LoadResources() 
-{
-    try
-    {
-        m_data->textureManager.acquire("BG_Space",
-            thor::Resources::fromFile<sf::Texture>("resources/bg/Space_Stars2.png"),
-            thor::Resources::Reuse);
-        m_data->textureManager.acquire("SP_Player",
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship.png"),
-            thor::Resources::Reuse);
-        m_data->textureManager.acquire("SP_Enemy",
-            thor::Resources::fromFile<sf::Texture>("resources/player/triangle.png"),
-            thor::Resources::Reuse);
-        m_data->textureManager.acquire("SP_Player2",
-            thor::Resources::fromFile<sf::Texture>("resources/player/ship_alt.png"),
-            thor::Resources::Reuse);
-    }
-    catch (thor::ResourceLoadingException& e)
-    {
-        std::cout << "Error: " << e.what() << std::endl;
-    }
-}
-
 void EmptyScene::BuildEntities() 
 {
-    std::unique_ptr<AbstractFactory> interactable = std::make_unique<InteractableFactory>(m_data, this);
-    std::unique_ptr<AbstractFactory> nonInteractable = std::make_unique<NonInteractableFactory>(m_data, this);
+    InteractableFactory interactableFact(m_data, this);
+    NonInteractableFactory nonInteractableFact(m_data, this);
 
-    m_entity["Player"] = interactable->CreateEntity(TYPE::PLAYER, m_data->textureManager["SP_Player"]);
-    m_entity["Background"] = nonInteractable->CreateEntity(TYPE::BACKGROUND, m_data->textureManager["BG_Space"]);
-    m_entity["Enemy"] = interactable->CreateEntity(TYPE::ENEMY, m_data->textureManager["SP_Player2"]);
+    m_entity["Player"] = interactableFact.CreateEntity(TYPE::PLAYER, m_data->spriteManager.GetTexture("SP_Player"));
+    m_entity["Background"] = nonInteractableFact.CreateEntity(TYPE::BACKGROUND, m_data->spriteManager.GetTexture("BG_Space"));
+    m_entity["Enemy"] = interactableFact.CreateEntity(TYPE::ENEMY, m_data->spriteManager.GetTexture("SP_Player2"));
 }
 
 void EmptyScene::SetupScene()

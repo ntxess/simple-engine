@@ -32,7 +32,6 @@ public:
 	void Resume();
 	entt::registry& GetRegistry();
 
-	void LoadResources();
 	void BuildEntities();
 	void SetupScene();
 	void SetupSystems();
