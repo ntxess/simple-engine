@@ -21,7 +21,7 @@ void WaypointManager::ParseJsonData(std::string filename)
 	for (rapidjson::SizeType i = 0; i < waypointDataArray.Size(); i++)
 	{
 		const rapidjson::Value& waypoints = waypointDataArray[i]["movement-coords"];
-		std::string id = waypointDataArray[i]["id"].GetString();
+		entt::hashed_string id = entt::hashed_string{waypointDataArray[i]["id"].GetString()};
 
 		float head_x = waypoints[0][0].GetFloat();
 		float head_y = waypoints[0][1].GetFloat();
@@ -44,7 +44,7 @@ void WaypointManager::ParseJsonData(std::string filename)
 	}
 }
 
-Waypoint* WaypointManager::GetWaypoint(const std::string id)
+Waypoint* WaypointManager::GetWaypoint(entt::hashed_string::hash_type id)
 {
 	return waypointMap[id].get();
 }

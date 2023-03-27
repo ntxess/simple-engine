@@ -21,7 +21,7 @@ void EmptyScene::ProcessEvent(const sf::Event& event)
 
 void EmptyScene::ProcessInput()
 {
-    auto& controller = m_entity["Player"]->GetComponent<PlayerInput>();
+    auto& controller = m_entity["Player"_hs]->GetComponent<PlayerInput>();
 
     const float input = 1.f;
     controller.direction = sf::Vector2f(0, 0);
@@ -41,14 +41,14 @@ void EmptyScene::ProcessInput()
 
 void EmptyScene::Update(const float& deltaTime)
 {
-    if (!m_entity["Player"]->GetComponent<AnimatedSprite>().animator.isPlayingAnimation()) {
-        m_entity["Player"]->GetComponent<AnimatedSprite>().animator.playAnimation("idle2");
+    if (!m_entity["Player"_hs]->GetComponent<Animator>().animator.isPlayingAnimation()) {
+        m_entity["Player"_hs]->GetComponent<Animator>().animator.playAnimation("idle2");
     }
 
-    m_system.GetSystem<InputSystem>()->Update(deltaTime, m_reg, m_entity["Player"]->GetHandle());
+    m_system.GetSystem<DebugSystem>()->Update(deltaTime, m_reg, m_entity["debug"_hs]->GetHandle());
+    m_system.GetSystem<InputSystem>()->Update(deltaTime, m_reg, m_entity["Player"_hs]->GetHandle());
     m_system.GetSystem<AnimationSystem>()->Update(deltaTime, m_reg);
     m_system.GetSystem<WaypointSystem>()->Update(deltaTime, m_reg);
-    m_system.GetSystem<DebugSystem>()->Update(deltaTime, m_reg, m_entity["debug"]->GetHandle());
 }
 
 void EmptyScene::Render(sf::RenderWindow& rw, const float& deltaTime, const float& interpolation)
@@ -72,17 +72,17 @@ void EmptyScene::BuildEntities()
     InteractableFactory interactableFact(m_data, this);
     NonInteractableFactory nonInteractableFact(m_data, this);
 
-    m_entity["Background"] = nonInteractableFact.CreateEntity(TYPE::BACKGROUND, m_data->spriteManager.GetTexture("BG_Space"));
-    m_entity["Player"] = interactableFact.CreateEntity(TYPE::PLAYER, m_data->spriteManager.GetTexture("SP_Player"));
-    m_entity["Enemy"] = interactableFact.CreateEntity(TYPE::ENEMY, m_data->spriteManager.GetTexture("SP_Player2"));
-    m_entity["debug"] = std::make_unique<Entity>(this);
+    m_entity["Player"_hs] = interactableFact.CreateEntity(TYPE::PLAYER, m_data->spriteManager.GetTexture("SP_Player"_hs));
+    m_entity["Enemy"_hs] = interactableFact.CreateEntity(TYPE::ENEMY, m_data->spriteManager.GetTexture("SP_Player2"_hs));
+    m_entity["debug"_hs] = std::make_unique<Entity>(this);
+    m_entity["Background"_hs] = nonInteractableFact.CreateEntity(TYPE::BACKGROUND, m_data->spriteManager.GetTexture("BG_Space"_hs));
 }
 
 void EmptyScene::SetupScene()
 {
-    m_entity["Player"]->GetComponent<AnimatedSprite>().sprite.setPosition(960, 500);
-    m_entity["Enemy"]->GetComponent<AnimatedSprite>().sprite.setPosition(200, 500);
-    m_entity["debug"]->AddComponent<PerformanceMonitor>(&m_data->window);
+    m_entity["Player"_hs]->GetComponent<Sprite>().sprite.setPosition(960, 500);
+    m_entity["Enemy"_hs]->GetComponent<Sprite>().sprite.setPosition(200, 500);
+    m_entity["debug"_hs]->AddComponent<PerformanceMonitor>(&m_data->window);
 }
 
 void EmptyScene::SetupSystems()

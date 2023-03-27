@@ -8,23 +8,22 @@ std::unique_ptr<Entity> InteractableFactory::CreateEntity(TYPE type, sf::Texture
 	switch (type)
 	{
 	case TYPE::PLAYER:
-		entity->AddComponent<AnimatedSprite>(texture);
+		entity->AddComponent<Sprite>(texture);
 		entity->AddComponent<PlayerInput>();
 		entity->AddComponent<Health>(100.f);
 		entity->AddComponent<Speed>(500.f);
-		entity->AddComponent<Attack>(10.f);
-		entity->GetComponent<AnimatedSprite>().AddAnimator(m_data->spriteManager.GetAnimator("SP_Player"));
+		entity->AddComponent<Animator>(m_data->spriteManager.GetAnimator("SP_Player"_hs));
 		break;
 	case TYPE::ENEMY:
-		entity->AddComponent<AnimatedSprite>(texture);
+		entity->AddComponent<Sprite>(texture);
 		entity->AddComponent<Health>(200.f);
 		entity->AddComponent<Speed>(10.f);
 		entity->AddComponent<Attack>(5.f);
 		entity->AddComponent<MovementPattern>(
-			m_data->waypointManager.GetWaypoint("straight-down"));
+			m_data->waypointManager.GetWaypoint("straight-down"_hs));
 		break;
 	case TYPE::FRIENDLY:
-		entity->AddComponent<AnimatedSprite>(texture);
+		entity->AddComponent<Sprite>(texture);
 		entity->AddComponent<Health>(100.f);
 		entity->AddComponent<Speed>(20.f);
 		entity->AddComponent<Attack>(10.f);

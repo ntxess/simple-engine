@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.hpp"
 #include "entt/entt.hpp"
+using namespace entt::literals;
 
 class Entity
 {
@@ -17,8 +18,11 @@ public:
 
 	entt::entity GetHandle();
 
+	template<typename T>
+	void AssignTag(entt::basic_hashed_string<char> tag);
+
 	template<typename T, typename... Args>
-	T& AddComponent(Args&&... args);
+	void AddComponent(Args&&... args);
 
 	template<typename T>
 	T& GetComponent();
@@ -32,10 +36,16 @@ public:
 	operator bool() const { return m_entityHandle != (entt::entity)0; }
 };
 
-template<typename T, typename... Args>
-inline T& Entity::AddComponent(Args&&... args)
+template<typename T>
+inline void Entity::AssignTag(entt::basic_hashed_string<char> tag)
 {
-	return m_scene->GetRegistry().emplace<T>(m_entityHandle, std::forward<Args>(args)...);
+	m_scene->GetRegistry().emplace_or_replace<T>(m_entityHandle, tag);
+}
+
+template<typename T, typename... Args>
+inline void Entity::AddComponent(Args&&... args)
+{
+	m_scene->GetRegistry().emplace<T>(m_entityHandle, std::forward<Args>(args)...);
 }
 
 template<typename T>

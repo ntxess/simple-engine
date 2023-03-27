@@ -4,6 +4,7 @@
 #include "Thor/Animations/FrameAnimation.hpp"
 #include "Thor/Animations/Animator.hpp"
 #include "rapidjson/document.h"
+#include "entt/entt.hpp"
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
@@ -25,14 +26,14 @@ private:
 		std::vector<float> frameTiming;
 	};
 
-	std::unordered_map<std::string, SpriteData> m_spriteMap;
+	std::unordered_map<entt::hashed_string::hash_type, SpriteData> m_spriteMap;
 
 public:
 	SpriteManager();
 	~SpriteManager() = default;
 
 	void ParseJsonData(std::string filename);
-	sf::Texture& GetTexture(const std::string name);
-	thor::Animator<sf::Sprite, std::string> GetAnimator(const std::string name);
+	sf::Texture& GetTexture(entt::hashed_string::hash_type id);
+	thor::Animator<sf::Sprite, std::string> GetAnimator(entt::hashed_string::hash_type id);
 };
 

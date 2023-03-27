@@ -12,12 +12,11 @@
 #include "../Systems/RenderSystem.hpp"
 #include "../Systems/DebugSystem.hpp"
 
-
 class EmptyScene : public Scene
 {
 private:
 	std::shared_ptr<GameData> m_data;
-	std::unordered_map<std::string, std::unique_ptr<Entity>> m_entity;
+	std::unordered_map<entt::hashed_string::hash_type, std::unique_ptr<Entity>> m_entity;
 	entt::registry m_reg;
 	SystemManager m_system;
 

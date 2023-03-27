@@ -19,7 +19,7 @@ void SpriteManager::ParseJsonData(std::string filename)
 
 	for (rapidjson::SizeType i = 0; i < entityDataArray.Size(); i++)
 	{
-		std::string id = entityDataArray[i]["id"].GetString();
+		entt::hashed_string id = entt::hashed_string{entityDataArray[i]["id"].GetString()};
 		std::string path = entityDataArray[i]["path"].GetString();
 
 		if (!m_spriteMap[id].texture.loadFromFile(path))
@@ -71,12 +71,12 @@ void SpriteManager::ParseJsonData(std::string filename)
 	input.close();
 }
 
-sf::Texture& SpriteManager::GetTexture(const std::string name)
+sf::Texture& SpriteManager::GetTexture(entt::hashed_string::hash_type id)
 {
-	return m_spriteMap[name].texture;
+	return m_spriteMap[id].texture;
 }
 
-thor::Animator<sf::Sprite, std::string> SpriteManager::GetAnimator(const std::string name)
+thor::Animator<sf::Sprite, std::string> SpriteManager::GetAnimator(entt::hashed_string::hash_type id)
 {
-	return m_spriteMap[name].animator;
+	return m_spriteMap[id].animator;
 }
