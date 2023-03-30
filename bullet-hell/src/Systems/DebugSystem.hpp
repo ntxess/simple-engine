@@ -6,7 +6,7 @@
 class DebugSystem : public System
 {
 public:
-	void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null)
+	void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
 	{
 		auto& clock = reg.get<PerformanceMonitor>(ent).clock;
 		auto& fps = reg.get<PerformanceMonitor>(ent).value;

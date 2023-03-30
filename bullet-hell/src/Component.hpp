@@ -1,14 +1,25 @@
 #pragma once
+#include "Waypoint.hpp"
+#include "SFML/System/Clock.hpp"
+#include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Text.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/RenderWindow.hpp"
 #include "Thor/Animations/Animator.hpp"
-#include "Waypoint.hpp"
+#include "entt/entt.hpp"
 #include <iostream>
 //#include "CommandDodge.hpp"
 //#include "CommandExSkill.hpp"
 //#include "CommandBasic.hpp"
+
+enum class TEAM
+{
+	PLAYER,
+	ENEMY,
+	NEUTRAL
+};
 
 struct Sprite
 {
@@ -28,42 +39,40 @@ struct Sprite
 	Sprite(const Sprite&) = default;
 };
 
-struct AnimatedSprite
+struct Animator
 {
-	sf::Sprite sprite;
 	thor::Animator<sf::Sprite, std::string> animator;
 
-	AnimatedSprite() = default;
-	AnimatedSprite(sf::Texture& texture)
-	{
-		sprite.setTexture(texture);
-	}
-	AnimatedSprite(const AnimatedSprite&) = default;
-	void AddAnimator(thor::Animator<sf::Sprite, std::string> ani)
-	{
-		animator = ani;
-	}
+	Animator() = default;
+	Animator(thor::Animator<sf::Sprite, std::string> animations)
+		: animator(animations) {}
+	Animator(const Animator&) = default;
 };
 
-struct Text
+struct PlayerInput
 {
-	sf::Text text;
-	sf::Font font;
+	sf::Vector2f direction;
+	//std::shared_ptr<Command> dodge;
+	//std::shared_ptr<Command> exSkill;
+	//std::shared_ptr<Command> attack;
 
-	Text() = default;
-	Text(const std::string& pathToFont)
-	{
-		if (!font.loadFromFile(pathToFont))
-		{
-			std::cout << "FAILURE TO LOAD FONT TYPE!" << std::endl;
-			exit(-1);
-		}
-		text.setFont(font);
-		text.setCharacterSize(20);
-		text.setFillColor(sf::Color::White);
-		text.setPosition(sf::Vector2f(10.f, 5.f));
-	}
-	Text(const Text&) = default;
+	PlayerInput() = default;
+	//PlayerInput(std::shared_ptr<Command> dodge, std::shared_ptr<Command> exSkill, std::shared_ptr<Command> attack)
+	//	: dodge(dodge), exSkill(exSkill), attack(attack) {}
+	PlayerInput(const PlayerInput&) = default;
+};
+
+struct MovementPattern
+{
+	Waypoint* movePattern;
+	Waypoint* currentPath;
+	float distance;
+	bool repeat;
+
+	MovementPattern() = default;
+	MovementPattern(Waypoint* wp, const bool& repeat = false)
+		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat) {}
+	MovementPattern(const MovementPattern&) = default;
 };
 
 struct Health
@@ -75,17 +84,19 @@ struct Health
 	Health(const float& health)
 		: max(health), current(health) {}
 	Health(const Health&) = default;
-	void IncreaseHealth(float increaseUnit)
+	float IncreaseHealth(float increaseUnit)
 	{
 		current += increaseUnit;
 		if (current > max)
 			current = max;
+		return current;
 	}
-	void DecreaseHealth(float decreaseUnit)
+	float DecreaseHealth(float decreaseUnit)
 	{
 		current -= decreaseUnit;
 		if (current < 0.f)
 			current = 0.f;
+		return current;
 	}
 };
 
@@ -130,30 +141,47 @@ struct Attack
 	Attack(const Attack&) = default;
 };
 
-struct MovementPattern
+struct Attraction
 {
-	Waypoint* movePattern;
-	Waypoint* currentPath;
-	float distance;
-	bool repeat;
+	union Power
+	{
+		bool fullStrength;
+		float level;
+	};
 
-	MovementPattern() = default;
-	MovementPattern(Waypoint* wp, const bool& repeat = false)
-		: movePattern(&*wp), currentPath(&*wp), distance(0.0f), repeat(repeat) {}
-	MovementPattern(const MovementPattern&) = default;
+	Power power;
+
+	Attraction() = default;
+	Attraction(const float& strength)
+	{
+		power.level = strength;
+	}
+	Attraction(const bool& fullStrength)
+	{
+		power.fullStrength = fullStrength;
+	}
+	Attraction(const Attraction&) = default;
 };
 
-struct PlayerInput
+struct Text
 {
-	sf::Vector2f direction;
-	//std::shared_ptr<Command> dodge;
-	//std::shared_ptr<Command> exSkill;
-	//std::shared_ptr<Command> attack;
+	sf::Text text;
+	sf::Font font;
 
-	PlayerInput() = default;
-	//PlayerInput(std::shared_ptr<Command> dodge, std::shared_ptr<Command> exSkill, std::shared_ptr<Command> attack)
-	//	: dodge(dodge), exSkill(exSkill), attack(attack) {}
-	PlayerInput(const PlayerInput&) = default;
+	Text() = default;
+	Text(const std::string& pathToFont)
+	{
+		if (!font.loadFromFile(pathToFont))
+		{
+			std::cout << "FAILURE TO LOAD FONT TYPE!" << std::endl;
+			exit(-1);
+		}
+		text.setFont(font);
+		text.setCharacterSize(20);
+		text.setFillColor(sf::Color::White);
+		text.setPosition(sf::Vector2f(10.f, 5.f));
+	}
+	Text(const Text&) = default;
 };
 
 struct Clock
@@ -162,6 +190,18 @@ struct Clock
 
 	Clock() = default;
 	Clock(const Clock&) = default;
+};
+
+struct PerformanceMonitor
+{
+	sf::RenderWindow* rw;
+	sf::Clock clock;
+	float value;
+
+	PerformanceMonitor() = default;
+	PerformanceMonitor(sf::RenderWindow* renderWindow)
+		: rw(renderWindow), value(0.f) {}
+	PerformanceMonitor(const PerformanceMonitor&) = default;
 };
 
 struct TopLayerTag
@@ -182,98 +222,36 @@ struct BotLayerTag
 	BotLayerTag(const BotLayerTag&) = default;
 };
 
-struct PlayerTag
+struct Hitbox
 {
-	PlayerTag() = default;
-	PlayerTag(const PlayerTag&) = default;
+	sf::FloatRect hitbox;
+	Hitbox() = default;
+	Hitbox(const sf::FloatRect& hitbox)
+		: hitbox(hitbox) {}
+	Hitbox(const Hitbox&) = default;
 };
 
-struct AllyTag
+struct CollidedTag
 {
-	AllyTag() = default;
-	AllyTag(const AllyTag&) = default;
+	entt::entity collider;
+	CollidedTag() = default;
+	CollidedTag(const entt::entity& ent)
+		: collider(ent) {}
+	CollidedTag(const CollidedTag&) = default;
 };
 
-struct EnemyTag
+struct DestroyTag
 {
-	EnemyTag() = default;
-	EnemyTag(const EnemyTag&) = default;
+	DestroyTag() = default;
+	DestroyTag(const DestroyTag&) = default;
 };
 
-struct NeutralTag
+struct TeamTag
 {
-	NeutralTag() = default;
-	NeutralTag(const NeutralTag&) = default;
+	TEAM tag;
+	TeamTag() = default;
+	TeamTag(TEAM teamtag)
+		: tag(teamtag) {}
+	TeamTag(const TeamTag&) = default;
 };
 
-struct InteractableTag
-{
-	InteractableTag() = default;
-	InteractableTag(const InteractableTag&) = default;
-};
-
-struct ParticleTag
-{
-	ParticleTag() = default;
-	ParticleTag(const ParticleTag&) = default;
-};
-
-struct InterfaceTag
-{
-	InterfaceTag() = default;
-	InterfaceTag(const InterfaceTag&) = default;
-};
-
-struct GravityTag
-{
-	bool gravityOn;
-
-	GravityTag()
-		: gravityOn(false) {}
-	GravityTag(const GravityTag&) = default;
-};
-
-struct Attraction
-{
-	union Power 
-	{
-		bool fullStrength;
-		float level;
-	};
-
-	Power power;
-
-	Attraction() = default;
-	Attraction(const float& strength)
-	{
-		power.level = strength;
-	}
-	Attraction(const bool& fullStrength)
-	{
-		power.fullStrength = fullStrength;
-	}
-	Attraction(const Attraction&) = default;
-};
-
-struct PerformanceMonitor
-{
-	sf::RenderWindow* rw;
-	sf::Clock clock;
-	float value;
-
-	PerformanceMonitor() = default;
-	PerformanceMonitor(sf::RenderWindow* renderWindow)
-		: rw(renderWindow), value(0.f) {}
-	PerformanceMonitor(const PerformanceMonitor&) = default;
-};
-
-struct RotateTurret
-{
-	float degree;
-	float speed;
-	int flip;
-	
-	RotateTurret() : degree(275.f), speed(1.f), flip(true) {};
-	RotateTurret(const float& speed) : degree(275.f), speed(speed), flip(true) {};
-	RotateTurret(const RotateTurret&) = default;
-};

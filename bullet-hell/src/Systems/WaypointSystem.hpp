@@ -6,12 +6,12 @@
 class WaypointSystem : public System
 {
 public:
-	void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null)
-	{
-        auto group = reg.group<MovementPattern, Speed>(entt::get<AnimatedSprite>);
+    void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
+    {
+        auto group = reg.group<MovementPattern, Speed>(entt::get<Sprite>);
         for (auto entity : group)
         {
-            auto [wpc, spd, sp] = group.get<MovementPattern, Speed, AnimatedSprite>(entity);
+            auto [wpc, spd, sp] = group.get<MovementPattern, Speed, Sprite>(entity);
 
             Waypoint* headPtr = wpc.currentPath;
             Waypoint* nextPtr = headPtr->nextWP.get();
@@ -42,5 +42,5 @@ public:
             sp.sprite.setRotation(theta + 90);
             sp.sprite.move(velocity);
         }
-	}
+    }
 };

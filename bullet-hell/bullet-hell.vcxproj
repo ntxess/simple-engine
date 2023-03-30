@@ -22,6 +22,7 @@
     <ClCompile Include="src\Managers\SpriteManager.cpp" />
     <ClCompile Include="src\Factory\NonInteractableFactory.cpp" />
     <ClCompile Include="src\Factory\InteractableFactory.cpp" />
+    <ClCompile Include="src\QuadTree.cpp" />
     <ClCompile Include="src\Scenes\EmptyScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Managers\SceneManager.cpp" />
@@ -31,8 +32,10 @@
     <ClCompile Include="src\Managers\WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\QuadTree.hpp" />
     <ClInclude Include="src\Systems\DebugSystem.hpp" />
     <ClInclude Include="src\Managers\SpriteManager.hpp" />
+    <ClInclude Include="src\Systems\EventHandlingSystem.hpp" />
     <ClInclude Include="src\Systems\RenderSystem.hpp" />
     <ClInclude Include="src\Factory\NonInteractableFactory.hpp" />
     <ClInclude Include="src\Factory\InteractableFactory.hpp" />

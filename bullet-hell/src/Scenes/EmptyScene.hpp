@@ -10,6 +10,8 @@
 #include "../Systems/InputSystem.hpp"
 #include "../Systems/AnimationSystem.hpp"
 #include "../Systems/RenderSystem.hpp"
+#include "../Systems/CollisionSystem.hpp"
+#include "../Systems/EventHandlingSystem.hpp"
 #include "../Systems/DebugSystem.hpp"
 
 class EmptyScene : public Scene
@@ -27,8 +29,8 @@ public:
 	void Init();
 	void ProcessEvent(const sf::Event& event);
 	void ProcessInput();
-	void Update(const float& deltaTime);
-	void Render(sf::RenderWindow& rw, const float& deltaTime, const float& interpolation);
+	void Update(const float& dt);
+	void Render(sf::RenderWindow& rw, const float& dt, const float& interpolation);
 	void Pause();
 	void Resume();
 	entt::registry& GetRegistry();

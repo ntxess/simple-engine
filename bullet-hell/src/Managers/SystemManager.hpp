@@ -23,10 +23,10 @@ public:
         return nullptr;
     }
 
-    void Update(const float& dt, entt::registry& reg)
+    void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
     {
         for (auto& system : m_systems)
-            system.second->Update(dt, reg);
+            system.second->Update(reg, dt, ent);
     }
 };
 

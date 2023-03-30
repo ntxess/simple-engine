@@ -6,14 +6,14 @@
 class TrackingSystem : public System
 {
 public:
-    void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null)
+    void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
     {
-		auto view = reg.view<Attraction>();
+		auto group = reg.group<Attraction>(entt::get<Sprite>);
 
-		for (auto entity : view)
+		for (auto entity : group)
 		{
-			auto& tracker = reg.get<AnimatedSprite>(entity).sprite;
-			auto target = reg.get<AnimatedSprite>(ent).sprite;
+			auto& tracker = group.get<Sprite>(entity).sprite;
+			auto target = reg.get<Sprite>(ent).sprite;
 
 			auto attraction = reg.get<Attraction>(entity);
 			auto speed = reg.get<Speed>(entity).current;

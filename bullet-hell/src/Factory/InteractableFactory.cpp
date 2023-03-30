@@ -8,22 +8,29 @@ std::unique_ptr<Entity> InteractableFactory::CreateEntity(TYPE type, sf::Texture
 	switch (type)
 	{
 	case TYPE::PLAYER:
-		entity->AddComponent<Sprite>(texture);
+		entity->AddComponent<TeamTag>(TEAM::PLAYER);
 		entity->AddComponent<PlayerInput>();
+		entity->AddComponent<Sprite>(texture);
+		entity->AddComponent<Hitbox>(sf::FloatRect(0, 0, 16, 24));
 		entity->AddComponent<Health>(100.f);
 		entity->AddComponent<Speed>(500.f);
+		entity->AddComponent<Attack>(100.f);
 		entity->AddComponent<Animator>(m_data->spriteManager.GetAnimator("SP_Player"_hs));
 		break;
 	case TYPE::ENEMY:
+		entity->AddComponent<TeamTag>(TEAM::ENEMY);
 		entity->AddComponent<Sprite>(texture);
+		entity->AddComponent<Hitbox>();
 		entity->AddComponent<Health>(200.f);
 		entity->AddComponent<Speed>(10.f);
 		entity->AddComponent<Attack>(5.f);
-		entity->AddComponent<MovementPattern>(
-			m_data->waypointManager.GetWaypoint("straight-down"_hs));
+		//entity->AddComponent<MovementPattern>(
+		//	m_data->waypointManager.GetWaypoint("straight-down"_hs));
 		break;
 	case TYPE::FRIENDLY:
+		entity->AddComponent<TeamTag>(TEAM::PLAYER);
 		entity->AddComponent<Sprite>(texture);
+		entity->AddComponent<Hitbox>();
 		entity->AddComponent<Health>(100.f);
 		entity->AddComponent<Speed>(20.f);
 		entity->AddComponent<Attack>(10.f);

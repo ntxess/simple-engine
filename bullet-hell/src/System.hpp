@@ -5,6 +5,6 @@ class System
 {
 public:
 	virtual ~System() = default;
-	virtual void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null) = 0;
+	virtual void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null) = 0;
 };
 

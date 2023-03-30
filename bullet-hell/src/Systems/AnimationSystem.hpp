@@ -6,13 +6,13 @@
 class AnimationSystem : public System
 {
 public:
-	void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null)
+	void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
 	{
-		auto view = reg.view<AnimatedSprite>();
-		for (auto entity : view)
+		auto group = reg.group<Animator>(entt::get<Sprite>);
+		for (auto entity : group)
 		{
-			auto& animator = view.get<AnimatedSprite>(entity).animator;
-			auto& sprite = view.get<AnimatedSprite>(entity).sprite;
+			auto& sprite = group.get<Sprite>(entity).sprite;
+			auto& animator = group.get<Animator>(entity).animator;
 			animator.update(sf::seconds(dt));
 			animator.animate(sprite);
 		}

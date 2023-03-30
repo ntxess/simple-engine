@@ -13,7 +13,7 @@ public:
 	Entity();
 	Entity(Scene* scene);
 	Entity(entt::entity handle, Scene* scene);
-	~Entity();
+	~Entity() = default;
 	Entity(const Entity& other) = default;
 
 	entt::entity GetHandle();

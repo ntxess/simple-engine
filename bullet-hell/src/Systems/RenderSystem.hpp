@@ -6,22 +6,15 @@
 class RenderSystem : public System
 {
 public:
-    void Update(const float& dt, entt::registry& reg, entt::entity ent = entt::null)
+    void Update(entt::registry& reg, const float& dt = 0.f, entt::entity ent = entt::null)
     {}
 
     void Render(sf::RenderWindow& rw, entt::registry& reg)
     {
-        auto viewStatic = reg.view<Sprite>();
-        for (auto entity : viewStatic)
+        auto view = reg.view<Sprite>();
+        for (auto entity : view)
         {
-            auto& sprite = viewStatic.get<Sprite>(entity).sprite;
-            rw.draw(sprite);
-        }
-
-        auto viewAnimated = reg.view<AnimatedSprite>();
-        for (auto entity : viewAnimated)
-        {
-            auto& sprite = viewAnimated.get<AnimatedSprite>(entity).sprite;
+            auto& sprite = view.get<Sprite>(entity).sprite;
             rw.draw(sprite);
         }
     }

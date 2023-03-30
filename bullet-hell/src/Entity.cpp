@@ -16,9 +16,6 @@ Entity::Entity(entt::entity handle, Scene* scene)
 	, m_scene(scene)
 {}
 
-Entity::~Entity()
-{}
-
 entt::entity Entity::GetHandle()
 {
 	return m_entityHandle;

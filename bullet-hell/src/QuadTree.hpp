@@ -1,11 +1,9 @@
 #pragma once
+#include "Component.hpp"
+#include "entt/entt.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
 #include <memory>
 #include <vector>
-
-#include "SFML/Graphics/Rect.hpp"
-#include "SFML/Graphics/Sprite.hpp"
-#include "entt/entt.hpp"
-#include "Component.hpp"
 
 constexpr size_t MAX_DEPTH = 6;
 
@@ -13,20 +11,20 @@ class QuadTree
 {
 private:
 	static const size_t QT_NODE_CAPACITY = 4;
-	sf::FloatRect _boundary;
-	size_t _depth;
-	bool _divided;
-	std::vector<entt::entity> _nodes;
-	std::unique_ptr<QuadTree> _northWest;
-	std::unique_ptr<QuadTree> _northEast;
-	std::unique_ptr<QuadTree> _southWest;
-	std::unique_ptr<QuadTree> _southEast;
+	sf::FloatRect m_boundary;
+	size_t m_depth;
+	bool m_divided;
+	std::vector<entt::entity> m_nodes;
+	std::unique_ptr<QuadTree> m_northWest;
+	std::unique_ptr<QuadTree> m_northEast;
+	std::unique_ptr<QuadTree> m_southWest;
+	std::unique_ptr<QuadTree> m_southEast;
 
-	sf::RectangleShape _rectangle;
+	sf::RectangleShape m_rectangle;
 
 public:
 	QuadTree(const sf::FloatRect& rect, const size_t depth = 0);
-	~QuadTree();
+	~QuadTree() = default;
 
 	bool Insert(entt::registry& registry, entt::entity entity);
 	void Subdivide();
