@@ -184,12 +184,17 @@ struct Text
 	Text(const Text&) = default;
 };
 
-struct Clock
+struct IFrameClock
 {
 	sf::Clock clock;
+	float currentFrame;
+	float maxFrame;
 
-	Clock() = default;
-	Clock(const Clock&) = default;
+	IFrameClock()
+		: currentFrame(0), maxFrame(0) {}
+	IFrameClock(const float& interval)
+		: currentFrame(0), maxFrame(interval) {}
+	IFrameClock(const IFrameClock&) = default;
 };
 
 struct PerformanceMonitor

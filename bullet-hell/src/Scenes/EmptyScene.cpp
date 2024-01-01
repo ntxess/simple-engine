@@ -48,7 +48,7 @@ void EmptyScene::Update(const float& dt)
     m_system.GetSystem<InputSystem>()->Update(m_reg, dt, m_entity["Player"_hs]->GetHandle());
     m_system.GetSystem<AnimationSystem>()->Update(m_reg, dt);
     m_system.GetSystem<WaypointSystem>()->Update(m_reg, dt);
-    m_system.GetSystem<CollisionSystem>()->Update(m_reg);
+    m_system.GetSystem<CollisionSystem>()->Update(m_reg, dt);
     m_system.GetSystem<EventHandlingSystem>()->Update(m_reg);
     m_system.GetSystem<DebugSystem>()->Update(m_reg, dt, m_entity["debug"_hs]->GetHandle());
 }

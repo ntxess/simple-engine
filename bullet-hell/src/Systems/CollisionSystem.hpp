@@ -38,8 +38,6 @@ public:
 		auto view = reg.view<Hitbox>();
 		for (auto collider : view)
 		{
-			//auto& colliderHitbox = reg.get<Hitbox>(collider).hitbox;
-			//std::vector<entt::entity> entityCollidedWith = m_quadTree->QueryRange(reg, colliderHitbox);
 			auto& colliderHitbox = reg.get<Sprite>(collider).sprite;
 			std::vector<entt::entity> entityCollidedWith = m_quadTree->QueryRange(reg, colliderHitbox.getGlobalBounds());
 			auto colliderTeamTag = reg.get<TeamTag>(collider).tag;
@@ -49,8 +47,10 @@ public:
 				auto collidedTeamTag = reg.get<TeamTag>(collided).tag;
 				if (colliderTeamTag == collidedTeamTag)
 					continue;
-				std::cout << "Collided" << std::endl;
 
+				// When an object hits another object it retains the id of the object it collided.
+				// However, this system in which emplacing/replacing collisions means that collisions are 
+				// resolved at a Last In First Out order.
 				reg.emplace_or_replace<CollidedTag>(collider, collided);
 				reg.emplace_or_replace<CollidedTag>(collided, collider);
 			}
